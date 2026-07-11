@@ -7,7 +7,7 @@ import { ReservationTrigger } from "./ReservationTrigger";
  * modale de pré-inscription (<ReservationDialog>). Décorations motifFond masquées
  * sous lg.
  */
-export function Reservation() {
+export function Reservation({ mention }: { mention?: string | null }) {
   return (
     <section
       id="contact"
@@ -65,8 +65,8 @@ export function Reservation() {
         </ReservationTrigger>
 
         <div className="mt-4 text-[13px] text-soft">
-          10 places par session · pré-inscription sans engagement · réponse sous
-          48 h.
+          {mention ??
+            "10 places par session · pré-inscription sans engagement · réponse sous 48 h."}
         </div>
       </div>
     </section>

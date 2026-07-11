@@ -8,7 +8,38 @@ export const metadata: Metadata = {
   title: "Merci — Marssane",
 };
 
-export default function Merci() {
+/** Contenu de la page selon le statut renvoyé par la server action (F2). */
+const CONTENUS = {
+  confirme: {
+    titre: "Votre pré-inscription est bien enregistrée.",
+    texte:
+      "Vous recevrez un email de confirmation avec les prérequis de la journée : un ordinateur portable, un abonnement Claude Pro (20 €/mois) et, si votre poste est géré, un point avec votre DSI.",
+  },
+  attente: {
+    titre: "Vous êtes sur liste d'attente.",
+    texte:
+      "Nous vous recontactons dès qu'une place ou une session se libère.",
+  },
+  defaut: {
+    titre: "Votre pré-inscription est bien enregistrée.",
+    texte:
+      "Vous recevrez un email de confirmation avec les prérequis de la journée (abonnement Claude Pro, ordinateur portable, point DSI si votre poste est géré).",
+  },
+} as const;
+
+export default async function Merci({
+  searchParams,
+}: {
+  searchParams: Promise<{ statut?: string }>;
+}) {
+  const { statut } = await searchParams;
+  const contenu =
+    statut === "confirme"
+      ? CONTENUS.confirme
+      : statut === "attente"
+        ? CONTENUS.attente
+        : CONTENUS.defaut;
+
   return (
     <>
       <Nav />
@@ -17,12 +48,10 @@ export default function Merci() {
           <div className="max-w-[560px]">
             <Kicker>Pré-inscription</Kicker>
             <h1 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-              Votre pré-inscription est bien enregistrée.
+              {contenu.titre}
             </h1>
             <p className="mt-[18px] text-[16.5px] leading-[1.58] text-body">
-              Vous recevrez un email de confirmation avec les prérequis de la
-              journée (abonnement Claude Pro, ordinateur portable, point DSI si
-              votre poste est géré).
+              {contenu.texte}
             </p>
             <Link
               href="/"

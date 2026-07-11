@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { sendInscriptionEmails } from "@/lib/emails";
@@ -13,9 +14,30 @@ export type InscriptionState = {
   formError?: string;
   /** Erreurs par champ (clé = nom du champ). */
   fieldErrors?: Record<string, string>;
+  /**
+   * Valeurs saisies, réinjectées dans le formulaire en cas d'erreur (utile sans
+   * JS : le POST recharge la page et le formulaire doit se repeupler). Ne
+   * contient aucune donnée sensible au-delà de ce que l'utilisateur a tapé.
+   */
+  values?: Record<string, string>;
 };
 
 export const initialInscriptionState: InscriptionState = { status: "idle" };
+
+/** Extrait les valeurs saisies pour les réinjecter dans le formulaire. */
+function submittedValues(formData: FormData): Record<string, string> {
+  const str = (key: string) => (formData.get(key) ?? "").toString();
+  return {
+    prenom: str("prenom"),
+    nom: str("nom"),
+    email: str("email"),
+    telephone: str("telephone"),
+    metier: str("metier"),
+    metier_autre: str("metier_autre"),
+    entreprise: str("entreprise"),
+    consentement: str("consentement") === "on" ? "on" : "",
+  };
+}
 
 /**
  * Rate-limiting en mémoire par IP : 5 tentatives par heure.
@@ -67,19 +89,22 @@ export async function submitInscription(
   const honeypot = (formData.get("site_web") ?? "").toString().trim();
   if (honeypot) redirect("/merci");
 
+  const values = submittedValues(formData);
+
   // 2. Rate-limiting par IP.
   const ip = await clientIp();
   if (!checkRateLimit(ip)) {
     return {
       status: "error",
       formError: "Trop de tentatives, réessayez plus tard.",
+      values,
     };
   }
 
   // 3. Validation.
   const parsed = parseInscription(formData);
   if (!parsed.ok) {
-    return { status: "error", fieldErrors: parsed.fieldErrors };
+    return { status: "error", fieldErrors: parsed.fieldErrors, values };
   }
 
   // 4. Enregistrement.
@@ -93,6 +118,7 @@ export async function submitInscription(
     return {
       status: "error",
       formError: "Une erreur est survenue. Réessayez dans un instant.",
+      values,
     };
   }
 
@@ -100,6 +126,7 @@ export async function submitInscription(
     return {
       status: "error",
       formError: "Vous êtes déjà inscrit pour cette session.",
+      values,
     };
   }
 
@@ -115,6 +142,9 @@ export async function submitInscription(
   } catch {
     console.error("[inscription] échec de l'envoi des emails");
   }
+
+  // Rafraîchit la landing (compteur de places, bascule « complète »).
+  revalidatePath("/");
 
   // redirect() lève une exception : appelé hors de tout try/catch.
   redirect(`/merci?statut=${result.statut}`);

@@ -1,7 +1,10 @@
 "use client";
 
-import { useRef } from "react";
-import { Button } from "@/components/ui/Button";
+import { useActionState, useRef } from "react";
+import {
+  initialInscriptionState,
+  submitInscription,
+} from "@/app/actions/inscription";
 import { controlClass, Field } from "@/components/ui/Field";
 
 /** Options du champ « Métier » (CDC §5.2). */
@@ -13,16 +16,41 @@ const METIERS = [
   "Autre",
 ];
 
+type ReservationDialogProps = {
+  /** Libellé du champ « Session » (lecture seule) — date + lieu ou liste d'attente. */
+  sessionLabel: string;
+  /** `true` si la prochaine session est complète : inscription en liste d'attente. */
+  sessionComplete: boolean;
+};
+
 /**
  * Modale de pré-inscription (F2). <dialog> natif : focus trap, Esc et ::backdrop
  * gratuits. Ouverte par <ReservationTrigger> via document.getElementById +
  * showModal(). Fermeture : bouton ✕, Esc (natif) ou clic sur le backdrop.
- * Le formulaire reste jalon 2 (bouton inerte, non branché).
+ *
+ * Le formulaire est branché sur la server action `submitInscription` via
+ * `useActionState` : erreurs par champ + erreur globale, état « pending », et
+ * repeuplement des valeurs sans JS (progressive enhancement).
  */
-export function ReservationDialog() {
+export function ReservationDialog({
+  sessionLabel,
+  sessionComplete,
+}: ReservationDialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
+  const [state, formAction, isPending] = useActionState(
+    submitInscription,
+    initialInscriptionState,
+  );
 
   const close = () => ref.current?.close();
+  const fieldErrors = state.fieldErrors ?? {};
+  const values = state.values ?? {};
+
+  /** aria-invalid / aria-describedby reliant un champ à son message d'erreur. */
+  const errorAttrs = (name: string, id: string) =>
+    fieldErrors[name]
+      ? { "aria-invalid": true as const, "aria-describedby": `${id}-error` }
+      : {};
 
   return (
     <dialog
@@ -52,29 +80,52 @@ export function ReservationDialog() {
           Réserver ma place
         </h2>
 
+        {sessionComplete && (
+          <p className="mt-6 rounded-card bg-toile px-4 py-3 text-[13.5px] leading-[1.5] text-body">
+            La session est complète : ce formulaire vous inscrit en liste
+            d&apos;attente.
+          </p>
+        )}
+
         {/* Formulaire de pré-inscription (F2) */}
-        <form className="mt-7 grid grid-cols-1 gap-x-4 gap-y-[18px] text-left sm:grid-cols-2">
-          <Field id="f2-prenom" label="Prénom" required>
+        <form
+          action={formAction}
+          className="mt-7 grid grid-cols-1 gap-x-4 gap-y-[18px] text-left sm:grid-cols-2"
+        >
+          {state.formError && (
+            <div
+              role="alert"
+              className="rounded-chip bg-[rgba(199,90,77,0.14)] px-4 py-3 text-[13.5px] leading-[1.5] text-ink-clay sm:col-span-2"
+            >
+              {state.formError}
+            </div>
+          )}
+
+          <Field id="f2-prenom" label="Prénom" required error={fieldErrors.prenom}>
             <input
               id="f2-prenom"
               name="prenom"
               type="text"
               required
               autoComplete="given-name"
+              defaultValue={values.prenom ?? ""}
+              {...errorAttrs("prenom", "f2-prenom")}
               className={controlClass}
             />
           </Field>
-          <Field id="f2-nom" label="Nom" required>
+          <Field id="f2-nom" label="Nom" required error={fieldErrors.nom}>
             <input
               id="f2-nom"
               name="nom"
               type="text"
               required
               autoComplete="family-name"
+              defaultValue={values.nom ?? ""}
+              {...errorAttrs("nom", "f2-nom")}
               className={controlClass}
             />
           </Field>
-          <Field id="f2-email" label="Email" required>
+          <Field id="f2-email" label="Email" required error={fieldErrors.email}>
             <input
               id="f2-email"
               name="email"
@@ -82,10 +133,17 @@ export function ReservationDialog() {
               required
               autoComplete="email"
               inputMode="email"
+              defaultValue={values.email ?? ""}
+              {...errorAttrs("email", "f2-email")}
               className={controlClass}
             />
           </Field>
-          <Field id="f2-telephone" label="Téléphone" required>
+          <Field
+            id="f2-telephone"
+            label="Téléphone"
+            required
+            error={fieldErrors.telephone}
+          >
             <input
               id="f2-telephone"
               name="telephone"
@@ -93,15 +151,18 @@ export function ReservationDialog() {
               required
               autoComplete="tel"
               inputMode="tel"
+              defaultValue={values.telephone ?? ""}
+              {...errorAttrs("telephone", "f2-telephone")}
               className={controlClass}
             />
           </Field>
-          <Field id="f2-metier" label="Métier" required>
+          <Field id="f2-metier" label="Métier" required error={fieldErrors.metier}>
             <select
               id="f2-metier"
               name="metier"
               required
-              defaultValue=""
+              defaultValue={values.metier ?? ""}
+              {...errorAttrs("metier", "f2-metier")}
               className={controlClass}
             >
               <option value="" disabled>
@@ -114,12 +175,18 @@ export function ReservationDialog() {
               ))}
             </select>
           </Field>
-          <Field id="f2-metier-autre" label="Si « Autre », précisez">
+          <Field
+            id="f2-metier-autre"
+            label="Si « Autre », précisez"
+            error={fieldErrors.metier_autre}
+          >
             <input
               id="f2-metier-autre"
               name="metier_autre"
               type="text"
               autoComplete="off"
+              defaultValue={values.metier_autre ?? ""}
+              {...errorAttrs("metier_autre", "f2-metier-autre")}
               className={controlClass}
             />
           </Field>
@@ -127,12 +194,15 @@ export function ReservationDialog() {
             id="f2-entreprise"
             label="Entreprise / cabinet"
             className="sm:col-span-2"
+            error={fieldErrors.entreprise}
           >
             <input
               id="f2-entreprise"
               name="entreprise"
               type="text"
               autoComplete="organization"
+              defaultValue={values.entreprise ?? ""}
+              {...errorAttrs("entreprise", "f2-entreprise")}
               className={controlClass}
             />
           </Field>
@@ -143,7 +213,7 @@ export function ReservationDialog() {
               type="text"
               readOnly
               required
-              value="Prochaine session — date et lieu bientôt annoncés"
+              value={sessionLabel}
               className={`${controlClass} cursor-default bg-toile text-muted`}
             />
           </Field>
@@ -163,6 +233,7 @@ export function ReservationDialog() {
               type="checkbox"
               name="consentement"
               required
+              defaultChecked={values.consentement === "on"}
               className="mt-[3px] h-4 w-4 flex-none accent-canard"
             />
             <span>
@@ -179,13 +250,19 @@ export function ReservationDialog() {
           </label>
 
           <div className="sm:col-span-2">
-            <Button
-              variant="primary"
-              arrow
-              className="px-[30px] py-4 text-[16.5px]"
+            <button
+              type="submit"
+              disabled={isPending}
+              aria-busy={isPending}
+              className="inline-flex items-center gap-2.5 rounded-btn bg-canard px-[30px] py-4 text-[16.5px] font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark disabled:cursor-not-allowed disabled:opacity-70"
             >
-              Réserver ma place
-            </Button>
+              {isPending ? "Envoi…" : "Réserver ma place"}
+              {!isPending && (
+                <span aria-hidden className="text-[1.1em] leading-none">
+                  →
+                </span>
+              )}
+            </button>
           </div>
         </form>
       </div>

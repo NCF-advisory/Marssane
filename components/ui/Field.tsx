@@ -14,6 +14,11 @@ type FieldProps = {
   label: string;
   required?: boolean;
   className?: string;
+  /**
+   * Message d'erreur du champ. Rendu sous le contrôle avec l'id `${id}-error` ;
+   * le contrôle doit le référencer via `aria-describedby` + `aria-invalid`.
+   */
+  error?: string;
   /** Le contrôle (input / select / textarea) portant `id` et `controlClass`. */
   children: ReactNode;
 };
@@ -23,7 +28,14 @@ type FieldProps = {
  * (décoratif) sur les champs obligatoires — l'attribut `required` du contrôle
  * porte l'information pour les technologies d'assistance.
  */
-export function Field({ id, label, required = false, className, children }: FieldProps) {
+export function Field({
+  id,
+  label,
+  required = false,
+  className,
+  error,
+  children,
+}: FieldProps) {
   return (
     <div className={className}>
       <label
@@ -39,6 +51,14 @@ export function Field({ id, label, required = false, className, children }: Fiel
         )}
       </label>
       {children}
+      {error && (
+        <p
+          id={`${id}-error`}
+          className="mt-[6px] text-[12.5px] leading-[1.4] text-ink-clay"
+        >
+          {error}
+        </p>
+      )}
     </div>
   );
 }

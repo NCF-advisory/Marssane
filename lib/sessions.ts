@@ -90,6 +90,21 @@ export async function getProchaineSession(): Promise<ProchaineSession | null> {
 }
 
 /**
+ * Variante « sûre » pour le rendu de la landing. Si `DATABASE_URL` est absent
+ * ou la base injoignable, retombe silencieusement sur `null` (mode liste
+ * d'attente générale) au lieu de lever : la page « / » se rend donc sans env et
+ * `npm run build` passe sans base. Aucune donnée n'est journalisée.
+ */
+export async function getProchaineSessionSafe(): Promise<ProchaineSession | null> {
+  try {
+    return await getProchaineSession();
+  } catch {
+    console.error("[sessions] session indisponible — repli liste d'attente");
+    return null;
+  }
+}
+
+/**
  * Enregistre une pré-inscription (CDC §5.2). Transaction avec verrou
  * `FOR UPDATE` sur la ligne session : sérialise le calcul des places pour
  * éviter la course à la dernière place (deux 10ᵉ inscriptions simultanées).

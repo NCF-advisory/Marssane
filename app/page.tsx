@@ -8,22 +8,35 @@ import { PourFaireQuoi } from "@/components/site/PourFaireQuoi";
 import { PourQui } from "@/components/site/PourQui";
 import { Reservation } from "@/components/site/Reservation";
 import { ReservationDialog } from "@/components/site/ReservationDialog";
+import { champSession, mentionSession } from "@/lib/session-display";
+import { getProchaineSessionSafe } from "@/lib/sessions";
 
-export default function Home() {
+// Page dynamique contrôlée : revalidation périodique + `revalidatePath("/")`
+// depuis la server action, pour que le compteur de places se rafraîchisse.
+export const revalidate = 60;
+
+export default async function Home() {
+  // Repli sans base : `null` → wording « liste d'attente » (voir getProchaineSessionSafe).
+  const session = await getProchaineSessionSafe();
+  const mention = session ? mentionSession(session) : null;
+
   return (
     <>
       <Nav />
       <main>
-        <Hero />
+        <Hero mention={mention} />
         <PourFaireQuoi />
         <CasConcrets />
         <PourQui />
         <Formation />
         <AllerPlusLoin />
-        <Reservation />
+        <Reservation mention={mention} />
       </main>
       <Footer />
-      <ReservationDialog />
+      <ReservationDialog
+        sessionLabel={champSession(session)}
+        sessionComplete={session?.complete ?? false}
+      />
     </>
   );
 }

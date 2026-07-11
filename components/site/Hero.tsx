@@ -10,7 +10,7 @@ import { ReservationTrigger } from "./ReservationTrigger";
  * média à droite (HeroMedia) et bandeau chiffres sous la grille. Fond quadrillé
  * masqué + décorations « motifFond » de la maquette.
  */
-export function Hero() {
+export function Hero({ mention }: { mention?: string | null }) {
   return (
     <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-10 pt-[74px]">
       <GridBackground
@@ -69,7 +69,8 @@ export function Hero() {
             </Button>
           </div>
           <div className="mt-4 text-[13px] text-slate">
-            Pré-inscription à la prochaine session · 10 places · sans engagement.
+            {mention ??
+              "Pré-inscription à la prochaine session · 10 places · sans engagement."}
           </div>
         </div>
 
