@@ -1,0 +1,26 @@
+{
+  "name": "marssane-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vidéo de présentation du héro Marssane (Remotion). Sous-projet isolé.",
+  "scripts": {
+    "dev": "remotion studio src/index.ts",
+    "render:mp4": "remotion render src/index.ts HeroVideo ../public/video/hero.mp4 --codec=h264 --crf=30",
+    "render:webm": "remotion render src/index.ts HeroVideo ../public/video/hero.webm --codec=vp9 --crf=36",
+    "render:poster": "remotion still src/index.ts HeroVideo ../public/video/hero-poster.jpg --frame=157 --image-format=jpeg --jpeg-quality=88",
+    "render:stills": "node scripts/render-stills.mjs",
+    "render:all": "npm run render:mp4 && npm run render:webm && npm run render:poster"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.488",
+    "@remotion/fonts": "4.0.488",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.488"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
+    "typescript": "5.8.3"
+  }
+}
