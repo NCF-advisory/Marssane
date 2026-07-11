@@ -1,0 +1,274 @@
+import { Button } from "@/components/ui/Button";
+import { CheckItem } from "@/components/ui/CheckItem";
+import { controlClass, Field } from "@/components/ui/Field";
+import { Kicker } from "@/components/ui/Kicker";
+import { PlusMark } from "@/components/ui/PlusMark";
+
+/** Barres du mini-reporting : hauteur (% de 52 px) et couleur de la charte. */
+const BARRES: { h: string; color: string }[] = [
+  { h: "38%", color: "var(--color-periwinkle)" },
+  { h: "52%", color: "var(--color-periwinkle)" },
+  { h: "46%", color: "var(--color-lavande)" },
+  { h: "64%", color: "var(--color-lavande)" },
+  { h: "58%", color: "var(--color-canard)" },
+  { h: "80%", color: "var(--color-canard)" },
+  { h: "100%", color: "var(--color-turquoise)" },
+];
+
+/** Lignes horodatées du journal d'audit. */
+const JOURNAL: { texte: string; heure: string }[] = [
+  { texte: "Brouillon généré", heure: "09:12" },
+  { texte: "Relu et modifié par votre équipe", heure: "09:14" },
+  { texte: "Validé & envoyé", heure: "09:15" },
+];
+
+/**
+ * Section « Aller plus loin — implémentation » (ancre #implementation).
+ * Grille visuel gauche (cartes reporting + journal d'audit) / texte droite,
+ * puis le formulaire de contact implémentation F4 (ancre #contact-implementation).
+ * Fond quadrillé masqué + décorations motifFond masqués sous lg.
+ */
+export function AllerPlusLoin() {
+  return (
+    <section
+      id="implementation"
+      className="relative isolate mx-auto max-w-[1180px] px-10 pb-5 pt-[96px]"
+    >
+      {/* Fond quadrillé masqué radial (décoratif) */}
+      <div
+        aria-hidden
+        className="grid-toile -z-[1] hidden lg:block"
+        style={{
+          inset: "auto",
+          left: 0,
+          top: "80px",
+          width: "560px",
+          height: "440px",
+          WebkitMaskImage:
+            "radial-gradient(70% 70% at 45% 45%, #000, transparent 78%)",
+          maskImage: "radial-gradient(70% 70% at 45% 45%, #000, transparent 78%)",
+        }}
+      />
+
+      {/* Décorations motifFond (décoratives) */}
+      <span
+        aria-hidden
+        className="absolute left-[778.25px] top-0 -z-[1] hidden h-[48px] w-[1.5px] bg-repere lg:block"
+      />
+      <span
+        aria-hidden
+        className="absolute left-[631px] top-[47.25px] -z-[1] hidden h-[1.5px] w-[148px] lg:block"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(90deg,#C4CBD2 0 8px,rgba(196,203,210,0) 8px 15px)",
+        }}
+      />
+      <PlusMark
+        variant="turquoise"
+        size={19}
+        className="absolute left-[620px] top-[48px] -z-[1] hidden -translate-x-1/2 -translate-y-1/2 lg:block"
+      />
+      <span
+        aria-hidden
+        className="absolute bottom-0 left-[619.25px] top-[59px] -z-[1] hidden w-[1.5px] bg-repere lg:block"
+      />
+      <PlusMark
+        size={16}
+        className="absolute left-[70px] top-[70px] hidden lg:block"
+      />
+
+      <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+        {/* Visuel : reporting + journal d'audit */}
+        <div className="relative h-[420px] overflow-hidden lg:overflow-visible">
+          {/* Carte « Reporting · 30 jours » */}
+          <div
+            className="absolute left-0 top-0 z-[2] w-[262px] overflow-hidden rounded-card border border-hairline bg-surface"
+            style={{ boxShadow: "0 24px 50px -18px rgba(16,24,40,.26)" }}
+          >
+            <div
+              className="flex items-center justify-between px-[15px] py-[11px]"
+              style={{ background: "linear-gradient(120deg,#A88FEE,#C7D2F7)" }}
+            >
+              <span className="text-[12px] font-semibold text-ink-periwinkle">
+                Reporting · 30 jours
+              </span>
+              <span className="rounded-chip bg-white/50 px-2 py-[3px] text-[10px] text-ink-periwinkle">
+                équipe
+              </span>
+            </div>
+            <div className="px-[15px] py-[14px]">
+              <div className="flex h-[52px] items-end gap-1.5">
+                {BARRES.map((barre, i) => (
+                  <div
+                    key={i}
+                    className="flex-1 rounded-[3px_3px_0_0]"
+                    style={{ height: barre.h, background: barre.color }}
+                  />
+                ))}
+              </div>
+              <div className="mt-[11px] text-[12px] text-faint">
+                Le gain du mois, lu dans votre reporting — pas dans nos slides.
+              </div>
+            </div>
+          </div>
+
+          {/* Carte « Journal d'audit » */}
+          <div
+            className="absolute bottom-4 right-[10px] z-[3] w-[286px] rounded-card border border-hairline bg-surface p-[18px]"
+            style={{ boxShadow: "0 28px 56px -18px rgba(16,24,40,.3)" }}
+          >
+            <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-quiet">
+              Journal d&apos;audit · ce que vous verrez chez vous
+            </div>
+            <div className="mt-[13px] flex flex-col gap-2.5 text-[12.5px]">
+              {JOURNAL.map((ligne) => (
+                <div key={ligne.heure} className="flex justify-between gap-2.5">
+                  <span className="text-body">{ligne.texte}</span>
+                  <span className="font-mono text-faint">{ligne.heure}</span>
+                </div>
+              ))}
+              <div className="flex justify-between gap-2.5 border-t border-hairline-strong pt-2.5">
+                <span className="font-semibold">Chaque action</span>
+                <span className="font-mono font-semibold text-ink-ecume">
+                  tracée
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Texte */}
+        <div className="max-w-[450px] lg:justify-self-end">
+          <Kicker>Aller plus loin · implémentation</Kicker>
+          <h2 className="mt-[14px] text-[38px] font-extrabold leading-[1.08] tracking-[-0.025em]">
+            Vous voyez le potentiel ? Nous venons l&apos;installer chez vous.
+          </h2>
+          <p className="mt-[18px] text-[16.5px] leading-[1.58] text-body">
+            Vous êtes formé, vous savez ce que l&apos;IA sait faire. L&apos;étape
+            suivante : nous implémentons l&apos;IA directement dans votre
+            entreprise — sur vos données, avec vos équipes, avec un gain mesuré
+            chaque mois.
+          </p>
+          <div className="mt-[22px] flex flex-col gap-2.5">
+            <CheckItem>Construit sur vos dossiers réels, avec vos équipes</CheckItem>
+            <CheckItem>
+              L&apos;agent propose, l&apos;humain valide — chaque flux est tracé
+            </CheckItem>
+            <CheckItem>Chaque mois, le gain se lit dans votre reporting</CheckItem>
+          </div>
+          <Button
+            variant="secondary"
+            href="#contact-implementation"
+            arrow
+            className="mt-[26px]"
+          >
+            Parler de votre projet
+          </Button>
+        </div>
+      </div>
+
+      {/* Formulaire contact implémentation (F4) */}
+      <div
+        id="contact-implementation"
+        className="mt-[52px] scroll-mt-24 rounded-card border border-hairline bg-surface p-8 shadow-card sm:p-10"
+      >
+        <h3 className="text-[24px] font-bold tracking-[-0.02em]">
+          Parlez-nous de votre projet
+        </h3>
+        <p className="mt-2 text-[15px] leading-[1.55] text-muted">
+          Décrivez votre besoin en quelques lignes — nous revenons vers vous sous
+          48 h.
+        </p>
+
+        <form className="mt-7 grid grid-cols-1 gap-x-4 gap-y-[18px] sm:grid-cols-2">
+          <Field id="f4-prenom" label="Prénom" required>
+            <input
+              id="f4-prenom"
+              name="prenom"
+              type="text"
+              required
+              autoComplete="given-name"
+              className={controlClass}
+            />
+          </Field>
+          <Field id="f4-nom" label="Nom" required>
+            <input
+              id="f4-nom"
+              name="nom"
+              type="text"
+              required
+              autoComplete="family-name"
+              className={controlClass}
+            />
+          </Field>
+          <Field id="f4-email" label="Email" required>
+            <input
+              id="f4-email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              inputMode="email"
+              className={controlClass}
+            />
+          </Field>
+          <Field id="f4-telephone" label="Téléphone">
+            <input
+              id="f4-telephone"
+              name="telephone"
+              type="tel"
+              autoComplete="tel"
+              inputMode="tel"
+              className={controlClass}
+            />
+          </Field>
+          <Field id="f4-entreprise" label="Entreprise" required className="sm:col-span-2">
+            <input
+              id="f4-entreprise"
+              name="entreprise"
+              type="text"
+              required
+              autoComplete="organization"
+              className={controlClass}
+            />
+          </Field>
+          <Field id="f4-message" label="Message" required className="sm:col-span-2">
+            <textarea
+              id="f4-message"
+              name="message"
+              required
+              rows={5}
+              className={`${controlClass} resize-y`}
+            />
+          </Field>
+
+          <label className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-faint sm:col-span-2">
+            <input
+              type="checkbox"
+              name="consentement"
+              required
+              className="mt-[3px] h-4 w-4 flex-none accent-canard"
+            />
+            <span>
+              J&apos;accepte que mes données soient utilisées pour traiter ma
+              demande, conformément à la{" "}
+              <a
+                href="/confidentialite"
+                className="text-canard underline hover:text-canard-dark"
+              >
+                politique de confidentialité
+              </a>
+              .
+            </span>
+          </label>
+
+          <div className="sm:col-span-2">
+            <Button variant="primary" arrow>
+              Envoyer ma demande
+            </Button>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
+}
