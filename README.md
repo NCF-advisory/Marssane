@@ -1,8 +1,8 @@
 # Site Marssane
 
 Landing page de Marssane — formation à l'IA pour dirigeants de PME et professions
-libérales (avocats, notaires, experts-comptables). Site statique en Next.js
-(App Router) + Tailwind CSS v4, sans base de données ni API.
+libérales (avocats, notaires, experts-comptables). Next.js (App Router) +
+Tailwind CSS v4, avec pré-inscription en base Postgres (Supabase en v1).
 
 ## Prérequis
 
@@ -24,6 +24,25 @@ npm start          # sert le build (next start)
 
 Autres scripts : `npm run lint` (ESLint).
 
+## Base de données
+
+Postgres (Supabase en v1, portable vers OVH — accès Postgres standard, sans SDK
+propriétaire). La connexion se fait via la variable `DATABASE_URL`.
+
+1. Créer un projet sur [supabase.com](https://supabase.com) (région UE).
+2. Copier l'URI du **pooler** (Project Settings → Database → Connection string →
+   « Transaction pooler », port 6543) dans `.env.local` (voir `.env.example`).
+3. Appliquer le schéma et insérer une session de test :
+
+```bash
+npm run db:migrate    # crée les tables (idempotent)
+npm run db:seed        # insère une session de test publiée (J+30, 10 places)
+```
+
+Les migrations SQL vivent dans `db/migrations/` ; la table `_migrations` assure
+l'idempotence. Migrer vers OVH plus tard = changer `DATABASE_URL` et relancer
+`db:migrate`.
+
 ## Structure
 
 ```
@@ -41,8 +60,16 @@ app/                     Routes (App Router)
 components/
   ui/                    Primitifs (Button, Field, Kicker, LogoMarssane…)
   site/                  Sections de la landing (Hero, Formation, Reservation…)
+app/
+  actions/               Server actions (pré-inscription F2)
 lib/
   site-config.ts         Configuration éditoriale (bascule vidéo du héro)
+  db.ts                  Client Postgres partagé (lazy)
+  sessions.ts            Accès données : sessions + création d'inscription
+  validation.ts          Schéma zod du formulaire de pré-inscription
+  emails.ts              Emails transactionnels (no-op — jalon 3 tâche 3)
+db/migrations/           Migrations SQL (schéma)
+scripts/                 Scripts Node : db:migrate, db:seed
 docs/references/         Maquette et charte graphique (sources de vérité)
 ```
 
