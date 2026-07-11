@@ -130,8 +130,8 @@ export async function submitInscription(
     };
   }
 
-  // Emails transactionnels (no-op jusqu'au jalon 3 tâche 3). Un échec d'envoi
-  // ne doit pas bloquer l'inscription déjà enregistrée.
+  // Emails transactionnels (F5). Un échec d'envoi ne doit pas bloquer
+  // l'inscription déjà enregistrée : l'appel est await-é mais neutralisé.
   try {
     const session = await getProchaineSession();
     await sendInscriptionEmails({
