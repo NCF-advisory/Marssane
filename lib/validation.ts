@@ -102,3 +102,110 @@ export function parseInscription(formData: FormData): ParseInscriptionResult {
 function asString(value: FormDataEntryValue | null): string {
   return typeof value === "string" ? value : "";
 }
+
+/* ===== Administration (F3 · CDC §5.3) ================================== */
+
+/** Statuts possibles d'une session. */
+export const SESSION_STATUTS = [
+  "brouillon",
+  "publiee",
+  "complete",
+  "terminee",
+] as const;
+
+/** Statuts possibles d'une inscription. */
+export const INSCRIPTION_STATUTS = ["confirme", "attente", "annule"] as const;
+
+/** Heure au format « HH:MM » (input natif `type=time`). */
+const HEURE = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+/** Une chaîne vide/espaces devient `undefined` (champ optionnel). */
+function optionalTrimmed<T extends z.ZodTypeAny>(schema: T) {
+  return z.preprocess(
+    (value) =>
+      typeof value === "string" && value.trim() !== ""
+        ? value.trim()
+        : undefined,
+    schema.optional(),
+  );
+}
+
+/** Schéma de validation d'une session (création / édition admin). */
+export const sessionSchema = z
+  .object({
+    date: z
+      .string()
+      .trim()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, "La date est requise."),
+    heure_debut: optionalTrimmed(
+      z.string().regex(HEURE, "Heure de début invalide."),
+    ),
+    heure_fin: optionalTrimmed(
+      z.string().regex(HEURE, "Heure de fin invalide."),
+    ),
+    lieu: optionalTrimmed(z.string().max(200, "Le lieu est trop long.")),
+    capacite: z.preprocess(
+      (value) => {
+        if (typeof value === "string" && value.trim() === "") return undefined;
+        const n = Number(value);
+        return Number.isFinite(n) ? n : value;
+      },
+      z
+        .number("La capacité est requise.")
+        .int("La capacité doit être un entier.")
+        .min(1, "La capacité doit être d'au moins 1.")
+        .max(1000, "La capacité est trop élevée."),
+    ),
+    statut: z.enum(SESSION_STATUTS, { error: "Statut invalide." }),
+  })
+  .superRefine((data, ctx) => {
+    if (data.heure_debut && data.heure_fin && data.heure_fin <= data.heure_debut) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["heure_fin"],
+        message: "L'heure de fin doit suivre l'heure de début.",
+      });
+    }
+  });
+
+export type SessionData = z.infer<typeof sessionSchema>;
+
+export type ParseSessionResult =
+  | { ok: true; data: SessionData }
+  | { ok: false; fieldErrors: Record<string, string> };
+
+/** Valide les champs d'un `FormData` de session. */
+export function parseSession(formData: FormData): ParseSessionResult {
+  const raw = {
+    date: asString(formData.get("date")),
+    heure_debut: asString(formData.get("heure_debut")),
+    heure_fin: asString(formData.get("heure_fin")),
+    lieu: asString(formData.get("lieu")),
+    capacite: asString(formData.get("capacite")),
+    statut: asString(formData.get("statut")),
+  };
+
+  const result = sessionSchema.safeParse(raw);
+  if (result.success) return { ok: true, data: result.data };
+
+  const fieldErrors: Record<string, string> = {};
+  for (const issue of result.error.issues) {
+    const key = String(issue.path[0] ?? "form");
+    if (!fieldErrors[key]) fieldErrors[key] = issue.message;
+  }
+  return { ok: false, fieldErrors };
+}
+
+/** Valide un identifiant (uuid) transmis par un formulaire d'action. */
+export function parseId(value: FormDataEntryValue | null): string | null {
+  const parsed = z.uuid().safeParse(asString(value));
+  return parsed.success ? parsed.data : null;
+}
+
+/** Valide un statut d'inscription transmis par un formulaire d'action. */
+export function parseInscriptionStatut(
+  value: FormDataEntryValue | null,
+): (typeof INSCRIPTION_STATUTS)[number] | null {
+  const parsed = z.enum(INSCRIPTION_STATUTS).safeParse(asString(value));
+  return parsed.success ? parsed.data : null;
+}
