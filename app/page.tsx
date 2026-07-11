@@ -1,12 +1,17 @@
+import { Hero } from "@/components/site/Hero";
+import { Nav } from "@/components/site/Nav";
+
 export default function Home() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-3">
-      <h1 className="font-sans text-5xl font-extrabold tracking-tight">
-        Marssane
-      </h1>
-      <p className="font-mono text-sm uppercase tracking-widest">
-        Formation IA
-      </p>
-    </main>
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        {/* Sections à venir (chacune centrée à max-w 1180, paddings maquette) :
+            - T4 : #usages (Pour faire quoi) + les 3 cas d'usage
+            - T5 : Pour qui · #formation (La formation) · #implementation
+            - T6 : #contact (CTA final) + footer */}
+      </main>
+    </>
   );
 }
