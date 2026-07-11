@@ -46,3 +46,11 @@ export function InscriptionStatutBadge({ statut }: { statut: string }) {
     </span>
   );
 }
+
+/** État d'une demande de contact : traité = écume, à traiter = périwinkle. */
+export function ContactTraiteBadge({ traite }: { traite: boolean }) {
+  const tone = traite
+    ? "bg-ecume text-ink-ecume"
+    : "bg-periwinkle text-ink-periwinkle";
+  return <span className={`${CHIP} ${tone}`}>{traite ? "Traité" : "À traiter"}</span>;
+}

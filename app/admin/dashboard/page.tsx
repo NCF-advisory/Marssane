@@ -2,12 +2,15 @@ import type { Metadata } from "next";
 import { archiveSessionAction } from "@/app/admin/dashboard/actions";
 import { SessionStatutBadge } from "@/components/admin/badges";
 import { ConfirmButton } from "@/components/admin/ConfirmButton";
+import { ContactsList } from "@/components/admin/ContactsList";
 import { DbUnavailable } from "@/components/admin/DbUnavailable";
 import { InscriptionsTable } from "@/components/admin/InscriptionsTable";
 import { Button } from "@/components/ui/Button";
 import {
   getWaitlistGenerale,
+  listContacts,
   listSessionsWithCounts,
+  type ContactRow,
   type InscriptionRow,
   type SessionRow,
 } from "@/lib/admin-queries";
@@ -63,6 +66,17 @@ export default async function AdminDashboardPage() {
   }
 
   const prochaine = prochaineSession(sessions);
+
+  // Demandes de contact : chargées à part, avec repli propre. Ainsi la vue
+  // contact peut dégrader indépendamment (ex. migration 003 pas encore
+  // appliquée) sans masquer les sessions déjà chargées ci-dessus.
+  let contacts: ContactRow[] | null;
+  try {
+    contacts = await listContacts();
+  } catch {
+    console.error("[admin] demandes de contact : base indisponible");
+    contacts = null;
+  }
 
   return (
     <div className="space-y-10">
@@ -219,12 +233,29 @@ export default async function AdminDashboardPage() {
         />
       </section>
 
-      {/* Emplacement de la vue « demandes de contact » (jalon 5). */}
-      <p className="border-t border-hairline pt-6 text-[13px] text-quiet">
-        <span aria-disabled="true" className="cursor-not-allowed">
-          Demandes de contact — bientôt
-        </span>
-      </p>
+      {/* Vue contact : demandes reçues via le formulaire implémentation (F4). */}
+      <section className="space-y-4 border-t border-hairline pt-8">
+        <div className="flex items-baseline gap-3">
+          <h2 className="text-[19px] font-bold tracking-[-0.01em]">
+            Demandes de contact
+          </h2>
+          {contacts && (
+            <span className="font-mono text-[13px] text-faint">
+              {contacts.length}
+            </span>
+          )}
+        </div>
+        <p className="max-w-[640px] text-[13.5px] leading-[1.5] text-soft">
+          Demandes reçues via le formulaire « Aller plus loin » (implémentation).
+          Lecture seule ; marquez chaque demande comme traitée une fois prise en
+          charge.
+        </p>
+        {contacts === null ? (
+          <DbUnavailable />
+        ) : (
+          <ContactsList rows={contacts} />
+        )}
+      </section>
     </div>
   );
 }

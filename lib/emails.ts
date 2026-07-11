@@ -1,5 +1,10 @@
 import { Resend } from "resend";
-import { buildAdminEmail, buildClientEmail } from "./email-templates";
+import {
+  buildAdminEmail,
+  buildClientEmail,
+  buildContactEmail,
+  type ContactEmailInput,
+} from "./email-templates";
 import type { InscriptionInput, ProchaineSession } from "./sessions";
 
 export type InscriptionEmailPayload = {
@@ -72,4 +77,45 @@ export async function sendInscriptionEmails(
       );
     }
   });
+}
+
+/**
+ * Email de notification d'une demande de contact « implémentation » (F5 · CDC
+ * §5.5), envoyé aux administrateurs (`CONTACT_EMAIL`), `replyTo` = email du
+ * demandeur.
+ *
+ * Ne lève jamais : la demande est déjà enregistrée en base (source de vérité) —
+ * un échec d'envoi ne doit pas la remettre en cause. Sans `RESEND_API_KEY` /
+ * `CONTACT_EMAIL`, l'envoi est sauté silencieusement. Les erreurs sont attrapées
+ * et loguées sous forme de code, jamais avec le contenu ou le destinataire (RGPD).
+ */
+export async function sendContactEmail(payload: {
+  contact: ContactEmailInput;
+}): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  const contactEmail = process.env.CONTACT_EMAIL;
+
+  if (!apiKey || !contactEmail) {
+    console.warn("[emails] non configurés — envoi contact sauté");
+    return;
+  }
+
+  const resend = new Resend(apiKey);
+  const mail = buildContactEmail(payload.contact);
+
+  try {
+    const { error } = await resend.emails.send({
+      from: EMAIL_FROM,
+      to: contactEmail,
+      replyTo: payload.contact.email,
+      subject: mail.subject,
+      html: mail.html,
+      text: mail.text,
+    });
+    if (error) {
+      console.error(`[emails] échec envoi contact (code: ${error.name})`);
+    }
+  } catch {
+    console.error("[emails] échec envoi contact (erreur réseau)");
+  }
 }

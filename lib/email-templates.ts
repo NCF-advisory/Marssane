@@ -233,3 +233,63 @@ export function buildAdminEmail(args: {
     text,
   };
 }
+
+/** Données d'une demande de contact « implémentation » (F4). */
+export type ContactEmailInput = {
+  prenom: string;
+  nom: string;
+  email: string;
+  telephone?: string;
+  entreprise: string;
+  message: string;
+};
+
+/**
+ * Email de notification d'une demande de contact « implémentation » (F5 · CDC
+ * §5.5), destiné aux administrateurs (`CONTACT_EMAIL`). Coordonnées + entreprise
+ * + message. Toutes les saisies libres sont échappées avant interpolation HTML ;
+ * le message conserve ses retours à la ligne (`white-space:pre-wrap`).
+ */
+export function buildContactEmail(contact: ContactEmailInput): RenderedEmail {
+  const champs: [string, string][] = [
+    ["Prénom", contact.prenom],
+    ["Nom", contact.nom],
+    ["Email", contact.email],
+    ["Téléphone", contact.telephone || "—"],
+    ["Entreprise", contact.entreprise],
+  ];
+
+  const text = [
+    "Nouvelle demande d'implémentation",
+    "",
+    ...champs.map(([label, value]) => `${label} : ${value}`),
+    "",
+    "Message :",
+    contact.message,
+  ].join("\n");
+
+  const rows = champs
+    .map(
+      ([label, value]) =>
+        `<tr>` +
+        `<td style="padding:4px 12px 4px 0;color:#5b5b66;vertical-align:top;white-space:nowrap;">${esc(
+          label,
+        )}</td>` +
+        `<td style="padding:4px 0;color:${TEXT_COLOR};">${esc(value)}</td>` +
+        `</tr>`,
+    )
+    .join("");
+
+  const html = htmlLayout(
+    `<p style="margin:0 0 16px;font-weight:600;">Nouvelle demande d'implémentation</p>` +
+      `<table style="border-collapse:collapse;font-size:16px;margin:0 0 20px;">${rows}</table>` +
+      `<p style="margin:0 0 8px;color:#5b5b66;">Message :</p>` +
+      `<p style="margin:0;white-space:pre-wrap;">${esc(contact.message)}</p>`,
+  );
+
+  return {
+    subject: `Nouvelle demande d'implémentation — ${contact.prenom} ${contact.nom}`,
+    html,
+    text,
+  };
+}

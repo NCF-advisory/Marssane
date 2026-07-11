@@ -51,6 +51,40 @@ export type InscriptionRow = {
   created_at: string;
 };
 
+/** Ligne de demande de contact « implémentation » (F4 · vue contact §5.3). */
+export type ContactRow = {
+  id: string;
+  prenom: string;
+  nom: string;
+  email: string;
+  telephone: string | null;
+  entreprise: string;
+  message: string;
+  traite: boolean;
+  created_at: string;
+};
+
+/** Toutes les demandes de contact, de la plus récente à la plus ancienne. */
+export async function listContacts(): Promise<ContactRow[]> {
+  const sql = getSql();
+  return sql<ContactRow[]>`
+    select
+      id, prenom, nom, email, telephone, entreprise, message, traite,
+      to_char(created_at at time zone 'Europe/Paris', 'DD/MM/YYYY HH24:MI') as created_at
+    from contacts
+    order by created_at desc
+  `;
+}
+
+/** Bascule l'état « traité » d'une demande de contact. */
+export async function updateContactTraite(
+  id: string,
+  traite: boolean,
+): Promise<void> {
+  const sql = getSql();
+  await sql`update contacts set traite = ${traite} where id = ${id}`;
+}
+
 /**
  * Toutes les sessions, avec le décompte d'inscriptions par statut. Triées de la
  * plus récente à la plus ancienne (les sessions à venir en tête).

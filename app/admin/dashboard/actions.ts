@@ -6,6 +6,7 @@ import {
   archiveSession,
   deleteInscription,
   insertSession,
+  updateContactTraite,
   updateInscriptionStatut,
   updateSession,
 } from "@/lib/admin-queries";
@@ -14,6 +15,7 @@ import {
   parseId,
   parseInscriptionStatut,
   parseSession,
+  parseTraite,
 } from "@/lib/validation";
 
 /**
@@ -151,5 +153,24 @@ export async function deleteInscriptionAction(
     revalidateSessions();
   } catch {
     console.error("[admin] échec de la suppression d'inscription (incident)");
+  }
+}
+
+/* ===== Contacts ======================================================== */
+
+/** Bascule l'état « traité » d'une demande de contact (vue contact §5.3). */
+export async function updateContactTraiteAction(
+  formData: FormData,
+): Promise<void> {
+  await requireAdmin();
+  const id = parseId(formData.get("id"));
+  if (!id) return;
+  const traite = parseTraite(formData.get("traite"));
+
+  try {
+    await updateContactTraite(id, traite);
+    revalidatePath(DASHBOARD);
+  } catch {
+    console.error("[admin] échec du changement d'état de contact (incident)");
   }
 }

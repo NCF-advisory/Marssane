@@ -103,6 +103,74 @@ function asString(value: FormDataEntryValue | null): string {
   return typeof value === "string" ? value : "";
 }
 
+/* ===== Contact « implémentation » (F4 · CDC §5.4) ===================== */
+
+/** Schéma de validation d'une demande de contact (entrées serveur, F4). */
+export const contactSchema = z.object({
+  prenom: z
+    .string()
+    .trim()
+    .min(1, "Le prénom est requis.")
+    .max(100, "Le prénom est trop long."),
+  nom: z
+    .string()
+    .trim()
+    .min(1, "Le nom est requis.")
+    .max(100, "Le nom est trop long."),
+  email: z.preprocess(
+    (value) => (typeof value === "string" ? value.trim().toLowerCase() : value),
+    z.email("Adresse email invalide."),
+  ),
+  // Optionnel, mais s'il est rempli il doit respecter le motif FR (comme F2).
+  telephone: optionalTrimmed(
+    z.string().regex(TELEPHONE_FR, "Numéro de téléphone invalide."),
+  ),
+  entreprise: z
+    .string()
+    .trim()
+    .min(1, "L'entreprise est requise.")
+    .max(200, "Le nom de l'entreprise est trop long."),
+  message: z
+    .string()
+    .trim()
+    .min(10, "Votre message doit faire au moins 10 caractères.")
+    .max(5000, "Votre message est trop long (5000 caractères maximum)."),
+  consentement: z.literal("on", { error: "Le consentement est requis." }),
+});
+
+export type ContactData = z.infer<typeof contactSchema>;
+
+export type ParseContactResult =
+  | { ok: true; data: ContactData }
+  | { ok: false; fieldErrors: Record<string, string> };
+
+/**
+ * Valide les champs d'un `FormData` de contact. Retourne les données
+ * normalisées (email en minuscules, champs trimés) ou une erreur par champ
+ * (premier message rencontré, en français). Ne journalise aucune valeur.
+ */
+export function parseContact(formData: FormData): ParseContactResult {
+  const raw = {
+    prenom: asString(formData.get("prenom")),
+    nom: asString(formData.get("nom")),
+    email: asString(formData.get("email")),
+    telephone: asString(formData.get("telephone")),
+    entreprise: asString(formData.get("entreprise")),
+    message: asString(formData.get("message")),
+    consentement: asString(formData.get("consentement")),
+  };
+
+  const result = contactSchema.safeParse(raw);
+  if (result.success) return { ok: true, data: result.data };
+
+  const fieldErrors: Record<string, string> = {};
+  for (const issue of result.error.issues) {
+    const key = String(issue.path[0] ?? "form");
+    if (!fieldErrors[key]) fieldErrors[key] = issue.message;
+  }
+  return { ok: false, fieldErrors };
+}
+
 /* ===== Administration (F3 · CDC §5.3) ================================== */
 
 /** Statuts possibles d'une session. */
@@ -208,4 +276,9 @@ export function parseInscriptionStatut(
 ): (typeof INSCRIPTION_STATUTS)[number] | null {
   const parsed = z.enum(INSCRIPTION_STATUTS).safeParse(asString(value));
   return parsed.success ? parsed.data : null;
+}
+
+/** Valide l'état « traité » d'une demande de contact (formulaire de bascule). */
+export function parseTraite(value: FormDataEntryValue | null): boolean {
+  return asString(value) === "true";
 }

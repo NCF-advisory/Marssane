@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/Button";
 import { CheckItem } from "@/components/ui/CheckItem";
-import { controlClass, Field } from "@/components/ui/Field";
 import { Kicker } from "@/components/ui/Kicker";
 import { PlusMark } from "@/components/ui/PlusMark";
+import { ContactForm } from "./ContactForm";
 
 /** Barres du mini-reporting : hauteur (% de 52 px) et couleur de la charte. */
 const BARRES: { h: string; color: string }[] = [
@@ -191,94 +191,7 @@ export function AllerPlusLoin() {
           48 h.
         </p>
 
-        <form className="mt-7 grid grid-cols-1 gap-x-4 gap-y-[18px] sm:grid-cols-2">
-          <Field id="f4-prenom" label="Prénom" required>
-            <input
-              id="f4-prenom"
-              name="prenom"
-              type="text"
-              required
-              autoComplete="given-name"
-              className={controlClass}
-            />
-          </Field>
-          <Field id="f4-nom" label="Nom" required>
-            <input
-              id="f4-nom"
-              name="nom"
-              type="text"
-              required
-              autoComplete="family-name"
-              className={controlClass}
-            />
-          </Field>
-          <Field id="f4-email" label="Email" required>
-            <input
-              id="f4-email"
-              name="email"
-              type="email"
-              required
-              autoComplete="email"
-              inputMode="email"
-              className={controlClass}
-            />
-          </Field>
-          <Field id="f4-telephone" label="Téléphone">
-            <input
-              id="f4-telephone"
-              name="telephone"
-              type="tel"
-              autoComplete="tel"
-              inputMode="tel"
-              className={controlClass}
-            />
-          </Field>
-          <Field id="f4-entreprise" label="Entreprise" required className="sm:col-span-2">
-            <input
-              id="f4-entreprise"
-              name="entreprise"
-              type="text"
-              required
-              autoComplete="organization"
-              className={controlClass}
-            />
-          </Field>
-          <Field id="f4-message" label="Message" required className="sm:col-span-2">
-            <textarea
-              id="f4-message"
-              name="message"
-              required
-              rows={5}
-              className={`${controlClass} resize-y`}
-            />
-          </Field>
-
-          <label className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-soft sm:col-span-2">
-            <input
-              type="checkbox"
-              name="consentement"
-              required
-              className="mt-[3px] h-4 w-4 flex-none accent-canard"
-            />
-            <span>
-              J&apos;accepte que mes données soient utilisées pour traiter ma
-              demande, conformément à la{" "}
-              <a
-                href="/confidentialite"
-                className="text-canard underline hover:text-canard-dark"
-              >
-                politique de confidentialité
-              </a>
-              .
-            </span>
-          </label>
-
-          <div className="sm:col-span-2">
-            <Button variant="primary" arrow>
-              Envoyer ma demande
-            </Button>
-          </div>
-        </form>
+        <ContactForm />
       </div>
     </section>
   );
