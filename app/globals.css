@@ -12,6 +12,60 @@
   --font-mono: var(--font-spline-mono);
 }
 
+/* ===== Design tokens Marssane =====
+   Valeurs extraites de la maquette « Landing page v3 » (source de vérité)
+   et de la charte graphique. En cas de conflit, la maquette gagne. */
+@theme {
+  /* Neutres & toile */
+  --color-toile: #eef1f3; /* fond de page */
+  --color-surface: #ffffff; /* cartes / surfaces */
+  --color-grid-line: #e0e4e8; /* lignes de grille */
+  --color-repere: #c4cbd2; /* repères « + » de la toile */
+  --color-ink: #0e0e12; /* encre / texte principal */
+
+  /* Action & accents */
+  --color-canard: #0e7291; /* couleur d'action */
+  --color-canard-dark: #095b73; /* hover (a:hover de la maquette) */
+  --color-turquoise: #00d1be; /* flash / ponctuation */
+  --color-lavande: #a88fee; /* data */
+  --color-periwinkle: #c7d2f7; /* wash / data */
+  --color-ecume: #c7f7ef; /* validation */
+  --color-clay: #c75a4d; /* rappel France / erreur */
+
+  /* Textes secondaires (gris de la maquette, du plus foncé au plus clair) */
+  --color-body: #3c4654; /* corps */
+  --color-muted: #4b5562;
+  --color-slate: #5b6472; /* ex. badge « Classé » */
+  --color-soft: #6b7480; /* kickers */
+  --color-faint: #7a828e;
+  --color-quiet: #98a1ac; /* eyebrows sur cartes */
+
+  /* Encres sur pastels */
+  --color-ink-ecume: #006560; /* texte sur écume */
+  --color-ink-ecume-alt: #0e5a3c; /* variante « validé » (charte) */
+  --color-ink-clay: #8c3a30; /* texte sur clay */
+  --color-ink-periwinkle: #1b1442; /* texte sur lavande / périwinkle */
+
+  /* Fonds de barres (jauges) */
+  --color-bar-track: #e6e9ed;
+
+  /* Hairlines / bordures */
+  --color-hairline: rgba(16, 24, 40, 0.06); /* bordure carte */
+  --color-hairline-strong: rgba(16, 24, 40, 0.07); /* variante */
+  --color-outline: rgba(16, 24, 40, 0.16); /* bordure bouton secondaire */
+
+  /* Ombres (3 niveaux de la maquette + ombre CTA canard) */
+  --shadow-card: 0 14px 34px -20px rgba(16, 24, 40, 0.18); /* carte posée */
+  --shadow-float: 0 22px 46px -20px rgba(16, 24, 40, 0.24); /* flottante */
+  --shadow-hero: 0 30px 58px -18px rgba(16, 24, 40, 0.32); /* héro */
+  --shadow-cta: 0 12px 26px -10px rgba(14, 114, 145, 0.55); /* CTA canard */
+
+  /* Rayons (valeurs maquette : chips / boutons / cartes) */
+  --radius-chip: 2px;
+  --radius-btn: 3px;
+  --radius-card: 4px;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -23,4 +77,47 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+/* ===== Toile Marssane ===== */
+
+/* Washes radiaux du fond de page (4 radial-gradients du <div> racine de la maquette). */
+.toile-washes {
+  background-color: var(--color-toile);
+  background-image:
+    radial-gradient(34% 22% at 94% 0%, rgba(199, 247, 239, 0.55), rgba(199, 247, 239, 0) 70%),
+    radial-gradient(30% 18% at 2% 10%, rgba(199, 210, 247, 0.5), rgba(199, 210, 247, 0) 70%),
+    radial-gradient(28% 14% at 98% 46%, rgba(199, 210, 247, 0.32), rgba(199, 210, 247, 0) 72%),
+    radial-gradient(30% 12% at 4% 78%, rgba(199, 247, 239, 0.4), rgba(199, 247, 239, 0) 72%);
+}
+
+/* Quadrillage de la toile — pas 80 px (64 px en mobile), ligne 1 px.
+   Superposé en fond via <GridBackground>. */
+.grid-toile {
+  --grid-step: 80px;
+  --grid-line: rgba(193, 201, 210, 0.45);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      transparent 0,
+      transparent calc(var(--grid-step) - 1px),
+      var(--grid-line) calc(var(--grid-step) - 1px),
+      var(--grid-line) var(--grid-step)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--grid-step) - 1px),
+      var(--grid-line) calc(var(--grid-step) - 1px),
+      var(--grid-line) var(--grid-step)
+    );
+}
+
+@media (max-width: 640px) {
+  .grid-toile {
+    --grid-step: 64px;
+  }
 }
