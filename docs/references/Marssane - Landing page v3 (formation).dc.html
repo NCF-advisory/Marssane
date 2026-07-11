@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; }
+    image-slot { display: block; width: 100%; height: 100%; box-sizing: border-box; }
+    a { color: #0E7291; }
+    a:hover { color: #095b73; }
+  </style>
+</helmet>
+<div style="position:relative;width:100%;min-width:1180px;box-sizing:border-box;min-height:100vh;font-family:'Plus Jakarta Sans',sans-serif;color:#0E0E12;background-color:#EEF1F3;background-image:radial-gradient(34% 22% at 94% 0%, rgba(199,247,239,.55), rgba(199,247,239,0) 70%),radial-gradient(30% 18% at 2% 10%, rgba(199,210,247,.5), rgba(199,210,247,0) 70%),radial-gradient(28% 14% at 98% 46%, rgba(199,210,247,.32), rgba(199,210,247,0) 72%),radial-gradient(30% 12% at 4% 78%, rgba(199,247,239,.4), rgba(199,247,239,0) 72%);overflow:hidden;">
+
+  <!-- ===== NAV ===== -->
+  <div data-screen-label="Nav" style="position:relative;max-width:1180px;margin:0 auto;padding:26px 40px 0;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+    <div style="display:flex;align-items:center;gap:11px;">
+      <div style="position:relative;width:34px;height:34px;flex:none;">
+        <span style="position:absolute;left:1px;top:1px;width:7px;height:7px;border-left:2px solid #0E7291;border-top:2px solid #0E7291;border-radius:2px 0 0 0;"></span>
+        <span style="position:absolute;right:0;top:-1px;font-weight:500;font-size:10px;line-height:1;color:#00D1BE;">+</span>
+        <span style="position:absolute;left:1px;bottom:1px;width:7px;height:7px;border-left:2px solid #0E7291;border-bottom:2px solid #0E7291;border-radius:0 0 0 2px;"></span>
+        <span style="position:absolute;right:1px;bottom:1px;width:7px;height:7px;border-right:2px solid #0E7291;border-bottom:2px solid #0E7291;border-radius:0 0 2px 0;"></span>
+        <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);font-weight:800;font-size:20px;line-height:1;letter-spacing:-0.02em;color:#0E0E12;">M</span>
+      </div>
+      <span style="font-weight:700;font-size:21px;letter-spacing:-0.01em;">Marssane</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:28px;">
+      <a href="#usages" style="text-decoration:none;color:#3C4654;font-weight:600;font-size:14.5px;">Pour faire quoi</a>
+      <a href="#formation" style="text-decoration:none;color:#3C4654;font-weight:600;font-size:14.5px;">Les formations</a>
+      <a href="#implementation" style="text-decoration:none;color:#3C4654;font-weight:600;font-size:14.5px;">Je veux implémenter l'IA</a>
+      <a href="#contact" style="text-decoration:none;color:#0E0E12;background:#fff;border:1.5px solid rgba(16,24,40,.16);border-radius:3px;padding:10px 20px;font-weight:600;font-size:14.5px;">Réserver ma place</a>
+    </div>
+  </div>
+
+  <!-- ===== HERO — LA FORMATION ===== -->
+  <div data-screen-label="Hero — formation" style="position:relative;isolation:isolate;max-width:1180px;margin:0 auto;padding:74px 40px 40px;">
+    <div style="position:absolute;inset:0;z-index:-1;background-image:repeating-linear-gradient(to right, rgba(193,201,210,0) 0, rgba(193,201,210,0) 79px, rgba(193,201,210,.45) 79px, rgba(193,201,210,.45) 80px),repeating-linear-gradient(to bottom, rgba(193,201,210,0) 0, rgba(193,201,210,0) 79px, rgba(193,201,210,.45) 79px, rgba(193,201,210,.45) 80px);-webkit-mask-image:linear-gradient(to bottom, #000 0 58%, transparent 94%);mask-image:linear-gradient(to bottom, #000 0 58%, transparent 94%);"></div>
+    <sc-if value="{{ motifFond }}" hint-placeholder-val="{{ true }}">
+      <span style="position:absolute;left:16px;top:90px;transform:translate(-50%,-50%);color:#00D1BE;font:500 21px/1 'Plus Jakarta Sans',sans-serif;z-index:-1;">+</span>
+      <span style="position:absolute;left:15.25px;top:103px;bottom:0;width:1.5px;background:#C4CBD2;z-index:-1;"></span>
+      <span style="position:absolute;left:56px;top:44px;color:#C4CBD2;font:400 16px/1 'Spline Sans Mono',monospace;">+</span>
+      <span style="position:absolute;right:120px;top:20px;color:#C4CBD2;font:400 16px/1 'Spline Sans Mono',monospace;">+</span>
+    </sc-if>
+    <div style="display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;">
+      <div style="max-width:530px;">
+        <div style="font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:#6B7480;">Formation IA · dirigeants de PME, avocats, notaires, experts-comptables</div>
+        <h1 style="font-weight:800;font-size:54px;line-height:1.04;letter-spacing:-0.03em;margin:18px 0 0;">Une formation IA sur des <span style="display:inline-block;"><span style="position:relative;display:inline-block;background:#0E7291;color:#fff;border-radius:0;padding:0 0.26em 0.05em;">cas concrets<span style="position:absolute;right:-0.62em;top:-0.5em;color:#00D1BE;font-weight:500;font-size:0.64em;line-height:1;">+</span></span>.</span></h1>
+        <p style="font-size:18px;line-height:1.55;color:#3C4654;margin:22px 0 0;max-width:490px;">Trier vos mails, résumer un dossier, rédiger un courrier : une journée, chacun sur son ordinateur, sur vos propres documents. Vous repartez avec un système fonctionnel.</p>
+        <div style="display:flex;align-items:center;gap:16px;margin-top:30px;flex-wrap:wrap;">
+          <a href="#contact" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:#0E7291;color:#fff;border-radius:3px;padding:15px 27px;font-weight:600;font-size:16px;box-shadow:0 12px 26px -10px rgba(14,114,145,.55);">Réserver ma place <span style="font-size:18px;line-height:1;">→</span></a>
+          <a href="#formation" style="text-decoration:none;color:#0E7291;font-weight:600;font-size:15px;">Voir le déroulé de la journée →</a>
+        </div>
+        <div style="font-size:13px;color:#7A828E;margin-top:16px;">Pré-inscription à la prochaine session · 10 places · sans engagement.</div>
+      </div>
+      <div style="position:relative;height:470px;">
+        <div style="position:absolute;right:0;top:26px;width:300px;height:350px;border-radius:4px;overflow:hidden;box-shadow:0 28px 58px -22px rgba(16,24,40,.30);border:1px solid rgba(16,24,40,.05);z-index:1;">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="photo-hero-formation" shape="rect" fit="cover" placeholder="Déposez une photo — une session de formation" style="width:100%;height:100%;display:block;" hint-size="300px,350px"></x-import>
+        </div>
+        <div style="position:absolute;left:0;bottom:10px;width:296px;background:#fff;border-radius:4px;border:1px solid rgba(16,24,40,.06);box-shadow:0 26px 52px -18px rgba(16,24,40,.28);padding:20px;z-index:3;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-weight:600;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#98A1AC;">Votre boîte mail</div>
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:10px;color:#98A1AC;">17:00</span>
+          </div>
+          <div style="margin-top:13px;display:flex;flex-direction:column;gap:9px;font-size:13px;">
+            <div style="display:flex;align-items:center;gap:9px;"><span style="width:8px;height:8px;border-radius:50%;background:#0E7291;flex:none;"></span><span style="color:#0E0E12;flex:1;">À traiter aujourd'hui</span><span style="font-family:'Spline Sans Mono',monospace;color:#0E0E12;font-weight:600;">6</span></div>
+            <div style="display:flex;align-items:center;gap:9px;"><span style="width:8px;height:8px;border-radius:50%;background:#C7D2F7;flex:none;"></span><span style="color:#3C4654;flex:1;">En attente d'une réponse</span><span style="font-family:'Spline Sans Mono',monospace;color:#3C4654;">4</span></div>
+            <div style="display:flex;align-items:center;gap:9px;"><span style="width:8px;height:8px;border-radius:50%;background:#C4CBD2;flex:none;"></span><span style="color:#3C4654;flex:1;">Classés automatiquement</span><span style="font-family:'Spline Sans Mono',monospace;color:#3C4654;">37</span></div>
+          </div>
+          <div style="margin-top:15px;display:flex;flex-direction:column;gap:9px;">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:11.5px;color:#7A828E;margin-bottom:5px;"><span>Ce matin · non triés</span><span style="font-family:'Spline Sans Mono',monospace;">47</span></div>
+              <div style="height:7px;border-radius:2px;background:#E6E9ED;"><div style="width:100%;height:7px;border-radius:2px;background:#C4CBD2;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:11.5px;color:#7A828E;margin-bottom:5px;"><span>À 17 h · à traiter</span><span style="font-family:'Spline Sans Mono',monospace;color:#006560;">6</span></div>
+              <div style="height:7px;border-radius:2px;background:#E6E9ED;"><div style="width:13%;height:7px;border-radius:2px;background:#00D1BE;"></div></div>
+            </div>
+          </div>
+          <div style="margin-top:14px;display:inline-flex;align-items:center;gap:6px;background:#C7F7EF;color:#006560;font-size:12px;font-weight:600;padding:5px 11px;border-radius:2px;">triée par votre automatisation</div>
+        </div>
+        <div style="position:absolute;right:24px;top:-14px;width:216px;background:#fff;border-radius:4px;border:1px solid rgba(16,24,40,.06);box-shadow:0 22px 42px -16px rgba(16,24,40,.26);overflow:hidden;z-index:2;">
+          <div style="background:linear-gradient(120deg,#A88FEE,#C7D2F7);padding:10px 14px;color:#1b1442;font-weight:600;font-size:12px;">Votre première automatisation</div>
+          <div style="padding:12px 14px;display:flex;flex-direction:column;gap:8px;font-size:12.5px;">
+            <div style="display:flex;align-items:center;gap:9px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:10px;font-weight:700;flex:none;">✓</span>Lire les nouveaux mails</div>
+            <div style="display:flex;align-items:center;gap:9px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:10px;font-weight:700;flex:none;">✓</span>Classer par priorité</div>
+            <div style="display:flex;align-items:center;gap:9px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:10px;font-weight:700;flex:none;">✓</span>Signaler les urgences</div>
+            <div style="font-family:'Spline Sans Mono',monospace;font-size:10px;color:#98A1AC;margin-top:2px;">construite par vous · pas à pas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- bandeau format -->
+    <div style="margin-top:64px;background:rgba(255,255,255,.65);border:1px solid rgba(16,24,40,.07);border-radius:4px;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-family:'Spline Sans Mono',monospace;font-weight:600;font-size:22px;color:#006560;">1 journée</span><span style="font-size:12.5px;color:#7A828E;">de 9 h à 17 h</span></div>
+      <span style="width:1px;height:26px;background:#E0E4E8;"></span>
+      <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-family:'Spline Sans Mono',monospace;font-weight:600;font-size:22px;color:#006560;">10 places</span><span style="font-size:12.5px;color:#7A828E;">maximum par session</span></div>
+
+      <span style="width:1px;height:26px;background:#E0E4E8;"></span>
+      <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-family:'Spline Sans Mono',monospace;font-weight:600;font-size:22px;color:#006560;">1 système</span><span style="font-size:12.5px;color:#7A828E;">fonctionnel, construit par vous</span></div>
+    </div>
+  </div>
+
+  <!-- ===== POURQUOI — CAS D'USAGE ===== -->
+  <div id="usages" data-screen-label="Pour faire quoi" style="position:relative;isolation:isolate;max-width:1180px;margin:0 auto;padding:100px 40px 8px;">
+    <sc-if value="{{ motifFond }}" hint-placeholder-val="{{ true }}">
+      <span style="position:absolute;left:15.25px;top:0;height:52px;width:1.5px;background:#C4CBD2;z-index:-1;"></span>
+      <span style="position:absolute;left:16px;top:51.25px;width:520px;height:1.5px;background:repeating-linear-gradient(90deg,#C4CBD2 0 8px,rgba(196,203,210,0) 8px 15px);z-index:-1;"></span>
+      <span style="position:absolute;left:547px;top:52px;transform:translate(-50%,-50%);color:#00D1BE;font:500 19px/1 'Plus Jakarta Sans',sans-serif;z-index:-1;">+</span>
+      <span style="position:absolute;left:546.25px;top:63px;height:34px;width:1.5px;background:#C4CBD2;z-index:-1;"></span>
+      <span style="position:absolute;right:150px;top:56px;color:#C4CBD2;font:400 16px/1 'Spline Sans Mono',monospace;">+</span>
+    </sc-if>
+    <div style="max-width:680px;">
+      <div style="font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:#6B7480;">Pour faire quoi · le quotidien d'un cabinet ou d'une PME</div>
+      <h2 style="font-weight:800;font-size:38px;line-height:1.08;letter-spacing:-0.025em;margin:14px 0 0;">L'IA, d'accord. Mais pour faire quoi ?</h2>
+      <p style="font-size:16.5px;line-height:1.58;color:#3C4654;margin:16px 0 0;">Trois cas concrets — ceux, précisément, que vous pratiquerez pendant la formation, sur vos propres documents.</p>
+    </div>
+  </div>
+
+  <!-- ===== CAS 1 — TRIER SES MAILS (texte gauche / visuel droite) ===== -->
+  <div data-screen-label="Cas 1 — Trier ses mails" style="position:relative;isolation:isolate;max-width:1180px;margin:0 auto;padding:58px 40px 20px;">
+    <div style="position:absolute;right:0;top:40px;width:540px;height:440px;z-index:-1;background-image:repeating-linear-gradient(to right, rgba(193,201,210,0) 0, rgba(193,201,210,0) 79px, rgba(193,201,210,.42) 79px, rgba(193,201,210,.42) 80px),repeating-linear-gradient(to bottom, rgba(193,201,210,0) 0, rgba(193,201,210,0) 79px, rgba(193,201,210,.42) 79px, rgba(193,201,210,.42) 80px);-webkit-mask-image:radial-gradient(72% 70% at 62% 45%, #000, transparent 78%);mask-image:radial-gradient(72% 70% at 62% 45%, #000, transparent 78%);"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;">
+      <div style="max-width:450px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#006560;background:#C7F7EF;padding:5px 11px;border-radius:2px;">01 · Trier ses mails</div>
+        <h3 style="font-weight:800;font-size:32px;line-height:1.1;letter-spacing:-0.02em;margin:14px 0 0;">Vous ouvrez une boîte rangée, pas une pile.</h3>
+        <p style="font-size:16px;line-height:1.58;color:#3C4654;margin:16px 0 0;">Chaque matin, vos mails arrivent déjà classés : ce qui est urgent, ce qui attend une réponse, ce qui se range tout seul. C'est l'automatisation que vous construisez en fin de formation — sur votre propre boîte.</p>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-top:20px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>Classé selon <b style="font-weight:600;">vos</b> priorités, pas des règles génériques</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>Rien n'est supprimé — tout est rangé, retrouvable</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>Construit par vous, pas à pas, pendant l'atelier final</div>
+        </div>
+      </div>
+      <!-- visuel 1 : boîte brute -> boîte triée -->
+      <div style="position:relative;height:430px;">
+        <div style="position:absolute;left:0;top:6px;width:252px;background:#fff;border-radius:4px;border:1px solid rgba(16,24,40,.06);box-shadow:0 22px 46px -20px rgba(16,24,40,.24);overflow:hidden;z-index:1;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid rgba(16,24,40,.05);">
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#98A1AC;">Boîte de réception · 08:02</span>
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:10px;color:#98A1AC;">47</span>
+          </div>
+          <div style="padding:6px 8px 8px;display:flex;flex-direction:column;">
+            <div style="padding:8px;border-radius:3px;"><div style="display:flex;justify-content:space-between;"><span style="font-size:12.5px;font-weight:600;">Greffe TC</span><span style="font-family:'Spline Sans Mono',monospace;font-size:9.5px;color:#98A1AC;">07:58</span></div><div style="font-size:11px;color:#7A828E;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Convocation — dossier n° 24-118</div></div>
+            <div style="padding:8px;border-radius:3px;"><div style="display:flex;justify-content:space-between;"><span style="font-size:12.5px;font-weight:600;">Newsletter fournisseur</span><span style="font-family:'Spline Sans Mono',monospace;font-size:9.5px;color:#98A1AC;">07:41</span></div><div style="font-size:11px;color:#7A828E;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Nos offres du mois de juillet</div></div>
+            <div style="padding:8px;border-radius:3px;"><div style="display:flex;justify-content:space-between;"><span style="font-size:12.5px;font-weight:600;">Client · pièces</span><span style="font-family:'Spline Sans Mono',monospace;font-size:9.5px;color:#98A1AC;">07:30</span></div><div style="font-size:11px;color:#7A828E;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Re: documents manquants pour le dossier</div></div>
+            <div style="padding:8px;border-radius:3px;"><div style="display:flex;justify-content:space-between;"><span style="font-size:12.5px;font-weight:600;">Banque</span><span style="font-family:'Spline Sans Mono',monospace;font-size:9.5px;color:#98A1AC;">07:12</span></div><div style="font-size:11px;color:#7A828E;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Relevé mensuel disponible</div></div>
+            <div style="padding:8px;border-radius:3px;"><div style="display:flex;justify-content:space-between;"><span style="font-size:12.5px;font-weight:600;">Confrère</span><span style="font-family:'Spline Sans Mono',monospace;font-size:9.5px;color:#98A1AC;">06:54</span></div><div style="font-size:11px;color:#7A828E;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Proposition de date d'audience</div></div>
+          </div>
+        </div>
+        <!-- connecteur -->
+        <div style="position:absolute;left:296px;top:88px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:5px;">
+          <span style="height:26px;width:1.5px;background:repeating-linear-gradient(180deg,#0E7291 0 5px,rgba(14,114,145,0) 5px 9px);"></span>
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0E7291;color:#fff;font-size:13px;box-shadow:0 8px 18px -6px rgba(14,114,145,.6);">↓</span>
+        </div>
+        <!-- boîte triée -->
+        <div style="position:absolute;right:0;bottom:6px;width:280px;background:#fff;border-radius:4px;border:1px solid rgba(16,24,40,.06);box-shadow:0 30px 58px -18px rgba(16,24,40,.32);overflow:hidden;z-index:3;">
+          <div style="height:3px;background:#00D1BE;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 15px;border-bottom:1px solid rgba(16,24,40,.05);">
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#98A1AC;">Boîte de réception · 08:03</span>
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:10px;color:#006560;background:#C7F7EF;padding:3px 7px;border-radius:2px;">triée</span>
+          </div>
+          <div style="padding:8px 10px 12px;display:flex;flex-direction:column;gap:2px;">
+            <div style="display:flex;align-items:center;gap:9px;padding:8px;"><span style="font-size:10.5px;font-weight:600;color:#fff;background:#0E7291;padding:2px 8px;border-radius:2px;flex:none;">Urgent</span><div style="min-width:0;"><div style="font-size:12.5px;font-weight:600;">Greffe TC — convocation</div></div></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:8px;"><span style="font-size:10.5px;font-weight:600;color:#006560;background:#C7F7EF;padding:2px 8px;border-radius:2px;flex:none;">À traiter</span><div style="min-width:0;"><div style="font-size:12.5px;font-weight:600;">Confrère — date d'audience</div></div></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:8px;"><span style="font-size:10.5px;font-weight:600;color:#1b1442;background:#C7D2F7;padding:2px 8px;border-radius:2px;flex:none;">En attente</span><div style="min-width:0;"><div style="font-size:12.5px;font-weight:600;">Client — pièces manquantes</div></div></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:8px;"><span style="font-size:10.5px;font-weight:600;color:#5B6472;background:#EEF1F3;padding:2px 8px;border-radius:2px;flex:none;">Classé</span><div style="min-width:0;"><div style="font-size:12.5px;color:#7A828E;">Banque · Newsletter · 41 autres</div></div></div>
+          </div>
+          <div style="border-top:1px solid rgba(16,24,40,.07);padding:10px 15px;display:flex;align-items:center;justify-content:space-between;font-size:11.5px;">
+            <span style="color:#7A828E;">à traiter ce matin</span>
+            <span style="font-family:'Spline Sans Mono',monospace;font-weight:600;color:#006560;">6 / 47</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CAS 2 — ANALYSER & RÉSUMER (visuel gauche / texte droite) ===== -->
+  <div data-screen-label="Cas 2 — Analyser &amp; résumer" style="position:relative;isolation:isolate;max-width:1180px;margin:0 auto;padding:74px 40px 20px;">
+    <div style="position:absolute;left:0;top:50px;width:540px;height:440px;z-index:-1;background-image:repeating-linear-gradient(to right, rgba(193,201,210,0) 0, rgba(193,201,210,0) 79px, rgba(193,201,210,.42) 79px, rgba(193,201,210,.42) 80px),repeating-linear-gradient(to bottom, rgba(193,201,210,0) 0, rgba(193,201,210,0) 79px, rgba(193,201,210,.42) 79px, rgba(193,201,210,.42) 80px);-webkit-mask-image:radial-gradient(72% 70% at 42% 45%, #000, transparent 78%);mask-image:radial-gradient(72% 70% at 42% 45%, #000, transparent 78%);"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;">
+      <!-- visuel 2 : document -> synthèse -->
+      <div style="position:relative;height:430px;">
+        <div style="position:absolute;left:6px;top:0;width:236px;background:#fff;border-radius:4px;border:1px solid rgba(16,24,40,.06);box-shadow:0 22px 46px -20px rgba(16,24,40,.24);overflow:hidden;z-index:1;">
+          <div style="padding:12px 15px;border-bottom:1px solid rgba(16,24,40,.05);display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#98A1AC;">PDF · 42 pages</span>
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:10px;color:#98A1AC;">2,4 Mo</span>
+          </div>
+          <div style="padding:16px 15px 18px;">
+            <div style="font-weight:700;font-size:14px;letter-spacing:-0.01em;">Contrat de bail commercial</div>
+            <div style="margin-top:13px;display:flex;flex-direction:column;gap:7px;">
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:100%;"></span>
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:92%;"></span>
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:97%;"></span>
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:88%;"></span>
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:95%;"></span>
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:60%;"></span>
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:100%;margin-top:8px;"></span>
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:94%;"></span>
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:90%;"></span>
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:72%;"></span>
+            </div>
+            <div style="margin-top:14px;font-family:'Spline Sans Mono',monospace;font-size:10px;color:#98A1AC;">« Résume-moi ce bail, points d'attention. »</div>
+          </div>
+        </div>
+        <!-- connecteur -->
+        <div style="position:absolute;left:290px;top:76px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:5px;">
+          <span style="height:26px;width:1.5px;background:repeating-linear-gradient(180deg,#0E7291 0 5px,rgba(14,114,145,0) 5px 9px);"></span>
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0E7291;color:#fff;font-size:13px;box-shadow:0 8px 18px -6px rgba(14,114,145,.6);">↓</span>
+        </div>
+        <!-- synthèse -->
+        <div style="position:absolute;right:0;bottom:0;width:300px;background:#fff;border-radius:4px;border:1px solid rgba(16,24,40,.06);box-shadow:0 30px 58px -18px rgba(16,24,40,.32);overflow:hidden;z-index:3;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid rgba(16,24,40,.06);">
+            <div style="font-weight:700;font-size:13.5px;letter-spacing:-0.01em;">Synthèse — bail commercial</div>
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:10px;color:#006560;background:#C7F7EF;padding:4px 8px;border-radius:2px;">12 lignes</span>
+          </div>
+          <div style="padding:13px 16px 15px;">
+            <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px;color:#3C4654;line-height:1.5;">
+              <div style="display:flex;gap:10px;"><span style="font-family:'Spline Sans Mono',monospace;font-size:10px;color:#98A1AC;flex:none;padding-top:2px;">DURÉE</span><span>9 ans, résiliation triennale — préavis 6 mois</span></div>
+              <div style="display:flex;gap:10px;"><span style="font-family:'Spline Sans Mono',monospace;font-size:10px;color:#98A1AC;flex:none;padding-top:2px;">LOYER</span><span>Indexation ILC, révision annuelle</span></div>
+              <div style="display:flex;gap:10px;"><span style="font-family:'Spline Sans Mono',monospace;font-size:10px;color:#98A1AC;flex:none;padding-top:2px;">DÉPÔT</span><span>3 mois de loyer HT</span></div>
+            </div>
+            <div style="margin-top:13px;background:#F5F7F9;border-radius:3px;padding:10px 12px;">
+              <div style="font-size:11px;font-weight:700;color:#0E0E12;">⚠ 2 points d'attention</div>
+              <div style="font-size:11.5px;color:#3C4654;line-height:1.5;margin-top:5px;">Clause d'échelle mobile non plafonnée · travaux à charge preneur (art. 12)</div>
+            </div>
+            <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;font-size:11px;">
+              <span style="color:#7A828E;">chaque point renvoie à sa page</span>
+              <span style="font-family:'Spline Sans Mono',monospace;color:#006560;font-weight:600;">source : p. 17</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="max-width:450px;justify-self:end;">
+        <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#006560;background:#C7F7EF;padding:5px 11px;border-radius:2px;">02 · Analyser &amp; résumer</div>
+        <h3 style="font-weight:800;font-size:32px;line-height:1.1;letter-spacing:-0.02em;margin:14px 0 0;">42 pages posées sur votre bureau. L'essentiel en 12 lignes.</h3>
+        <p style="font-size:16px;line-height:1.58;color:#3C4654;margin:16px 0 0;">Un contrat, une liasse, un dossier : vous demandez une synthèse comme vous le demanderiez à un collaborateur. Les points d'attention sont signalés, chacun renvoie à sa page — vous vérifiez à la source.</p>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-top:20px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>La question se pose en français, pas en informatique</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>Chaque affirmation renvoie à la page source</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>Vos documents restent sur votre poste — cadre expliqué en formation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CAS 3 — RÉDIGER DES COURRIERS (texte gauche / visuel droite) ===== -->
+  <div data-screen-label="Cas 3 — Rédiger des courriers" style="position:relative;isolation:isolate;max-width:1180px;margin:0 auto;padding:74px 40px 20px;">
+    <div style="position:absolute;right:0;top:40px;width:540px;height:460px;z-index:-1;background-image:repeating-linear-gradient(to right, rgba(193,201,210,0) 0, rgba(193,201,210,0) 79px, rgba(193,201,210,.42) 79px, rgba(193,201,210,.42) 80px),repeating-linear-gradient(to bottom, rgba(193,201,210,0) 0, rgba(193,201,210,0) 79px, rgba(193,201,210,.42) 79px, rgba(193,201,210,.42) 80px);-webkit-mask-image:radial-gradient(72% 70% at 60% 45%, #000, transparent 78%);mask-image:radial-gradient(72% 70% at 60% 45%, #000, transparent 78%);"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;">
+      <div style="max-width:450px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#006560;background:#C7F7EF;padding:5px 11px;border-radius:2px;">03 · Rédiger des courriers</div>
+        <h3 style="font-weight:800;font-size:32px;line-height:1.1;letter-spacing:-0.02em;margin:14px 0 0;">Vous dictez l'intention. Le courrier s'écrit dans votre ton.</h3>
+        <p style="font-size:16px;line-height:1.58;color:#3C4654;margin:16px 0 0;">Une note vocale entre deux rendez-vous suffit : le brouillon arrive structuré, appuyé sur le dossier, fidèle à vos formulations. Vous relisez, vous ajustez, vous signez — rien ne part sans vous.</p>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-top:20px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>Votre ton, vos formules — pas un texte générique</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>Appuyé sur les pièces du dossier concerné</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>Toujours un brouillon : vous relisez avant d'envoyer</div>
+        </div>
+      </div>
+      <!-- visuel 3 : note vocale WhatsApp -> courrier -->
+      <div style="position:relative;height:452px;">
+        <div style="position:absolute;left:2px;top:8px;width:262px;background:#fff;border-radius:9px;border:1px solid rgba(16,24,40,.06);box-shadow:0 22px 46px -20px rgba(16,24,40,.24);overflow:hidden;z-index:1;">
+          <div style="display:flex;align-items:center;gap:9px;padding:9px 12px;background:#075E54;">
+            <img src="assets/whatsapp-logo.png" alt="WhatsApp" style="width:23px;height:23px;border-radius:5px;flex:none;display:block;">
+            <div style="min-width:0;line-height:1.2;"><div style="font-weight:600;font-size:12.5px;color:#fff;">Mon assistant</div><div style="font-size:9.5px;color:rgba(255,255,255,.62);">en ligne</div></div>
+            <span style="margin-left:auto;color:rgba(255,255,255,.5);font-size:15px;line-height:1;">⋮</span>
+          </div>
+          <div style="background:#ECE5DD;padding:14px 12px 13px;display:flex;flex-direction:column;gap:8px;">
+            <div style="align-self:stretch;background:#DCF8C6;border-radius:9px 2px 9px 9px;box-shadow:0 1px 1px rgba(0,0,0,.09);padding:8px 10px 7px;">
+              <div style="display:flex;align-items:center;gap:9px;">
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#00A884;color:#fff;font-size:10px;flex:none;">▶</span>
+                <div style="flex:1;position:relative;display:flex;align-items:center;gap:2px;height:22px;">
+                  <i style="flex:1;height:36%;background:#00A884;border-radius:2px;"></i><i style="flex:1;height:64%;background:#00A884;border-radius:2px;"></i><i style="flex:1;height:48%;background:#00A884;border-radius:2px;"></i><i style="flex:1;height:82%;background:#8FA98B;border-radius:2px;"></i><i style="flex:1;height:56%;background:#8FA98B;border-radius:2px;"></i><i style="flex:1;height:100%;background:#8FA98B;border-radius:2px;"></i><i style="flex:1;height:70%;background:#8FA98B;border-radius:2px;"></i><i style="flex:1;height:44%;background:#8FA98B;border-radius:2px;"></i><i style="flex:1;height:66%;background:#8FA98B;border-radius:2px;"></i><i style="flex:1;height:30%;background:#8FA98B;border-radius:2px;"></i><i style="flex:1;height:52%;background:#8FA98B;border-radius:2px;"></i><i style="flex:1;height:38%;background:#8FA98B;border-radius:2px;"></i>
+                  <span style="position:absolute;left:24%;top:50%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:#00A884;border:1.5px solid #fff;box-shadow:0 0 0 .5px rgba(0,0,0,.08);"></span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px;">
+                <span style="display:inline-flex;align-items:center;gap:5px;color:#7A828E;font-size:10.5px;"><span style="display:inline-block;width:5px;height:9px;border-radius:3px;background:#7A828E;position:relative;top:1px;"></span><span style="font-family:'Spline Sans Mono',monospace;">0:42</span></span>
+                <span style="font-family:'Spline Sans Mono',monospace;font-size:9.5px;color:#98A1AC;">18:06</span>
+              </div>
+            </div>
+            <div style="align-self:flex-start;max-width:96%;background:#F4F1EA;border-radius:9px;padding:8px 10px;">
+              <div style="font-family:'Spline Sans Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:#00A884;">Transcription auto</div>
+              <div style="font-size:11.5px;line-height:1.45;color:#3C4654;margin-top:4px;">« Courrier au bailleur : rappel de l'échéance du bail, demande de renouvellement, mêmes conditions… »</div>
+            </div>
+          </div>
+        </div>
+        <!-- connecteur -->
+        <div style="position:absolute;left:330px;top:80px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:5px;">
+          <span style="height:26px;width:1.5px;background:repeating-linear-gradient(180deg,#0E7291 0 5px,rgba(14,114,145,0) 5px 9px);"></span>
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#0E7291;color:#fff;font-size:13px;box-shadow:0 8px 18px -6px rgba(14,114,145,.6);">↓</span>
+        </div>
+        <!-- courrier généré -->
+        <div style="position:absolute;right:0;bottom:6px;width:308px;background:#fff;border-radius:4px;border:1px solid rgba(16,24,40,.06);box-shadow:0 30px 58px -18px rgba(16,24,40,.32);overflow:hidden;z-index:3;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 17px 12px;border-bottom:1px solid rgba(16,24,40,.06);">
+            <div><div style="font-weight:700;font-size:14px;letter-spacing:-0.01em;">Courrier — Renouvellement de bail</div><div style="font-family:'Spline Sans Mono',monospace;font-size:10.5px;color:#98A1AC;margin-top:2px;">dossier bail · brouillon v1</div></div>
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:10px;color:#006560;background:#C7F7EF;padding:4px 8px;border-radius:2px;white-space:nowrap;">auto</span>
+          </div>
+          <div style="padding:14px 17px;">
+            <div style="font-size:12.5px;color:#3C4654;line-height:1.6;">Madame, Monsieur,<br>Le bail commercial nous liant arrive à échéance le 31 mars prochain. Conformément à nos échanges, nous souhaitons solliciter son renouvellement aux conditions actuelles…</div>
+            <div style="margin-top:12px;display:flex;flex-direction:column;gap:7px;">
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:100%;"></span>
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:94%;"></span>
+              <span style="height:6px;border-radius:2px;background:#E6E9ED;width:64%;"></span>
+            </div>
+            <div style="margin-top:14px;display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-size:11px;color:#7A828E;">Brouillon · à valider</span>
+              <span style="font-size:12px;color:#fff;background:#0E7291;padding:7px 15px;border-radius:3px;font-weight:600;">Relire &amp; signer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== POUR QUI ===== -->
+  <div data-screen-label="Pour qui" style="position:relative;isolation:isolate;max-width:1180px;margin:0 auto;padding:84px 40px 8px;">
+    <sc-if value="{{ motifFond }}" hint-placeholder-val="{{ true }}">
+      <span style="position:absolute;left:546.25px;top:0;height:44px;width:1.5px;background:#C4CBD2;z-index:-1;"></span>
+      <span style="position:absolute;left:558px;top:43.25px;width:210px;height:1.5px;background:repeating-linear-gradient(90deg,#C4CBD2 0 8px,rgba(196,203,210,0) 8px 15px);z-index:-1;"></span>
+      <span style="position:absolute;left:779px;top:44px;transform:translate(-50%,-50%);color:#00D1BE;font:500 19px/1 'Plus Jakarta Sans',sans-serif;z-index:-1;">+</span>
+      <span style="position:absolute;left:778.25px;top:55px;bottom:0;width:1.5px;background:#C4CBD2;z-index:-1;"></span>
+      <span style="position:absolute;right:90px;top:60px;color:#C4CBD2;font:400 16px/1 'Spline Sans Mono',monospace;">+</span>
+    </sc-if>
+    <div style="max-width:640px;">
+      <div style="font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:#6B7480;">Pour qui</div>
+      <h2 style="font-weight:800;font-size:38px;line-height:1.08;letter-spacing:-0.025em;margin:14px 0 0;">Pensée pour des professions exigeantes.</h2>
+      <p style="font-size:16.5px;line-height:1.58;color:#3C4654;margin:14px 0 0;">Des métiers où la confidentialité n'est pas une option : la question est traitée dès la première heure de formation.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:34px;">
+      <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;padding:24px;box-shadow:0 14px 34px -20px rgba(16,24,40,.18);">
+        <div style="font-weight:700;font-size:17px;letter-spacing:-0.01em;">Dirigeants de PME</div>
+        <div style="font-family:'Spline Sans Mono',monospace;font-size:10.5px;color:#98A1AC;margin-top:4px;">industrie · services · négoce</div>
+        <p style="font-size:13.5px;line-height:1.55;color:#4B5562;margin:12px 0 0;">Mails, courriers, suivi des dossiers : reprenez la main sur votre journée, sans recruter.</p>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;padding:24px;box-shadow:0 14px 34px -20px rgba(16,24,40,.18);">
+        <div style="font-weight:700;font-size:17px;letter-spacing:-0.01em;">Avocats</div>
+        <div style="font-family:'Spline Sans Mono',monospace;font-size:10.5px;color:#98A1AC;margin-top:4px;">cabinets individuels · structures</div>
+        <p style="font-size:13.5px;line-height:1.55;color:#4B5562;margin:12px 0 0;">Résumer des pièces, chercher dans les dossiers — le secret professionnel reste au cabinet.</p>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;padding:24px;box-shadow:0 14px 34px -20px rgba(16,24,40,.18);">
+        <div style="font-weight:700;font-size:17px;letter-spacing:-0.01em;">Notaires</div>
+        <div style="font-family:'Spline Sans Mono',monospace;font-size:10.5px;color:#98A1AC;margin-top:4px;">offices · études</div>
+        <p style="font-size:13.5px;line-height:1.55;color:#4B5562;margin:12px 0 0;">Analyser actes et pièces, préparer les courriers aux parties — dans un cadre de confidentialité strict.</p>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;padding:24px;box-shadow:0 14px 34px -20px rgba(16,24,40,.18);">
+        <div style="font-weight:700;font-size:17px;letter-spacing:-0.01em;">Experts-comptables</div>
+        <div style="font-family:'Spline Sans Mono',monospace;font-size:10.5px;color:#98A1AC;margin-top:4px;">cabinets · AGC</div>
+        <p style="font-size:13.5px;line-height:1.55;color:#4B5562;margin:12px 0 0;">Courriers clients, tri des demandes, recherche dans les dossiers permanents.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LA FORMATION ===== -->
+  <div id="formation" data-screen-label="La formation" style="position:relative;isolation:isolate;max-width:1180px;margin:0 auto;padding:96px 40px 20px;">
+    <sc-if value="{{ motifFond }}" hint-placeholder-val="{{ true }}">
+      <span style="position:absolute;left:778.25px;top:0;bottom:0;width:1.5px;background:#C4CBD2;z-index:-1;"></span>
+      <span style="position:absolute;left:70px;top:64px;color:#C4CBD2;font:400 16px/1 'Spline Sans Mono',monospace;">+</span>
+    </sc-if>
+    <div style="max-width:640px;">
+      <div style="font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:#6B7480;">La formation · niveau débutant</div>
+      <h2 style="font-weight:800;font-size:38px;line-height:1.08;letter-spacing:-0.025em;margin:14px 0 0;">Une journée, cinq temps, dix personnes.</h2>
+      <p style="font-size:16.5px;line-height:1.58;color:#3C4654;margin:16px 0 0;">De 9 h à 17 h, chacun sur son propre ordinateur. Vous ne regardez pas une démonstration : vous construisez.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:44px;margin-top:40px;align-items:start;">
+      <!-- déroulé -->
+      <div style="display:flex;flex-direction:column;">
+        <div style="display:flex;gap:18px;">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:none;width:52px;">
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:#0E7291;font-weight:600;">09:00</span>
+            <span style="flex:1;width:1.5px;background:#C4CBD2;margin-top:6px;"></span>
+          </div>
+          <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;padding:20px 22px;box-shadow:0 14px 34px -20px rgba(16,24,40,.18);flex:1;margin-bottom:14px;">
+            <div style="font-weight:700;font-size:17px;letter-spacing:-0.01em;">La démonstration d'ouverture</div>
+            <p style="font-size:14px;line-height:1.58;color:#4B5562;margin:8px 0 0;">Une boîte mail se trie automatiquement, sous vos yeux. <b style="font-weight:600;color:#0E0E12;">« À 17 h, vous saurez faire ça. »</b></p>
+          </div>
+        </div>
+        <div style="display:flex;gap:18px;">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:none;width:52px;">
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:#0E7291;font-weight:600;">09:30</span>
+            <span style="flex:1;width:1.5px;background:#C4CBD2;margin-top:6px;"></span>
+          </div>
+          <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;padding:20px 22px;box-shadow:0 14px 34px -20px rgba(16,24,40,.18);flex:1;margin-bottom:14px;">
+            <div style="font-weight:700;font-size:17px;letter-spacing:-0.01em;">Installer et connecter Claude</div>
+            <p style="font-size:14px;line-height:1.58;color:#4B5562;margin:8px 0 0;">Sur votre ordinateur : vos mails, vos dossiers. Avec un point clair sur la confidentialité — ce que voit l'outil, ce qu'il ne voit pas.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:18px;">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:none;width:52px;">
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:#0E7291;font-weight:600;">11:00</span>
+            <span style="flex:1;width:1.5px;background:#C4CBD2;margin-top:6px;"></span>
+          </div>
+          <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;padding:20px 22px;box-shadow:0 14px 34px -20px rgba(16,24,40,.18);flex:1;margin-bottom:14px;">
+            <div style="font-weight:700;font-size:17px;letter-spacing:-0.01em;">Confier ses premières tâches</div>
+            <p style="font-size:14px;line-height:1.58;color:#4B5562;margin:8px 0 0;">Résumer, chercher, rédiger : exercices guidés, sur vos propres documents.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:18px;">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:none;width:52px;">
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:#0E7291;font-weight:600;">14:00</span>
+            <span style="flex:1;width:1.5px;background:#C4CBD2;margin-top:6px;"></span>
+          </div>
+          <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;padding:20px 22px;box-shadow:0 14px 34px -20px rgba(16,24,40,.18);flex:1;margin-bottom:14px;">
+            <div style="font-weight:700;font-size:17px;letter-spacing:-0.01em;">Créer sa première automatisation</div>
+            <p style="font-size:14px;line-height:1.58;color:#4B5562;margin:8px 0 0;">Pas à pas, vous construisez une « skill » : une consigne que l'outil sait rejouer, tous les jours, sans vous.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:18px;">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:none;width:52px;">
+            <span style="font-family:'Spline Sans Mono',monospace;font-size:11px;color:#0E7291;font-weight:600;">15:30</span>
+          </div>
+          <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;padding:20px 22px;box-shadow:0 14px 34px -20px rgba(16,24,40,.18);flex:1;">
+            <div style="font-weight:700;font-size:17px;letter-spacing:-0.01em;">L'atelier final</div>
+            <p style="font-size:14px;line-height:1.58;color:#4B5562;margin:8px 0 0;">Chacun construit et teste le tri automatique de sa propre boîte mail — et repart quand ça fonctionne.</p>
+          </div>
+        </div>
+        <!-- livrable -->
+        <div style="margin-top:22px;margin-left:70px;background:#C7F7EF;border-radius:4px;padding:18px 22px;display:flex;align-items:center;gap:14px;">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#fff;color:#006560;font-size:13px;font-weight:700;flex:none;">✓</span>
+          <div style="font-size:15px;line-height:1.5;color:#006560;font-weight:600;">Vous repartez avec un système fonctionnel — que vous avez construit vous-même.</div>
+        </div>
+      </div>
+      <!-- cadre + prérequis -->
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;padding:24px;box-shadow:0 14px 34px -20px rgba(16,24,40,.18);">
+          <div style="font-weight:600;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#98A1AC;">Le cadre</div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px;font-size:14.5px;">
+            <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#3C4654;">Durée</span><span style="font-family:'Spline Sans Mono',monospace;color:#0E0E12;font-weight:600;">1 journée · 9 h – 17 h</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#3C4654;">Effectif</span><span style="font-family:'Spline Sans Mono',monospace;color:#0E0E12;font-weight:600;">10 places max.</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#3C4654;">Matériel</span><span style="font-family:'Spline Sans Mono',monospace;color:#0E0E12;font-weight:600;">votre ordinateur</span></div>
+            <div style="display:flex;justify-content:space-between;gap:12px;"><span style="color:#3C4654;">Niveau</span><span style="font-family:'Spline Sans Mono',monospace;color:#0E0E12;font-weight:600;">débutant</span></div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;padding:24px;box-shadow:0 14px 34px -20px rgba(16,24,40,.18);">
+          <div style="font-weight:600;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#98A1AC;">Prérequis</div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:11px;font-size:14px;color:#3C4654;">
+            <div style="display:flex;align-items:flex-start;gap:10px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;margin-top:1px;">✓</span>Un ordinateur portable — celui sur lequel vous travaillez.</div>
+            <div style="display:flex;align-items:flex-start;gap:10px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;margin-top:1px;">✓</span>Un abonnement Claude Pro actif (20&nbsp;€/mois).</div>
+            <div style="display:flex;align-items:flex-start;gap:10px;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;margin-top:1px;">✓</span>Poste géré par une DSI : validation préalable de l'installation.</div>
+          </div>
+        </div>
+        <a href="#contact" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#0E7291;color:#fff;border-radius:3px;padding:15px 27px;font-weight:600;font-size:15.5px;box-shadow:0 12px 26px -10px rgba(14,114,145,.55);">Réserver ma place <span style="font-size:17px;line-height:1;">→</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ALLER PLUS LOIN — IMPLÉMENTATION ===== -->
+  <div id="implementation" data-screen-label="Aller plus loin — implémentation" style="position:relative;isolation:isolate;max-width:1180px;margin:0 auto;padding:96px 40px 20px;">
+    <div style="position:absolute;left:0;top:80px;width:560px;height:440px;z-index:-1;background-image:repeating-linear-gradient(to right, rgba(193,201,210,0) 0, rgba(193,201,210,0) 79px, rgba(193,201,210,.45) 79px, rgba(193,201,210,.45) 80px),repeating-linear-gradient(to bottom, rgba(193,201,210,0) 0, rgba(193,201,210,0) 79px, rgba(193,201,210,.45) 79px, rgba(193,201,210,.45) 80px);-webkit-mask-image:radial-gradient(70% 70% at 45% 45%, #000, transparent 78%);mask-image:radial-gradient(70% 70% at 45% 45%, #000, transparent 78%);"></div>
+    <sc-if value="{{ motifFond }}" hint-placeholder-val="{{ true }}">
+      <span style="position:absolute;left:778.25px;top:0;height:48px;width:1.5px;background:#C4CBD2;z-index:-1;"></span>
+      <span style="position:absolute;left:631px;top:47.25px;width:148px;height:1.5px;background:repeating-linear-gradient(90deg,#C4CBD2 0 8px,rgba(196,203,210,0) 8px 15px);z-index:-1;"></span>
+      <span style="position:absolute;left:620px;top:48px;transform:translate(-50%,-50%);color:#00D1BE;font:500 19px/1 'Plus Jakarta Sans',sans-serif;z-index:-1;">+</span>
+      <span style="position:absolute;left:619.25px;top:59px;bottom:0;width:1.5px;background:#C4CBD2;z-index:-1;"></span>
+      <span style="position:absolute;left:70px;top:70px;color:#C4CBD2;font:400 16px/1 'Spline Sans Mono',monospace;">+</span>
+    </sc-if>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+      <div style="position:relative;height:420px;">
+        <div style="position:absolute;left:0;top:0;width:262px;background:#fff;border-radius:4px;border:1px solid rgba(16,24,40,.06);box-shadow:0 24px 50px -18px rgba(16,24,40,.26);overflow:hidden;z-index:2;">
+          <div style="background:linear-gradient(120deg,#A88FEE,#C7D2F7);padding:11px 15px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-weight:600;font-size:12px;color:#1b1442;">Reporting · 30 jours</span>
+            <span style="font-size:10px;color:#1b1442;background:rgba(255,255,255,.5);padding:3px 8px;border-radius:2px;">équipe</span>
+          </div>
+          <div style="padding:14px 15px;">
+            <div style="display:flex;align-items:flex-end;gap:6px;height:52px;">
+              <div style="flex:1;height:38%;border-radius:3px 3px 0 0;background:#C7D2F7;"></div>
+              <div style="flex:1;height:52%;border-radius:3px 3px 0 0;background:#C7D2F7;"></div>
+              <div style="flex:1;height:46%;border-radius:3px 3px 0 0;background:#A88FEE;"></div>
+              <div style="flex:1;height:64%;border-radius:3px 3px 0 0;background:#A88FEE;"></div>
+              <div style="flex:1;height:58%;border-radius:3px 3px 0 0;background:#0E7291;"></div>
+              <div style="flex:1;height:80%;border-radius:3px 3px 0 0;background:#0E7291;"></div>
+              <div style="flex:1;height:100%;border-radius:3px 3px 0 0;background:#00D1BE;"></div>
+            </div>
+            <div style="margin-top:11px;font-size:12px;color:#7A828E;">Le gain du mois, lu dans votre reporting — pas dans nos slides.</div>
+          </div>
+        </div>
+        <div style="position:absolute;right:10px;bottom:16px;width:286px;background:#fff;border-radius:4px;border:1px solid rgba(16,24,40,.06);box-shadow:0 28px 56px -18px rgba(16,24,40,.3);padding:18px;z-index:3;">
+          <div style="font-weight:600;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#98A1AC;">Journal d'audit · ce que vous verrez chez vous</div>
+          <div style="margin-top:13px;display:flex;flex-direction:column;gap:10px;font-size:12.5px;">
+            <div style="display:flex;justify-content:space-between;gap:10px;"><span style="color:#3C4654;">Brouillon généré</span><span style="font-family:'Spline Sans Mono',monospace;color:#7A828E;">09:12</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px;"><span style="color:#3C4654;">Relu et modifié par votre équipe</span><span style="font-family:'Spline Sans Mono',monospace;color:#7A828E;">09:14</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px;"><span style="color:#3C4654;">Validé &amp; envoyé</span><span style="font-family:'Spline Sans Mono',monospace;color:#7A828E;">09:15</span></div>
+            <div style="display:flex;justify-content:space-between;gap:10px;border-top:1px solid rgba(16,24,40,.07);padding-top:10px;"><span style="font-weight:600;">Chaque action</span><span style="font-family:'Spline Sans Mono',monospace;font-weight:600;color:#006560;">tracée</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="max-width:450px;justify-self:end;">
+        <div style="font-family:'Spline Sans Mono',monospace;font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:#6B7480;">Aller plus loin · implémentation</div>
+        <h2 style="font-weight:800;font-size:38px;line-height:1.08;letter-spacing:-0.025em;margin:14px 0 0;">Vous voyez le potentiel ? Nous venons l'installer chez vous.</h2>
+        <p style="font-size:16.5px;line-height:1.58;color:#3C4654;margin:18px 0 0;">Vous êtes formé, vous savez ce que l'IA sait faire. L'étape suivante : nous implémentons l'IA directement dans votre entreprise — sur vos données, avec vos équipes, avec un gain mesuré chaque mois.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:22px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>Construit sur vos dossiers réels, avec vos équipes</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>L'agent propose, l'humain valide — chaque flux est tracé</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14.5px;color:#0E0E12;"><span style="display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#C7F7EF;color:#006560;font-size:11px;font-weight:700;flex:none;">✓</span>Chaque mois, le gain se lit dans votre reporting</div>
+        </div>
+        <a href="#contact" style="text-decoration:none;display:inline-flex;align-items:center;gap:9px;color:#0E0E12;background:#fff;border:1.5px solid rgba(16,24,40,.16);border-radius:3px;padding:13px 24px;font-weight:600;font-size:15px;margin-top:26px;">Parler de votre projet <span style="font-size:16px;line-height:1;">→</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CTA FINAL ===== -->
+  <div id="contact" data-screen-label="CTA final" style="position:relative;isolation:isolate;max-width:1180px;margin:0 auto;padding:100px 40px 90px;">
+    <sc-if value="{{ motifFond }}" hint-placeholder-val="{{ true }}">
+      <span style="position:absolute;left:619.25px;top:0;height:74px;width:1.5px;background:#C4CBD2;z-index:-1;"></span>
+      <span style="position:absolute;left:620px;top:88px;transform:translate(-50%,-50%);color:#00D1BE;font:500 25px/1 'Plus Jakarta Sans',sans-serif;">+</span>
+    </sc-if>
+    <div style="background:#fff;border:1px solid rgba(16,24,40,.06);border-radius:4px;box-shadow:0 30px 60px -26px rgba(16,24,40,.25);padding:56px 40px;text-align:center;position:relative;overflow:hidden;">
+      <span style="position:absolute;left:26px;top:22px;color:#C4CBD2;font:400 15px/1 'Spline Sans Mono',monospace;">+</span>
+      <span style="position:absolute;right:26px;bottom:22px;color:#C4CBD2;font:400 15px/1 'Spline Sans Mono',monospace;">+</span>
+      <h2 style="font-weight:800;font-size:42px;line-height:1.06;letter-spacing:-0.028em;margin:0;">Réservez votre place pour<br><span style="display:inline-block;"><span style="position:relative;display:inline-block;background:#0E7291;color:#fff;border-radius:0;padding:0 0.26em 0.05em;">la prochaine session<span style="position:absolute;right:-0.62em;top:-0.5em;color:#00D1BE;font-weight:500;font-size:0.64em;line-height:1;">+</span></span>.</span></h2>
+      <p style="font-size:16.5px;line-height:1.55;color:#3C4654;margin:18px auto 0;max-width:460px;">Formation débutant, une journée, chacun sur son ordinateur. À 17 h, votre boîte mail se trie toute seule — parce que vous l'aurez construit.</p>
+      <a href="#" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:#0E7291;color:#fff;border-radius:3px;padding:16px 30px;font-weight:600;font-size:16.5px;box-shadow:0 12px 26px -10px rgba(14,114,145,.55);margin-top:28px;">Réserver ma place <span style="font-size:18px;line-height:1;">→</span></a>
+      <div style="font-size:13px;color:#7A828E;margin-top:16px;">10 places par session · pré-inscription sans engagement · réponse sous 48 h.</div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div data-screen-label="Footer" style="position:relative;border-top:1px solid rgba(16,24,40,.08);background:rgba(255,255,255,.55);">
+    <div style="max-width:1180px;margin:0 auto;padding:30px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="position:relative;width:28px;height:28px;flex:none;">
+          <span style="position:absolute;left:1px;top:1px;width:6px;height:6px;border-left:1.75px solid #0E7291;border-top:1.75px solid #0E7291;"></span>
+          <span style="position:absolute;right:0;top:-1px;font-weight:500;font-size:9px;line-height:1;color:#00D1BE;">+</span>
+          <span style="position:absolute;left:1px;bottom:1px;width:6px;height:6px;border-left:1.75px solid #0E7291;border-bottom:1.75px solid #0E7291;"></span>
+          <span style="position:absolute;right:1px;bottom:1px;width:6px;height:6px;border-right:1.75px solid #0E7291;border-bottom:1.75px solid #0E7291;"></span>
+          <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);font-weight:800;font-size:16px;line-height:1;color:#0E0E12;">M</span>
+        </div>
+        <span style="font-weight:700;font-size:15px;">Marssane</span>
+        <span style="font-size:12.5px;color:#7A828E;">© 2026 · Mentions légales · Confidentialité</span>
+      </div>
+      <sc-if value="{{ showFR }}" hint-placeholder-val="{{ true }}">
+        <div style="display:inline-flex;align-items:center;gap:9px;font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.08em;color:#6B7480;">
+          <span style="display:inline-flex;gap:2px;height:11px;"><i style="width:2.5px;background:#0E7291;border-radius:1px;"></i><i style="width:2.5px;background:#DCE1E6;border-radius:1px;"></i><i style="width:2.5px;background:#C75A4D;border-radius:1px;"></i></span>
+          CONÇU ET OPÉRÉ EN FRANCE
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;mentionFrance&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Pied de page&quot; },
+  &quot;motifFond&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Fond — trajet de mesure&quot; }
+}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      showFR: this.props.mentionFrance ?? true,
+      motifFond: this.props.motifFond ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>
