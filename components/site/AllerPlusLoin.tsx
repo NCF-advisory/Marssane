@@ -78,11 +78,21 @@ export function AllerPlusLoin() {
       />
 
       <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
-        {/* Visuel : reporting + journal d'audit */}
-        <div className="relative h-[420px] overflow-hidden lg:overflow-visible">
+        {/* Visuel : reporting + journal d'audit — décoratif (aria-hidden) doublé
+            d'un texte sr-only ; empilé en flux sous lg, positions absolues
+            restaurées à partir de lg (comme les 3 cas concrets). */}
+        <div className="relative">
+          <span className="sr-only">
+            Illustration : un reporting mensuel et un journal d&apos;audit
+            horodaté.
+          </span>
+          <div
+            aria-hidden
+            className="relative flex flex-col items-center gap-6 lg:block lg:h-[420px]"
+          >
           {/* Carte « Reporting · 30 jours » */}
           <div
-            className="absolute left-0 top-0 z-[2] w-[262px] overflow-hidden rounded-card border border-hairline bg-surface"
+            className="w-[262px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface lg:absolute lg:left-0 lg:top-0 lg:z-[2]"
             style={{ boxShadow: "0 24px 50px -18px rgba(16,24,40,.26)" }}
           >
             <div
@@ -114,7 +124,7 @@ export function AllerPlusLoin() {
 
           {/* Carte « Journal d'audit » */}
           <div
-            className="absolute bottom-4 right-[10px] z-[3] w-[286px] rounded-card border border-hairline bg-surface p-[18px]"
+            className="w-[286px] max-w-full rounded-card border border-hairline bg-surface p-[18px] lg:absolute lg:bottom-4 lg:right-[10px] lg:z-[3]"
             style={{ boxShadow: "0 28px 56px -18px rgba(16,24,40,.3)" }}
           >
             <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-quiet">
@@ -134,6 +144,7 @@ export function AllerPlusLoin() {
                 </span>
               </div>
             </div>
+          </div>
           </div>
         </div>
 
