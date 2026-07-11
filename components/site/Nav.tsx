@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
+import { ReservationTrigger } from "./ReservationTrigger";
 
 const links = [
   { href: "#usages", label: "Pour faire quoi" },
@@ -37,12 +38,9 @@ export function Nav() {
             {link.label}
           </a>
         ))}
-        <a
-          href="#contact"
-          className="rounded-btn border-[1.5px] border-outline bg-surface px-5 py-2.5 text-[14.5px] font-semibold text-ink hover:bg-toile"
-        >
+        <ReservationTrigger className="rounded-btn border-[1.5px] border-outline bg-surface px-5 py-2.5 text-[14.5px] font-semibold text-ink hover:bg-toile">
           Réserver ma place
-        </a>
+        </ReservationTrigger>
       </nav>
     </header>
   );

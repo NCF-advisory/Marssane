@@ -1,20 +1,11 @@
-import { Button } from "@/components/ui/Button";
-import { controlClass, Field } from "@/components/ui/Field";
 import { PlusMark } from "@/components/ui/PlusMark";
-
-/** Options du champ « Métier » (CDC §5.2). */
-const METIERS = [
-  "Dirigeant de PME",
-  "Avocat",
-  "Notaire",
-  "Expert-comptable",
-  "Autre",
-];
+import { ReservationTrigger } from "./ReservationTrigger";
 
 /**
- * Section « Réservation » (ancre #contact). Reprend la carte du CTA final de la
- * maquette (coins « + », titre surligné canard) et remplace le bouton par le
- * formulaire de pré-inscription F2. Décorations motifFond masquées sous lg.
+ * Section « Réservation » (ancre #contact) : carte « CTA final » de la maquette
+ * (coins « + », titre surligné canard). Le bouton « Réserver ma place » ouvre la
+ * modale de pré-inscription (<ReservationDialog>). Décorations motifFond masquées
+ * sous lg.
  */
 export function Reservation() {
   return (
@@ -66,142 +57,12 @@ export function Reservation() {
           construit.
         </p>
 
-        {/* Formulaire de pré-inscription (F2) */}
-        <form className="mx-auto mt-9 grid max-w-[640px] grid-cols-1 gap-x-4 gap-y-[18px] text-left sm:grid-cols-2">
-          <Field id="f2-prenom" label="Prénom" required>
-            <input
-              id="f2-prenom"
-              name="prenom"
-              type="text"
-              required
-              autoComplete="given-name"
-              className={controlClass}
-            />
-          </Field>
-          <Field id="f2-nom" label="Nom" required>
-            <input
-              id="f2-nom"
-              name="nom"
-              type="text"
-              required
-              autoComplete="family-name"
-              className={controlClass}
-            />
-          </Field>
-          <Field id="f2-email" label="Email" required>
-            <input
-              id="f2-email"
-              name="email"
-              type="email"
-              required
-              autoComplete="email"
-              inputMode="email"
-              className={controlClass}
-            />
-          </Field>
-          <Field id="f2-telephone" label="Téléphone" required>
-            <input
-              id="f2-telephone"
-              name="telephone"
-              type="tel"
-              required
-              autoComplete="tel"
-              inputMode="tel"
-              className={controlClass}
-            />
-          </Field>
-          <Field id="f2-metier" label="Métier" required>
-            <select
-              id="f2-metier"
-              name="metier"
-              required
-              defaultValue=""
-              className={controlClass}
-            >
-              <option value="" disabled>
-                Sélectionnez…
-              </option>
-              {METIERS.map((metier) => (
-                <option key={metier} value={metier}>
-                  {metier}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field id="f2-metier-autre" label="Si « Autre », précisez">
-            <input
-              id="f2-metier-autre"
-              name="metier_autre"
-              type="text"
-              autoComplete="off"
-              className={controlClass}
-            />
-          </Field>
-          <Field
-            id="f2-entreprise"
-            label="Entreprise / cabinet"
-            className="sm:col-span-2"
-          >
-            <input
-              id="f2-entreprise"
-              name="entreprise"
-              type="text"
-              autoComplete="organization"
-              className={controlClass}
-            />
-          </Field>
-          <Field id="f2-session" label="Session" required className="sm:col-span-2">
-            <input
-              id="f2-session"
-              name="session"
-              type="text"
-              readOnly
-              required
-              value="Prochaine session — date et lieu bientôt annoncés"
-              className={`${controlClass} cursor-default bg-toile text-muted`}
-            />
-          </Field>
-
-          {/* Honeypot anti-spam — inerte, hors écran (F2 · CDC §5.2). */}
-          <input
-            type="text"
-            name="site_web"
-            tabIndex={-1}
-            autoComplete="off"
-            aria-hidden
-            className="absolute left-[-9999px] h-0 w-0 opacity-0"
-          />
-
-          <label className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-soft sm:col-span-2">
-            <input
-              type="checkbox"
-              name="consentement"
-              required
-              className="mt-[3px] h-4 w-4 flex-none accent-canard"
-            />
-            <span>
-              J&apos;accepte que mes données soient utilisées pour ma
-              pré-inscription, conformément à la{" "}
-              <a
-                href="/confidentialite"
-                className="text-canard underline hover:text-canard-dark"
-              >
-                politique de confidentialité
-              </a>
-              .
-            </span>
-          </label>
-
-          <div className="sm:col-span-2">
-            <Button
-              variant="primary"
-              arrow
-              className="px-[30px] py-4 text-[16.5px]"
-            >
-              Réserver ma place
-            </Button>
-          </div>
-        </form>
+        <ReservationTrigger className="mt-7 inline-flex items-center gap-2.5 rounded-btn bg-canard px-[30px] py-4 text-[16.5px] font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark">
+          Réserver ma place
+          <span aria-hidden className="text-[18px] leading-none">
+            →
+          </span>
+        </ReservationTrigger>
 
         <div className="mt-4 text-[13px] text-soft">
           10 places par session · pré-inscription sans engagement · réponse sous

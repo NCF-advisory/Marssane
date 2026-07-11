@@ -117,3 +117,19 @@ body,
     --grid-step: 64px;
   }
 }
+
+/* Apparition de la modale de pré-inscription : fade + léger translate-y.
+   Uniquement si l'utilisateur n'a pas demandé à réduire les animations ;
+   sinon apparition instantanée. */
+@media (prefers-reduced-motion: no-preference) {
+  #reservation-dialog[open] {
+    animation: reservation-dialog-in 150ms ease-out;
+  }
+
+  @keyframes reservation-dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+}

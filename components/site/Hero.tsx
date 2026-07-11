@@ -3,6 +3,7 @@ import { GridBackground } from "@/components/ui/GridBackground";
 import { Kicker } from "@/components/ui/Kicker";
 import { PlusMark } from "@/components/ui/PlusMark";
 import { HeroMedia } from "./HeroMedia";
+import { ReservationTrigger } from "./ReservationTrigger";
 
 /**
  * Héro « formation » : colonne texte (kicker, H1, sous-titre, CTA, mention),
@@ -57,9 +58,12 @@ export function Hero() {
             repartez avec un système fonctionnel.
           </p>
           <div className="mt-[30px] flex flex-wrap items-center gap-4">
-            <Button variant="primary" href="#contact" arrow>
+            <ReservationTrigger className="inline-flex items-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-base font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark">
               Réserver ma place
-            </Button>
+              <span aria-hidden className="text-[1.1em] leading-none">
+                →
+              </span>
+            </ReservationTrigger>
             <Button variant="link" href="#formation" arrow>
               Voir le déroulé de la journée
             </Button>

@@ -7,6 +7,7 @@ import { Nav } from "@/components/site/Nav";
 import { PourFaireQuoi } from "@/components/site/PourFaireQuoi";
 import { PourQui } from "@/components/site/PourQui";
 import { Reservation } from "@/components/site/Reservation";
+import { ReservationDialog } from "@/components/site/ReservationDialog";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         <Reservation />
       </main>
       <Footer />
+      <ReservationDialog />
     </>
   );
 }

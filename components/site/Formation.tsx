@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Kicker } from "@/components/ui/Kicker";
 import { PlusMark } from "@/components/ui/PlusMark";
+import { ReservationTrigger } from "./ReservationTrigger";
 
 /** Les cinq temps de la journée. Le paragraphe peut contenir un passage en gras. */
 const ETAPES: { heure: string; titre: string; texte: ReactNode }[] = [
@@ -161,15 +162,12 @@ export function Formation() {
             </div>
           </div>
 
-          <a
-            href="#contact"
-            className="inline-flex w-full items-center justify-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-[15.5px] font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark"
-          >
+          <ReservationTrigger className="inline-flex w-full items-center justify-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-[15.5px] font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark">
             Réserver ma place
             <span aria-hidden className="text-[17px] leading-none">
               →
             </span>
-          </a>
+          </ReservationTrigger>
         </div>
       </div>
     </section>
