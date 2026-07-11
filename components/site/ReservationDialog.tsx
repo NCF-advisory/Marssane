@@ -1,11 +1,12 @@
 "use client";
 
-import { useActionState, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import {
   initialInscriptionState,
   submitInscription,
 } from "@/app/actions/inscription";
 import { controlClass, Field } from "@/components/ui/Field";
+import { LogoMarssane } from "@/components/ui/LogoMarssane";
 
 /** Options du champ « Métier » (CDC §5.2). */
 const METIERS = [
@@ -42,6 +43,28 @@ export function ReservationDialog({
     initialInscriptionState,
   );
 
+  /**
+   * Rejoue la séquence d'entrée à chaque ouverture. L'attribut `[open]` seul ne
+   * relance pas des animations CSS sur un nœud qui reste monté ; on écoute donc
+   * l'événement natif `toggle` du <dialog> et on incrémente `runId`, utilisé
+   * comme `key` sur le conteneur .reservation-seq → React le remonte, ce qui
+   * relance proprement toutes les animations depuis leur frame 0.
+   *
+   * L'état du formulaire (valeurs, erreurs) est porté par `useActionState` sur
+   * CE composant (hors du sous-arbre remonté) : il survit au remontage — les
+   * champs non contrôlés se repeuplent via `defaultValue={values.*}`.
+   */
+  const [runId, setRunId] = useState(0);
+  useEffect(() => {
+    const dialog = ref.current;
+    if (!dialog) return;
+    const onToggle = () => {
+      if (dialog.open) setRunId((n) => n + 1);
+    };
+    dialog.addEventListener("toggle", onToggle);
+    return () => dialog.removeEventListener("toggle", onToggle);
+  }, []);
+
   const close = () => ref.current?.close();
   const fieldErrors = state.fieldErrors ?? {};
   const values = state.values ?? {};
@@ -72,23 +95,31 @@ export function ReservationDialog({
         <span aria-hidden>✕</span>
       </button>
 
-      <div className="overflow-y-auto px-6 py-8 sm:px-10 sm:py-10">
-        <h2
-          id="reservation-dialog-title"
-          className="pr-10 text-[24px] font-extrabold leading-[1.1] tracking-[-0.02em]"
-        >
-          Réserver ma place
-        </h2>
+      <div
+        key={runId}
+        className="reservation-seq overflow-y-auto px-6 py-8 sm:px-10 sm:py-10"
+      >
+        <div className="reservation-seq__logo mb-7 flex justify-center">
+          <LogoMarssane withWordmark plusClassName="reservation-seq__plus" />
+        </div>
 
-        {sessionComplete && (
-          <p className="mt-6 rounded-card bg-toile px-4 py-3 text-[13.5px] leading-[1.5] text-body">
-            La session est complète : ce formulaire vous inscrit en liste
-            d&apos;attente.
-          </p>
-        )}
+        <div className="reservation-seq__body">
+          <h2
+            id="reservation-dialog-title"
+            className="pr-10 text-[24px] font-extrabold leading-[1.1] tracking-[-0.02em]"
+          >
+            Réserver ma place
+          </h2>
 
-        {/* Formulaire de pré-inscription (F2) */}
-        <form
+          {sessionComplete && (
+            <p className="mt-6 rounded-card bg-toile px-4 py-3 text-[13.5px] leading-[1.5] text-body">
+              La session est complète : ce formulaire vous inscrit en liste
+              d&apos;attente.
+            </p>
+          )}
+
+          {/* Formulaire de pré-inscription (F2) */}
+          <form
           action={formAction}
           className="mt-7 grid grid-cols-1 gap-x-4 gap-y-[18px] text-left sm:grid-cols-2"
         >
@@ -264,7 +295,8 @@ export function ReservationDialog({
               )}
             </button>
           </div>
-        </form>
+          </form>
+        </div>
       </div>
     </dialog>
   );

@@ -6,6 +6,8 @@ type LogoMarssaneProps = {
   /** Ajoute le mot « Marssane » (700) à droite du symbole — lockup horizontal. */
   withWordmark?: boolean;
   className?: string;
+  /** Classe posée sur le « + » turquoise, pour l'animer depuis le parent. */
+  plusClassName?: string;
 };
 
 /**
@@ -22,6 +24,7 @@ export function LogoMarssane({
   size = 34,
   withWordmark = false,
   className,
+  plusClassName,
 }: LogoMarssaneProps) {
   const k = size / 34;
   const bracket = 7 * k;
@@ -50,6 +53,7 @@ export function LogoMarssane({
         })}
       />
       <span
+        className={plusClassName}
         style={{
           position: "absolute",
           right: 0,
