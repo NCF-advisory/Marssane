@@ -8,13 +8,18 @@ site. Rien n'a été ajouté aux dépendances du site.
 
 La vidéo de présentation affichée dans la moitié droite du héro (CDC §5.6 / F6).
 
-- Composition `HeroVideo` : **1080×1350 (4:5)**, **30 fps**, **780 frames = 26,0 s**.
-- Boucle parfaite : la dernière frame fond vers la toile d'ouverture (frame 779 ≡ frame 0).
+- Composition `HeroVideo` : **1080×1350 (4:5)**, **30 fps**, **720 frames = 24,0 s**.
+- Boucle parfaite : la dernière frame fond vers l'état initial de la boîte non
+  triée (frame 719 ≡ frame 0, vérifié par hash).
 - Sans son.
 - Polices chargées **localement** depuis `public/fonts/` (copie des woff2 du site,
   `app/fonts/`) — aucun appel réseau.
-- Séquencier : ouverture (cadre-repère) · promesse · trier vos mails · résumer un
-  dossier · dicter un courrier · formation + clôture.
+- Principe « le texte promet, la vidéo prouve » : **trois démos d'interface**
+  enchaînées en fondu, aucun texte narratif ni carton titre. Le seul texte est
+  celui des interfaces.
+  1. La boîte qui se trie (badges Urgent / À traiter / En attente / Classé, 6 / 47).
+  2. Le dossier qui se résume (42 pages → 12 lignes, source : p. 17).
+  3. La note vocale qui devient courrier (onde → brouillon à valider).
 
 ## Prérequis
 
@@ -39,7 +44,7 @@ Les sorties vont directement dans le `public/` du site.
 ```bash
 npm run render:mp4     # -> ../public/video/hero.mp4   (H.264, CRF 30)
 npm run render:webm    # -> ../public/video/hero.webm  (VP9, CRF 36)
-npm run render:poster  # -> ../public/video/hero-poster.jpg (frame 157, scène « promesse »)
+npm run render:poster  # -> ../public/video/hero-poster.jpg (frame 170, boîte triée)
 npm run render:all     # les trois ci-dessus
 ```
 
@@ -80,7 +85,7 @@ video/
     theme.ts            tokens (repris de app/globals.css)
     anim.ts             helpers d'animation
     fonts.ts            chargement local des polices
-    components/         Toile, Cadre (logo), primitives
-    scenes/             Scene1..Scene6
+    components/         Toile (fond), primitives (Card, Chip, TextBar)
+    scenes/             DemoInbox · DemoDocument · DemoLetter
   scripts/render-stills.mjs
 ```

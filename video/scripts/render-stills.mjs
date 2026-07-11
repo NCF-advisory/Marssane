@@ -10,16 +10,16 @@ const DEFAULT_OUT =
 const outDir = resolve(process.argv[2] ?? DEFAULT_OUT);
 mkdirSync(outDir, { recursive: true });
 
-// [frame, nom] — voir séquencier (30 fps).
+// [frame, nom] — 3 démos d'interface (30 fps, 720 frames).
 const STILLS = [
-  [90, "01-ouverture"],
-  [157, "02-promesse"],
-  [250, "03-cas1-transition"],
-  [325, "03-cas1-final"],
-  [470, "04-cas2-synthese"],
-  [600, "05-cas3-courrier"],
-  [665, "06-chiffres"],
-  [748, "06-cloture"],
+  [20, "d1-boite-brute"],
+  [95, "d1-tri-en-cours"],
+  [170, "d1-boite-triee"],
+  [290, "d2-document-42p"],
+  [430, "d2-synthese-12l"],
+  [520, "d3-onde-vocale"],
+  [660, "d3-courrier"],
+  [702, "loop-raccord"],
 ];
 
 for (const [frame, name] of STILLS) {

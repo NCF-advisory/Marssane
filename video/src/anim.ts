@@ -19,6 +19,10 @@ export function sceneOpacity(
     extrapolateRight: "clamp" as const,
     easing: easeOut,
   };
+  // Sans fondu d'entrée (inDur ≤ 0) : pleine dès le départ (ancre de boucle).
+  if (inDur <= 0) {
+    return interpolate(frame, [start, end - outDur, end], [1, 1, 0], opts);
+  }
   // Sans fondu de sortie (outDur ≤ 0) : la scène reste pleine jusqu'à la fin.
   if (outDur <= 0) {
     return interpolate(frame, [start, start + inDur, end], [0, 1, 1], opts);
