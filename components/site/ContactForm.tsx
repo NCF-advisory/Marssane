@@ -1,8 +1,15 @@
 "use client";
 
 import { useActionState } from "react";
-import { initialContactState, submitContact } from "@/app/actions/contact";
+import { type ContactState, submitContact } from "@/app/actions/contact";
 import { controlClass, Field } from "@/components/ui/Field";
+
+/**
+ * État initial de `useActionState`. Défini côté client (pas dans le fichier
+ * `"use server"`, où Next.js 16 interdit les exports non-async) — même motif
+ * que `initialLoginState` dans app/admin/LoginForm.tsx.
+ */
+const initialContactState: ContactState = { status: "idle" };
 
 /**
  * Formulaire de contact « implémentation » (F4 · CDC §5.4). Extrait de la

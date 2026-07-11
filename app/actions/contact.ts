@@ -20,8 +20,6 @@ export type ContactState = {
   values?: Record<string, string>;
 };
 
-export const initialContactState: ContactState = { status: "idle" };
-
 /** Extrait les valeurs saisies pour les réinjecter dans le formulaire. */
 function submittedValues(formData: FormData): Record<string, string> {
   const str = (key: string) => (formData.get(key) ?? "").toString();

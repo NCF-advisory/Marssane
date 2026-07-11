@@ -2,11 +2,18 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import {
-  initialInscriptionState,
+  type InscriptionState,
   submitInscription,
 } from "@/app/actions/inscription";
 import { controlClass, Field } from "@/components/ui/Field";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
+
+/**
+ * État initial de `useActionState`. Défini côté client (pas dans le fichier
+ * `"use server"`, où Next.js 16 interdit les exports non-async) — même motif
+ * que `initialLoginState` dans app/admin/LoginForm.tsx.
+ */
+const initialInscriptionState: InscriptionState = { status: "idle" };
 
 /** Options du champ « Métier » (CDC §5.2). */
 const METIERS = [
