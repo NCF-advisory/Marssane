@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Site Marssane
 
-## Getting Started
+Landing page de Marssane — formation à l'IA pour dirigeants de PME et professions
+libérales (avocats, notaires, experts-comptables). Site statique en Next.js
+(App Router) + Tailwind CSS v4, sans base de données ni API.
 
-First, run the development server:
+## Prérequis
+
+- Node **24** (le projet est développé et testé sous Node 24).
+
+## Démarrer
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install        # installer les dépendances
+npm run dev        # serveur de développement (http://localhost:3000)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build de production
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build      # build optimisé
+npm start          # sert le build (next start)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Autres scripts : `npm run lint` (ESLint).
 
-## Learn More
+## Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/                     Routes (App Router)
+  layout.tsx             Layout racine : polices, métadonnées, OpenGraph
+  page.tsx               Landing (assemble les sections)
+  merci/                 Page de confirmation de pré-inscription
+  mentions-legales/      Mentions légales
+  confidentialite/       Politique de confidentialité
+  styleguide/            Recette interne (design system) — hors sitemap
+  sitemap.ts             Plan du site (4 routes publiques)
+  icon.svg               Favicon (M sur tuile canard)
+  globals.css            Tokens de design + toile (quadrillage, washes)
+  fonts/                 Polices auto-hébergées (woff2)
+components/
+  ui/                    Primitifs (Button, Field, Kicker, LogoMarssane…)
+  site/                  Sections de la landing (Hero, Formation, Reservation…)
+lib/
+  site-config.ts         Configuration éditoriale (bascule vidéo du héro)
+docs/references/         Maquette et charte graphique (sources de vérité)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Polices auto-hébergées** : Plus Jakarta Sans et Spline Sans Mono sont
+  chargées localement via `next/font/local` depuis `app/fonts/` — aucun appel à
+  un CDN de polices.
+- **Preview `noindex`** : le layout racine pose `robots: { index: false }` tant
+  que le site est en préproduction ; à retirer à la mise en ligne définitive.
+- **Portabilité** : le site fonctionne avec `next start` de façon autonome et ne
+  dépend d'aucune API propre à Vercel — il peut être hébergé sur n'importe quel
+  environnement Node. L'URL de base du sitemap est pilotée par la variable
+  `NEXT_PUBLIC_SITE_URL`.

@@ -36,7 +36,7 @@ export function Hero() {
             Formation IA · dirigeants de PME, avocats, notaires,
             experts-comptables
           </Kicker>
-          <h1 className="mt-[18px] text-[54px] font-extrabold leading-[1.04] tracking-[-0.03em]">
+          <h1 className="mt-[18px] text-[36px] font-extrabold leading-[1.04] tracking-[-0.03em] sm:text-[44px] lg:text-[54px]">
             Une formation IA sur des{" "}
             <span className="inline-block">
               <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
@@ -64,7 +64,7 @@ export function Hero() {
               Voir le déroulé de la journée
             </Button>
           </div>
-          <div className="mt-4 text-[13px] text-faint">
+          <div className="mt-4 text-[13px] text-slate">
             Pré-inscription à la prochaine session · 10 places · sans engagement.
           </div>
         </div>
@@ -72,8 +72,9 @@ export function Hero() {
         <HeroMedia />
       </div>
 
-      {/* Bandeau chiffres */}
-      <div className="mt-16 flex flex-wrap items-center justify-between gap-5 rounded-card border border-hairline-strong bg-white/65 px-7 py-[18px]">
+      {/* Bandeau chiffres — colonne empilée sous lg (séparateurs masqués),
+          ligne répartie à partir de lg. */}
+      <div className="mt-16 flex flex-col gap-4 rounded-card border border-hairline-strong bg-white/65 px-7 py-[18px] lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:gap-5">
         <Stat value="1 journée" label="de 9 h à 17 h" />
         <Separator />
         <Stat value="10 places" label="maximum par session" />
@@ -90,11 +91,11 @@ function Stat({ value, label }: { value: string; label: string }) {
       <span className="font-mono text-[22px] font-semibold text-ink-ecume">
         {value}
       </span>
-      <span className="text-[12.5px] text-faint">{label}</span>
+      <span className="text-[12.5px] text-soft">{label}</span>
     </div>
   );
 }
 
 function Separator() {
-  return <span aria-hidden className="h-[26px] w-px bg-grid-line" />;
+  return <span aria-hidden className="hidden h-[26px] w-px bg-grid-line lg:block" />;
 }

@@ -67,7 +67,7 @@ export function PourQui() {
 
       <div className="max-w-[640px]">
         <Kicker>Pour qui</Kicker>
-        <h2 className="mt-[14px] text-[38px] font-extrabold leading-[1.08] tracking-[-0.025em]">
+        <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
           Pensée pour des professions exigeantes.
         </h2>
         <p className="mt-[14px] text-[16.5px] leading-[1.58] text-body">
@@ -83,7 +83,7 @@ export function PourQui() {
             className="rounded-card border border-hairline bg-surface p-6 shadow-card"
           >
             <div className="text-[17px] font-bold tracking-[-0.01em]">{p.titre}</div>
-            <div className="mt-1 font-mono text-[10.5px] text-quiet">{p.sousTitre}</div>
+            <div className="mt-1 font-mono text-[10.5px] text-soft">{p.sousTitre}</div>
             <p className="mt-3 text-[13.5px] leading-[1.55] text-muted">{p.texte}</p>
           </article>
         ))}

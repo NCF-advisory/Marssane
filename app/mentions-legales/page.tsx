@@ -20,7 +20,7 @@ export default function MentionsLegales() {
       <main>
         <section className="mx-auto max-w-[1180px] px-10 pb-[80px] pt-[72px]">
           <Kicker>Informations légales</Kicker>
-          <h1 className="mt-[14px] text-[38px] font-extrabold leading-[1.08] tracking-[-0.025em]">
+          <h1 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
             Mentions légales
           </h1>
 

@@ -140,7 +140,7 @@ export function AllerPlusLoin() {
         {/* Texte */}
         <div className="max-w-[450px] lg:justify-self-end">
           <Kicker>Aller plus loin · implémentation</Kicker>
-          <h2 className="mt-[14px] text-[38px] font-extrabold leading-[1.08] tracking-[-0.025em]">
+          <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
             Vous voyez le potentiel ? Nous venons l&apos;installer chez vous.
           </h2>
           <p className="mt-[18px] text-[16.5px] leading-[1.58] text-body">
@@ -242,7 +242,7 @@ export function AllerPlusLoin() {
             />
           </Field>
 
-          <label className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-faint sm:col-span-2">
+          <label className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-soft sm:col-span-2">
             <input
               type="checkbox"
               name="consentement"

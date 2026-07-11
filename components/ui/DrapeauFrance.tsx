@@ -13,7 +13,7 @@ type DrapeauFranceProps = {
 export function DrapeauFrance({ height = 11, className }: DrapeauFranceProps) {
   return (
     <span
-      className={`inline-flex items-center gap-[9px] font-mono text-[10px] uppercase tracking-[0.08em] text-soft ${className ?? ""}`}
+      className={`inline-flex items-center gap-[9px] font-mono text-[10px] uppercase tracking-[0.08em] text-slate ${className ?? ""}`}
     >
       <span
         aria-hidden

@@ -20,10 +20,10 @@ export function HeroMedia() {
 
 function HeroComposition() {
   return (
-    <div className="relative h-[470px]">
+    <div className="relative mx-auto flex max-w-[340px] flex-col items-center gap-6 lg:mx-0 lg:block lg:h-[470px] lg:max-w-none">
       {/* Photo — placeholder « photographie » hachuré 45° */}
       <div
-        className="absolute right-0 top-[26px] z-[1] h-[350px] w-[300px] overflow-hidden rounded-card"
+        className="h-[300px] w-[300px] max-w-full overflow-hidden rounded-card lg:absolute lg:right-0 lg:top-[26px] lg:z-[1] lg:h-[350px]"
         style={{
           boxShadow: "0 28px 58px -22px rgba(16,24,40,.30)",
           border: "1px solid rgba(16,24,40,.05)",
@@ -44,7 +44,7 @@ function HeroComposition() {
 
       {/* Carte « Votre boîte mail » */}
       <div
-        className="absolute bottom-[10px] left-0 z-[3] w-[296px] rounded-card border border-hairline bg-surface p-5"
+        className="w-[296px] max-w-full rounded-card border border-hairline bg-surface p-5 lg:absolute lg:bottom-[10px] lg:left-0 lg:z-[3]"
         style={{ boxShadow: "0 26px 52px -18px rgba(16,24,40,.28)" }}
       >
         <div className="flex items-center justify-between">
@@ -99,7 +99,7 @@ function HeroComposition() {
 
       {/* Carte « Votre première automatisation » */}
       <div
-        className="absolute right-[24px] top-[-14px] z-[2] w-[216px] overflow-hidden rounded-card border border-hairline bg-surface"
+        className="w-[216px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface lg:absolute lg:right-[24px] lg:top-[-14px] lg:z-[2]"
         style={{ boxShadow: "0 22px 42px -16px rgba(16,24,40,.26)" }}
       >
         <div

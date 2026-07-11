@@ -16,7 +16,7 @@ export default function Merci() {
         <section className="mx-auto max-w-[1180px] px-10 pb-[80px] pt-[72px]">
           <div className="max-w-[560px]">
             <Kicker>Pré-inscription</Kicker>
-            <h1 className="mt-[14px] text-[38px] font-extrabold leading-[1.08] tracking-[-0.025em]">
+            <h1 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
               Votre pré-inscription est bien enregistrée.
             </h1>
             <p className="mt-[18px] text-[16.5px] leading-[1.58] text-body">

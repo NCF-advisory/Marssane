@@ -73,7 +73,7 @@ export function Formation() {
 
       <div className="max-w-[640px]">
         <Kicker>La formation · niveau débutant</Kicker>
-        <h2 className="mt-[14px] text-[38px] font-extrabold leading-[1.08] tracking-[-0.025em]">
+        <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
           Une journée, cinq temps, dix personnes.
         </h2>
         <p className="mt-4 text-[16.5px] leading-[1.58] text-body">
@@ -131,7 +131,7 @@ export function Formation() {
         {/* Cadre + prérequis + CTA */}
         <div className="flex flex-col gap-[22px]">
           <div className="rounded-card border border-hairline bg-surface p-6 shadow-card">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-quiet">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-soft">
               Le cadre
             </div>
             <div className="mt-[14px] flex flex-col gap-3 text-[14.5px]">
@@ -145,7 +145,7 @@ export function Formation() {
           </div>
 
           <div className="rounded-card border border-hairline bg-surface p-6 shadow-card">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-quiet">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-soft">
               Prérequis
             </div>
             <div className="mt-[14px] flex flex-col gap-[11px] text-[14px] text-body">

@@ -53,7 +53,7 @@ export default function Confidentialite() {
       <main>
         <section className="mx-auto max-w-[1180px] px-10 pb-[80px] pt-[72px]">
           <Kicker>Vos données</Kicker>
-          <h1 className="mt-[14px] text-[38px] font-extrabold leading-[1.08] tracking-[-0.025em]">
+          <h1 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
             Politique de confidentialité
           </h1>
 

@@ -151,7 +151,7 @@ function Cas1() {
       <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
         <div className="max-w-[450px]">
           <BadgeEcume>01 · Trier ses mails</BadgeEcume>
-          <h3 className="mt-[14px] text-[32px] font-extrabold leading-[1.1] tracking-[-0.02em]">
+          <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
             Vous ouvrez une boîte rangée, pas une pile.
           </h3>
           <p className="mt-4 text-[16px] leading-[1.58] text-body">
@@ -363,7 +363,7 @@ function Cas2() {
 
         <div className="order-first max-w-[450px] lg:order-last lg:justify-self-end">
           <BadgeEcume>02 · Analyser &amp; résumer</BadgeEcume>
-          <h3 className="mt-[14px] text-[32px] font-extrabold leading-[1.1] tracking-[-0.02em]">
+          <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
             42 pages posées sur votre bureau. L&apos;essentiel en 12 lignes.
           </h3>
           <p className="mt-4 text-[16px] leading-[1.58] text-body">
@@ -402,7 +402,7 @@ function Cas3() {
       <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
         <div className="max-w-[450px]">
           <BadgeEcume>03 · Rédiger des courriers</BadgeEcume>
-          <h3 className="mt-[14px] text-[32px] font-extrabold leading-[1.1] tracking-[-0.02em]">
+          <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
             Vous dictez l&apos;intention. Le courrier s&apos;écrit dans votre ton.
           </h3>
           <p className="mt-4 text-[16px] leading-[1.58] text-body">

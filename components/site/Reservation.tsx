@@ -34,7 +34,7 @@ export function Reservation() {
       />
 
       <div
-        className="relative overflow-hidden rounded-card border border-hairline bg-surface px-10 py-14 text-center"
+        className="relative overflow-hidden rounded-card border border-hairline bg-surface px-6 py-12 text-center sm:px-10 sm:py-14"
         style={{ boxShadow: "0 30px 60px -26px rgba(16,24,40,.25)" }}
       >
         <span className="absolute left-[26px] top-[22px] font-mono text-[15px] leading-none text-repere">
@@ -44,7 +44,7 @@ export function Reservation() {
           +
         </span>
 
-        <h2 className="text-[42px] font-extrabold leading-[1.06] tracking-[-0.028em]">
+        <h2 className="text-[32px] font-extrabold leading-[1.06] tracking-[-0.028em] sm:text-[42px]">
           Réservez votre place pour
           <br />
           <span className="inline-block">
@@ -172,7 +172,7 @@ export function Reservation() {
             className="absolute left-[-9999px] h-0 w-0 opacity-0"
           />
 
-          <label className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-faint sm:col-span-2">
+          <label className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-soft sm:col-span-2">
             <input
               type="checkbox"
               name="consentement"
@@ -203,7 +203,7 @@ export function Reservation() {
           </div>
         </form>
 
-        <div className="mt-4 text-[13px] text-faint">
+        <div className="mt-4 text-[13px] text-soft">
           10 places par session · pré-inscription sans engagement · réponse sous
           48 h.
         </div>

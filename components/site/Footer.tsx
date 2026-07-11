@@ -14,7 +14,7 @@ export function Footer() {
         <div className="flex items-center gap-2.5">
           <LogoMarssane size={28} />
           <span className="text-[15px] font-bold">Marssane</span>
-          <span className="text-[12.5px] text-faint">
+          <span className="text-[12.5px] text-slate">
             © 2026 ·{" "}
             <Link href="/mentions-legales" className="hover:text-canard">
               Mentions légales

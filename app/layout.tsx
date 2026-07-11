@@ -16,11 +16,21 @@ const splineSansMono = localFont({
   display: "swap",
 });
 
+const description =
+  "Marssane forme les dirigeants de PME et les professions libérales à l'utilisation de l'IA.";
+
 export const metadata: Metadata = {
   title: "Marssane — Formation IA",
-  description:
-    "Marssane forme les dirigeants de PME et les professions libérales à l'utilisation de l'IA.",
+  description,
   robots: { index: false, follow: false },
+  // og:image reste à produire (aucun asset visuel disponible à ce jalon).
+  openGraph: {
+    title: "Marssane — Formation IA",
+    description,
+    locale: "fr_FR",
+    type: "website",
+    siteName: "Marssane",
+  },
 };
 
 export default function RootLayout({

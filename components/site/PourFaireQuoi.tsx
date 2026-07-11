@@ -12,14 +12,15 @@ export function PourFaireQuoi() {
       id="usages"
       className="relative isolate mx-auto max-w-[1180px] px-10 pb-2 pt-[100px]"
     >
-      {/* Décorations motifFond (décoratives) */}
+      {/* Décorations motifFond (décoratives) — positions px : masquées sous lg
+          pour ne pas déborder de la fenêtre à 360px (cf. autres sections). */}
       <span
         aria-hidden
-        className="absolute left-[15.25px] top-0 -z-[1] h-[52px] w-[1.5px] bg-repere"
+        className="absolute left-[15.25px] top-0 -z-[1] hidden h-[52px] w-[1.5px] bg-repere lg:block"
       />
       <span
         aria-hidden
-        className="absolute left-4 top-[51.25px] -z-[1] h-[1.5px] w-[520px]"
+        className="absolute left-4 top-[51.25px] -z-[1] hidden h-[1.5px] w-[520px] lg:block"
         style={{
           backgroundImage:
             "repeating-linear-gradient(90deg,#C4CBD2 0 8px,rgba(196,203,210,0) 8px 15px)",
@@ -28,17 +29,17 @@ export function PourFaireQuoi() {
       <PlusMark
         variant="turquoise"
         size={19}
-        className="absolute left-[547px] top-[52px] -z-[1] -translate-x-1/2 -translate-y-1/2"
+        className="absolute left-[547px] top-[52px] -z-[1] hidden -translate-x-1/2 -translate-y-1/2 lg:block"
       />
       <span
         aria-hidden
-        className="absolute left-[546.25px] top-[63px] -z-[1] h-[34px] w-[1.5px] bg-repere"
+        className="absolute left-[546.25px] top-[63px] -z-[1] hidden h-[34px] w-[1.5px] bg-repere lg:block"
       />
-      <PlusMark size={16} className="absolute right-[150px] top-[56px]" />
+      <PlusMark size={16} className="absolute right-[150px] top-[56px] hidden lg:block" />
 
       <div className="max-w-[680px]">
         <Kicker>Pour faire quoi · le quotidien d&apos;un cabinet ou d&apos;une PME</Kicker>
-        <h2 className="mt-[14px] text-[38px] font-extrabold leading-[1.08] tracking-[-0.025em]">
+        <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
           L&apos;IA, d&apos;accord. Mais pour faire quoi ?
         </h2>
         <p className="mt-4 text-[16.5px] leading-[1.58] text-body">
