@@ -136,8 +136,9 @@ body,
    Uniquement hors reduced-motion ; sinon (reduce) aucune règle ici ne
    s'applique et la modale s'ouvre complète et immédiatement utilisable (les
    styles de base des éléments = état final visible).
-   Replay : .reservation-seq est remonté (key=runId) à chaque `toggle` d'ouverture
-   côté React, ce qui relance les animations depuis leur frame 0. Le `both` de
+   Replay : .reservation-seq est remonté (key=runId) à chaque ouverture (détectée
+   côté React par un MutationObserver sur l'attribut [open] du <dialog>), ce qui
+   relance les animations depuis leur frame 0. Le `both` de
    fill-mode garde les éléments à leur frame 0 (invisibles) pendant leur delay,
    donc rien ne « flashe » avant son tour. Les éléments restent focusables et
    cliquables pendant l'animation (opacité seule) : un utilisateur pressé peut

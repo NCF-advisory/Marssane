@@ -45,10 +45,18 @@ export function ReservationDialog({
 
   /**
    * Rejoue la séquence d'entrée à chaque ouverture. L'attribut `[open]` seul ne
-   * relance pas des animations CSS sur un nœud qui reste monté ; on écoute donc
-   * l'événement natif `toggle` du <dialog> et on incrémente `runId`, utilisé
-   * comme `key` sur le conteneur .reservation-seq → React le remonte, ce qui
-   * relance proprement toutes les animations depuis leur frame 0.
+   * relance pas des animations CSS sur un nœud qui reste monté ; on incrémente
+   * donc `runId`, utilisé comme `key` sur le conteneur .reservation-seq → React
+   * le remonte, ce qui relance proprement toutes les animations depuis leur
+   * frame 0.
+   *
+   * Détection de l'ouverture : un `MutationObserver` sur l'attribut `open` du
+   * <dialog>. `showModal()` pose cet attribut, `close()` le retire → l'observer
+   * se déclenche à chaque bascule ; on n'incrémente que quand `dialog.open`
+   * devient vrai. Ce choix (plutôt que l'événement natif `toggle`, récent et
+   * inégalement supporté — absent sur d'anciens WebKit/Safari, ce qui figeait la
+   * modale à son état final) est universellement supporté : MutationObserver est
+   * disponible dans tous les navigateurs cibles depuis 2012.
    *
    * L'état du formulaire (valeurs, erreurs) est porté par `useActionState` sur
    * CE composant (hors du sous-arbre remonté) : il survit au remontage — les
@@ -58,11 +66,11 @@ export function ReservationDialog({
   useEffect(() => {
     const dialog = ref.current;
     if (!dialog) return;
-    const onToggle = () => {
+    const observer = new MutationObserver(() => {
       if (dialog.open) setRunId((n) => n + 1);
-    };
-    dialog.addEventListener("toggle", onToggle);
-    return () => dialog.removeEventListener("toggle", onToggle);
+    });
+    observer.observe(dialog, { attributeFilter: ["open"] });
+    return () => observer.disconnect();
   }, []);
 
   const close = () => ref.current?.close();
