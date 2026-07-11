@@ -47,7 +47,9 @@ export function Scene5Cas3({ local, fps }: { local: number; fps: number }) {
         }}
       >
         <Kicker>Cas 03</Kicker>
-        <Titre size={100}>Dicter un courrier</Titre>
+        <Titre size={100} style={{ textAlign: "center" }}>
+          Dicter un courrier
+        </Titre>
       </div>
 
       {/* Forme d'onde vocale sobre */}

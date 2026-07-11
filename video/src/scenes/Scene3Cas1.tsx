@@ -40,7 +40,9 @@ export function Scene3Cas1({ local, fps }: { local: number; fps: number }) {
         }}
       >
         <Kicker>Cas 01</Kicker>
-        <Titre size={100}>Trier vos mails</Titre>
+        <Titre size={100} style={{ textAlign: "center" }}>
+          Trier vos mails
+        </Titre>
       </div>
 
       {/* Chiffre géant */}

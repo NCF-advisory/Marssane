@@ -47,7 +47,9 @@ export function Scene4Cas2({ local }: { local: number; fps: number }) {
         }}
       >
         <Kicker>Cas 02</Kicker>
-        <Titre size={100}>Résumer un dossier</Titre>
+        <Titre size={100} style={{ textAlign: "center" }}>
+          Résumer un dossier
+        </Titre>
       </div>
 
       <Card style={{ width: 780 }} shadow={SHADOW.hero}>
@@ -116,25 +118,34 @@ export function Scene4Cas2({ local }: { local: number; fps: number }) {
             ))}
           </div>
 
-          {/* Mention */}
+          {/* Mention (ligne pleine largeur) + source dessous à droite */}
           <div
             style={{
               marginTop: 30,
               display: "flex",
-              justifyContent: "space-between",
-              alignItems: "baseline",
+              flexDirection: "column",
+              gap: 10,
               opacity: noteOpacity,
             }}
           >
-            <span style={{ fontFamily: FONT.sans, fontSize: 32, color: C.faint }}>
+            <span
+              style={{
+                fontFamily: FONT.sans,
+                fontSize: 32,
+                color: C.faint,
+                whiteSpace: "nowrap",
+              }}
+            >
               chaque point renvoie à sa page
             </span>
             <span
               style={{
+                alignSelf: "flex-end",
                 fontFamily: FONT.mono,
                 fontWeight: 600,
                 fontSize: 32,
                 color: C.inkEcume,
+                whiteSpace: "nowrap",
               }}
             >
               source : p. 17

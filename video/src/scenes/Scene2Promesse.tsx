@@ -8,8 +8,10 @@ import { ramp, pop, easeOut } from "../anim";
  * « + » turquoise qui pop. Wording strictement identique à la maquette.
  */
 export function Scene2Promesse({ local, fps }: { local: number; fps: number }) {
-  const reveal = ramp(local, 22, 58) * 100; // % révélé du surlignage
-  const plus = pop(local, fps, 56);
+  // Le titre doit être COMPLET à la frame du poster (157 = local 57) :
+  // le surlignage se déploie puis le « + » pop, tout terminé avant local ~50.
+  const reveal = ramp(local, 18, 44) * 100; // % révélé du surlignage
+  const plus = pop(local, fps, 30);
   const titleY = interpolate(local, [0, 22], [26, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -42,7 +44,7 @@ export function Scene2Promesse({ local, fps }: { local: number; fps: number }) {
             style={{
               background: C.canard,
               color: "#fff",
-              padding: "0 0.26em 0.05em",
+              padding: "0 0.2em 0.05em",
               clipPath: `inset(0 ${100 - reveal}% 0 0)`,
             }}
           >
@@ -51,7 +53,7 @@ export function Scene2Promesse({ local, fps }: { local: number; fps: number }) {
           <span
             style={{
               position: "absolute",
-              right: "-0.62em",
+              right: "-0.56em",
               top: "-0.5em",
               color: C.turquoise,
               fontWeight: 500,
@@ -65,7 +67,7 @@ export function Scene2Promesse({ local, fps }: { local: number; fps: number }) {
             +
           </span>
         </span>
-        .
+        {"."}
       </h1>
     </AbsoluteFill>
   );
