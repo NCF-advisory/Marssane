@@ -4,6 +4,7 @@ import { Footer } from "@/components/site/Footer";
 import { Formation } from "@/components/site/Formation";
 import { Hero } from "@/components/site/Hero";
 import { Nav } from "@/components/site/Nav";
+import { OutilsIA } from "@/components/site/OutilsIA";
 import { PourFaireQuoi } from "@/components/site/PourFaireQuoi";
 import { PourQui } from "@/components/site/PourQui";
 import { Reservation } from "@/components/site/Reservation";
@@ -28,6 +29,7 @@ export default async function Home() {
         <PourFaireQuoi />
         <CasConcrets />
         <PourQui />
+        <OutilsIA />
         <Formation />
         <AllerPlusLoin />
         <Reservation mention={mention} />
