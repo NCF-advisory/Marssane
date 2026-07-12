@@ -70,15 +70,9 @@ export default function FormationsPage() {
               vos propres cas : vous montez en autonomie, niveau après niveau.
             </p>
             <div className="mt-[30px] flex flex-wrap items-center gap-4">
-              <Link
-                href="/#contact"
-                className="inline-flex items-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-base font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark"
-              >
+              <Button variant="primary" href="/#contact" arrow>
                 Réserver ma place
-                <span aria-hidden className="text-[1.1em] leading-none">
-                  →
-                </span>
-              </Link>
+              </Button>
               <Button variant="link" href="#parcours" arrow>
                 Voir le parcours
               </Button>

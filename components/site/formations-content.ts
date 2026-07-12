@@ -28,8 +28,10 @@ export type Formation = {
   compteur: string;
   /** Titre de la section détaillée. */
   titre: string;
-  /** Promesse « je saurai » (plan). */
+  /** Promesse « je saurai » (plan) — section détaillée. */
   promesse: string;
+  /** Promesses courtes sans jargon pour la carte de parcours (kit Niveaux). */
+  promesseCarte: string[];
   /** Modules (plan) — « Module N : titre — description ». */
   modules: string[];
   /** Déroulé horodaté (plan) — « HH:MM – HH:MM — titre — détails ». */
@@ -56,6 +58,10 @@ export const FORMATIONS: Formation[] = [
     titre: "Installer l'IA et trier ses mails, en une journée.",
     promesse:
       "À la fin de la formation, je saurai installer Claude sur mon ordinateur, l'utiliser au quotidien avec Cowork, et créer mon premier skill pour automatiser le tri de mes mails.",
+    promesseCarte: [
+      "Je comprends ce que l'IA peut faire pour mon métier",
+      "Je rédige des demandes qui donnent de bons résultats",
+    ],
     modules: [
       "Module 1 : Intégrer Claude à son ordinateur — je saurai installer et connecter Claude à mes outils (ce qu'est Claude, ce qu'il peut / ne peut pas faire ; installation guidée ; connexion aux mails et dossiers ; point confidentialité).",
       "Module 2 : Travailler avec Cowork — je saurai confier des tâches concrètes à Claude sur mes fichiers et mes mails (lire et résumer un document, chercher dans un dossier, rédiger un courrier ; bien formuler une demande et corriger Claude).",
@@ -75,7 +81,7 @@ export const FORMATIONS: Formation[] = [
     prerequis: [
       "Abonnement Claude Pro minimum (20 €/mois) actif — à souscrire avant la formation, pas le jour même",
       "Application Claude installée sur l'ordinateur qui sera apporté",
-      "Poste géré par une DSI : faire valider en amont l'installation et l'usage de Claude Cowork (accès fichiers et messagerie) ; sans cette validation, la pratique sur ses propres outils est impossible — point à signaler explicitement dans le mail d'inscription",
+      "Poste géré par une DSI : faire valider en amont l'installation et l'usage de Claude Cowork (accès fichiers et messagerie) ; sans cette validation, la pratique sur ses propres outils est impossible",
       "Droits d'administrateur ou identifiants nécessaires disponibles",
       "Accès à sa messagerie depuis l'ordinateur apporté",
     ],
@@ -95,6 +101,10 @@ export const FORMATIONS: Formation[] = [
     titre: "Connecter l'IA à ses outils métiers.",
     promesse:
       "À la fin de la formation, je saurai connecter Claude à mes outils métiers via MCP, faire travailler plusieurs outils IA ensemble, et piloter le tout depuis VS Code.",
+    promesseCarte: [
+      "Je branche l'IA sur mes documents et mes outils",
+      "J'automatise mes tâches répétitives en sécurité",
+    ],
     modules: [
       "Module 1 : Les MCP — je saurai brancher Claude sur mes outils (agenda, mails, outil métier) : le concept en 15 min (une prise universelle entre Claude et vos outils), installation guidée de 2 connecteurs, point confidentialité.",
       "Module 2 : Plusieurs outils IA en même temps — je saurai orchestrer une chaîne d'outils IA complémentaires : transcription d'un rendez-vous → analyse Claude → génération de document ; comparer les outils (lequel pour quoi).",
@@ -134,6 +144,10 @@ export const FORMATIONS: Formation[] = [
     titre: "Créer des agents qui travaillent seuls.",
     promesse:
       "À la fin de la formation, je saurai créer des agents qui travaillent seuls — tâches planifiées, sub-agents, workflows complets — et les garder sous contrôle.",
+    promesseCarte: [
+      "Je déploie des cas d'usage dans mon équipe",
+      "Je pilote qualité, coûts et confidentialité",
+    ],
     modules: [
       "Module 1 : Du skill à l'agent — je saurai programmer une automatisation récurrente qui tourne sans moi : la différence (le skill s'exécute à la demande, l'agent décide et enchaîne) ; tâches planifiées.",
       "Module 2 : Sub-agents et workflows — je saurai découper une mission en agents spécialisés qui coopèrent (un cherche, un rédige, un vérifie) ; construction guidée d'un workflow multi-étapes.",
@@ -167,6 +181,7 @@ export const FORMATIONS: Formation[] = [
 /** Encart « Le cadre » — commun aux trois niveaux (format public de la journée). */
 export const CADRE_COMMUN: { label: string; valeur: string }[] = [
   { label: "Durée", valeur: "1 journée · 9 h – 17 h" },
+  { label: "Groupe", valeur: "mixte, toutes professions" },
   { label: "Effectif", valeur: "10 places max." },
   { label: "Matériel", valeur: "votre ordinateur" },
 ];

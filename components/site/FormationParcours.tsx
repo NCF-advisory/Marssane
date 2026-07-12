@@ -95,7 +95,18 @@ function ParcoursCard({ formation }: { formation: Formation }) {
 
       <dl className="mt-5 flex flex-col gap-4 border-t border-hairline pt-5">
         <CardField label="Ce que je saurai faire">
-          {formation.promesse}
+          <ul className="flex flex-col gap-1.5">
+            {formation.promesseCarte.map((item) => (
+              <li key={item} className="flex gap-2">
+                <span
+                  aria-hidden
+                  className="mt-[7px] h-[5px] w-[5px] flex-none rounded-full"
+                  style={{ backgroundColor: formation.accent }}
+                />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </CardField>
         <CardField label="Ce que je remporte">{formation.livrable}</CardField>
         <CardField label="Prérequis d'entrée">

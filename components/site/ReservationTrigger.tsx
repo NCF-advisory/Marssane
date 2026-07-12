@@ -24,7 +24,13 @@ export function ReservationTrigger({ className, children }: ReservationTriggerPr
         const dialog = document.getElementById(
           "reservation-dialog",
         ) as HTMLDialogElement | null;
-        dialog?.showModal();
+        if (dialog) {
+          dialog.showModal();
+        } else {
+          // Pages sans modale (/formations, /merci…) : repli vers la section
+          // réservation de la landing plutôt qu'un clic sans effet.
+          window.location.href = "/#contact";
+        }
       }}
     >
       {children}
