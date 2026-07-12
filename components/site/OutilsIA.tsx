@@ -140,7 +140,7 @@ const OUTILS: {
     brandHex: "#D97757",
     badge: true,
     texte:
-      "Considéré comme l'IA la plus efficace en entreprise en ce moment. Rédaction soignée, sérieux sur les documents longs — c'est lui que vous installerez.",
+      "Considéré comme l'IA la plus adoptée en entreprise. Rédaction soignée, sérieux sur les documents longs — c'est lui que vous installerez.",
   },
   {
     nom: "Mistral",
