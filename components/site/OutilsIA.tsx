@@ -93,14 +93,14 @@ const OUTILS: {
     editeur: "Mistral AI · France",
     logo: <LogoMistral />,
     texte:
-      "L'acteur français. Une alternative européenne, adoptée par des administrations et des entreprises.",
+      "L'acteur français, avec son assistant Le Chat. Une alternative européenne, adoptée par des administrations et des entreprises.",
   },
   {
     nom: "GLM",
     editeur: "Z.ai · Chine",
     logo: <LogoGLM />,
     texte:
-      "L'un des grands modèles « ouverts » : son moteur peut s'installer sur ses propres serveurs.",
+      "L'un des grands modèles « ouverts » : son moteur peut s'installer sur vos propres serveurs.",
   },
 ];
 
@@ -121,6 +121,11 @@ export function OutilsIA() {
       <span
         aria-hidden
         className="absolute left-[15.25px] top-0 -z-[1] hidden h-[48px] w-[1.5px] bg-repere lg:block"
+      />
+      {/* Prolonge le trait continu à x=778.25px entre « Pour qui » et « La formation ». */}
+      <span
+        aria-hidden
+        className="absolute bottom-0 left-[778.25px] top-0 -z-[1] hidden w-[1.5px] bg-repere lg:block"
       />
       <PlusMark
         variant="turquoise"
