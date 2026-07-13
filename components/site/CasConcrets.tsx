@@ -3,8 +3,9 @@ import { BadgeEcume } from "@/components/ui/BadgeEcume";
 import { CheckItem } from "@/components/ui/CheckItem";
 
 /**
- * Les trois cas concrets (« Trier ses mails », « Analyser & résumer »,
- * « Rédiger des courriers »). Chaque cas : une grille 2 colonnes (texte + visuel)
+ * Les trois cas concrets (« Ses mails de bout en bout », « Synthétiser &
+ * préparer ses réunions », « Automatiser un process »). Chaque cas : une grille
+ * 2 colonnes (texte + visuel)
  * qui s'empile sous lg (texte d'abord, visuel ensuite). Les visuels sont des
  * compositions purement décoratives (aria-hidden) doublées d'un texte sr-only.
  *
@@ -150,23 +151,30 @@ function Cas1() {
       <GridDecor side="right" top={40} height={440} maskX="62%" />
       <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
         <div className="max-w-[450px]">
-          <BadgeEcume>01 · Trier ses mails</BadgeEcume>
+          <BadgeEcume>01</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
-            Vous ouvrez une boîte rangée, pas une pile.
+            Trier, prioriser, répondre à vos mails : votre boîte tenue en un
+            passage.
           </h3>
           <p className="mt-4 text-[16px] leading-[1.58] text-body">
-            Chaque matin, vos mails arrivent déjà classés : ce qui est urgent, ce
-            qui attend une réponse, ce qui se range tout seul. C&apos;est
-            l&apos;automatisation que vous construisez en fin de formation — sur
-            votre propre boîte.
+            Chaque matin, vos mails arrivent classés — urgent, à répondre, à
+            ranger — et les réponses courantes sont déjà rédigées dans votre ton,
+            prêtes à relire. C&apos;est l&apos;automatisation que vous construisez
+            en fin de formation, sur votre propre boîte.
           </p>
           <div className="mt-5 flex flex-col gap-[9px]">
             <CheckItem>
               Classé selon <b className="font-semibold">vos</b> priorités, pas des
               règles génériques
             </CheckItem>
-            <CheckItem>Rien n&apos;est supprimé — tout est rangé, retrouvable</CheckItem>
-            <CheckItem>Construit par vous, pas à pas, pendant l&apos;atelier final</CheckItem>
+            <CheckItem>
+              Les réponses récurrentes pré-rédigées dans votre ton — vous relisez,
+              vous envoyez
+            </CheckItem>
+            <CheckItem>
+              Rien ne part sans vous ; rien n&apos;est supprimé, tout reste
+              retrouvable
+            </CheckItem>
           </div>
         </div>
 
@@ -362,20 +370,22 @@ function Cas2() {
         </Visuel>
 
         <div className="order-first max-w-[450px] lg:order-last lg:justify-self-end">
-          <BadgeEcume>02 · Analyser &amp; résumer</BadgeEcume>
+          <BadgeEcume>02</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
-            42 pages posées sur votre bureau. L&apos;essentiel en 12 lignes.
+            Synthétiser vos documents et préparer vos réunions, dans votre ton.
           </h3>
           <p className="mt-4 text-[16px] leading-[1.58] text-body">
-            Un contrat, une liasse, un dossier : vous demandez une synthèse comme
-            vous le demanderiez à un collaborateur. Les points d&apos;attention
-            sont signalés, chacun renvoie à sa page — vous vérifiez à la source.
+            Un dossier, plusieurs documents, vos notes : vous demandez une
+            synthèse comme à un collaborateur, puis un rapport structuré dans
+            votre style, prêt pour la réunion. Les points d&apos;attention sont
+            signalés, chacun renvoie à sa source.
           </p>
           <div className="mt-5 flex flex-col gap-[9px]">
-            <CheckItem>La question se pose en français, pas en informatique</CheckItem>
-            <CheckItem>Chaque affirmation renvoie à la page source</CheckItem>
+            <CheckItem>La demande se formule en français, pas en informatique</CheckItem>
+            <CheckItem>Mise en forme et ton fidèles à vos rapports habituels</CheckItem>
             <CheckItem>
-              Vos documents restent sur votre poste — cadre expliqué en formation
+              Chaque affirmation renvoie à sa page source — vous vérifiez avant de
+              présenter
             </CheckItem>
           </div>
         </div>
@@ -401,24 +411,27 @@ function Cas3() {
       <GridDecor side="right" top={40} height={460} maskX="60%" />
       <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
         <div className="max-w-[450px]">
-          <BadgeEcume>03 · Rédiger des courriers</BadgeEcume>
+          <BadgeEcume>03</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
-            Vous dictez l&apos;intention. Le courrier s&apos;écrit dans votre ton.
+            Automatiser un process de votre travail.
           </h3>
           <p className="mt-4 text-[16px] leading-[1.58] text-body">
-            Une note vocale entre deux rendez-vous suffit : le brouillon arrive
-            structuré, appuyé sur le dossier, fidèle à vos formulations. Vous
-            relisez, vous ajustez, vous signez — rien ne part sans vous.
+            Une tâche que vous répétez chaque semaine, toujours les mêmes étapes :
+            en fin de formation, vous la transformez en un enchaînement qui tourne
+            pour vous. Vous choisissez le process, vous le construisez, il
+            s&apos;exécute — et si vous voulez aller plus loin, on
+            l&apos;implémente chez vous.
           </p>
           <div className="mt-5 flex flex-col gap-[9px]">
-            <CheckItem>Votre ton, vos formules — pas un texte générique</CheckItem>
-            <CheckItem>Appuyé sur les pièces du dossier concerné</CheckItem>
-            <CheckItem>Toujours un brouillon : vous relisez avant d&apos;envoyer</CheckItem>
+            <CheckItem>Relancer les factures impayées et les devis sans réponse</CheckItem>
+            <CheckItem>Collecter et classer les pièces d&apos;un nouveau dossier</CheckItem>
+            <CheckItem>Préparer le reporting mensuel à partir de vos fichiers</CheckItem>
           </div>
         </div>
 
+        {/* TODO : maquette à remplacer par la mini-vidéo « automatiser un process » (relances / pièces / reporting). */}
         <Visuel
-          alt="Illustration : une note vocale WhatsApp transformée en brouillon de courrier à valider."
+          alt="Illustration : un process répétitif transformé en enchaînement automatisé (relances, pièces, reporting)."
           className="lg:h-[452px]"
         >
           {/* Conversation WhatsApp */}
