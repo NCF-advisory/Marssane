@@ -10,15 +10,15 @@ const DEFAULT_OUT =
 const outDir = resolve(process.argv[2] ?? DEFAULT_OUT);
 mkdirSync(outDir, { recursive: true });
 
-// [frame, nom] — 6 séquences (30 fps, 900 frames).
+// [frame, nom] — 6 séquences (30 fps, 930 frames).
 const STILLS = [
   [56, "g1-logos"],
   [112, "g1-question"],
-  [250, "g2-pile"],
-  [350, "g3-colonnes"],
-  [555, "g4-tri"],
-  [700, "g6-cartes"],
-  [860, "g7-final"],
+  [280, "g2-pile"],
+  [380, "g3-colonnes"],
+  [585, "g4-tri"],
+  [730, "g6-cartes"],
+  [890, "g7-final"],
 ];
 
 for (const [frame, name] of STILLS) {

@@ -50,4 +50,4 @@ export const FONT = {
 
 /** Timeline (30 fps). Fenêtres [start, end] en frames, avec crossfades. */
 export const FPS = 30;
-export const DURATION = 900; // 30,0 s
+export const DURATION = 930; // 31,0 s

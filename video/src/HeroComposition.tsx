@@ -11,7 +11,7 @@ import { G6Cartes } from "./scenes/G6Cartes";
 import { G7Cta } from "./scenes/G7Cta";
 
 /**
- * Composition du héro (1920×1080, 30 fps, 900 frames = 30,0 s).
+ * Composition du héro (1920×1080, 30 fps, 930 frames = 31,0 s).
  *
  * Vidéo narrative de présentation, muette, guidée par le texte animé. Six
  * séquences enchaînées en crossfade court sur la toile (le brief G5 « compteur
@@ -28,12 +28,12 @@ import { G7Cta } from "./scenes/G7Cta";
  * dernière frame ≈ la première (toile nue), donc la boucle est sans à-coup.
  */
 const SCENES = [
-  { Comp: G1Hook, start: 0, inDur: 0, end: 126, outDur: 11, sub: null },
-  { Comp: G2Pile, start: 115, inDur: 11, end: 271, outDur: 11, sub: "Le quotidien : tout s'accumule" },
-  { Comp: G3Colonnes, start: 260, inDur: 11, end: 416, outDur: 11, sub: "Trois étapes, une seule journée" },
-  { Comp: G4Tri, start: 405, inDur: 11, end: 627, outDur: 11, sub: "Le tri des mails — construit par un participant" },
-  { Comp: G6Cartes, start: 616, inDur: 11, end: 760, outDur: 11, sub: "Formation, puis implémentation chez vous" },
-  { Comp: G7Cta, start: 749, inDur: 11, end: 900, outDur: 14, sub: null },
+  { Comp: G1Hook, start: 0, inDur: 0, end: 156, outDur: 11, sub: null },
+  { Comp: G2Pile, start: 145, inDur: 11, end: 301, outDur: 11, sub: "Le quotidien : tout s'accumule" },
+  { Comp: G3Colonnes, start: 290, inDur: 11, end: 446, outDur: 11, sub: "Trois étapes, une seule journée" },
+  { Comp: G4Tri, start: 435, inDur: 11, end: 657, outDur: 11, sub: "Le tri des mails — construit par un participant" },
+  { Comp: G6Cartes, start: 646, inDur: 11, end: 790, outDur: 11, sub: "Formation, puis implémentation chez vous" },
+  { Comp: G7Cta, start: 779, inDur: 11, end: 930, outDur: 14, sub: null },
 ] as const;
 
 const SAFE_LIFT = 38; // remontée des scènes sous-titrées, hors de la bande

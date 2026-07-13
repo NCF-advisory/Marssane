@@ -6,6 +6,7 @@ import { AiLogoGlyph } from "../components/AiLogo";
 
 const L1 = ["OK,", "l'IA", "c'est", "cool."];
 const L2 = ["Mais", "pour", "faire"]; // « quoi ? » traité à part (accent + rebond)
+const L3 = ["Et", "comment"]; // « faire ? » traité à part (accent + rebond)
 
 /** Un mot qui apparaît : opacité + légère montée, spring doux. */
 function Word({
@@ -42,10 +43,11 @@ function Word({
 }
 
 /**
- * G1 — Hook typographique (0–4,2 s). « OK, l'IA c'est cool. » s'écrit mot par
+ * G1 — Hook typographique (0–5,2 s). « OK, l'IA c'est cool. » s'écrit mot par
  * mot ; les logos des IA (Claude, ChatGPT, Mistral, GLM) apparaissent en dessous
  * en stagger rapide, puis s'estompent quand « Mais pour faire quoi ? » arrive,
- * « quoi ? » en canard avec un léger rebond.
+ * « quoi ? » en canard avec un léger rebond. Une seconde question « Et comment
+ * faire ? » suit juste après, « faire ? » en canard avec le même rebond.
  */
 export function G1Hook({ local, fps }: { local: number; fps: number }) {
   const logosOut = interpolate(local, [66, 82], [1, 0], {
@@ -55,6 +57,8 @@ export function G1Hook({ local, fps }: { local: number; fps: number }) {
   });
   const line2In = ramp(local, 74, 90);
   const q = Math.min(1.06, pop(local, fps, 82));
+  const line3In = ramp(local, 98, 114);
+  const q2 = Math.min(1.06, pop(local, fps, 106));
 
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
@@ -157,6 +161,45 @@ export function G1Hook({ local, fps }: { local: number; fps: number }) {
               quoi ?
             </span>
           </div>
+        </div>
+
+        {/* Deuxième question */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            gap: 22,
+            opacity: line3In,
+          }}
+        >
+          {L3.map((w, i) => (
+            <Word
+              key={w}
+              local={local}
+              fps={fps}
+              delay={98 + i * 4}
+              size={72}
+              color={C.ink}
+            >
+              {w}
+            </Word>
+          ))}
+          <span
+            style={{
+              fontFamily: FONT.sans,
+              fontWeight: 800,
+              fontSize: 90,
+              letterSpacing: "-0.02em",
+              color: C.canard,
+              opacity: Math.min(1, q2),
+              transform: `translateY(${(1 - Math.min(1, q2)) * 22}px) scale(${
+                0.9 + 0.1 * q2
+              })`,
+              transformOrigin: "left bottom",
+            }}
+          >
+            faire ?
+          </span>
         </div>
       </div>
     </AbsoluteFill>
