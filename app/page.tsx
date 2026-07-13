@@ -24,7 +24,7 @@ export default async function Home() {
     <>
       <Nav />
       <main>
-        <Hero mention={mention} />
+        <Hero />
         <PourFaireQuoi />
         <CasConcrets />
         <PourQui />

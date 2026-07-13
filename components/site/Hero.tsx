@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/Button";
 import { GridBackground } from "@/components/ui/GridBackground";
 import { Kicker } from "@/components/ui/Kicker";
 import { PlusMark } from "@/components/ui/PlusMark";
@@ -6,13 +5,13 @@ import { HeroMedia } from "./HeroMedia";
 import { ReservationTrigger } from "./ReservationTrigger";
 
 /**
- * Héro « formation » : colonne texte (kicker, H1, sous-titre, CTA, mention),
+ * Héro « formation » : colonne texte (kicker, H1, sous-titre, CTA),
  * média à droite (HeroMedia) et bandeau chiffres sous la grille. Fond quadrillé
  * masqué + décorations « motifFond » de la maquette.
  */
-export function Hero({ mention }: { mention?: string | null }) {
+export function Hero() {
   return (
-    <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-10 pt-[74px]">
+    <section className="relative isolate mx-auto max-w-[1260px] px-10 pb-10 pt-[74px]">
       <GridBackground
         className="-z-[1]"
         mask="linear-gradient(to bottom, #000 0 58%, transparent 94%)"
@@ -31,7 +30,7 @@ export function Hero({ mention }: { mention?: string | null }) {
       <PlusMark size={16} className="absolute left-14 top-11" />
       <PlusMark size={16} className="absolute right-[120px] top-5" />
 
-      <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.05fr_1fr]">
+      <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.9fr_1.2fr]">
         <div className="max-w-[530px]">
           <Kicker>
             Formation IA · dirigeants de PME, avocats, notaires,
@@ -64,13 +63,6 @@ export function Hero({ mention }: { mention?: string | null }) {
                 →
               </span>
             </ReservationTrigger>
-            <Button variant="link" href="#formation" arrow>
-              Voir le déroulé de la journée
-            </Button>
-          </div>
-          <div className="mt-4 text-[13px] text-slate">
-            {mention ??
-              "Pré-inscription à la prochaine session · 10 places · sans engagement."}
           </div>
         </div>
 
