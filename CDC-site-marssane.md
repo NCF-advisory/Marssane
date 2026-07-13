@@ -248,7 +248,7 @@ Livrables : code source (repo Git), URL de preview Vercel, accès admin, ce CDC 
 
 ## 10. Points en suspens (hors périmètre du développement, à trancher côté Marssane)
 
-- **Nom de domaine** et orthographe définitive « Marssane / Marsanne » (INPI, domaine, adresse email dédiée).
+- ~~Orthographe définitive~~ **Acté le 12/07/2026 : « Marssane »**. Restent : nom de domaine, INPI, adresse email dédiée.
 - **Prix de la formation** (affiché ou non sur la page).
 - **Date et lieu de la première session.**
 - **Production de la vidéo héro** (brief à rédiger).
