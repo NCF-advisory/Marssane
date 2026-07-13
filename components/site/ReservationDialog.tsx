@@ -99,7 +99,7 @@ export function ReservationDialog({
         // Clic sur le backdrop : la cible est le <dialog> lui-même.
         if (event.target === ref.current) close();
       }}
-      className="relative flex max-h-[calc(100vh-64px)] w-[640px] max-w-[calc(100vw-32px)] flex-col overflow-hidden rounded-card border-0 bg-surface p-0 shadow-hero backdrop:bg-[rgba(14,14,18,0.55)]"
+      className="open:flex max-h-[calc(100vh-64px)] w-[640px] max-w-[calc(100vw-32px)] flex-col overflow-hidden rounded-card border-0 bg-surface p-0 shadow-hero backdrop:bg-[rgba(14,14,18,0.55)]"
     >
       <button
         type="button"
