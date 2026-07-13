@@ -7,4 +7,8 @@
  * dans `public/` et de renseigner cet objet — aucun composant à modifier.
  */
 export const heroVideo: { mp4: string; webm?: string; poster: string } | null =
-  null;
+  {
+    mp4: "/video/hero.mp4",
+    webm: "/video/hero.webm",
+    poster: "/video/hero-poster.jpg",
+  };

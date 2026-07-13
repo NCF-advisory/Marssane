@@ -1,62 +1,112 @@
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate } from "remotion";
+import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import "./fonts";
-import { C } from "./theme";
+import { C, FONT } from "./theme";
 import { sceneOpacity } from "./anim";
 import { Toile } from "./components/Toile";
-import { DemoInbox } from "./scenes/DemoInbox";
-import { DemoDocument } from "./scenes/DemoDocument";
-import { DemoLetter } from "./scenes/DemoLetter";
+import { G1Hook } from "./scenes/G1Hook";
+import { G2Pile } from "./scenes/G2Pile";
+import { G3Colonnes } from "./scenes/G3Colonnes";
+import { G4Tri } from "./scenes/G4Tri";
+import { G6Cartes } from "./scenes/G6Cartes";
+import { G7Cta } from "./scenes/G7Cta";
 
 /**
- * Composition du héro (1080×1350, 30 fps, 720 frames = 24 s).
+ * Composition du héro (1920×1080, 30 fps, 900 frames = 30,0 s).
  *
- * « Le texte promet, la vidéo prouve » : trois démos d'interface enchaînées en
- * fondu, aucun texte narratif ni carton titre. Le seul texte est celui des
- * interfaces (mails, synthèse, courrier).
+ * Vidéo narrative de présentation, muette, guidée par le texte animé. Six
+ * séquences enchaînées en crossfade court sur la toile (le brief G5 « compteur
+ * de preuve » est retiré tant que le chiffre n'est pas mesuré) :
+ *   G1 Hook · G2 Pile · G3 Colonnes · G4 Tri · G6 Cartes · G7 CTA.
  *
- * Boucle parfaite : la démo « boîte » (D1) ancre l'état initial à la frame 0.
- * En fin de timeline, une reprise de D1 dans son état initial (localForcé = 0)
- * revient en fondu par-dessus le courrier — donc la dernière frame ≡ frame 0.
+ * Une bande de sous-titres identique en bas d'écran affiche, à chaque nouvelle
+ * séquence (sauf le hook et le final), une puce canard + une ligne courte. Les
+ * scènes concernées sont légèrement remontées (SAFE_LIFT) pour ne jamais
+ * empiéter sur cette bande.
+ *
+ * Boucle : G1 démarre pleine dès la frame 0 sur une toile quasi vide (les mots
+ * n'apparaissent qu'ensuite) ; G7 se fond vers la toile en toute fin. La
+ * dernière frame ≈ la première (toile nue), donc la boucle est sans à-coup.
  */
+const SCENES = [
+  { Comp: G1Hook, start: 0, inDur: 0, end: 126, outDur: 11, sub: null },
+  { Comp: G2Pile, start: 115, inDur: 11, end: 271, outDur: 11, sub: "Le quotidien : tout s'accumule" },
+  { Comp: G3Colonnes, start: 260, inDur: 11, end: 416, outDur: 11, sub: "Trois étapes, une seule journée" },
+  { Comp: G4Tri, start: 405, inDur: 11, end: 627, outDur: 11, sub: "Le tri des mails — construit par un participant" },
+  { Comp: G6Cartes, start: 616, inDur: 11, end: 760, outDur: 11, sub: "Formation, puis implémentation chez vous" },
+  { Comp: G7Cta, start: 749, inDur: 11, end: 900, outDur: 14, sub: null },
+] as const;
+
+const SAFE_LIFT = 38; // remontée des scènes sous-titrées, hors de la bande
+
+/** Bande de sous-titres identique sur toutes les scènes concernées. */
+function SubtitleBand({ text, opacity }: { text: string; opacity: number }) {
+  return (
+    <AbsoluteFill
+      style={{
+        alignItems: "center",
+        justifyContent: "flex-end",
+        paddingBottom: 66,
+        opacity,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+        <span
+          style={{
+            width: 18,
+            height: 18,
+            borderRadius: 5,
+            background: C.canard,
+            flex: "none",
+          }}
+        />
+        <span
+          style={{
+            fontFamily: FONT.sans,
+            fontWeight: 600,
+            fontSize: 34,
+            letterSpacing: "-0.01em",
+            color: C.body,
+          }}
+        >
+          {text}
+        </span>
+      </div>
+    </AbsoluteFill>
+  );
+}
+
 export function HeroComposition() {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-
-  // Fenêtres (frames). D1 est pleine dès la frame 0 (in = 0) = ancre de boucle.
-  const opInbox = sceneOpacity(frame, 0, 0, 260, 22);
-  const opDoc = sceneOpacity(frame, 248, 20, 486, 20);
-  const opLetter = sceneOpacity(frame, 474, 20, 706, 30);
-
-  // Reprise de la boîte (état initial) pour raccorder à la frame 0.
-  const opLoop = interpolate(frame, [688, 719], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
 
   return (
     <AbsoluteFill style={{ backgroundColor: C.toile }}>
       <Toile />
 
-      {opInbox > 0.001 && (
-        <AbsoluteFill style={{ opacity: opInbox }}>
-          <DemoInbox local={frame} fps={fps} />
-        </AbsoluteFill>
-      )}
-      {opDoc > 0.001 && (
-        <AbsoluteFill style={{ opacity: opDoc }}>
-          <DemoDocument local={frame - 248} fps={fps} />
-        </AbsoluteFill>
-      )}
-      {opLetter > 0.001 && (
-        <AbsoluteFill style={{ opacity: opLetter }}>
-          <DemoLetter local={frame - 474} fps={fps} />
-        </AbsoluteFill>
-      )}
-      {opLoop > 0.001 && (
-        <AbsoluteFill style={{ opacity: opLoop }}>
-          <DemoInbox local={0} fps={fps} />
-        </AbsoluteFill>
-      )}
+      {SCENES.map(({ Comp, start, inDur, end, outDur, sub }, i) => {
+        const opacity = sceneOpacity(frame, start, inDur, end, outDur);
+        if (opacity <= 0.001) return null;
+        const lift = sub ? -SAFE_LIFT : 0;
+        return (
+          <AbsoluteFill key={i} style={{ opacity, transform: `translateY(${lift}px)` }}>
+            <Comp local={frame - start} fps={fps} />
+          </AbsoluteFill>
+        );
+      })}
+
+      {/* Bande de sous-titres — fenêtre resserrée pour ne pas se chevaucher
+          entre deux scènes pendant le crossfade. */}
+      {SCENES.map(({ start, end, sub }, i) => {
+        if (!sub) return null;
+        const op = interpolate(
+          frame,
+          [start + 16, start + 28, end - 22, end - 10],
+          [0, 1, 1, 0],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+        );
+        if (op <= 0.001) return null;
+        return <SubtitleBand key={i} text={sub} opacity={op} />;
+      })}
     </AbsoluteFill>
   );
 }

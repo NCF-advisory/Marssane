@@ -1,25 +1,24 @@
-// Rend 8 PNG de revue (1 par scène + 2 intermédiaires) dans un dossier de sortie.
+// Rend 8 PNG de revue (1 par séquence + 2 intermédiaires) dans un dossier de sortie.
 // Usage : node scripts/render-stills.mjs [dossier_de_sortie]
 import { execFileSync } from "node:child_process";
 import { mkdirSync } from "node:fs";
 import { resolve } from "node:path";
 
 const DEFAULT_OUT =
-  "/private/tmp/claude-501/-Users-ncf-Documents-Marssane-Site-Marssane/7704e8bc-8e2e-4a78-b75b-8e2c493a1c4f/scratchpad/video-stills";
+  "/private/tmp/claude-501/-Users-ncf-Documents-Marssane-Site-Marssane/ebfa84cb-4a95-4333-bc23-9c3972ac1964/scratchpad/video-stills";
 
 const outDir = resolve(process.argv[2] ?? DEFAULT_OUT);
 mkdirSync(outDir, { recursive: true });
 
-// [frame, nom] — 3 démos d'interface (30 fps, 720 frames).
+// [frame, nom] — 6 séquences (30 fps, 900 frames).
 const STILLS = [
-  [20, "d1-boite-brute"],
-  [95, "d1-tri-en-cours"],
-  [170, "d1-boite-triee"],
-  [290, "d2-document-42p"],
-  [430, "d2-synthese-12l"],
-  [520, "d3-onde-vocale"],
-  [660, "d3-courrier"],
-  [702, "loop-raccord"],
+  [56, "g1-logos"],
+  [112, "g1-question"],
+  [250, "g2-pile"],
+  [350, "g3-colonnes"],
+  [555, "g4-tri"],
+  [700, "g6-cartes"],
+  [860, "g7-final"],
 ];
 
 for (const [frame, name] of STILLS) {

@@ -34,7 +34,7 @@ export function HeroVideo({ video }: HeroVideoProps) {
 
   return (
     <video
-      className="aspect-[4/5] w-full rounded-card object-cover shadow-hero"
+      className="aspect-[16/10] w-full rounded-card object-cover shadow-hero"
       poster={video.poster}
       autoPlay={!reduced}
       controls={reduced}
