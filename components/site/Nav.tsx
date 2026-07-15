@@ -2,10 +2,12 @@ import Link from "next/link";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
 import { ReservationTrigger } from "./ReservationTrigger";
 
+// Ancres préfixées « /# » pour rester valides depuis les pages secondaires
+// (ex. /formations) ; « Les formations » pointe vers sa page dédiée.
 const links = [
-  { href: "#usages", label: "Pour faire quoi" },
-  { href: "#formation", label: "Les formations" },
-  { href: "#implementation", label: "Je veux implémenter l'IA" },
+  { href: "/#usages", label: "Pour faire quoi" },
+  { href: "/formations", label: "Les formations" },
+  { href: "/#implementation", label: "Je veux implémenter l'IA" },
 ];
 
 /**
