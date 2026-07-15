@@ -105,6 +105,107 @@ scènes gardent leur contenu dans une marge sûre), avec autoplay muet en boucle
 et respecte `prefers-reduced-motion` (poster + contrôles natifs). La colonne
 média du héro (`components/site/Hero.tsx`) a été élargie pour un média plus grand.
 
+## Vidéo Cas 1 — « Trier, prioriser, répondre à vos mails »
+
+Composition `Cas1Mails` : **1350×1080 (5:4)**, **30 fps**, **420 frames = 14 s**,
+muette, en boucle sans à-coup (frame 419 ≈ frame 0 : boîte vide à 08:02). Une
+seule carte « boîte mail » plein cadre qui vit sur la toile, **contenu générique
+PME** — **texte d'interface uniquement** (objets, badges, compteurs, horloge),
+aucune phrase narrative.
+
+C'est **Claude (l'IA) qui agit** : présence visible via son logo terracotta
+(`CLAUDE_TERRA = #D97757`, constante **locale** à la scène — la charte du site ne
+bouge pas) et ses libellés (« Claude · tri en cours », « brouillon rédigé par
+Claude », « triée par Claude »). Deux acteurs distincts : Claude (terracotta)
+trie et rédige ; l'humain (pointeur souris noir) valide. Les badges de tri
+gardent leurs couleurs de charte — le terracotta reste réservé à Claude. Quatre
+plans enchaînés dans la même carte :
+
+| Plan | Frames | Contenu |
+|---|---|---|
+| **1** Accumulation | 0–90 | Les mails PME tombent en stagger (intervalle qui se resserre), compteur 41 → 47 |
+| **2** Claude trie | 90–200 | Pastille « Claude · tri en cours » ; un balayage terracotta descend la liste et les badges (Urgent · À traiter · En attente) poppent dans son sillage ; le reste se replie dans « Classé · 41 » |
+| **3** Claude rédige, l'humain décide | 200–326 | Le mail « Client · Durand » s'ouvre : chip « brouillon rédigé par Claude », réponse à la machine à écrire (caret terracotta), puis le pointeur humain clique « Relire & envoyer » → puce `envoyé` |
+| **4** Résultat | 326–420 | Liseré turquoise, chip « triée par Claude » (mini-logo terracotta), horloge 08:03, pied « à traiter ce matin · 6 / 47 », puis retour à l'état vide pour boucler |
+
+Rendus (sorties dans le `public/` du site) :
+
+```bash
+npm run render:cas1:mp4     # -> ../public/video/cas1.mp4   (H.264, CRF 30)
+npm run render:cas1:webm    # -> ../public/video/cas1.webm  (VP9, CRF 36)
+npm run render:cas1:poster  # -> ../public/video/cas1-poster.jpg (frame 370, état trié)
+npm run render:cas1         # les trois ci-dessus
+```
+
+Poids : mp4 ~1,0 Mo + webm ~0,8 Mo + poster ~0,1 Mo ≈ **1,9 Mo**.
+
+Branchement : `lib/site-config.ts` (`cas1Video`) pointe vers les trois fichiers ;
+`components/site/CasVideo.tsx` affiche le média en `aspect-[5/4]` (autoplay muet
+en boucle, `prefers-reduced-motion` → poster + contrôles natifs). Tant que
+`cas1Video` vaut `null`, le cas 1 garde son visuel statique.
+
+## Vidéo Cas 2 — « Synthétiser vos documents et préparer vos réunions »
+
+Composition `Cas2Synthese` : **1350×1080 (5:4)**, **30 fps**, **420 frames = 14 s**,
+muette, en boucle sans à-coup (frame 419 ≈ frame 0 : document nu, corps vierge).
+Une seule carte plein cadre qui bascule du document brut vers sa synthèse,
+**contenu générique PME** — **texte d'interface uniquement** (en-têtes,
+rubriques, compteurs, sources), aucune phrase narrative.
+
+Deux acteurs : **Claude lit et synthétise** (présence terracotta,
+`CLAUDE_TERRA = #D97757`, constante **locale** à la scène ; logo terracotta,
+pastille « Claude · lecture en cours », chip « rédigée par Claude », caret de
+saisie terracotta) ; l'**humain vérifie** (pointeur souris noir). Quatre plans :
+
+| Plan | Frames | Contenu |
+|---|---|---|
+| **1** Le document | 0–90 | Une carte « Contrat fournisseur · 42 pages · 2,4 Mo » s'assemble, corps rempli de barres, compteur de pages 1 → 42 |
+| **2** La demande | 90–150 | Champ de saisie : « Résume ce contrat, points d'attention. » à la machine à écrire (caret terracotta), puis envoi |
+| **3** Claude lit & synthétise | 150–300 | Pastille « Claude · lecture en cours » + halo terracotta sur les barres (compteur 1 → 42), puis la synthèse se construit (rubriques PRIX · DURÉE · RÉSILIATION avec sources p. 17 / p. 4 / p. 23, encadré « ⚠ 2 points d'attention ») |
+| **4** L'humain vérifie | 300–420 | Le pointeur clique « source : p. 17 » → l'extrait de la page 17 s'ouvre, passage surligné (écume), puis retour au document pour boucler |
+
+```bash
+npm run render:cas2:mp4     # -> ../public/video/cas2.mp4   (H.264, CRF 30)
+npm run render:cas2:webm    # -> ../public/video/cas2.webm  (VP9, CRF 36)
+npm run render:cas2:poster  # -> ../public/video/cas2-poster.jpg (frame 300, synthèse complète)
+npm run render:cas2         # les trois ci-dessus
+```
+
+Poids : mp4 ~0,9 Mo + webm ~0,65 Mo + poster ~0,1 Mo ≈ **1,6 Mo**. Branchement :
+`lib/site-config.ts` (`cas2Video`) ; tant qu'il vaut `null`, le cas 2 garde son
+visuel statique (colonne à gauche en desktop).
+
+## Vidéo Cas 3 — « Automatiser un process de votre travail »
+
+Composition `Cas3Process` : **1350×1080 (5:4)**, **30 fps**, **420 frames = 14 s**,
+muette, en boucle sans à-coup (frame 419 ≈ frame 0 : tableau à 08:02, statuts
+« émise »). Angle **relances d'impayés**. Une seule carte plein cadre, **contenu
+générique PME** — **texte d'interface uniquement** (tableau, badges, objets,
+compteurs), aucune phrase narrative.
+
+Deux acteurs : **Claude enchaîne le process** (présence terracotta ; pastille
+« Claude · relances en cours », chip « brouillon rédigé par Claude », caret
+terracotta) ; l'**humain valide** (pointeur souris noir). Les badges de retard
+utilisent `clay` (état de l'interface, pas Claude). Quatre plans :
+
+| Plan | Frames | Contenu |
+|---|---|---|
+| **1** Le déclencheur | 0–90 | Tableau « Factures émises · 08:02 » ; trois lignes basculent en retard (badges J+30 · J+22 · J+15 en clay), chip « 3 impayées » |
+| **2** Claude enchaîne | 90–240 | Pastille « Claude · relances en cours » ; trois brouillons de relance se génèrent en cascade (destinataire, objet, demi-ligne à la machine à écrire + barres, chip « brouillon rédigé par Claude ») |
+| **3** L'humain valide | 240–330 | Le pointeur clique « Envoyer les 3 relances » (bouton canard) → les trois chips passent à `envoyé` en cascade |
+| **4** Le résultat | 330–420 | Retour au tableau : statuts « relancé » (écume), horloge 08:04, bandeau « 3 relances envoyées · 08:04 » + « prochain passage : demain 08:00 », puis retour à l'état initial pour boucler |
+
+```bash
+npm run render:cas3:mp4     # -> ../public/video/cas3.mp4   (H.264, CRF 30)
+npm run render:cas3:webm    # -> ../public/video/cas3.webm  (VP9, CRF 36)
+npm run render:cas3:poster  # -> ../public/video/cas3-poster.jpg (frame 360, tableau « relancé »)
+npm run render:cas3         # les trois ci-dessus
+```
+
+Poids : mp4 ~1,0 Mo + webm ~0,76 Mo + poster ~0,1 Mo ≈ **1,8 Mo**. Branchement :
+`lib/site-config.ts` (`cas3Video`) ; tant qu'il vaut `null`, le cas 3 garde son
+visuel statique (colonne à droite en desktop).
+
 ## Structure
 
 ```
@@ -120,7 +221,7 @@ video/
     anim.ts             helpers d'animation
     fonts.ts            chargement local des polices
     logos.ts            paths/wordmarks des IA (Claude, ChatGPT, Mistral, GLM)
-    components/         Toile · primitives · MarssaneLogo · AiLogo (glyphe partagé)
-    scenes/             G1Hook · G2Pile · G3Colonnes · G4Tri · G6Cartes · G7Cta
+    components/         Toile · primitives · MarssaneLogo · AiLogo · ClaudeMark · Cursor
+    scenes/             G1Hook · G2Pile · G3Colonnes · G4Tri · G6Cartes · G7Cta · Cas1Mails · Cas2Synthese · Cas3Process
   scripts/render-stills.mjs
 ```

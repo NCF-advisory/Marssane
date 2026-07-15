@@ -1,6 +1,8 @@
 import type { CSSProperties, ReactNode } from "react";
 import { BadgeEcume } from "@/components/ui/BadgeEcume";
 import { CheckItem } from "@/components/ui/CheckItem";
+import { CasVideo } from "@/components/site/CasVideo";
+import { cas1Video, cas2Video, cas3Video } from "@/lib/site-config";
 
 /**
  * Les trois cas concrets (« Ses mails de bout en bout », « Synthétiser &
@@ -156,12 +158,6 @@ function Cas1() {
             Trier, prioriser, répondre à vos mails : votre boîte tenue en un
             passage.
           </h3>
-          <p className="mt-4 text-[16px] leading-[1.58] text-body">
-            Chaque matin, vos mails arrivent classés — urgent, à répondre, à
-            ranger — et les réponses courantes sont déjà rédigées dans votre ton,
-            prêtes à relire. C&apos;est l&apos;automatisation que vous construisez
-            en fin de formation, sur votre propre boîte.
-          </p>
           <div className="mt-5 flex flex-col gap-[9px]">
             <CheckItem>
               Classé selon <b className="font-semibold">vos</b> priorités, pas des
@@ -178,10 +174,18 @@ function Cas1() {
           </div>
         </div>
 
-        <Visuel
-          alt="Illustration : une boîte de 47 mails triée en 6 à traiter ce matin."
-          className="lg:h-[430px]"
-        >
+        {cas1Video ? (
+          <div className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-end">
+            <span className="sr-only">
+              Illustration : une boîte de 47 mails triée en 6 à traiter ce matin.
+            </span>
+            <CasVideo video={cas1Video} />
+          </div>
+        ) : (
+          <Visuel
+            alt="Illustration : une boîte de 47 mails triée en 6 à traiter ce matin."
+            className="lg:h-[430px]"
+          >
           {/* Boîte brute */}
             <div className="w-[252px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface shadow-float lg:absolute lg:left-0 lg:top-[6px] lg:z-[1]">
               <div className="flex items-center justify-between border-b border-[rgba(16,24,40,0.05)] px-[14px] py-[11px]">
@@ -240,7 +244,8 @@ function Cas1() {
                 <span className="font-mono font-semibold text-ink-ecume">6 / 47</span>
               </div>
             </div>
-        </Visuel>
+          </Visuel>
+        )}
       </div>
     </section>
   );
@@ -300,10 +305,19 @@ function Cas2() {
     <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-5 pt-[74px]">
       <GridDecor side="left" top={50} height={440} maskX="42%" />
       <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
-        <Visuel
-          alt="Illustration : un PDF de 42 pages résumé en une synthèse de 12 lignes."
-          className="lg:h-[430px]"
-        >
+        {cas2Video ? (
+          <div className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-start">
+            <span className="sr-only">
+              Illustration : un PDF de 42 pages résumé en une synthèse de 12
+              lignes.
+            </span>
+            <CasVideo video={cas2Video} />
+          </div>
+        ) : (
+          <Visuel
+            alt="Illustration : un PDF de 42 pages résumé en une synthèse de 12 lignes."
+            className="lg:h-[430px]"
+          >
           {/* Document PDF */}
             <div className="w-[236px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface shadow-float lg:absolute lg:left-[6px] lg:top-0 lg:z-[1]">
               <div className="flex items-center justify-between border-b border-[rgba(16,24,40,0.05)] px-[15px] py-3">
@@ -367,19 +381,14 @@ function Cas2() {
                 </div>
               </div>
             </div>
-        </Visuel>
+          </Visuel>
+        )}
 
         <div className="order-first max-w-[450px] lg:order-last lg:justify-self-end">
           <BadgeEcume>02</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
             Synthétiser vos documents et préparer vos réunions, dans votre ton.
           </h3>
-          <p className="mt-4 text-[16px] leading-[1.58] text-body">
-            Un dossier, plusieurs documents, vos notes : vous demandez une
-            synthèse comme à un collaborateur, puis un rapport structuré dans
-            votre style, prêt pour la réunion. Les points d&apos;attention sont
-            signalés, chacun renvoie à sa source.
-          </p>
           <div className="mt-5 flex flex-col gap-[9px]">
             <CheckItem>La demande se formule en français, pas en informatique</CheckItem>
             <CheckItem>Mise en forme et ton fidèles à vos rapports habituels</CheckItem>
@@ -415,13 +424,6 @@ function Cas3() {
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
             Automatiser un process de votre travail.
           </h3>
-          <p className="mt-4 text-[16px] leading-[1.58] text-body">
-            Une tâche que vous répétez chaque semaine, toujours les mêmes étapes :
-            en fin de formation, vous la transformez en un enchaînement qui tourne
-            pour vous. Vous choisissez le process, vous le construisez, il
-            s&apos;exécute — et si vous voulez aller plus loin, on
-            l&apos;implémente chez vous.
-          </p>
           <div className="mt-5 flex flex-col gap-[9px]">
             <CheckItem>Relancer les factures impayées et les devis sans réponse</CheckItem>
             <CheckItem>Collecter et classer les pièces d&apos;un nouveau dossier</CheckItem>
@@ -429,11 +431,19 @@ function Cas3() {
           </div>
         </div>
 
-        {/* TODO : maquette à remplacer par la mini-vidéo « automatiser un process » (relances / pièces / reporting). */}
-        <Visuel
-          alt="Illustration : un process répétitif transformé en enchaînement automatisé (relances, pièces, reporting)."
-          className="lg:h-[452px]"
-        >
+        {cas3Video ? (
+          <div className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-end">
+            <span className="sr-only">
+              Illustration : un process répétitif transformé en enchaînement
+              automatisé (relances, pièces, reporting).
+            </span>
+            <CasVideo video={cas3Video} />
+          </div>
+        ) : (
+          <Visuel
+            alt="Illustration : un process répétitif transformé en enchaînement automatisé (relances, pièces, reporting)."
+            className="lg:h-[452px]"
+          >
           {/* Conversation WhatsApp */}
             <div className="w-[262px] max-w-full overflow-hidden rounded-[9px] border border-hairline bg-surface shadow-float lg:absolute lg:left-[2px] lg:top-2 lg:z-[1]">
               <div className="flex items-center gap-[9px] px-3 py-[9px]" style={{ background: "#075E54" }}>
@@ -563,7 +573,8 @@ function Cas3() {
                 </div>
               </div>
             </div>
-        </Visuel>
+          </Visuel>
+        )}
       </div>
     </section>
   );
