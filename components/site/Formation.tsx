@@ -3,47 +3,41 @@ import { Kicker } from "@/components/ui/Kicker";
 import { PlusMark } from "@/components/ui/PlusMark";
 import { ReservationTrigger } from "./ReservationTrigger";
 
-/** Les cinq temps de la journée. Le paragraphe peut contenir un passage en gras. */
-const ETAPES: { heure: string; titre: string; texte: ReactNode }[] = [
+/** Les trois temps de la semaine. Le paragraphe peut contenir un passage en gras. */
+const ETAPES: { jour: string; titre: string; texte: ReactNode }[] = [
   {
-    heure: "09:00",
-    titre: "La démonstration d'ouverture",
+    jour: "Lundi",
+    titre: "Session 1 · le cas mail, de A à Z (3 h 45)",
     texte: (
       <>
-        Une boîte mail se trie automatiquement, sous vos yeux.{" "}
-        <b className="font-semibold text-ink">« À 17 h, vous saurez faire ça. »</b>
+        Démonstration d&apos;ouverture, puis les bases : comment fonctionne
+        Claude, le prompt, la confidentialité. Ensuite Cowork, votre skill de tri
+        et le connecteur, construits en salle sur données fictives.{" "}
+        <b className="font-semibold text-ink">
+          « À la fin de la session, le tri automatique et le brief du matin
+          tournent de bout en bout. »
+        </b>
       </>
     ),
   },
   {
-    heure: "09:30",
-    titre: "Installer et connecter Claude",
+    jour: "Mar → jeu",
+    titre: "Trois jours de pratique accompagnée",
     texte:
-      "Sur votre ordinateur : vos mails, vos dossiers. Avec un point clair sur la confidentialité — ce que voit l'outil, ce qu'il ne voit pas.",
+      "Vous transposez le cas mail sur votre propre boîte, depuis chez vous. Le chat commun reste ouvert, et le mercredi le formateur répond à tous dans une FAQ groupée.",
   },
   {
-    heure: "11:00",
-    titre: "Confier ses premières tâches",
+    jour: "Vendredi",
+    titre: "Session 2 · votre propre cas (5 h)",
     texte:
-      "Résumer, chercher, rédiger : exercices guidés, sur vos propres documents.",
-  },
-  {
-    heure: "14:00",
-    titre: "Créer sa première automatisation",
-    texte:
-      "Pas à pas, vous construisez une « skill » : une consigne que l'outil sait rejouer, tous les jours, sans vous.",
-  },
-  {
-    heure: "15:30",
-    titre: "L'atelier final",
-    texte:
-      "Chacun construit et teste le tri automatique de sa propre boîte mail — et repart quand ça fonctionne.",
+      "Mini-audit de vos tâches pour choisir le bon cas, puis chacun construit le sien (skill, connecteur si pertinent) et le démontre au groupe. Validation des acquis et remise du certificat de participation.",
   },
 ];
 
-/** Le cadre : quatre lignes libellé / valeur (valeur en mono). */
+/** Le cadre : cinq lignes libellé / valeur (valeur en mono). */
 const CADRE = [
-  { label: "Durée", valeur: "1 journée · 9 h – 17 h" },
+  { label: "Durée", valeur: "8 h 45 · 2 demi-journées" },
+  { label: "Rythme", valeur: "la même semaine" },
   { label: "Effectif", valeur: "10 places max." },
   { label: "Matériel", valeur: "votre ordinateur" },
   { label: "Niveau", valeur: "débutant" },
@@ -51,7 +45,7 @@ const CADRE = [
 
 /**
  * Section « La formation » (ancre #formation) : intro puis grille 1.15fr/0.85fr.
- * Colonne gauche : timeline verticale (liste ordonnée) des cinq temps + encart
+ * Colonne gauche : timeline verticale (liste ordonnée) des trois temps + encart
  * livrable écume. Colonne droite : cartes « Le cadre » et « Prérequis » + CTA.
  * Sous lg la grille s'empile (timeline puis cadre/prérequis) ; les décorations
  * motifFond, en positions absolues px, sont masquées.
@@ -75,11 +69,12 @@ export function Formation() {
       <div className="max-w-[640px]">
         <Kicker>La formation · niveau débutant</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-          Une journée, cinq temps, dix personnes.
+          Une semaine, deux sessions, dix personnes.
         </h2>
         <p className="mt-4 text-[16.5px] leading-[1.58] text-body">
-          De 9 h à 17 h, chacun sur son propre ordinateur. Vous ne regardez pas une
-          démonstration : vous construisez.
+          Deux demi-journées en salle, lundi et vendredi, et trois jours de
+          pratique accompagnée entre les deux, chacun sur son propre ordinateur.
+          Vous ne regardez pas une démonstration : vous construisez.
         </p>
       </div>
 
@@ -90,10 +85,10 @@ export function Formation() {
             {ETAPES.map((etape, i) => {
               const dernier = i === ETAPES.length - 1;
               return (
-                <li key={etape.heure} className="flex gap-[18px]">
+                <li key={etape.jour} className="flex gap-[18px]">
                   <div className="flex w-[52px] flex-none flex-col items-center">
                     <span className="font-mono text-[11px] font-semibold text-canard">
-                      {etape.heure}
+                      {etape.jour}
                     </span>
                     {!dernier && (
                       <span className="mt-[6px] w-[1.5px] flex-1 bg-repere" />
@@ -123,8 +118,9 @@ export function Formation() {
               ✓
             </span>
             <div className="text-[15px] font-semibold leading-[1.5] text-ink-ecume">
-              Vous repartez avec un système fonctionnel — que vous avez construit
-              vous-même.
+              Vous repartez avec une boîte mail qui se trie toute seule, un compte
+              rendu des urgences chaque matin, et la méthode pour automatiser vos
+              propres tâches.
             </div>
           </div>
         </div>
@@ -151,13 +147,18 @@ export function Formation() {
             </div>
             <div className="mt-[14px] flex flex-col gap-[11px] text-[14px] text-body">
               <PrerequisItem>
-                Un ordinateur portable — celui sur lequel vous travaillez.
+                Un ordinateur portable, celui sur lequel vous travaillez, avec
+                l&apos;application Claude installée.
               </PrerequisItem>
               <PrerequisItem>
                 Un abonnement Claude Pro actif (20&nbsp;€/mois).
               </PrerequisItem>
               <PrerequisItem>
-                Poste géré par une DSI : validation préalable de l&apos;installation.
+                L&apos;accès à votre messagerie depuis cet ordinateur.
+              </PrerequisItem>
+              <PrerequisItem>
+                Poste géré par une DSI : validation préalable (fichiers et
+                messagerie).
               </PrerequisItem>
             </div>
           </div>

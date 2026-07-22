@@ -51,7 +51,7 @@ function HeroComposition() {
           <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-quiet">
             Votre boîte mail
           </div>
-          <span className="font-mono text-[10px] text-quiet">17:00</span>
+          <span className="font-mono text-[10px] text-quiet">09:00</span>
         </div>
         <div className="mt-[13px] flex flex-col gap-[9px] text-[13px]">
           <div className="flex items-center gap-[9px]">
@@ -84,7 +84,7 @@ function HeroComposition() {
           </div>
           <div>
             <div className="mb-[5px] flex justify-between text-[11.5px] text-faint">
-              <span>À 17 h · à traiter</span>
+              <span>Après le tri · à traiter</span>
               <span className="font-mono text-ink-ecume">6</span>
             </div>
             <div className="h-[7px] rounded-chip bg-bar-track">

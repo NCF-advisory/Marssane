@@ -140,7 +140,7 @@ const OUTILS: {
     brandHex: "#D97757",
     badge: true,
     texte:
-      "Considéré comme l'IA la plus efficace en entreprise en ce moment. Rédaction soignée, sérieux sur les documents longs — c'est lui que vous installerez.",
+      "Considéré comme l'IA la plus efficace en entreprise en ce moment. Rédaction soignée, sérieux sur les documents longs : c'est lui que vous installerez.",
   },
   {
     nom: "Mistral",
@@ -239,8 +239,8 @@ export function OutilsIA() {
       </div>
 
       <p className="mt-[26px] max-w-[640px] text-[16.5px] leading-[1.58] text-body">
-        Les réflexes que vous apprendrez — confier une tâche, vérifier la
-        source, automatiser — valent pour les quatre.{" "}
+        Les réflexes que vous apprendrez (confier une tâche, vérifier la
+        source, automatiser) valent pour les quatre.{" "}
         <b className="font-semibold text-ink">La formation se fait sur Claude.</b>
       </p>
     </section>

@@ -3,7 +3,9 @@ import {
   buildAdminEmail,
   buildClientEmail,
   buildContactEmail,
+  buildInvitationEmail,
   type ContactEmailInput,
+  type InvitationEmailInput,
 } from "./email-templates";
 import type { InscriptionInput, ProchaineSession } from "./sessions";
 
@@ -38,7 +40,7 @@ export async function sendInscriptionEmails(
   const contactEmail = process.env.CONTACT_EMAIL;
 
   if (!apiKey || !contactEmail) {
-    console.warn("[emails] non configurés — envoi sauté");
+    console.warn("[emails] non configurés : envoi sauté");
     return;
   }
 
@@ -80,6 +82,51 @@ export async function sendInscriptionEmails(
 }
 
 /**
+ * E-mail d'invitation à l'espace formation, envoyé à un inscrit confirmé quand
+ * le formateur lance la formation (ou lors d'un renvoi). `replyTo` = adresse de
+ * contact si configurée.
+ *
+ * Ne lève jamais : le participant est déjà créé en base (source de vérité) — un
+ * échec d'envoi ne doit pas remettre en cause l'invitation. Retourne `true` si
+ * l'e-mail est parti, `false` si l'envoi a échoué ou a été sauté (emails non
+ * configurés) : l'appelant s'en sert pour le décompte des échecs. Aucun contenu
+ * ni destinataire n'est journalisé (RGPD).
+ */
+export async function sendInvitationEmail(
+  input: InvitationEmailInput & { email: string },
+): Promise<boolean> {
+  const apiKey = process.env.RESEND_API_KEY;
+  const contactEmail = process.env.CONTACT_EMAIL;
+
+  if (!apiKey) {
+    console.warn("[emails] non configurés : invitation sautée");
+    return false;
+  }
+
+  const resend = new Resend(apiKey);
+  const mail = buildInvitationEmail(input);
+
+  try {
+    const { error } = await resend.emails.send({
+      from: EMAIL_FROM,
+      to: input.email,
+      ...(contactEmail ? { replyTo: contactEmail } : {}),
+      subject: mail.subject,
+      html: mail.html,
+      text: mail.text,
+    });
+    if (error) {
+      console.error(`[emails] échec envoi invitation (code: ${error.name})`);
+      return false;
+    }
+    return true;
+  } catch {
+    console.error("[emails] échec envoi invitation (erreur réseau)");
+    return false;
+  }
+}
+
+/**
  * Email de notification d'une demande de contact « implémentation » (F5 · CDC
  * §5.5), envoyé aux administrateurs (`CONTACT_EMAIL`), `replyTo` = email du
  * demandeur.
@@ -96,7 +143,7 @@ export async function sendContactEmail(payload: {
   const contactEmail = process.env.CONTACT_EMAIL;
 
   if (!apiKey || !contactEmail) {
-    console.warn("[emails] non configurés — envoi contact sauté");
+    console.warn("[emails] non configurés : envoi contact sauté");
     return;
   }
 

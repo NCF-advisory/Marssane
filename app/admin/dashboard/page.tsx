@@ -17,7 +17,7 @@ import {
 import { formatDateLongue } from "@/lib/session-display";
 
 export const metadata: Metadata = {
-  title: "Tableau de bord — Administration Marssane",
+  title: "Tableau de bord · Administration Marssane",
 };
 
 /** Horaires « 09:30 – 17:00 » (ou « 09:30 », ou « — »). */
@@ -100,7 +100,7 @@ export default async function AdminDashboardPage() {
               / {prochaine.capacite}
             </span>
             <span className="text-[14px] text-body">
-              inscrits confirmés — session du{" "}
+              inscrits confirmés · session du{" "}
               <span className="font-semibold text-ink">
                 {formatDateLongue(prochaine.date)}
               </span>

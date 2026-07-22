@@ -17,10 +17,8 @@ const initialInscriptionState: InscriptionState = { status: "idle" };
 
 /** Options du champ « Métier » (CDC §5.2). */
 const METIERS = [
-  "Dirigeant de PME",
-  "Avocat",
-  "Notaire",
-  "Expert-comptable",
+  "Dirigeant de PME/TPE",
+  "Entrepreneur",
   "Autre",
 ];
 

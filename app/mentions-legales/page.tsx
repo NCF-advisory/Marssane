@@ -4,7 +4,7 @@ import { Nav } from "@/components/site/Nav";
 import { Kicker } from "@/components/ui/Kicker";
 
 export const metadata: Metadata = {
-  title: "Mentions légales — Marssane",
+  title: "Mentions légales · Marssane",
 };
 
 const SECTIONS = [
@@ -31,7 +31,7 @@ export default function MentionsLegales() {
                   {section.titre}
                 </h2>
                 <p className="mt-2 text-[15px] leading-[1.6] text-body">
-                  À compléter — en attente des textes définitifs (CDC §10).
+                  À compléter, en attente des textes définitifs (CDC §10).
                 </p>
               </div>
             ))}

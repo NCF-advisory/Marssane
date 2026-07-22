@@ -3,7 +3,7 @@ import { LogoMarssane } from "@/components/ui/LogoMarssane";
 import { LoginForm } from "./LoginForm";
 
 export const metadata: Metadata = {
-  title: "Connexion — Administration Marssane",
+  title: "Connexion · Administration Marssane",
 };
 
 /**

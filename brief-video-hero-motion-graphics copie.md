@@ -1,6 +1,6 @@
 # Brief motion graphics — Vidéo hero du site Marssane
 
-*Analyse des patterns visuels du secteur formation/éducation en ligne, appliquée à une vidéo de présentation en héros de site. Cible : dirigeants de PME, avocats, notaires, experts-comptables. Positionnement : premium, crédible, sans codes « IA-tech ».*
+*Analyse des patterns visuels du secteur formation/éducation en ligne, appliquée à une vidéo de présentation en héros de site. Cible : dirigeants de PME et TPE et entrepreneurs. Positionnement : premium, crédible, sans codes « IA-tech ».*
 
 ---
 

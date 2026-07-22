@@ -99,7 +99,7 @@ export function SessionForm({
           name="lieu"
           type="text"
           maxLength={200}
-          placeholder="Ex. Marseille — centre-ville"
+          placeholder="Ex. Marseille, centre-ville"
           defaultValue={values.lieu ?? ""}
           className={controlClass}
         />

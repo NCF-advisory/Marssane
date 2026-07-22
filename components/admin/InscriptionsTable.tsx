@@ -5,9 +5,9 @@ import type { InscriptionRow } from "@/lib/admin-queries";
 import { ConfirmButton } from "./ConfirmButton";
 import { InscriptionStatutSelect } from "./InscriptionStatutSelect";
 
-/** Métier affiché avec sa précision éventuelle (« Autre — … »). */
+/** Métier affiché avec sa précision éventuelle (« Autre · … »). */
 function metierLabel(row: InscriptionRow): string {
-  return row.metier_autre ? `${row.metier} — ${row.metier_autre}` : row.metier;
+  return row.metier_autre ? `${row.metier} · ${row.metier_autre}` : row.metier;
 }
 
 const TH =

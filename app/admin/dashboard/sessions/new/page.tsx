@@ -3,7 +3,7 @@ import { createSessionAction } from "@/app/admin/dashboard/actions";
 import { SessionForm } from "@/components/admin/SessionForm";
 
 export const metadata: Metadata = {
-  title: "Nouvelle session — Administration Marssane",
+  title: "Nouvelle session · Administration Marssane",
 };
 
 /** Création d'une session (F3 · CDC §5.3). */

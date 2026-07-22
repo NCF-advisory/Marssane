@@ -123,7 +123,7 @@ export function buildClientEmail(args: {
     );
 
     return {
-      subject: "Vous êtes sur liste d'attente — Marssane",
+      subject: "Vous êtes sur liste d'attente · Marssane",
       html,
       text,
     };
@@ -143,7 +143,7 @@ export function buildClientEmail(args: {
     "Pour suivre la formation dans de bonnes conditions, prévoyez :",
     ...PREREQUIS.map((p) => `- ${p}`),
     "",
-    "Il s'agit d'une pré-inscription sans engagement — nous revenons vers vous sous 48 h.",
+    "Il s'agit d'une pré-inscription sans engagement : nous revenons vers vous sous 48 h.",
     "",
     "L'équipe Marssane",
   );
@@ -163,12 +163,12 @@ export function buildClientEmail(args: {
     `<ul style="margin:0 0 16px;padding-left:20px;">${PREREQUIS.map(
       (p) => `<li style="margin:0 0 4px;">${esc(p)}</li>`,
     ).join("")}</ul>`,
-    `<p style="margin:0 0 16px;">Il s'agit d'une pré-inscription sans engagement — nous revenons vers vous sous 48 h.</p>`,
+    `<p style="margin:0 0 16px;">Il s'agit d'une pré-inscription sans engagement : nous revenons vers vous sous 48 h.</p>`,
     SIGNATURE_HTML,
   );
 
   return {
-    subject: "Votre pré-inscription — formation IA Marssane",
+    subject: "Votre pré-inscription · formation IA Marssane",
     html: htmlLayout(htmlParts.join("")),
     text: textLines.join("\n"),
   };
@@ -228,9 +228,73 @@ export function buildAdminEmail(args: {
   );
 
   return {
-    subject: `Nouvelle pré-inscription — ${inscription.prenom} ${inscription.nom} (${statutLabel})`,
+    subject: `Nouvelle pré-inscription · ${inscription.prenom} ${inscription.nom} (${statutLabel})`,
     html,
     text,
+  };
+}
+
+/* ===== Invitation à l'espace formation (espace formation · phase 1) ==== */
+
+/** Détails d'une invitation à l'espace formation. */
+export type InvitationEmailInput = {
+  prenom: string;
+  /** Lien personnel d'activation (token en query). */
+  activationUrl: string;
+  /** Session rattachée (date ISO + lieu) pour rappeler la date, le cas échéant. */
+  session?: { date: string; lieu: string | null } | null;
+};
+
+/**
+ * E-mail d'invitation à l'espace formation, envoyé à chaque inscrit confirmé
+ * quand le formateur lance la formation. Sobre, « texte d'abord » (charte) :
+ * il annonce le lien personnel d'activation (choix du mot de passe) et rappelle
+ * la date de la promotion. Le lien n'est pas échappé (URL de confiance, générée
+ * côté serveur) ; les saisies libres (prénom) le sont.
+ */
+export function buildInvitationEmail(input: InvitationEmailInput): RenderedEmail {
+  const { prenom, activationUrl, session } = input;
+
+  const dateLigne = session
+    ? `Votre formation démarre le ${formatDateLongue(session.date)}${
+        session.lieu ? ` à ${session.lieu}` : ""
+      }.`
+    : null;
+
+  const textLines = [
+    `Bonjour ${prenom},`,
+    "",
+    "Votre espace formation Marssane est prêt.",
+  ];
+  if (dateLigne) textLines.push("", dateLigne);
+  textLines.push(
+    "",
+    "Pour y accéder, activez votre compte en choisissant un mot de passe :",
+    activationUrl,
+    "",
+    "Ce lien est personnel et valable 14 jours. Une fois votre compte activé, vous vous connecterez avec votre e-mail et votre mot de passe.",
+    "",
+    "L'équipe Marssane",
+  );
+
+  const htmlParts = [
+    `<p style="margin:0 0 16px;">Bonjour ${esc(prenom)},</p>`,
+    `<p style="margin:0 0 16px;">Votre espace formation Marssane est prêt.</p>`,
+  ];
+  if (dateLigne) {
+    htmlParts.push(`<p style="margin:0 0 16px;">${esc(dateLigne)}</p>`);
+  }
+  htmlParts.push(
+    `<p style="margin:0 0 16px;">Pour y accéder, activez votre compte en choisissant un mot de passe :</p>`,
+    `<p style="margin:0 0 16px;"><a href="${activationUrl}" style="color:#0e7291;font-weight:600;">Activer mon compte</a></p>`,
+    `<p style="margin:0 0 16px;color:#5b5b66;font-size:14px;">Ce lien est personnel et valable 14 jours. Une fois votre compte activé, vous vous connecterez avec votre e-mail et votre mot de passe.</p>`,
+    SIGNATURE_HTML,
+  );
+
+  return {
+    subject: "Votre espace formation Marssane · activez votre compte",
+    html: htmlLayout(htmlParts.join("")),
+    text: textLines.join("\n"),
   };
 }
 
@@ -288,7 +352,7 @@ export function buildContactEmail(contact: ContactEmailInput): RenderedEmail {
   );
 
   return {
-    subject: `Nouvelle demande d'implémentation — ${contact.prenom} ${contact.nom}`,
+    subject: `Nouvelle demande d'implémentation · ${contact.prenom} ${contact.nom}`,
     html,
     text,
   };

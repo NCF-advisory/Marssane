@@ -5,7 +5,7 @@ import { Nav } from "@/components/site/Nav";
 import { Kicker } from "@/components/ui/Kicker";
 
 export const metadata: Metadata = {
-  title: "Politique de confidentialité — Marssane",
+  title: "Politique de confidentialité · Marssane",
 };
 
 const SECTIONS: { titre: string; corps: ReactNode }[] = [

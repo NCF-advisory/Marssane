@@ -1,7 +1,7 @@
 # Site Marssane
 
-Landing page de Marssane — formation à l'IA pour dirigeants de PME et professions
-libérales (avocats, notaires, experts-comptables). Next.js (App Router) +
+Landing page de Marssane — formation à l'IA pour dirigeants de PME et TPE
+et entrepreneurs. Next.js (App Router) +
 Tailwind CSS v4, avec pré-inscription en base Postgres (Supabase en v1).
 
 ## Prérequis

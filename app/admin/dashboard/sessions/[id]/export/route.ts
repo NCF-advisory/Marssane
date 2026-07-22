@@ -30,7 +30,7 @@ const HEADERS = [
 
 /** Métier avec sa précision éventuelle. */
 function metier(row: InscriptionRow): string {
-  return row.metier_autre ? `${row.metier} — ${row.metier_autre}` : row.metier;
+  return row.metier_autre ? `${row.metier} · ${row.metier_autre}` : row.metier;
 }
 
 export async function GET(

@@ -2,10 +2,8 @@ import { z } from "zod";
 
 /** Métiers proposés (CDC §5.2). « Autre » impose de préciser. */
 export const METIERS = [
-  "Dirigeant de PME",
-  "Avocat",
-  "Notaire",
-  "Expert-comptable",
+  "Dirigeant de PME/TPE",
+  "Entrepreneur",
   "Autre",
 ] as const;
 
@@ -268,6 +266,57 @@ export function parseSession(formData: FormData): ParseSessionResult {
 export function parseId(value: FormDataEntryValue | null): string | null {
   const parsed = z.uuid().safeParse(asString(value));
   return parsed.success ? parsed.data : null;
+}
+
+/* ===== Chat de promotion (phase 2) ==================================== */
+
+/** Longueur maximale du contenu d'un message (aligné sur la colonne texte). */
+export const CHAT_CONTENU_MAX = 4000;
+
+/**
+ * Schéma d'un message du chat (participant ou formateur). `contenu` requis
+ * (1..4000). `claude_quote` et `attachment_name` optionnels (vides → undefined,
+ * mappés en NULL en base). Le nom de capture est purement affiché en v1 (pas
+ * d'upload de fichier).
+ */
+export const chatMessageSchema = z.object({
+  contenu: z
+    .string()
+    .trim()
+    .min(1, "Votre message est vide.")
+    .max(CHAT_CONTENU_MAX, "Votre message est trop long (4000 caractères maximum)."),
+  claude_quote: optionalTrimmed(
+    z
+      .string()
+      .max(8000, "La réponse de Claude est trop longue (8000 caractères maximum)."),
+  ),
+  attachment_name: optionalTrimmed(
+    z.string().max(200, "Le nom de la capture est trop long."),
+  ),
+});
+
+export type ChatMessageInput = z.infer<typeof chatMessageSchema>;
+
+export type ParseChatMessageResult =
+  | { ok: true; data: ChatMessageInput }
+  | { ok: false; error: string };
+
+/**
+ * Valide les champs d'un `FormData` de message. Retourne les données
+ * normalisées ou le premier message d'erreur (en français). Ne journalise
+ * aucune valeur.
+ */
+export function parseChatMessage(formData: FormData): ParseChatMessageResult {
+  const result = chatMessageSchema.safeParse({
+    contenu: asString(formData.get("contenu")),
+    claude_quote: asString(formData.get("claude_quote")),
+    attachment_name: asString(formData.get("attachment_name")),
+  });
+  if (result.success) return { ok: true, data: result.data };
+  return {
+    ok: false,
+    error: result.error.issues[0]?.message ?? "Message invalide.",
+  };
 }
 
 /** Valide un statut d'inscription transmis par un formulaire d'action. */

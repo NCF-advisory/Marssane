@@ -99,7 +99,7 @@ export async function getProchaineSessionSafe(): Promise<ProchaineSession | null
   try {
     return await getProchaineSession();
   } catch {
-    console.error("[sessions] session indisponible — repli liste d'attente");
+    console.error("[sessions] session indisponible : repli liste d'attente");
     return null;
   }
 }

@@ -33,8 +33,7 @@ export function Hero() {
       <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.9fr_1.2fr]">
         <div className="max-w-[530px]">
           <Kicker>
-            Formation IA · dirigeants de PME, avocats, notaires,
-            experts-comptables
+            Formation IA · dirigeants de PME et TPE
           </Kicker>
           <h1 className="mt-[18px] text-[36px] font-extrabold leading-[1.04] tracking-[-0.03em] sm:text-[44px] lg:text-[54px]">
             Une formation IA sur des{" "}
@@ -52,9 +51,10 @@ export function Hero() {
             </span>
           </h1>
           <p className="mt-[22px] max-w-[490px] text-[18px] leading-[1.55] text-body">
-            Trier vos mails, résumer un dossier, rédiger un courrier : une
-            journée, chacun sur son ordinateur, sur vos propres documents. Vous
-            repartez avec un système fonctionnel.
+            Trier vos mails, recevoir chaque matin le compte rendu des urgences,
+            automatiser vos propres tâches : deux demi-journées, chacun sur son
+            ordinateur, et trois jours de pratique accompagnée. Vous repartez avec
+            un système qui tourne.
           </p>
           <div className="mt-[30px] flex flex-wrap items-center gap-4">
             <ReservationTrigger className="inline-flex items-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-base font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark">
@@ -72,11 +72,13 @@ export function Hero() {
       {/* Bandeau chiffres — colonne empilée sous lg (séparateurs masqués),
           ligne répartie à partir de lg. */}
       <div className="mt-16 flex flex-col gap-4 rounded-card border border-hairline-strong bg-white/65 px-7 py-[18px] lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:gap-5">
-        <Stat value="1 journée" label="de 9 h à 17 h" />
+        <Stat value="8 h 45" label="2 demi-journées, la même semaine" />
+        <Separator />
+        <Stat value="3 jours" label="de pratique accompagnée" />
         <Separator />
         <Stat value="10 places" label="maximum par session" />
         <Separator />
-        <Stat value="1 système" label="fonctionnel, construit par vous" />
+        <Stat value="2 projets" label="le cas mail, puis le vôtre" />
       </div>
     </section>
   );

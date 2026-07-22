@@ -1,31 +1,19 @@
 import { Kicker } from "@/components/ui/Kicker";
 import { PlusMark } from "@/components/ui/PlusMark";
 
-/** Les quatre professions visées. Titre 17px, sous-titre mono, paragraphe 13,5px. */
+/** Les professions visées. Titre 17px, sous-titre mono, paragraphe 13,5px. */
 const PROFESSIONS = [
   {
-    titre: "Dirigeants de PME",
+    titre: "Dirigeants de PME et TPE",
     sousTitre: "industrie · services · négoce",
     texte:
       "Mails, courriers, suivi des dossiers : reprenez la main sur votre journée, sans recruter.",
   },
   {
-    titre: "Avocats",
-    sousTitre: "cabinets individuels · structures",
+    titre: "Entrepreneurs",
+    sousTitre: "indépendants · créateurs · startups",
     texte:
-      "Résumer des pièces, chercher dans les dossiers — le secret professionnel reste au cabinet.",
-  },
-  {
-    titre: "Notaires",
-    sousTitre: "offices · études",
-    texte:
-      "Analyser actes et pièces, préparer les courriers aux parties — dans un cadre de confidentialité strict.",
-  },
-  {
-    titre: "Experts-comptables",
-    sousTitre: "cabinets · AGC",
-    texte:
-      "Courriers clients, tri des demandes, recherche dans les dossiers permanents.",
+      "Devis, relances, administratif : abattez les tâches chronophages et gardez du temps pour développer votre activité.",
   },
 ];
 
@@ -76,7 +64,7 @@ export function PourQui() {
         </p>
       </div>
 
-      <div className="mt-[34px] grid grid-cols-1 gap-[22px] sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-[34px] grid grid-cols-1 gap-[22px] sm:grid-cols-2">
         {PROFESSIONS.map((p) => (
           <article
             key={p.titre}

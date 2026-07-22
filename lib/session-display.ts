@@ -30,7 +30,7 @@ function placesRestantes(n: number): string {
  */
 export function mentionSession(session: ProchaineSession): string {
   if (session.complete) {
-    return "Session complète — inscrivez-vous en liste d'attente.";
+    return "Session complète : inscrivez-vous en liste d'attente.";
   }
   const lieu = session.lieu ?? "lieu à préciser";
   return `Prochaine session le ${formatDateLongue(session.date)} à ${lieu} · ${placesRestantes(
@@ -41,7 +41,7 @@ export function mentionSession(session: ProchaineSession): string {
 /** Libellé du champ « Session » (lecture seule) de la modale F2. */
 export function champSession(session: ProchaineSession | null): string {
   if (!session) {
-    return "Liste d'attente — vous serez prévenu dès qu'une session est publiée";
+    return "Liste d'attente : vous serez prévenu dès qu'une session est publiée";
   }
   const lieu = session.lieu ?? "lieu à préciser";
   return `${formatDateLongue(session.date)} · ${lieu}`;

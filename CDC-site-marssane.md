@@ -1,19 +1,21 @@
 # Cahier des charges — Site internet Marssane
 
-**Version 1.0 — 11/07/2026**
+**Version 1.1 — 22/07/2026**
 **Statut : validé pour développement (preview)**
+
+*Historique : v1.0 — 11/07/2026 (version initiale) · v1.1 — 22/07/2026 (alignement sur le parcours pédagogique formation débutant v2 : 2 demi-journées, prérequis, espace formation participant).*
 
 ---
 
 ## 1. Contexte et objectifs
 
-Marssane forme les dirigeants de PME, avocats, notaires et experts-comptables à l'utilisation de l'IA, et propose en prolongement l'implémentation de l'IA en entreprise.
+Marssane forme les dirigeants de PME et TPE et les entrepreneurs à l'utilisation de l'IA, et propose en prolongement l'implémentation de l'IA en entreprise.
 
 **Message clef du site** : « Nous vous formons à l'utilisation de l'IA. Si vous voulez aller plus loin, nous implémentons l'IA directement chez vous. »
 
 **Objectifs du site, par ordre de priorité :**
 
-1. Collecter des **pré-inscriptions** à la formation débutant (1 journée, 10 places par session).
+1. Collecter des **pré-inscriptions** à la formation débutant (2 demi-journées — 8 h 45 de formation — la même semaine, 10 places par session).
 2. Collecter des **demandes de contact** pour l'offre d'implémentation.
 3. Donner aux administrateurs un **tableau de bord** de suivi des inscriptions et des sessions.
 
@@ -36,7 +38,7 @@ Marssane forme les dirigeants de PME, avocats, notaires et experts-comptables à
 
 - Paiement en ligne (Stripe) — la facturation se fait hors site.
 - Migration vers **OVH** (prévue plus tard — voir contrainte de portabilité §7.4).
-- Espace client, contenu e-learning, blog.
+- Espace client, contenu e-learning, blog. **Exception désormais actée** : l'espace formation participant (chat commun, QCM, page de suivi — voir `spec-page-formation-chat-qcm.md`) fait partie du périmètre.
 - Multilingue (français uniquement).
 
 ---
@@ -84,10 +86,10 @@ Navigation (reprise de la maquette) : logo Marssane · « Pour faire quoi » · 
 
 Reproduction fidèle de la maquette v3, sections dans cet ordre :
 
-1. **Héro** — Titre « Une formation IA sur des cas concrets », sous-titre, CTA « Réserver ma place » + lien « Voir le déroulé de la journée », mention « Pré-inscription à la prochaine session · 10 places · sans engagement ». **À droite : la vidéo de présentation (voir F5).** Bandeau chiffres : 1 journée / 10 places / 1 système fonctionnel.
+1. **Héro** — Titre « Une formation IA sur des cas concrets », sous-titre, CTA « Réserver ma place » + lien « Voir le déroulé de la journée », mention « Pré-inscription à la prochaine session · 10 places · sans engagement ». **À droite : la vidéo de présentation (voir F5).** Bandeau chiffres : 2 demi-journées / 10 places / 1 système fonctionnel.
 2. **Pour faire quoi** — « L'IA, d'accord. Mais pour faire quoi ? » : les 3 cas concrets avec leurs maquettes interactives (tri de mails avant/après, synthèse de bail 42 pages → 12 lignes, courrier dicté).
-3. **Pensée pour des professions exigeantes** — cible : dirigeants de PME, avocats, notaires, experts-comptables ; registre confidentialité.
-4. **Une journée, cinq temps, dix personnes** — le déroulé 9h–17h de la formation (source : `../formation-1-debutant-classique.md`), prérequis affichés (ordinateur portable, abonnement Claude Pro 20 €/mois, validation DSI si poste géré).
+3. **Pensée pour des professions exigeantes** — cible : dirigeants de PME et TPE, entrepreneurs ; registre confidentialité.
+4. **Deux demi-journées, une semaine, dix personnes** — le déroulé de la formation en 2 sessions la même semaine (session 1 le lundi, session 2 le vendredi, créneaux horaires à confirmer), avec 3 jours de pratique accompagnée entre les deux. Référence pédagogique : le parcours v2 définitif (`02 Formations/Marssane - Parcours pédagogique - Formation débutant (définitif)/Parcours Formation 1.dc.html` ; l'ancien PDF v2 est archivé), qui remplace `../formation-1-debutant-classique.md`. Prérequis affichés : abonnement Claude Pro (20 €/mois min.) souscrit avant la session 1, application Claude installée sur l'ordinateur apporté, accès à sa messagerie depuis ce poste, validation DSI si poste géré (sinon, pratique sur données fictives).
 5. **Aller plus loin** — « Vous voyez le potentiel ? Nous venons l'installer chez vous. » + formulaire de contact implémentation (F4).
 6. **Réservation** — « Réservez votre place » : formulaire de pré-inscription (F2).
 7. **Footer** — liens légaux, « Conçu et opéré en France », hébergement UE.
@@ -104,7 +106,7 @@ Dynamique : la prochaine session publiée (date, lieu, places restantes) s'affic
 | Nom | texte | oui |
 | Email | email (validé) | oui |
 | Téléphone | tel | oui |
-| Métier | liste : Dirigeant de PME · Avocat · Notaire · Expert-comptable · Autre (préciser) | oui |
+| Métier | liste : Dirigeant de PME/TPE · Entrepreneur · Autre (préciser) | oui |
 | Entreprise / cabinet | texte | non |
 | Session | sélection de la session publiée (pré-remplie) | oui |
 | Consentement RGPD | case à cocher, non pré-cochée | oui |
@@ -145,7 +147,7 @@ Formulaire simple dans la section « Aller plus loin » : prénom, nom, email, t
 
 | Déclencheur | Destinataire | Contenu |
 |---|---|---|
-| Pré-inscription | Client | Confirmation, rappel date/lieu, **prérequis** (Claude Pro 20 €/mois, ordinateur, point DSI) |
+| Pré-inscription | Client | Confirmation, rappel dates/lieu, **prérequis** (Claude Pro souscrit avant la session 1, application Claude installée sur l'ordinateur apporté, accès à sa messagerie depuis ce poste, point DSI — sinon pratique sur données fictives) |
 | Pré-inscription | Admins | Notification : nom, prénom, contact, métier, session, places restantes |
 | Formulaire contact | Admins | Le message + coordonnées |
 
@@ -165,6 +167,7 @@ Formulaire simple dans la section « Aller plus loin » : prénom, nom, email, t
 ## 6. Modèle de données (indicatif)
 
 - **sessions** : id, date, heure_debut, heure_fin, lieu, capacite (défaut 10), statut, created_at.
+  *Évolution v2 : une promotion porte désormais 2 dates (session 1 le lundi, session 2 le vendredi de la même semaine). Le schéma en production a été étendu par la migration 004 (participants, chat, QCM) ; la prise en compte de la 2ᵉ date reste un point d'évolution du schéma.*
 - **inscriptions** : id, session_id, prenom, nom, email, telephone, metier, entreprise, statut (confirme / attente / annule), consentement_at, created_at.
 - **contacts** : id, prenom, nom, email, telephone, entreprise, message, traite (bool), created_at.
 - **admins** : id, email, password_hash, created_at.

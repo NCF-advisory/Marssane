@@ -43,7 +43,7 @@ export function PourFaireQuoi() {
           L&apos;IA, d&apos;accord. Mais pour faire quoi ?
         </h2>
         <p className="mt-4 text-[16.5px] leading-[1.58] text-body">
-          Trois cas concrets — ceux, précisément, que vous pratiquerez pendant la
+          Trois cas concrets : ceux, précisément, que vous pratiquerez pendant la
           formation, sur vos propres documents.
         </p>
       </div>

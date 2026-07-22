@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/Button";
 import { CheckItem } from "@/components/ui/CheckItem";
 import { Kicker } from "@/components/ui/Kicker";
 import { PlusMark } from "@/components/ui/PlusMark";
-import { ContactForm } from "./ContactForm";
 
 /** Barres du mini-reporting : hauteur (% de 52 px) et couleur de la charte. */
 const BARRES: { h: string; color: string }[] = [
@@ -24,8 +23,8 @@ const JOURNAL: { texte: string; heure: string }[] = [
 
 /**
  * Section « Aller plus loin — implémentation » (ancre #implementation).
- * Grille visuel gauche (cartes reporting + journal d'audit) / texte droite,
- * puis le formulaire de contact implémentation F4 (ancre #contact-implementation).
+ * Grille visuel gauche (cartes reporting + journal d'audit) / texte droite ;
+ * le CTA « Parler de votre projet » mène à la page dédiée /implementation.
  * Fond quadrillé masqué + décorations motifFond masqués sous lg.
  */
 export function AllerPlusLoin() {
@@ -117,7 +116,7 @@ export function AllerPlusLoin() {
                 ))}
               </div>
               <div className="mt-[11px] text-[12px] text-faint">
-                Le gain du mois, lu dans votre reporting — pas dans nos slides.
+                Le gain du mois, lu dans votre reporting, pas dans nos slides.
               </div>
             </div>
           </div>
@@ -157,41 +156,25 @@ export function AllerPlusLoin() {
           <p className="mt-[18px] text-[16.5px] leading-[1.58] text-body">
             Vous êtes formé, vous savez ce que l&apos;IA sait faire. L&apos;étape
             suivante : nous implémentons l&apos;IA directement dans votre
-            entreprise — sur vos données, avec vos équipes, avec un gain mesuré
+            entreprise, sur vos données, avec vos équipes, avec un gain mesuré
             chaque mois.
           </p>
           <div className="mt-[22px] flex flex-col gap-2.5">
             <CheckItem>Construit sur vos dossiers réels, avec vos équipes</CheckItem>
             <CheckItem>
-              L&apos;agent propose, l&apos;humain valide — chaque flux est tracé
+              L&apos;agent propose, l&apos;humain valide : chaque flux est tracé
             </CheckItem>
             <CheckItem>Chaque mois, le gain se lit dans votre reporting</CheckItem>
           </div>
           <Button
             variant="secondary"
-            href="#contact-implementation"
+            href="/implementation"
             arrow
             className="mt-[26px]"
           >
             Parler de votre projet
           </Button>
         </div>
-      </div>
-
-      {/* Formulaire contact implémentation (F4) */}
-      <div
-        id="contact-implementation"
-        className="mt-[52px] scroll-mt-24 rounded-card border border-hairline bg-surface p-8 shadow-card sm:p-10"
-      >
-        <h3 className="text-[24px] font-bold tracking-[-0.02em]">
-          Parlez-nous de votre projet
-        </h3>
-        <p className="mt-2 text-[15px] leading-[1.55] text-muted">
-          Décrivez votre besoin en quelques lignes — nous revenons vers vous sous
-          48 h.
-        </p>
-
-        <ContactForm />
       </div>
     </section>
   );

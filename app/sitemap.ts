@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 /**
- * Plan du site — quatre routes publiques. La page /styleguide (recette interne)
+ * Plan du site — routes publiques. La page /styleguide (recette interne)
  * en est volontairement exclue.
  *
  * L'URL de base vient de NEXT_PUBLIC_SITE_URL ; à défaut, localhost pour le
@@ -9,7 +9,14 @@ import type { MetadataRoute } from "next";
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-  const routes = ["/", "/merci", "/mentions-legales", "/confidentialite"];
+  const routes = [
+    "/",
+    "/formations",
+    "/implementation",
+    "/merci",
+    "/mentions-legales",
+    "/confidentialite",
+  ];
 
   return routes.map((route) => ({
     url: `${base}${route}`,

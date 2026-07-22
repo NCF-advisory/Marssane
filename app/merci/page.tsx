@@ -5,7 +5,7 @@ import { Nav } from "@/components/site/Nav";
 import { Kicker } from "@/components/ui/Kicker";
 
 export const metadata: Metadata = {
-  title: "Merci — Marssane",
+  title: "Merci · Marssane",
 };
 
 /** Contenu de la page selon le statut renvoyé par la server action (F2). */
@@ -13,7 +13,7 @@ const CONTENUS = {
   confirme: {
     titre: "Votre pré-inscription est bien enregistrée.",
     texte:
-      "Vous recevrez un email de confirmation avec les prérequis de la journée : un ordinateur portable, un abonnement Claude Pro (20 €/mois) et, si votre poste est géré, un point avec votre DSI.",
+      "Vous recevrez un email de confirmation avec les prérequis de la formation : un ordinateur portable avec l'application Claude installée, un abonnement Claude Pro (20 €/mois), l'accès à votre messagerie et, si votre poste est géré, un point avec votre DSI.",
   },
   attente: {
     titre: "Vous êtes sur liste d'attente.",
@@ -23,7 +23,7 @@ const CONTENUS = {
   defaut: {
     titre: "Votre pré-inscription est bien enregistrée.",
     texte:
-      "Vous recevrez un email de confirmation avec les prérequis de la journée (abonnement Claude Pro, ordinateur portable, point DSI si votre poste est géré).",
+      "Vous recevrez un email de confirmation avec les prérequis de la formation (ordinateur portable avec l'application Claude, abonnement Claude Pro, accès à votre messagerie, point DSI si votre poste est géré).",
   },
 } as const;
 

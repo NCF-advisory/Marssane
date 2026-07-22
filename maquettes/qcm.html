@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCM — Session 1 · Formation débutant Marssane</title>
+<style>
+  :root {
+    --toile: #eef1f3;
+    --surface: #ffffff;
+    --ink: #0e0e12;
+    --body: #3c4654;
+    --muted: #4b5562;
+    --slate: #5b6472;
+    --soft: #6b7480;
+    --faint: #7a828e;
+    --quiet: #98a1ac;
+    --canard: #0e7291;
+    --canard-dark: #095b73;
+    --turquoise: #00d1be;
+    --ecume: #c7f7ef;
+    --ink-ecume: #006560;
+    --periwinkle: #c7d2f7;
+    --clay: #c75a4d;
+    --ink-clay: #8c3a30;
+    --repere: #c4cbd2;
+    --bar-track: #e6e9ed;
+    --hairline: rgba(16,24,40,.06);
+    --hairline-strong: rgba(16,24,40,.07);
+    --outline: rgba(16,24,40,.16);
+    --shadow-card: 0 14px 34px -20px rgba(16,24,40,.18);
+    --shadow-cta: 0 12px 26px -10px rgba(14,114,145,.55);
+    --radius-chip: 2px;
+    --radius-btn: 3px;
+    --radius-card: 4px;
+    --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "Spline Sans Mono", ui-monospace, SFMono-Regular, Menlo, "Liberation Mono", monospace;
+
+    /* Traitement projection (formateur) — fond encre Marssane */
+    --proj-bg: #0e0e12;
+    --proj-panel: #17171d;
+    --proj-line: rgba(255,255,255,.10);
+    --proj-line-soft: rgba(255,255,255,.07);
+    --proj-text: #f1f2f4;
+    --proj-muted: rgba(255,255,255,.60);
+    --proj-track: rgba(255,255,255,.08);
+    --proj-bar: rgba(255,255,255,.22);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background-color: var(--toile);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 16px; line-height: 1.5;
+  }
+  /* Toile Marssane : washes radiaux du fond de page */
+  body {
+    position: relative;
+    background-image:
+      radial-gradient(34% 22% at 94% 0%, rgba(199,247,239,.55), rgba(199,247,239,0) 70%),
+      radial-gradient(30% 18% at 2% 10%, rgba(199,210,247,.5), rgba(199,210,247,0) 70%),
+      radial-gradient(28% 14% at 98% 46%, rgba(199,210,247,.32), rgba(199,210,247,0) 72%),
+      radial-gradient(30% 12% at 4% 78%, rgba(199,247,239,.4), rgba(199,247,239,0) 72%);
+    background-attachment: fixed;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      repeating-linear-gradient(to right, transparent 0, transparent 79px, rgba(193,201,210,.22) 79px, rgba(193,201,210,.22) 80px),
+      repeating-linear-gradient(to bottom, transparent 0, transparent 79px, rgba(193,201,210,.22) 79px, rgba(193,201,210,.22) 80px);
+  }
+  .page { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 24px 16px 48px; }
+  .hidden { display: none !important; }
+
+  .topbar {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 18px;
+  }
+  .topbar .brand { font-weight: 700; font-size: 1.05rem; color: var(--ink); }
+  .topbar .brand span {
+    font-family: var(--font-mono);
+    font-size: .82rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--canard);
+  }
+  .topbar .spacer { flex: 1; }
+  .link-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--soft); font-size: .82rem; font-family: inherit;
+    font-weight: 600;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  .link-btn:hover { color: var(--canard); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 28px;
+  }
+
+  /* Accueil */
+  .intro h1 { margin: 0 0 6px; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
+  .intro .sub { color: var(--canard); font-weight: 600; margin: 0 0 18px; }
+  .intro p { color: var(--body); }
+  .intro ul { color: var(--body); font-size: .95rem; padding-left: 20px; margin: 0 0 24px; }
+  .intro li { margin-bottom: 6px; }
+
+  .btn {
+    border: none; border-radius: var(--radius-btn);
+    padding: 11px 20px; font-size: .95rem; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+  }
+  .btn-primary { background: var(--canard); color: #fff; box-shadow: var(--shadow-cta); }
+  .btn-primary:hover { background: var(--canard-dark); }
+  .btn-primary:disabled { background: var(--repere); color: #fff; box-shadow: none; cursor: not-allowed; }
+  .btn-ghost { background: var(--surface); color: var(--ink); border: 1.5px solid var(--outline); }
+  .btn-ghost:hover { background: var(--toile); }
+  .btn-ghost:disabled { color: var(--repere); border-color: var(--hairline); cursor: not-allowed; }
+
+  /* Progression */
+  .progress-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .progress-head .step { font-family: var(--font-mono); font-size: .8rem; color: var(--soft); font-weight: 600; }
+  .progress-head .kind { font-size: .78rem; color: var(--soft); }
+  .progress-track {
+    height: 8px; background: var(--bar-track); border-radius: var(--radius-chip); overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .progress-fill { height: 100%; background: var(--canard); border-radius: var(--radius-chip); transition: width .25s; }
+
+  .q-text { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .q-hint { font-size: .82rem; color: var(--soft); margin: 0 0 20px; }
+
+  .options { display: grid; gap: 10px; margin-bottom: 26px; }
+  .option {
+    display: flex; align-items: flex-start; gap: 12px;
+    border: 1.5px solid var(--hairline); border-radius: var(--radius-card);
+    padding: 13px 15px; cursor: pointer; transition: border-color .15s, background .15s;
+  }
+  .option:hover { border-color: rgba(14,114,145,.45); }
+  .option.selected { border-color: var(--canard); background: rgba(14,114,145,.06); }
+  .option input { margin-top: 3px; width: 17px; height: 17px; accent-color: var(--canard); flex: 0 0 auto; }
+  .option .label { font-size: .97rem; color: var(--body); }
+
+  .q-nav { display: flex; justify-content: flex-end; gap: 10px; }
+
+  /* Résultats participant */
+  .score-hero { text-align: center; padding: 10px 0 20px; }
+  .score-circle {
+    width: 120px; height: 120px; margin: 0 auto 14px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    background: var(--toile); border: 3px solid var(--canard);
+  }
+  .score-circle .big { font-family: var(--font-mono); font-size: 2.1rem; font-weight: 600; color: var(--canard); line-height: 1; }
+  .score-circle .den { font-size: .9rem; color: var(--soft); }
+  .score-hero .msg { font-size: 1.05rem; margin: 0; color: var(--body); }
+
+  .recap-item {
+    border: 1px solid var(--hairline); border-radius: var(--radius-card);
+    padding: 16px 18px; margin-bottom: 14px;
+  }
+  .recap-item .rq {
+    display: flex; gap: 10px; align-items: baseline;
+    font-weight: 600; margin-bottom: 10px; color: var(--ink);
+  }
+  .recap-item .verdict {
+    font-family: var(--font-mono);
+    font-size: .68rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: var(--radius-chip);
+    flex: 0 0 auto;
+  }
+  .verdict.right { background: var(--ecume); color: var(--ink-ecume); }
+  .verdict.wrong { background: rgba(199,90,77,.14); color: var(--ink-clay); }
+  .recap-opt {
+    display: flex; align-items: center; gap: 8px;
+    font-size: .9rem; padding: 6px 10px; border-radius: var(--radius-chip); margin-bottom: 4px;
+    color: var(--body);
+  }
+  .recap-opt .tag { font-family: var(--font-mono); font-size: .68rem; color: var(--faint); margin-left: auto; white-space: nowrap; }
+  .recap-opt.correct { background: var(--ecume); }
+  .recap-opt.correct .mark { color: var(--ink-ecume); font-weight: 700; }
+  .recap-opt.picked-wrong { background: rgba(199,90,77,.12); }
+  .recap-opt.picked-wrong .mark { color: var(--ink-clay); font-weight: 700; }
+  .recap-opt .mark { flex: 0 0 18px; }
+
+  /* ---- Mode formateur (projection · fond encre) ---- */
+  .present {
+    background: var(--proj-bg); color: var(--proj-text);
+    min-height: 100vh; padding: 0;
+  }
+  .present-inner { max-width: 1000px; margin: 0 auto; padding: 24px 28px 40px; }
+  .present-top {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 26px;
+    border-bottom: 1px solid var(--proj-line); padding-bottom: 16px;
+  }
+  .present-top .badge {
+    background: rgba(255,255,255,.08); color: var(--periwinkle);
+    font-family: var(--font-mono); font-size: .72rem; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: var(--radius-chip);
+  }
+  .present-top .qnum { font-family: var(--font-mono); font-size: 1rem; color: var(--proj-muted); }
+  .present-top .spacer { flex: 1; }
+  .exit-btn {
+    background: none; border: 1px solid rgba(255,255,255,.22); color: var(--proj-text);
+    border-radius: var(--radius-btn); padding: 7px 14px; cursor: pointer; font-family: inherit; font-size: .85rem;
+  }
+  .exit-btn:hover { background: rgba(255,255,255,.06); }
+
+  .present-q { font-size: 2rem; font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .present-kind {
+    font-family: var(--font-mono); font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--proj-muted); margin: 0 0 30px;
+  }
+
+  .dist-row { margin-bottom: 18px; }
+  .dist-label {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 7px;
+    font-size: 1.15rem;
+  }
+  .dist-label .correct-flag {
+    font-family: var(--font-mono);
+    font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    background: var(--turquoise); color: var(--ink);
+    padding: 4px 10px; border-radius: var(--radius-chip);
+  }
+  .dist-label .nums { margin-left: auto; font-family: var(--font-mono); font-size: 1.05rem; color: var(--proj-muted); white-space: nowrap; }
+  .dist-bar-track { height: 30px; background: var(--proj-track); border-radius: var(--radius-btn); overflow: hidden; }
+  .dist-bar {
+    height: 100%; border-radius: var(--radius-btn); background: var(--proj-bar);
+    transition: width .4s; min-width: 2px;
+  }
+  .dist-bar.is-correct { background: var(--turquoise); }
+
+  .present-nav {
+    display: flex; align-items: center; gap: 14px; margin-top: 36px;
+  }
+  .present-nav .spacer { flex: 1; }
+  .nav-btn {
+    background: var(--canard); color: #fff; border: none;
+    border-radius: var(--radius-btn); padding: 12px 24px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+  }
+  .nav-btn:hover { background: var(--canard-dark); }
+  .nav-btn:disabled { background: rgba(255,255,255,.10); color: rgba(255,255,255,.35); cursor: not-allowed; }
+
+  /* Tableau détail participants (formateur) */
+  .detail-panel {
+    margin-top: 40px; border-top: 1px solid var(--proj-line); padding-top: 24px;
+  }
+  .detail-head {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 6px;
+  }
+  .detail-head h3 { margin: 0; font-size: 1.1rem; font-weight: 700; }
+  .detail-head .conf {
+    font-family: var(--font-mono);
+    font-size: .68rem; letter-spacing: .06em; text-transform: uppercase;
+    background: rgba(199,90,77,.20); color: #f0b9b1;
+    padding: 4px 10px; border-radius: var(--radius-chip); font-weight: 600;
+  }
+  .detail-head .spacer { flex: 1; }
+  .detail-note { color: var(--proj-muted); font-size: .85rem; margin: 0 0 16px; }
+  table.detail {
+    width: 100%; border-collapse: collapse; font-size: .92rem;
+  }
+  table.detail th, table.detail td {
+    text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--proj-line-soft);
+  }
+  table.detail th { color: var(--proj-muted); font-family: var(--font-mono); font-weight: 600; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; }
+  table.detail td.score { font-family: var(--font-mono); font-weight: 700; }
+  table.detail .pill {
+    display: inline-block; min-width: 44px; text-align: center;
+    font-family: var(--font-mono);
+    padding: 3px 8px; border-radius: var(--radius-chip); font-size: .82rem; font-weight: 600;
+  }
+  .pill.high { background: rgba(0,209,190,.18); color: #5fe0d0; }
+  .pill.mid { background: rgba(199,210,247,.18); color: var(--periwinkle); }
+  .pill.low { background: rgba(199,90,77,.20); color: #f0b9b1; }
+
+  @media (max-width: 560px) {
+    .card { padding: 20px; }
+    .present-inner { padding: 18px; }
+    .present-q { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= VUE PARTICIPANT ================= -->
+<div class="page" id="participant-view">
+
+  <div class="topbar">
+    <div class="brand">Marssane <span>· QCM</span></div>
+    <div class="spacer"></div>
+    <button class="link-btn" id="open-present">Mode présentation (formateur)</button>
+  </div>
+
+  <!-- Accueil -->
+  <section class="card intro" id="screen-intro">
+    <h1>QCM — Session 1 : Découvrir Claude</h1>
+    <p class="sub">Formation débutant · Promo du 13 au 17 juillet 2026</p>
+    <p>Ce questionnaire vérifie les acquis de la première demi-journée. Prenez le temps de lire chaque énoncé.</p>
+    <ul>
+      <li>10 questions, environ 5 minutes.</li>
+      <li>Une seule bonne réponse, sauf mention « plusieurs réponses possibles ».</li>
+      <li>Votre score et les corrections s'affichent à la fin.</li>
+    </ul>
+    <button class="btn btn-primary" id="start-btn">Commencer</button>
+  </section>
+
+  <!-- Question -->
+  <section class="card hidden" id="screen-question">
+    <div class="progress-head">
+      <span class="step" id="step-label">Question 1/10</span>
+      <span class="kind" id="kind-label"></span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:10%"></div></div>
+
+    <p class="q-text" id="q-text"></p>
+    <p class="q-hint" id="q-hint"></p>
+
+    <div class="options" id="options"></div>
+
+    <div class="q-nav">
+      <button class="btn btn-primary" id="validate-btn" disabled>Valider</button>
+    </div>
+  </section>
+
+  <!-- Résultats -->
+  <section class="card hidden" id="screen-results">
+    <div class="score-hero">
+      <div class="score-circle">
+        <span class="big" id="score-num">0</span>
+        <span class="den">sur 10</span>
+      </div>
+      <p class="msg" id="score-msg"></p>
+    </div>
+    <h2 style="font-size:1.1rem;margin:24px 0 14px;">Récapitulatif</h2>
+    <div id="recap"></div>
+    <button class="btn btn-ghost" id="restart-btn" style="margin-top:8px;">Recommencer</button>
+  </section>
+
+</div>
+
+<!-- ================= VUE FORMATEUR (présentation) ================= -->
+<div class="present hidden" id="present-view">
+  <div class="present-inner">
+    <div class="present-top">
+      <span class="badge">Mode présentation — reprise à chaud</span>
+      <span class="qnum" id="present-qnum">Question 1 / 10</span>
+      <div class="spacer"></div>
+      <button class="exit-btn" id="exit-present">Quitter</button>
+    </div>
+
+    <p class="present-q" id="present-q"></p>
+    <p class="present-kind" id="present-kind"></p>
+
+    <div id="present-dist"></div>
+
+    <div class="present-nav">
+      <button class="nav-btn" id="prev-btn" disabled>← Précédent</button>
+      <div class="spacer"></div>
+      <button class="nav-btn" id="next-btn">Suivant →</button>
+    </div>
+
+    <!-- Détail par participant : visible seulement côté formateur -->
+    <div class="detail-panel">
+      <div class="detail-head">
+        <h3>Détail par participant</h3>
+        <span class="conf">Confidentiel — écran formateur</span>
+        <div class="spacer"></div>
+        <button class="exit-btn" id="export-btn">⬇ Exporter les résultats (CSV)</button>
+      </div>
+      <p class="detail-note">Non projeté au groupe. Sert à repérer qui accompagner, sans l'exposer.</p>
+      <table class="detail">
+        <thead>
+          <tr><th>Participant</th><th>Score</th><th>Réussite</th></tr>
+        </thead>
+        <tbody id="detail-body"></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ---- Données du QCM (fictives) ----
+  // correct : indices des bonnes réponses. dist : nb de participants (sur 10) par option.
+  var QUESTIONS = [
+    {
+      q: "Qu'est-ce que Claude ?",
+      type: "radio",
+      options: [
+        "Un moteur de recherche qui liste des pages web",
+        "Un assistant fondé sur un modèle de langage, avec qui on dialogue",
+        "Un tableur pour faire des calculs",
+        "Un antivirus intelligent"
+      ],
+      correct: [1],
+      dist: [1, 8, 0, 1]
+    },
+    {
+      q: "Pour obtenir une réponse utile, la meilleure approche est de…",
+      type: "radio",
+      options: [
+        "Écrire quelques mots-clés comme sur un moteur de recherche",
+        "Formuler une demande claire et précise, en donnant le contexte et l'objectif",
+        "Poser la question la plus courte possible",
+        "Tout écrire en majuscules pour insister"
+      ],
+      correct: [1],
+      dist: [2, 7, 1, 0]
+    },
+    {
+      q: "Quels éléments aident Claude à mieux répondre ?",
+      type: "checkbox",
+      options: [
+        "Le contexte de votre situation",
+        "L'objectif visé et le public destinataire",
+        "Le format de réponse attendu (liste, e-mail, tableau…)",
+        "Un exemple de ce que vous attendez"
+      ],
+      correct: [0, 1, 2, 3],
+      dist: [9, 7, 6, 4]
+    },
+    {
+      q: "Claude peut-il se tromper ou inventer des informations ?",
+      type: "radio",
+      options: [
+        "Non, tout ce qu'il affirme est exact",
+        "Oui, il peut produire des informations fausses : il faut les vérifier",
+        "Seulement s'il n'a pas accès à Internet",
+        "Uniquement sur les sujets scientifiques"
+      ],
+      correct: [1],
+      dist: [0, 9, 1, 0]
+    },
+    {
+      q: "La réponse de Claude est à côté de votre demande. Que faites-vous ?",
+      type: "radio",
+      options: [
+        "Vous abandonnez, l'outil n'est pas fait pour ça",
+        "Vous reformulez en précisant ce qui manquait et ce que vous attendez",
+        "Vous reposez exactement la même question",
+        "Vous recopiez la réponse telle quelle"
+      ],
+      correct: [1],
+      dist: [1, 8, 1, 0]
+    },
+    {
+      q: "Bonnes pratiques de confidentialité avec Claude :",
+      type: "checkbox",
+      options: [
+        "Éviter de coller des données personnelles ou confidentielles sans cadre validé",
+        "Anonymiser les informations sensibles (ex. « Client A »)",
+        "Publier ses échanges avec des données clients sur les réseaux",
+        "Vérifier la politique d'usage de son organisation"
+      ],
+      correct: [0, 1, 3],
+      dist: [8, 6, 1, 5]
+    },
+    {
+      q: "Pour faire analyser un document par Claude, vous pouvez…",
+      type: "radio",
+      options: [
+        "Lui donner l'adresse du fichier sur votre disque dur",
+        "Joindre le fichier (ou le glisser) dans la conversation",
+        "Lui lire le document à voix haute",
+        "Lui envoyer par e-mail"
+      ],
+      correct: [1],
+      dist: [2, 7, 0, 1]
+    },
+    {
+      q: "Parmi ces usages, lequel est un bon cas d'usage bureautique de Claude ?",
+      type: "radio",
+      options: [
+        "Réparer une imprimante à distance",
+        "Résumer un compte rendu de réunion et en tirer les actions à mener",
+        "Stocker définitivement vos fichiers",
+        "Passer un appel téléphonique à votre place"
+      ],
+      correct: [1],
+      dist: [0, 9, 1, 0]
+    },
+    {
+      q: "« Itérer » sur une réponse, cela signifie…",
+      type: "radio",
+      options: [
+        "Recommencer une conversation vierge à chaque fois",
+        "Affiner progressivement en donnant des retours à Claude (« plus court », « ajoute un exemple »)",
+        "Copier la réponse dans un autre outil",
+        "Attendre que Claude se corrige tout seul"
+      ],
+      correct: [1],
+      dist: [1, 7, 1, 1]
+    },
+    {
+      q: "Avant d'utiliser une information factuelle donnée par Claude, vous devez…",
+      type: "radio",
+      options: [
+        "La partager immédiatement à vos collègues",
+        "La vérifier auprès d'une source fiable",
+        "La considérer comme définitive",
+        "L'ignorer, elle est forcément fausse"
+      ],
+      correct: [1],
+      dist: [1, 8, 1, 0]
+    }
+  ];
+
+  // Détail fictif par participant (formateur)
+  var PARTICIPANTS = [
+    { nom: "Sophie Laurent", score: 9 },
+    { nom: "Karim Benali", score: 8 },
+    { nom: "Nathalie Morel", score: 7 },
+    { nom: "Thomas Roche", score: 6 },
+    { nom: "Aïcha Diallo", score: 10 },
+    { nom: "Julien Perret", score: 8 },
+    { nom: "Fatou Sarr", score: 9 },
+    { nom: "Marc Fontaine", score: 5 },
+    { nom: "Léa Girard", score: 8 },
+    { nom: "Antoine Vidal", score: 7 }
+  ];
+
+  // ---- Vue participant ----
+  var answers = new Array(QUESTIONS.length).fill(null); // tableau d'indices sélectionnés
+  var current = 0;
+
+  var elIntro = document.getElementById('screen-intro');
+  var elQuestion = document.getElementById('screen-question');
+  var elResults = document.getElementById('screen-results');
+
+  document.getElementById('start-btn').addEventListener('click', function () {
+    current = 0;
+    answers = new Array(QUESTIONS.length).fill(null);
+    elIntro.classList.add('hidden');
+    elResults.classList.add('hidden');
+    elQuestion.classList.remove('hidden');
+    renderQuestion();
+  });
+
+  document.getElementById('restart-btn').addEventListener('click', function () {
+    elResults.classList.add('hidden');
+    elIntro.classList.remove('hidden');
+  });
+
+  var validateBtn = document.getElementById('validate-btn');
+
+  function renderQuestion() {
+    var Q = QUESTIONS[current];
+    var picked = answers[current] || [];
+
+    document.getElementById('step-label').textContent = 'Question ' + (current + 1) + '/' + QUESTIONS.length;
+    document.getElementById('kind-label').textContent = Q.type === 'checkbox' ? 'Plusieurs réponses possibles' : 'Une seule réponse';
+    document.getElementById('progress-fill').style.width = ((current + 1) / QUESTIONS.length * 100) + '%';
+    document.getElementById('q-text').textContent = Q.q;
+    document.getElementById('q-hint').textContent = Q.type === 'checkbox'
+      ? 'Cochez toutes les bonnes réponses.'
+      : 'Sélectionnez une réponse.';
+
+    var box = document.getElementById('options');
+    box.innerHTML = '';
+    Q.options.forEach(function (opt, i) {
+      var label = document.createElement('label');
+      label.className = 'option' + (picked.indexOf(i) !== -1 ? ' selected' : '');
+
+      var input = document.createElement('input');
+      input.type = Q.type === 'checkbox' ? 'checkbox' : 'radio';
+      input.name = 'opt';
+      input.value = i;
+      input.checked = picked.indexOf(i) !== -1;
+
+      var span = document.createElement('span');
+      span.className = 'label';
+      span.textContent = opt;
+
+      input.addEventListener('change', function () { onPick(i, Q.type); });
+
+      label.appendChild(input);
+      label.appendChild(span);
+      box.appendChild(label);
+    });
+
+    validateBtn.textContent = (current === QUESTIONS.length - 1) ? 'Terminer' : 'Valider';
+    updateValidateState();
+  }
+
+  function onPick(i, type) {
+    var picked = answers[current] || [];
+    if (type === 'checkbox') {
+      var pos = picked.indexOf(i);
+      if (pos === -1) { picked.push(i); } else { picked.splice(pos, 1); }
+    } else {
+      picked = [i];
+    }
+    answers[current] = picked;
+    // refléter la sélection visuelle
+    var labels = document.querySelectorAll('#options .option');
+    labels.forEach(function (l, idx) {
+      l.classList.toggle('selected', picked.indexOf(idx) !== -1);
+    });
+    updateValidateState();
+  }
+
+  function updateValidateState() {
+    var picked = answers[current] || [];
+    validateBtn.disabled = picked.length === 0;
+  }
+
+  validateBtn.addEventListener('click', function () {
+    if ((answers[current] || []).length === 0) { return; }
+    if (current < QUESTIONS.length - 1) {
+      current++;
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      showResults();
+    }
+  });
+
+  function sameSet(a, b) {
+    if (a.length !== b.length) { return false; }
+    var sa = a.slice().sort(), sb = b.slice().sort();
+    return sa.every(function (v, i) { return v === sb[i]; });
+  }
+
+  function showResults() {
+    var score = 0;
+    QUESTIONS.forEach(function (Q, qi) {
+      if (sameSet(answers[qi] || [], Q.correct)) { score++; }
+    });
+
+    document.getElementById('score-num').textContent = score;
+    var msg = score >= 8 ? 'Très bien, les bases sont solides !'
+            : score >= 5 ? 'Bon départ, on revoit ensemble les points manqués.'
+            : 'Pas de souci, on reprend les fondamentaux en session 2.';
+    document.getElementById('score-msg').textContent = msg;
+
+    var recap = document.getElementById('recap');
+    recap.innerHTML = '';
+    QUESTIONS.forEach(function (Q, qi) {
+      var picked = answers[qi] || [];
+      var ok = sameSet(picked, Q.correct);
+
+      var item = document.createElement('div');
+      item.className = 'recap-item';
+
+      var head = document.createElement('div');
+      head.className = 'rq';
+      var v = document.createElement('span');
+      v.className = 'verdict ' + (ok ? 'right' : 'wrong');
+      v.textContent = ok ? 'Juste' : 'À revoir';
+      var qt = document.createElement('span');
+      qt.textContent = (qi + 1) + '. ' + Q.q;
+      head.appendChild(v);
+      head.appendChild(qt);
+      item.appendChild(head);
+
+      Q.options.forEach(function (opt, i) {
+        var isCorrect = Q.correct.indexOf(i) !== -1;
+        var isPicked = picked.indexOf(i) !== -1;
+        var row = document.createElement('div');
+        row.className = 'recap-opt';
+        var mark = '';
+        if (isCorrect) { row.classList.add('correct'); mark = '✓'; }
+        else if (isPicked) { row.classList.add('picked-wrong'); mark = '✗'; }
+
+        var m = document.createElement('span');
+        m.className = 'mark';
+        m.textContent = mark;
+        var lab = document.createElement('span');
+        lab.textContent = opt;
+        row.appendChild(m);
+        row.appendChild(lab);
+
+        if (isPicked || isCorrect) {
+          var tag = document.createElement('span');
+          tag.className = 'tag';
+          if (isPicked && isCorrect) { tag.textContent = 'votre réponse · bonne réponse'; }
+          else if (isPicked) { tag.textContent = 'votre réponse'; }
+          else { tag.textContent = 'bonne réponse'; }
+          row.appendChild(tag);
+        }
+        item.appendChild(row);
+      });
+
+      recap.appendChild(item);
+    });
+
+    elQuestion.classList.add('hidden');
+    elResults.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ---- Vue formateur (présentation) ----
+  var participantView = document.getElementById('participant-view');
+  var presentView = document.getElementById('present-view');
+  var pCurrent = 0;
+
+  document.getElementById('open-present').addEventListener('click', function () {
+    pCurrent = 0;
+    participantView.classList.add('hidden');
+    presentView.classList.remove('hidden');
+    renderDetailTable();
+    renderPresent();
+    window.scrollTo({ top: 0 });
+  });
+  document.getElementById('exit-present').addEventListener('click', function () {
+    presentView.classList.add('hidden');
+    participantView.classList.remove('hidden');
+  });
+
+  function renderPresent() {
+    var Q = QUESTIONS[pCurrent];
+    var total = 10; // 10 participants
+    document.getElementById('present-qnum').textContent = 'Question ' + (pCurrent + 1) + ' / ' + QUESTIONS.length;
+    document.getElementById('present-q').textContent = (pCurrent + 1) + '. ' + Q.q;
+    document.getElementById('present-kind').textContent = Q.type === 'checkbox'
+      ? 'Plusieurs réponses attendues · réponses anonymisées'
+      : 'Une seule bonne réponse · réponses anonymisées';
+
+    var wrap = document.getElementById('present-dist');
+    wrap.innerHTML = '';
+    Q.options.forEach(function (opt, i) {
+      var count = Q.dist[i];
+      var pct = Math.round(count / total * 100);
+      var isCorrect = Q.correct.indexOf(i) !== -1;
+
+      var row = document.createElement('div');
+      row.className = 'dist-row';
+
+      var lab = document.createElement('div');
+      lab.className = 'dist-label';
+      var txt = document.createElement('span');
+      txt.textContent = opt;
+      lab.appendChild(txt);
+      if (isCorrect) {
+        var flag = document.createElement('span');
+        flag.className = 'correct-flag';
+        flag.textContent = '✓ Bonne réponse';
+        lab.appendChild(flag);
+      }
+      var nums = document.createElement('span');
+      nums.className = 'nums';
+      nums.textContent = count + '/' + total + ' · ' + pct + '%';
+      lab.appendChild(nums);
+      row.appendChild(lab);
+
+      var track = document.createElement('div');
+      track.className = 'dist-bar-track';
+      var bar = document.createElement('div');
+      bar.className = 'dist-bar' + (isCorrect ? ' is-correct' : '');
+      bar.style.width = pct + '%';
+      track.appendChild(bar);
+      row.appendChild(track);
+
+      wrap.appendChild(row);
+    });
+
+    document.getElementById('prev-btn').disabled = pCurrent === 0;
+    document.getElementById('next-btn').disabled = pCurrent === QUESTIONS.length - 1;
+  }
+
+  document.getElementById('prev-btn').addEventListener('click', function () {
+    if (pCurrent > 0) { pCurrent--; renderPresent(); }
+  });
+  document.getElementById('next-btn').addEventListener('click', function () {
+    if (pCurrent < QUESTIONS.length - 1) { pCurrent++; renderPresent(); }
+  });
+
+  function renderDetailTable() {
+    var body = document.getElementById('detail-body');
+    body.innerHTML = '';
+    PARTICIPANTS.forEach(function (p) {
+      var tr = document.createElement('tr');
+      var td1 = document.createElement('td');
+      td1.textContent = p.nom;
+      var td2 = document.createElement('td');
+      td2.className = 'score';
+      td2.textContent = p.score + '/10';
+      var td3 = document.createElement('td');
+      var pill = document.createElement('span');
+      var cls = p.score >= 8 ? 'high' : (p.score >= 6 ? 'mid' : 'low');
+      pill.className = 'pill ' + cls;
+      pill.textContent = Math.round(p.score / 10 * 100) + '%';
+      td3.appendChild(pill);
+      tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
+      body.appendChild(tr);
+    });
+  }
+
+  // Export CSV (fonctionnel, généré en JS)
+  document.getElementById('export-btn').addEventListener('click', function () {
+    var lignes = [['Participant', 'Score sur 10', 'Reussite (%)']];
+    PARTICIPANTS.forEach(function (p) {
+      lignes.push([p.nom, String(p.score), String(Math.round(p.score / 10 * 100))]);
+    });
+    var csv = lignes.map(function (l) {
+      return l.map(function (c) { return '"' + c.replace(/"/g, '""') + '"'; }).join(';');
+    }).join('\r\n');
+    var blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'resultats-qcm-session1-promo-13-07-2026.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+</script>
+</body>
+</html>

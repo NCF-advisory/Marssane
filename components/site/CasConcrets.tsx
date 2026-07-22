@@ -164,7 +164,7 @@ function Cas1() {
               règles génériques
             </CheckItem>
             <CheckItem>
-              Les réponses récurrentes pré-rédigées dans votre ton — vous relisez,
+              Les réponses récurrentes pré-rédigées dans votre ton : vous relisez,
               vous envoyez
             </CheckItem>
             <CheckItem>
@@ -195,7 +195,7 @@ function Cas1() {
                 <span className="font-mono text-[10px] text-quiet">47</span>
               </div>
               <div className="flex flex-col px-2 pb-2 pt-[6px]">
-                <MailBrut expediteur="Greffe TC" heure="07:58" objet="Convocation — dossier n° 24-118" />
+                <MailBrut expediteur="Greffe TC" heure="07:58" objet="Convocation : dossier n° 24-118" />
                 <MailBrut expediteur="Newsletter fournisseur" heure="07:41" objet="Nos offres du mois de juillet" />
                 <MailBrut expediteur="Client · pièces" heure="07:30" objet="Re: documents manquants pour le dossier" />
                 <MailBrut expediteur="Banque" heure="07:12" objet="Relevé mensuel disponible" />
@@ -220,17 +220,17 @@ function Cas1() {
                 <MailTrie
                   badge="Urgent"
                   badgeClass="bg-canard text-white"
-                  titre="Greffe TC — convocation"
+                  titre="Greffe TC · convocation"
                 />
                 <MailTrie
                   badge="À traiter"
                   badgeClass="bg-ecume text-ink-ecume"
-                  titre="Confrère — date d'audience"
+                  titre="Confrère · date d'audience"
                 />
                 <MailTrie
                   badge="En attente"
                   badgeClass="bg-periwinkle text-ink-periwinkle"
-                  titre="Client — pièces manquantes"
+                  titre="Client · pièces manquantes"
                 />
                 <MailTrie
                   badge="Classé"
@@ -354,7 +354,7 @@ function Cas2() {
             <div className="w-[300px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface shadow-hero lg:absolute lg:bottom-0 lg:right-0 lg:z-[3]">
               <div className="flex items-center justify-between border-b border-hairline px-4 py-[13px]">
                 <div className="text-[13.5px] font-bold tracking-[-0.01em]">
-                  Synthèse — bail commercial
+                  Synthèse · bail commercial
                 </div>
                 <span className="rounded-chip bg-ecume px-2 py-1 font-mono text-[10px] text-ink-ecume">
                   12 lignes
@@ -363,7 +363,7 @@ function Cas2() {
               <div className="px-4 pb-[15px] pt-[13px]">
                 <div className="flex flex-col gap-[10px] text-[12.5px] leading-[1.5] text-body">
                   <Rubrique label="DURÉE">
-                    9 ans, résiliation triennale — préavis 6 mois
+                    9 ans, résiliation triennale, préavis 6 mois
                   </Rubrique>
                   <Rubrique label="LOYER">Indexation ILC, révision annuelle</Rubrique>
                   <Rubrique label="DÉPÔT">3 mois de loyer HT</Rubrique>
@@ -393,7 +393,7 @@ function Cas2() {
             <CheckItem>La demande se formule en français, pas en informatique</CheckItem>
             <CheckItem>Mise en forme et ton fidèles à vos rapports habituels</CheckItem>
             <CheckItem>
-              Chaque affirmation renvoie à sa page source — vous vérifiez avant de
+              Chaque affirmation renvoie à sa page source : vous vérifiez avant de
               présenter
             </CheckItem>
           </div>
@@ -542,7 +542,7 @@ function Cas3() {
               <div className="flex items-center justify-between border-b border-hairline px-[17px] pb-3 pt-[14px]">
                 <div>
                   <div className="text-[14px] font-bold tracking-[-0.01em]">
-                    Courrier — Renouvellement de bail
+                    Courrier · Renouvellement de bail
                   </div>
                   <div className="mt-[2px] font-mono text-[10.5px] text-quiet">
                     dossier bail · brouillon v1

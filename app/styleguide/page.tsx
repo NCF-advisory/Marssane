@@ -9,7 +9,7 @@ import { LogoMarssane } from "@/components/ui/LogoMarssane";
 import { PlusMark } from "@/components/ui/PlusMark";
 
 export const metadata: Metadata = {
-  title: "Styleguide — Marssane",
+  title: "Styleguide · Marssane",
 };
 
 const palette: { name: string; hex: string }[] = [
@@ -97,7 +97,7 @@ export default function StyleguidePage() {
         </header>
 
         {/* ===== Couleurs ===== */}
-        <Section index="01 — Couleurs" title="Palette & tokens">
+        <Section index="01 · Couleurs" title="Palette & tokens">
           <div className={card}>
             <div className="text-[10.5px] font-semibold uppercase tracking-[0.15em] text-quiet">
               Palette
@@ -133,7 +133,7 @@ export default function StyleguidePage() {
         </Section>
 
         {/* ===== Typographie ===== */}
-        <Section index="02 — Typographie" title="Échelle">
+        <Section index="02 · Typographie" title="Échelle">
           <div className={`${card} flex flex-col`}>
             <TypeRow spec="Display · 56 · 800 · -0.03em">
               <span className="text-[56px] font-extrabold leading-[1.02] tracking-[-0.03em]">
@@ -170,7 +170,7 @@ export default function StyleguidePage() {
         </Section>
 
         {/* ===== Boutons ===== */}
-        <Section index="03 — Boutons" title="Actions">
+        <Section index="03 · Boutons" title="Actions">
           <div className={`${card} flex flex-wrap items-center gap-4`}>
             <Button variant="primary" href="#" arrow>
               Réserver ma place
@@ -190,7 +190,7 @@ export default function StyleguidePage() {
         </Section>
 
         {/* ===== Badges & états ===== */}
-        <Section index="04 — Badges & états" title="Signaux">
+        <Section index="04 · Badges & états" title="Signaux">
           <div className="grid gap-5 md:grid-cols-2">
             <div className={`${card} flex flex-wrap items-start gap-3`}>
               <BadgeEcume>01 · Trier ses mails</BadgeEcume>
@@ -199,7 +199,7 @@ export default function StyleguidePage() {
             </div>
             <div className={`${card} flex flex-col gap-2.5`}>
               <CheckItem>Classé selon vos priorités, pas des règles génériques</CheckItem>
-              <CheckItem>Rien n&apos;est supprimé — tout est rangé, retrouvable</CheckItem>
+              <CheckItem>Rien n&apos;est supprimé : tout est rangé, retrouvable</CheckItem>
               <CheckItem>Construit par vous, pas à pas, pendant l&apos;atelier</CheckItem>
             </div>
           </div>
@@ -215,7 +215,7 @@ export default function StyleguidePage() {
         </Section>
 
         {/* ===== Logo ===== */}
-        <Section index="05 — Logo" title="Le cadre-repère">
+        <Section index="05 · Logo" title="Le cadre-repère">
           <div className={`${card} flex flex-wrap items-end gap-12`}>
             <div className="flex flex-col items-center gap-3">
               <LogoMarssane size={34} />
@@ -237,7 +237,7 @@ export default function StyleguidePage() {
         </Section>
 
         {/* ===== Drapeau ===== */}
-        <Section index="06 — Rappel France" title="Le drapeau tonal">
+        <Section index="06 · Rappel France" title="Le drapeau tonal">
           <div className={`${card} flex flex-wrap items-center gap-10`}>
             <DrapeauFrance />
             <DrapeauFrance height={20} />
@@ -245,7 +245,7 @@ export default function StyleguidePage() {
         </Section>
 
         {/* ===== Toile & repères ===== */}
-        <Section index="07 — Toile" title="Grille & repères">
+        <Section index="07 · Toile" title="Grille & repères">
           <div className="relative h-[260px] overflow-hidden rounded-card border border-hairline bg-toile">
             <GridBackground mask="radial-gradient(72% 70% at 50% 45%, #000, transparent 78%)" />
             <PlusMark
