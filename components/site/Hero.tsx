@@ -53,8 +53,7 @@ export function Hero() {
           <p className="mt-[22px] max-w-[490px] text-[18px] leading-[1.55] text-body">
             Trier vos mails, recevoir chaque matin le compte rendu des urgences,
             automatiser vos propres tâches : deux demi-journées, chacun sur son
-            ordinateur, et trois jours de pratique accompagnée. Vous repartez avec
-            un système qui tourne.
+            ordinateur. Vous repartez avec un système qui tourne.
           </p>
           <div className="mt-[30px] flex flex-wrap items-center gap-4">
             <ReservationTrigger className="inline-flex items-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-base font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark">
@@ -74,11 +73,9 @@ export function Hero() {
       <div className="mt-16 flex flex-col gap-4 rounded-card border border-hairline-strong bg-white/65 px-7 py-[18px] lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:gap-5">
         <Stat value="8 h 45" label="2 demi-journées, la même semaine" />
         <Separator />
-        <Stat value="3 jours" label="de pratique accompagnée" />
-        <Separator />
         <Stat value="10 places" label="maximum par session" />
         <Separator />
-        <Stat value="2 projets" label="le cas mail, puis le vôtre" />
+        <Stat value="2 projets" label="le cas général, puis le vôtre" />
       </div>
     </section>
   );

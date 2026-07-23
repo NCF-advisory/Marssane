@@ -52,9 +52,9 @@ export function Reservation({ mention }: { mention?: string | null }) {
           </span>
         </h2>
         <p className="mx-auto mt-[18px] max-w-[460px] text-[16.5px] leading-[1.55] text-body">
-          Formation débutant : deux demi-journées la même semaine, et trois jours
-          de pratique accompagnée entre les deux. Le vendredi soir, votre boîte
-          mail se trie toute seule, parce que vous l&apos;aurez construit.
+          Formation débutant : deux demi-journées la même semaine, avec de la
+          pratique chez vous entre les deux. Le vendredi soir, votre boîte mail
+          se trie toute seule, parce que vous l&apos;aurez construit.
         </p>
 
         <ReservationTrigger className="mt-7 inline-flex items-center gap-2.5 rounded-btn bg-canard px-[30px] py-4 text-[16.5px] font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark">

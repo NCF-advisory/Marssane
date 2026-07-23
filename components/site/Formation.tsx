@@ -22,7 +22,7 @@ const ETAPES: { jour: string; titre: string; texte: ReactNode }[] = [
   },
   {
     jour: "Mar → jeu",
-    titre: "Trois jours de pratique accompagnée",
+    titre: "Entre les deux sessions · pratique chez vous",
     texte:
       "Vous transposez le cas mail sur votre propre boîte, depuis chez vous. Le chat commun reste ouvert, et le mercredi le formateur répond à tous dans une FAQ groupée.",
   },
@@ -72,9 +72,9 @@ export function Formation() {
           Une semaine, deux sessions, dix personnes.
         </h2>
         <p className="mt-4 text-[16.5px] leading-[1.58] text-body">
-          Deux demi-journées en salle, lundi et vendredi, et trois jours de
-          pratique accompagnée entre les deux, chacun sur son propre ordinateur.
-          Vous ne regardez pas une démonstration : vous construisez.
+          Deux demi-journées en salle, lundi et vendredi, avec de la pratique
+          chez vous entre les deux, chacun sur son propre ordinateur. Vous ne
+          regardez pas une démonstration : vous construisez.
         </p>
       </div>
 
