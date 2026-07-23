@@ -41,7 +41,7 @@ const NIVEAUX: Niveau[] = [
       "Vérifier une sortie et savoir ce qu'on peut confier (confidentialité)",
     ],
     infos: {
-      duree: "2 demi-journées · 8 h 45",
+      duree: "2 demi-journées · selon votre agenda",
       format: "Présentiel + pratique accompagnée",
       prochaineSession: "À venir",
     },

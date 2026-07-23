@@ -1,44 +1,43 @@
 import type { ReactNode } from "react";
+import { CheckItem } from "@/components/ui/CheckItem";
 import { Kicker } from "@/components/ui/Kicker";
 import { PlusMark } from "@/components/ui/PlusMark";
 import { ReservationTrigger } from "./ReservationTrigger";
 
-/** Les trois temps de la semaine. Le paragraphe peut contenir un passage en gras. */
-const ETAPES: { jour: string; titre: string; texte: ReactNode }[] = [
+/** Les trois temps de la semaine, en puces courtes. */
+const ETAPES: { jour: string; titre: string; puces: string[] }[] = [
   {
-    jour: "Lundi",
+    jour: "01",
     titre: "Session 1 · le cas mail, de A à Z (3 h 45)",
-    texte: (
-      <>
-        Démonstration d&apos;ouverture, puis les bases : comment fonctionne
-        Claude, le prompt, la confidentialité. Ensuite Cowork, votre skill de tri
-        et le connecteur, construits en salle sur données fictives.{" "}
-        <b className="font-semibold text-ink">
-          « À la fin de la session, le tri automatique et le brief du matin
-          tournent de bout en bout. »
-        </b>
-      </>
-    ),
+    puces: [
+      "Les bases : Claude, le prompt, la confidentialité",
+      "Votre skill de tri construit en salle",
+      "Le tri automatique tourne en fin de session",
+    ],
   },
   {
-    jour: "Mar → jeu",
+    jour: "01 → 02",
     titre: "Entre les deux sessions · pratique chez vous",
-    texte:
-      "Vous transposez le cas mail sur votre propre boîte, depuis chez vous. Le chat commun reste ouvert, et le mercredi le formateur répond à tous dans une FAQ groupée.",
+    puces: [
+      "Vous transposez sur votre propre boîte, à votre rythme",
+      "Chat commun ouvert, FAQ groupée du formateur à mi-parcours",
+    ],
   },
   {
-    jour: "Vendredi",
+    jour: "02",
     titre: "Session 2 · votre propre cas (5 h)",
-    texte:
-      "Mini-audit de vos tâches pour choisir le bon cas, puis chacun construit le sien (skill, connecteur si pertinent) et le démontre au groupe. Validation des acquis et remise du certificat de participation.",
+    puces: [
+      "Mini-audit de vos tâches, chacun construit son cas",
+      "Démonstration au groupe, certificat de participation",
+    ],
   },
 ];
 
 /** Le cadre : cinq lignes libellé / valeur (valeur en mono). */
 const CADRE = [
-  { label: "Durée", valeur: "8 h 45 · 2 demi-journées" },
-  { label: "Rythme", valeur: "la même semaine" },
-  { label: "Effectif", valeur: "10 places max." },
+  { label: "Durée", valeur: "2 demi-journées" },
+  { label: "Rythme", valeur: "selon votre agenda" },
+  { label: "Effectif", valeur: "petit groupe" },
   { label: "Matériel", valeur: "votre ordinateur" },
   { label: "Niveau", valeur: "débutant" },
 ];
@@ -69,16 +68,16 @@ export function Formation() {
       <div className="max-w-[640px]">
         <Kicker>La formation · niveau débutant</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-          Une semaine, et ça{" "}
+          Deux demi-journées, et ça{" "}
           <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
             tourne
           </span>
           .
         </h2>
         <p className="mt-4 text-[16.5px] leading-[1.58] text-body">
-          Lundi et vendredi en salle, de la pratique chez vous entre les deux,
-          chacun sur son ordinateur. Vous ne regardez pas une démonstration :
-          vous construisez.
+          Deux demi-journées en salle, à caler selon votre agenda, avec de la
+          pratique chez vous entre les deux. Vous ne regardez pas une
+          démonstration : vous construisez.
         </p>
       </div>
 
@@ -104,9 +103,11 @@ export function Formation() {
                     <div className="text-[17px] font-bold tracking-[-0.01em]">
                       {etape.titre}
                     </div>
-                    <p className="mt-2 text-[14px] leading-[1.58] text-muted">
-                      {etape.texte}
-                    </p>
+                    <div className="mt-3 flex flex-col gap-2">
+                      {etape.puces.map((puce) => (
+                        <CheckItem key={puce}>{puce}</CheckItem>
+                      ))}
+                    </div>
                   </div>
                 </li>
               );
@@ -148,8 +149,24 @@ export function Formation() {
             <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-soft">
               Prérequis
             </div>
-            <div className="mt-[14px] flex flex-col gap-[11px] text-[14px] text-body">
-              <PrerequisItem>
+            <details className="group mt-[14px]">
+              <summary className="flex cursor-pointer list-none items-center gap-2 text-[14px] font-semibold text-canard [&::-webkit-details-marker]:hidden">
+                <svg
+                  aria-hidden
+                  viewBox="0 0 24 24"
+                  className="h-3.5 w-3.5 flex-none transition-transform duration-200 group-open:rotate-90"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M9 6l6 6-6 6" />
+                </svg>
+                Prérequis (3)
+              </summary>
+              <div className="mt-[14px] flex flex-col gap-[11px] text-[14px] text-body">
+                <PrerequisItem>
                 Un ordinateur portable, celui sur lequel vous travaillez, avec
                 l&apos;application Claude installée.
               </PrerequisItem>
@@ -159,11 +176,8 @@ export function Formation() {
               <PrerequisItem>
                 L&apos;accès à votre messagerie depuis cet ordinateur.
               </PrerequisItem>
-              <PrerequisItem>
-                Poste géré par une DSI : validation préalable (fichiers et
-                messagerie).
-              </PrerequisItem>
-            </div>
+              </div>
+            </details>
           </div>
 
           <ReservationTrigger className="inline-flex w-full items-center justify-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-[15.5px] font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark">

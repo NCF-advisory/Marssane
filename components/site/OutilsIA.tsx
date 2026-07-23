@@ -196,11 +196,11 @@ export function OutilsIA() {
       <div className="max-w-[640px]">
         <Kicker>Les outils · repères</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-          ChatGPT, Claude, Mistral… vous êtes{" "}
+          On vous aide à choisir{" "}
           <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-            perdu
-          </span>{" "}
-          ?
+            une IA
+          </span>
+          .
         </h2>
         <p className="mt-[14px] text-[16.5px] leading-[1.58] text-body">
           Des assistants qui lisent vos documents, résument et rédigent. Repères

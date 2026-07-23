@@ -78,6 +78,26 @@ function Connector({ className }: { className?: string }) {
   );
 }
 
+/** Ligne d'auto-identification sous la phrase-réponse : label « Vécu chez » +
+ *  chips secteurs (bg-toile). Aide le lecteur à se reconnaître dans le cas. */
+function VecuChez({ secteurs }: { secteurs: string[] }) {
+  return (
+    <div className="mt-4 flex flex-wrap items-center gap-2">
+      <span className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-quiet">
+        Vécu chez
+      </span>
+      {secteurs.map((s) => (
+        <span
+          key={s}
+          className="rounded-chip bg-toile px-2 py-[3px] font-mono text-[10.5px] text-slate"
+        >
+          {s}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 /** Barre grise simulant une ligne de texte. */
 function Bar({ width, className }: { width: string; className?: string }) {
   return (
@@ -165,6 +185,7 @@ function Cas1() {
             comptent, les réponses pré-rédigées dans votre ton. Rien ne part sans
             vous.
           </p>
+          <VecuChez secteurs={["Experts-comptables", "Services B2B", "Négoce"]} />
         </div>
 
         {cas1Video ? (
@@ -389,6 +410,7 @@ function Cas2() {
             La synthèse en 12 lignes, dans votre ton — et chaque point renvoie à
             sa page source.
           </p>
+          <VecuChez secteurs={["Juridique", "Immobilier", "Industrie"]} />
         </div>
       </div>
     </section>
@@ -424,6 +446,7 @@ function Cas3() {
             Vous le dictez une fois, ça part tout seul — et c&apos;est toujours
             vous qui validez.
           </p>
+          <VecuChez secteurs={["BTP", "Artisans", "Agences"]} />
         </div>
 
         {cas3Video ? (

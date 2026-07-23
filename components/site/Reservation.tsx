@@ -52,8 +52,8 @@ export function Reservation({ mention }: { mention?: string | null }) {
           </span>
         </h2>
         <p className="mx-auto mt-[18px] max-w-[460px] text-[16.5px] leading-[1.55] text-body">
-          Deux demi-journées la même semaine, de la pratique entre les deux. Le
-          vendredi soir, votre boîte se trie toute seule — parce que vous
+          Deux demi-journées à caler selon votre agenda, de la pratique entre
+          les deux. À la fin, votre boîte se trie toute seule — parce que vous
           l&apos;aurez construit.
         </p>
 
@@ -66,7 +66,7 @@ export function Reservation({ mention }: { mention?: string | null }) {
 
         <div className="mt-4 text-[13px] text-soft">
           {mention ??
-            "10 places par session · pré-inscription sans engagement · réponse sous 48 h."}
+            "Petits groupes · pré-inscription sans engagement · réponse sous 48 h."}
         </div>
       </div>
     </section>
