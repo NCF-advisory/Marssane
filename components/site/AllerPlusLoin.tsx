@@ -151,13 +151,16 @@ export function AllerPlusLoin() {
         <div className="max-w-[450px] lg:justify-self-end">
           <Kicker>Aller plus loin · implémentation</Kicker>
           <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-            Vous voyez le potentiel ? Nous venons l&apos;installer chez vous.
+            Vous voyez le potentiel ? Nous venons l&apos;installer{" "}
+            <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+              chez vous
+            </span>
+            .
           </h2>
           <p className="mt-[18px] text-[16.5px] leading-[1.58] text-body">
-            Vous êtes formé, vous savez ce que l&apos;IA sait faire. L&apos;étape
-            suivante : nous implémentons l&apos;IA directement dans votre
-            entreprise, sur vos données, avec vos équipes, avec un gain mesuré
-            chaque mois.
+            Vous êtes formé, vous voyez ce que l&apos;IA sait faire. L&apos;étape
+            suivante : nous l&apos;installons dans votre entreprise, sur vos
+            données, avec vos équipes — gain mesuré chaque mois.
           </p>
           <div className="mt-[22px] flex flex-col gap-2.5">
             <CheckItem>Construit sur vos dossiers réels, avec vos équipes</CheckItem>

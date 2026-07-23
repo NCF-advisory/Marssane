@@ -13,7 +13,7 @@ const PROFESSIONS = [
     titre: "Entrepreneurs",
     sousTitre: "indépendants · créateurs · startups",
     texte:
-      "Devis, relances, administratif : abattez les tâches chronophages et gardez du temps pour développer votre activité.",
+      "Devis, relances, administratif : abattez les tâches chronophages et gardez votre temps pour développer.",
   },
 ];
 
@@ -56,11 +56,15 @@ export function PourQui() {
       <div className="max-w-[640px]">
         <Kicker>Pour qui</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-          Pensée pour des professions exigeantes.
+          Vous partez deux semaines, tout{" "}
+          <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+            s&apos;arrête
+          </span>{" "}
+          ?
         </h2>
         <p className="mt-[14px] text-[16.5px] leading-[1.58] text-body">
-          Des métiers où la confidentialité n&apos;est pas une option : la question
-          est traitée dès la première heure de formation.
+          La confidentialité n&apos;est pas une option chez vous : elle est
+          traitée dès la première heure de formation.
         </p>
       </div>
 

@@ -1,6 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
 import { BadgeEcume } from "@/components/ui/BadgeEcume";
-import { CheckItem } from "@/components/ui/CheckItem";
 import { CasVideo } from "@/components/site/CasVideo";
 import { cas1Video, cas2Video, cas3Video } from "@/lib/site-config";
 
@@ -155,23 +154,17 @@ function Cas1() {
         <div className="max-w-[450px]">
           <BadgeEcume>01</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
-            Trier, prioriser, répondre à vos mails : votre boîte tenue en un
-            passage.
+            Relancé{" "}
+            <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+              25 fois
+            </span>{" "}
+            par le même client ?
           </h3>
-          <div className="mt-5 flex flex-col gap-[9px]">
-            <CheckItem>
-              Classé selon <b className="font-semibold">vos</b> priorités, pas des
-              règles génériques
-            </CheckItem>
-            <CheckItem>
-              Les réponses récurrentes pré-rédigées dans votre ton : vous relisez,
-              vous envoyez
-            </CheckItem>
-            <CheckItem>
-              Rien ne part sans vous ; rien n&apos;est supprimé, tout reste
-              retrouvable
-            </CheckItem>
-          </div>
+          <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body">
+            Votre boîte se trie toute seule : il ne reste que les 6 mails qui
+            comptent, les réponses pré-rédigées dans votre ton. Rien ne part sans
+            vous.
+          </p>
         </div>
 
         {cas1Video ? (
@@ -387,16 +380,15 @@ function Cas2() {
         <div className="order-first max-w-[450px] lg:order-last lg:justify-self-end">
           <BadgeEcume>02</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
-            Synthétiser vos documents et préparer vos réunions, dans votre ton.
+            <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+              42 pages
+            </span>{" "}
+            à lire pour la réunion de demain ?
           </h3>
-          <div className="mt-5 flex flex-col gap-[9px]">
-            <CheckItem>La demande se formule en français, pas en informatique</CheckItem>
-            <CheckItem>Mise en forme et ton fidèles à vos rapports habituels</CheckItem>
-            <CheckItem>
-              Chaque affirmation renvoie à sa page source : vous vérifiez avant de
-              présenter
-            </CheckItem>
-          </div>
+          <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body">
+            La synthèse en 12 lignes, dans votre ton — et chaque point renvoie à
+            sa page source.
+          </p>
         </div>
       </div>
     </section>
@@ -422,13 +414,16 @@ function Cas3() {
         <div className="max-w-[450px]">
           <BadgeEcume>03</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
-            Automatiser un process de votre travail.
+            Encore un{" "}
+            <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+              vendredi soir
+            </span>{" "}
+            sur les impayés ?
           </h3>
-          <div className="mt-5 flex flex-col gap-[9px]">
-            <CheckItem>Relancer les factures impayées et les devis sans réponse</CheckItem>
-            <CheckItem>Collecter et classer les pièces d&apos;un nouveau dossier</CheckItem>
-            <CheckItem>Préparer le reporting mensuel à partir de vos fichiers</CheckItem>
-          </div>
+          <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body">
+            Vous le dictez une fois, ça part tout seul — et c&apos;est toujours
+            vous qui validez.
+          </p>
         </div>
 
         {cas3Video ? (

@@ -196,12 +196,15 @@ export function OutilsIA() {
       <div className="max-w-[640px]">
         <Kicker>Les outils · repères</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-          Quatre noms à connaître. Un seul suffit pour commencer.
+          ChatGPT, Claude, Mistral… vous êtes{" "}
+          <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+            perdu
+          </span>{" "}
+          ?
         </h2>
         <p className="mt-[14px] text-[16.5px] leading-[1.58] text-body">
-          ChatGPT, Claude, Mistral, GLM… Derrière les noms, le même principe :
-          un assistant qui lit vos documents, résume et rédige. Repères en
-          quatre lignes.
+          Des assistants qui lisent vos documents, résument et rédigent. Repères
+          en quatre lignes.
         </p>
       </div>
 
@@ -239,8 +242,7 @@ export function OutilsIA() {
       </div>
 
       <p className="mt-[26px] max-w-[640px] text-[16.5px] leading-[1.58] text-body">
-        Les réflexes que vous apprendrez (confier une tâche, vérifier la
-        source, automatiser) valent pour les quatre.{" "}
+        Les réflexes que vous apprendrez valent pour les quatre.{" "}
         <b className="font-semibold text-ink">La formation se fait sur Claude.</b>
       </p>
     </section>

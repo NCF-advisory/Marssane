@@ -38,13 +38,17 @@ export function PourFaireQuoi() {
       <PlusMark size={16} className="absolute right-[150px] top-[56px] hidden lg:block" />
 
       <div className="max-w-[680px]">
-        <Kicker>Pour faire quoi · le quotidien d&apos;un cabinet ou d&apos;une PME</Kicker>
+        <Kicker>Pour faire quoi · votre semaine type</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-          L&apos;IA, d&apos;accord. Mais pour faire quoi ?
+          Des semaines de 60 heures, et toujours{" "}
+          <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+            en retard
+          </span>{" "}
+          ?
         </h2>
         <p className="mt-4 text-[16.5px] leading-[1.58] text-body">
-          Trois cas concrets : ceux, précisément, que vous pratiquerez pendant la
-          formation, sur vos propres documents.
+          Trois situations que vous vivez chaque semaine. Pendant la formation,
+          vous les réglez sur vos propres documents.
         </p>
       </div>
     </section>

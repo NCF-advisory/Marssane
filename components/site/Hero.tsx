@@ -33,13 +33,13 @@ export function Hero() {
       <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.9fr_1.2fr]">
         <div className="max-w-[530px]">
           <Kicker>
-            Formation IA · dirigeants de PME et TPE
+            Formation IA · dirigeants de PME de moins de 20 salariés
           </Kicker>
           <h1 className="mt-[18px] text-[36px] font-extrabold leading-[1.04] tracking-[-0.03em] sm:text-[44px] lg:text-[54px]">
-            Une formation IA sur des{" "}
+            Tout repose sur vous ? Reprenez{" "}
             <span className="inline-block">
               <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-                cas concrets
+                votre temps
                 <span
                   aria-hidden
                   className="absolute right-[-0.62em] top-[-0.5em] text-[0.64em] font-medium leading-none text-turquoise"
@@ -50,11 +50,6 @@ export function Hero() {
               .
             </span>
           </h1>
-          <p className="mt-[22px] max-w-[490px] text-[18px] leading-[1.55] text-body">
-            Trier vos mails, recevoir chaque matin le compte rendu des urgences,
-            automatiser vos propres tâches : deux demi-journées, chacun sur son
-            ordinateur. Vous repartez avec un système qui tourne.
-          </p>
           <div className="mt-[30px] flex flex-wrap items-center gap-4">
             <ReservationTrigger className="inline-flex items-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-base font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark">
               Réserver ma place

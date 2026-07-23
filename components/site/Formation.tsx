@@ -69,12 +69,16 @@ export function Formation() {
       <div className="max-w-[640px]">
         <Kicker>La formation · niveau débutant</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-          Une semaine, deux sessions, dix personnes.
+          Une semaine, et ça{" "}
+          <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+            tourne
+          </span>
+          .
         </h2>
         <p className="mt-4 text-[16.5px] leading-[1.58] text-body">
-          Deux demi-journées en salle, lundi et vendredi, avec de la pratique
-          chez vous entre les deux, chacun sur son propre ordinateur. Vous ne
-          regardez pas une démonstration : vous construisez.
+          Lundi et vendredi en salle, de la pratique chez vous entre les deux,
+          chacun sur son ordinateur. Vous ne regardez pas une démonstration :
+          vous construisez.
         </p>
       </div>
 
@@ -118,9 +122,8 @@ export function Formation() {
               ✓
             </span>
             <div className="text-[15px] font-semibold leading-[1.5] text-ink-ecume">
-              Vous repartez avec une boîte mail qui se trie toute seule, un compte
-              rendu des urgences chaque matin, et la méthode pour automatiser vos
-              propres tâches.
+              Vous repartez avec une boîte qui se trie toute seule, le brief de
+              vos urgences chaque matin, et la méthode pour automatiser le reste.
             </div>
           </div>
         </div>
