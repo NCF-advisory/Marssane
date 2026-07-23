@@ -122,9 +122,15 @@ export default async function Formations() {
                 Chacun progresse à son rythme, des premiers usages jusqu&apos;à
                 l&apos;outil construit sur mesure.
               </p>
-            </div>
-            <div className="mt-16 flex justify-center">
-              <ScrollCue cibleId="debutant" />
+              {/* Chevrons juste sous le paragraphe, alignés sur le bord gauche
+                  du texte. Le `pl-[7px]` compense le débordement visuel de la
+                  pointe du « v » : chaque chevron est un carré de 36 px pivoté à
+                  45°, dont la pointe gauche visible dépasse d'environ 7,5 px à
+                  gauche de sa boîte de layout. `flex` (justify-start) garde le
+                  bouton à sa largeur de contenu et calé à gauche. */}
+              <div className="mt-10 flex pl-[7px]">
+                <ScrollCue cibleId="debutant" />
+              </div>
             </div>
           </div>
         </section>
