@@ -1,5 +1,6 @@
 import { Composition } from "remotion";
 import { HeroComposition } from "./HeroComposition";
+import { HeroV2 } from "./HeroV2";
 import { HybridProto } from "./scenes/HybridProto";
 import { Cas1Mails } from "./scenes/Cas1Mails";
 import { Cas2Synthese } from "./scenes/Cas2Synthese";
@@ -14,6 +15,15 @@ export function RemotionRoot() {
         id="HeroVideo"
         component={HeroComposition}
         durationInFrames={DURATION}
+        fps={FPS}
+        width={1920}
+        height={1080}
+      />
+      {/* Héro v2 « Le compteur de temps » (16:9, 750 f = 25,0 s). */}
+      <Composition
+        id="HeroV2"
+        component={HeroV2}
+        durationInFrames={750}
         fps={FPS}
         width={1920}
         height={1080}

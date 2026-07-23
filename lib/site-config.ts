@@ -8,9 +8,9 @@
  */
 export const heroVideo: { mp4: string; webm?: string; poster: string } | null =
   {
-    mp4: "/video/hero.mp4",
-    webm: "/video/hero.webm",
-    poster: "/video/hero-poster.jpg",
+    mp4: "/video/hero-v2.mp4",
+    webm: "/video/hero-v2.webm",
+    poster: "/video/hero-v2-poster.jpg",
   };
 
 /**
