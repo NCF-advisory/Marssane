@@ -66,6 +66,14 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Garde-fou : les décorations « motifFond » sont positionnées en px absolus ;
+   clip (et non hidden : pas de nouveau contexte de scroll) pour qu'aucune
+   ne puisse créer de défilement horizontal. */
+html,
+body {
+  overflow-x: clip;
+}
+
 /* Le smooth scroll des ancres, seulement si l'utilisateur n'a pas demandé
    à réduire les animations. */
 @media (prefers-reduced-motion: no-preference) {
