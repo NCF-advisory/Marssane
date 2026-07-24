@@ -19,11 +19,11 @@ export function RemotionRoot() {
         width={1920}
         height={1080}
       />
-      {/* Héro v2 « Le compteur de temps » (16:9, 750 f = 25,0 s). */}
+      {/* Héro v2 « Le compteur de temps » (16:9, 630 f = 21,0 s : rythme ×1,25 + gel final 30 f). */}
       <Composition
         id="HeroV2"
         component={HeroV2}
-        durationInFrames={750}
+        durationInFrames={630}
         fps={FPS}
         width={1920}
         height={1080}

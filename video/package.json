@@ -12,7 +12,7 @@
     "render:all": "npm run render:mp4 && npm run render:webm && npm run render:poster",
     "render:herov2:mp4": "remotion render src/index.ts HeroV2 ../public/video/hero-v2.mp4 --codec=h264 --crf=30",
     "render:herov2:webm": "remotion render src/index.ts HeroV2 ../public/video/hero-v2.webm --codec=vp9 --crf=36",
-    "render:herov2:poster": "remotion still src/index.ts HeroV2 ../public/video/hero-v2-poster.jpg --frame=660 --image-format=jpeg --jpeg-quality=88",
+    "render:herov2:poster": "remotion still src/index.ts HeroV2 ../public/video/hero-v2-poster.jpg --frame=528 --image-format=jpeg --jpeg-quality=88",
     "render:herov2": "npm run render:herov2:mp4 && npm run render:herov2:webm && npm run render:herov2:poster",
     "render:cas1:mp4": "remotion render src/index.ts Cas1Mails ../public/video/cas1.mp4 --codec=h264 --crf=30",
     "render:cas1:webm": "remotion render src/index.ts Cas1Mails ../public/video/cas1.webm --codec=vp9 --crf=36",

@@ -9,9 +9,11 @@ import { CaseDocs } from "./herov2/CaseDocs";
 import { CaseRelance } from "./herov2/CaseRelance";
 
 /**
- * Vidéo héro v2 « Le compteur de temps » (1920×1080, 30 fps, 750 frames =
- * 25,000 s). Muette, en boucle. Mêmes dimensions et même encodage que le héro
- * existant (bt709 plage limitée, via remotion.config.ts).
+ * Vidéo héro v2 « Le compteur de temps » (1920×1080, 30 fps). Timeline interne
+ * de 750 f jouée à ×1,25 (rythme +25 %) avec un gel de 30 f sur la carte de
+ * clôture, soit 630 frames rendues = 21,000 s. Muette, en boucle. Mêmes
+ * dimensions et même encodage que le héro existant (bt709 plage limitée, via
+ * remotion.config.ts).
  *
  * Structure (v2.3) :
  *   1. Hook typographique « Nos formations IA / vous font gagner du temps ».
@@ -34,6 +36,26 @@ import { CaseRelance } from "./herov2/CaseRelance";
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 const step = (f: number, a: number, b: number, from: number, to: number) =>
   from + (to - from) * easeOut(clamp01((f - a) / (b - a)));
+
+/* ---------------------------- Rythme & gel final ------------------------- */
+
+/**
+ * Remap temporel appliqué à l'unique source de temps (useCurrentFrame ci-dessous) :
+ * toute la vidéo dérive de cette seule valeur `frame` (les scènes reçoivent
+ * `local = frame - start` en prop, aucune ne relit useCurrentFrame), donc scaler
+ * cette valeur accélère proprement l'ensemble sans « tricher » sur un contexte de
+ * frame. La timeline interne (750 f) est inchangée ; on ne fait que la parcourir
+ * plus vite (×1,25) puis on la fige un instant.
+ *
+ *   • SPEED = 1,25   → durées internes ×0,8 (rythme +25 %) ; 750 f internes en 600 f réelles.
+ *   • FREEZE = 30 f  → gel de 1 s sur la carte de clôture posée, inséré à HOLD_START.
+ *   • Après le gel, la timeline reprend jusqu'au fondu de boucle (dernière frame ≈ toile nue).
+ *
+ * Total rendu : 600 + 30 = 630 f (voir durationInFrames dans Root.tsx).
+ */
+const SPEED = 1.25;
+const FREEZE = 30;
+const HOLD_START = 580; // frame réelle où la carte de clôture est entièrement posée (interne = 725)
 
 /* --------------------------- Découpage (frames) -------------------------- */
 
@@ -75,7 +97,15 @@ function progressFrac(f: number): number {
 }
 
 export function HeroV2() {
-  const frame = useCurrentFrame();
+  const raw = useCurrentFrame();
+  // Accélération ×1,25 puis gel de 30 f (image parfaitement statique car `frame`
+  // est constant pendant le gel), avant reprise vers le fondu de boucle.
+  const frame =
+    raw < HOLD_START
+      ? raw * SPEED
+      : raw < HOLD_START + FREEZE
+        ? HOLD_START * SPEED
+        : (raw - FREEZE) * SPEED;
 
   const barOp = interpolate(frame, [86, 106, 700, 720], [0, 1, 1, 0], {
     extrapolateLeft: "clamp",
