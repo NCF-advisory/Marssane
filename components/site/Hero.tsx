@@ -24,10 +24,9 @@ export function Hero() {
       <div className="mx-auto max-w-[860px] text-center">
         <h1 className="text-[30px] font-extrabold leading-[1.04] tracking-[-0.03em] sm:text-[44px] lg:text-[60px]">
           Dirigeant de PME,
-          <br className="hidden sm:block" /> tout repose sur vous ?
           <br className="hidden sm:block" />{" "}
           <span className="whitespace-nowrap">
-            Gagnez{" "}
+            gagnez{" "}
             <span className="inline-block">
               <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
                 2&nbsp;h par jour
