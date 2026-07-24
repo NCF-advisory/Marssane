@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Kicker } from "@/components/ui/Kicker";
 import { PlusMark } from "@/components/ui/PlusMark";
 
@@ -53,22 +54,24 @@ export function Preuves() {
         </h2>
       </div>
 
-      <div className="mt-[34px] grid grid-cols-1 gap-[22px] sm:grid-cols-3">
-        {STATS.map((s) => (
-          <article
-            key={s.source}
-            className="flex flex-col rounded-card border border-hairline bg-surface p-6 shadow-card"
-          >
-            <div className="font-mono text-[34px] font-semibold leading-[1.05] tracking-[-0.02em] text-ink-ecume">
-              {s.chiffre}
+      {/* Bande chiffres — colonne empilée sous lg (séparateurs masqués),
+          ligne répartie à partir de lg, calquée sur le bandeau du héro. */}
+      <div className="mt-[34px] flex flex-col gap-5 rounded-card border border-hairline-strong bg-white/65 px-7 py-[18px] lg:flex-row lg:items-stretch lg:gap-6">
+        {STATS.map((s, i) => (
+          <Fragment key={s.source}>
+            {i > 0 && <Separator />}
+            <div className="flex-1">
+              <div className="font-mono text-[22px] font-semibold leading-[1.1] tracking-[-0.02em] text-ink-ecume">
+                {s.chiffre}
+              </div>
+              <p className="mt-1.5 text-[12.5px] leading-[1.5] text-muted">
+                {s.libelle}
+              </p>
+              <div className="mt-2 font-mono text-[10.5px] text-soft">
+                {s.source}
+              </div>
             </div>
-            <p className="mt-3 flex-1 text-[13.5px] leading-[1.55] text-muted">
-              {s.libelle}
-            </p>
-            <div className="mt-4 font-mono text-[10.5px] text-soft">
-              {s.source}
-            </div>
-          </article>
+          </Fragment>
         ))}
       </div>
 
@@ -77,5 +80,11 @@ export function Preuves() {
         votre propre cas, pendant la formation.
       </p>
     </section>
+  );
+}
+
+function Separator() {
+  return (
+    <span aria-hidden className="hidden w-px shrink-0 bg-grid-line lg:block" />
   );
 }
