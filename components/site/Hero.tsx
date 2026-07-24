@@ -22,20 +22,24 @@ export function Hero() {
 
       {/* Bloc titre centré, pleine largeur */}
       <div className="mx-auto max-w-[860px] text-center">
-        <h1 className="text-[36px] font-extrabold leading-[1.04] tracking-[-0.03em] sm:text-[44px] lg:text-[60px]">
-          Tout repose sur vous ?
-          <br className="hidden sm:block" /> Gagnez{" "}
-          <span className="inline-block">
-            <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-              2&nbsp;h par jour
-              <span
-                aria-hidden
-                className="absolute right-[-0.62em] top-[-0.5em] text-[0.64em] font-medium leading-none text-turquoise"
-              >
-                +
+        <h1 className="text-[30px] font-extrabold leading-[1.04] tracking-[-0.03em] sm:text-[44px] lg:text-[60px]">
+          Dirigeant de PME,
+          <br className="hidden sm:block" /> tout repose sur vous ?
+          <br className="hidden sm:block" />{" "}
+          <span className="whitespace-nowrap">
+            Gagnez{" "}
+            <span className="inline-block">
+              <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+                2&nbsp;h par jour
+                <span
+                  aria-hidden
+                  className="absolute right-[-0.62em] top-[-0.5em] text-[0.64em] font-medium leading-none text-turquoise"
+                >
+                  +
+                </span>
               </span>
+              .
             </span>
-            .
           </span>
         </h1>
         <div className="mt-[30px] flex flex-wrap items-center justify-center gap-4">
@@ -78,5 +82,7 @@ function Stat({ value, label }: { value: string; label: string }) {
 }
 
 function Separator() {
-  return <span aria-hidden className="hidden h-[26px] w-px bg-grid-line lg:block" />;
+  return (
+    <span aria-hidden className="hidden h-[26px] w-px bg-grid-line lg:block" />
+  );
 }
