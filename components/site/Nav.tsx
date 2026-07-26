@@ -4,6 +4,7 @@ import { ReservationTrigger } from "./ReservationTrigger";
 
 // « Les formations » et « implémenter l'IA » pointent vers leurs pages dédiées.
 const links = [
+  { href: "/quelle-ia", label: "Quelle IA choisir ?" },
   { href: "/formations", label: "Les formations" },
   { href: "/implementation", label: "Je veux implémenter l'IA" },
 ];
@@ -15,8 +16,15 @@ const links = [
  * Responsive minimal (pas de menu burger) : sous ~1024px le groupe de liens
  * se replie sous le logo et ses éléments s'enroulent proprement.
  */
-export function Nav() {
+export function Nav({ variant = "sticky" }: { variant?: "sticky" | "fixed" } = {}) {
   return (
+    <div
+      className={
+        variant === "fixed"
+          ? "fixed inset-x-0 top-0 z-50 bg-toile/80 backdrop-blur-md"
+          : "sticky top-0 z-50 bg-toile/80 backdrop-blur-md"
+      }
+    >
     <header className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-x-6 gap-y-4 px-10 pt-[26px]">
       <Link
         href="/"
@@ -43,5 +51,6 @@ export function Nav() {
         </ReservationTrigger>
       </nav>
     </header>
+    </div>
   );
 }

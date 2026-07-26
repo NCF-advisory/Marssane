@@ -1,4 +1,4 @@
-import type { Modele } from "./models";
+import type { Modele, Pays } from "./models";
 
 /**
  * Calcul du classement « efficacité = intelligence ÷ coût » à partir des données
@@ -65,7 +65,7 @@ export type ClassementEntry = {
   cle: string;
   nom: string;
   editeur: string;
-  pays: string;
+  pays: Pays;
   effort?: string;
   /** Intelligence normalisée 0-100 (base du plancher et du calcul). */
   intelligence: number;

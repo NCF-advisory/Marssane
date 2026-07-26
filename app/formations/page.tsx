@@ -102,13 +102,9 @@ export default async function Formations() {
       {/* `snap-page-formations` active le scroll-snap racine, ciblé sur cette
           page via `html:has(...)` dans globals.css (aucune fuite ailleurs). */}
       <main className="snap-page-formations">
-        {/* Nav figée hors flux (fixed) : reste visible en haut pendant tout le
-            scroll. `fixed` plutôt que `sticky` car WebKit gère mal sticky +
-            scroll-snap racine (la nav était défilée hors écran dans Safari).
-            Fond de page translucide + flou pour rester lisible sur les cartes. */}
-        <div className="fixed inset-x-0 top-0 z-50 bg-toile/80 backdrop-blur-md">
-          <Nav />
-        </div>
+        {/* Nav figée hors flux (fixed) : le composant Nav gère le positionnement via variant="fixed"
+            (fixed plutôt que sticky car WebKit gère mal sticky + scroll-snap racine). */}
+        <Nav variant="fixed" />
         {/* Écran 1 : intro centrée verticalement (reste sous la nav grâce au
             centrage ; la nav est hors flux et démarre l'intro à y=0). */}
         <section className="flex min-h-[100dvh] flex-col snap-start">
