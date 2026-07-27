@@ -36,13 +36,15 @@ sont supprimées.)
 ## Mini-phrases d'annonce (kickers)
 
 Avant/pendant l'ouverture de chaque cas, une **mini-phrase** (kicker, sans 700,
-~42 px, encre) apparaît **en haut du cadre**, au-dessus de la carte mockup —
-apparition rapide, ~1 s de lecture pleine, puis le mockup s'anime. Même
-traitement pour les trois :
+~58 px, encre) apparaît **en haut du cadre**, au-dessus de la carte mockup —
+apparition rapide, puis elle **reste affichée pendant tout le cas** (~3 s de
+lecture) et s'efface quand la carte entame son fondu de sortie. Un **surlignage
+canard** balaie la phrase de gauche à droite juste après son apparition, et le
+**mot-clé passe en canard gras**. Même traitement pour les trois :
 
-- CAS 1 : **« Répondez automatiquement aux relances des clients »**
-- CAS 2 : **« Retenez seulement l'important de vos réunions »**
-- CAS 3 : **« Automatisez la relance de vos clients »**
+- CAS 1 : **« Répondez _automatiquement_ aux relances des clients »**
+- CAS 2 : **« Retenez seulement _l'important_ de vos réunions »**
+- CAS 3 : **« _Automatisez_ la relance de vos clients »**
 
 Boucle invisible : la frame 749 se fond vers la toile nue, identique à la frame 0.
 
@@ -82,8 +84,8 @@ du temps »** sur deux lignes.
 
 ### Plan 2 — CAS 1 · mails (90 – 228 · 3,0 – 7,6 s)
 
-- **f96 → 148 (kicker)** : « **Répondez automatiquement aux relances des
-  clients** » en haut du cadre (~1 s pleine).
+- **f96 → 216 (kicker)** : « **Répondez _automatiquement_ aux relances des
+  clients** » en haut du cadre, maintenue pendant tout le cas.
 - **local 0 → 22** : carte « Boîte de réception » monte en fondu ; compteur « 47 ».
 - **local 6 → 30** : 4 lignes de mails « en vrac ».
 - **local 34 → 100** : **tri** — badges qui poppent sous un balayage canard :
@@ -96,7 +98,7 @@ du temps »** sur deux lignes.
 
 ### Plan 3 — CAS 2 · documents (254 – 392 · 8,5 – 13,1 s)
 
-- **f260 → 312 (kicker)** : « **Retenez seulement l'important de vos réunions** ».
+- **f260 → 380 (kicker)** : « **Retenez seulement _l'important_ de vos réunions** ».
 - **local 0 → 46** : carte PDF « **Contrat fournisseur · 42 pages** » · « 2,4 Mo »,
   corps qui s'empile (barres = volume).
 - **local 60 → 110** : bascule vers la **synthèse** (liseré turquoise) — en-tête
@@ -107,7 +109,7 @@ du temps »** sur deux lignes.
 
 ### Plan 4 — CAS 3 · relances (418 – 556 · 13,9 – 18,5 s)
 
-- **f424 → 476 (kicker)** : « **Automatisez la relance de vos clients** ».
+- **f424 → 544 (kicker)** : « **_Automatisez_ la relance de vos clients** ».
 - **local 0 → 58** : carte « **Note vocale · 0:12** » + triangle de lecture ;
   forme d'onde canard parcourue par une tête de lecture.
 - **local 60 → 108** : bascule vers le **courrier de relance** (liseré turquoise) —
@@ -124,7 +126,7 @@ Trois temps enchaînés en fondu (barre à 100 % en bas jusqu'au payoff).
   (sans, encre ; « en formation. » en canard) — clarifie qu'il s'agit d'une
   **formation**, pas d'un logiciel.
 - **Temps 2 — f626 → 686 (payoff)** : « **2 h** » en grand (mono, canard, ~168 px)
-  + « **rendues, chaque jour.** » (sans, encre `body`), la **barre pleine à 100 %**
+  + « **gagnées, chaque jour.** » (sans, encre `body`), la **barre pleine à 100 %**
   visible en bas. Plein contraste (pas d'horloge).
 - **Temps 3 — f674 → 750 (clôture)** : lockup **Marssane** (Ø 300) en fondu, puis
   « **Formation pour dirigeants de PME** » (canard, 700) et « **2 demi-journées,
@@ -136,9 +138,9 @@ Trois temps enchaînés en fondu (barre à 100 % en bas jusqu'au payoff).
 
 ## Poster
 
-`hero-v2-poster.jpg` = **frame 660** — payoff « **2 h — rendues, chaque jour.** »
+`hero-v2-poster.jpg` = **frame 660** — payoff « **2 h — gagnées, chaque jour.** »
 avec la **barre de progression pleine (100 %)** en bas. L'image la plus parlante
-du message « du temps rendu, chaque jour ».
+du message « du temps gagné, chaque jour ».
 
 ## Textes exacts (récapitulatif)
 
@@ -149,6 +151,6 @@ de vos réunions · Contrat fournisseur · 42 pages · Synthèse · 12 lignes ·
 synthétisé · PRIX · DURÉE · RÉSILIATION · ⚠ 2 points d'attention · +40 min ·
 Automatisez la relance de vos clients · Note vocale · 0:12 · Relance — facture
 n° 2026-118 · rédigé · Relire & signer · +35 min · 2 h · Tout ça, vous le
-construisez en formation. · 2 h · rendues, chaque jour. · Formation pour
+construisez en formation. · 2 h · gagnées, chaque jour. · Formation pour
 dirigeants de PME · 2 demi-journées, selon votre agenda.
 </content>

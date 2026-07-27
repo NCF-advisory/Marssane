@@ -17,11 +17,13 @@ import { CaseRelance } from "./herov2/CaseRelance";
  *
  * Structure (v2.3) :
  *   1. Hook typographique « Nos formations IA / vous font gagner du temps ».
- *   2-4. Trois cas d'usage, chacun précédé d'une mini-phrase d'annonce (kicker
- *        en haut du cadre) ; à la fin de chaque cas, une TRANSITION plein centre
- *        affiche le gain en grand (« +45 min », « +40 min », « +35 min »).
+ *   2-4. Trois cas d'usage, chacun annoncé par une mini-phrase (kicker en haut
+ *        du cadre, surlignage canard qui balaie, mot-clé en canard) affichée
+ *        pendant toute la durée du cas ; à la fin de chaque cas, une TRANSITION
+ *        plein centre affiche le gain en grand (« +45 min », « +40 min »,
+ *        « +35 min »).
  *   5. Finale : « Tout ça, vous le construisez en formation. » → payoff
- *      « 2 h rendues, chaque jour. » (barre à 100 %) → logo Marssane +
+ *      « 2 h gagnées, chaque jour. » (barre à 100 %) → logo Marssane +
  *      « Formation pour dirigeants de PME » + « 2 demi-journées, selon votre
  *      agenda », puis fondu de boucle.
  *
@@ -78,11 +80,26 @@ const GAINS = [
   { label: "+35 min", start: 552, end: 584 },
 ] as const;
 
-// Mini-phrases d'annonce (kickers), en haut, au-dessus de la carte mockup.
+/**
+ * Mini-phrases d'annonce (kickers), en haut, au-dessus de la carte mockup.
+ * Chaque phrase est découpée à la main en trois morceaux (`before` / `strong` /
+ * `after`) : `strong` est le mot-clé mis en canard gras. Les trois morceaux
+ * concaténés doivent reproduire la phrase au caractère près.
+ */
 const KICKERS = [
-  { start: CASE1_START, text: "Répondez automatiquement aux relances des clients" },
-  { start: CASE2_START, text: "Retenez seulement l'important de vos réunions" },
-  { start: CASE3_START, text: "Automatisez la relance de vos clients" },
+  {
+    start: CASE1_START,
+    before: "Répondez ",
+    strong: "automatiquement",
+    after: " aux relances des clients",
+  },
+  {
+    start: CASE2_START,
+    before: "Retenez seulement ",
+    strong: "l'important",
+    after: " de vos réunions",
+  },
+  { start: CASE3_START, before: "", strong: "Automatisez", after: " la relance de vos clients" },
 ] as const;
 
 /** Remplissage de la barre : 0 → 0,37 → 0,71 → 1, par paliers sur les gains. */
@@ -133,7 +150,14 @@ export function HeroV2() {
 
       {/* Mini-phrases d'annonce (kickers) */}
       {KICKERS.map((k) => (
-        <CaseKicker key={k.start} frame={frame} start={k.start} text={k.text} />
+        <CaseKicker
+          key={k.start}
+          frame={frame}
+          start={k.start}
+          before={k.before}
+          strong={k.strong}
+          after={k.after}
+        />
       ))}
 
       {/* Barre de progression persistante (bas de cadre) */}
@@ -235,29 +259,42 @@ function GainBig({
 
 /* ---------------------------- Mini-phrase (kicker) ----------------------- */
 
+/**
+ * Mini-phrase d'annonce affichée pendant TOUT le cas : elle s'efface (fenêtre
+ * d'opacité locale 114 → 126) exactement quand la carte mockup entame son
+ * propre fondu de sortie (outDur = 12 f sur une scène de 138 f), soit ~3 s de
+ * lecture. Un surlignage canard balaie la phrase de gauche à droite (même
+ * device que le plan 1, alpha abaissé car la surface couverte est plus grande)
+ * et le mot-clé passe en canard gras.
+ */
 function CaseKicker({
   frame,
   start,
-  text,
+  before,
+  strong,
+  after,
 }: {
   frame: number;
   start: number;
-  text: string;
+  before: string;
+  strong: string;
+  after: string;
 }) {
   const local = frame - start;
-  const op = interpolate(local, [6, 16, 46, 58], [0, 1, 1, 0], {
+  const op = interpolate(local, [6, 16, 114, 126], [0, 1, 1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   if (op <= 0.001) return null;
   const rise = easeOut(clamp01((local - 6) / 12));
+  const hp = easeOut(clamp01((local - 14) / 20)); // balayage du surlignage
   return (
     <div
       style={{
         position: "absolute",
         left: 0,
         right: 0,
-        top: 120,
+        top: 100,
         display: "flex",
         justifyContent: "center",
         opacity: op,
@@ -266,16 +303,40 @@ function CaseKicker({
     >
       <span
         style={{
-          fontFamily: FONT.sans,
-          fontWeight: 700,
-          fontSize: 42,
-          letterSpacing: "-0.01em",
-          color: C.ink,
-          textAlign: "center",
+          position: "relative",
+          display: "inline-block",
           transform: `translateY(${(1 - rise) * -10}px)`,
         }}
       >
-        {text}
+        {/* Surlignage canard qui balaie, derrière la phrase */}
+        <div
+          style={{
+            position: "absolute",
+            left: -20,
+            right: -20,
+            top: "14%",
+            bottom: "12%",
+            background: "rgba(14,114,145,0.12)",
+            borderRadius: 12,
+            transformOrigin: "left center",
+            transform: `scaleX(${hp})`,
+          }}
+        />
+        <span
+          style={{
+            position: "relative",
+            fontFamily: FONT.sans,
+            fontWeight: 700,
+            fontSize: 58,
+            letterSpacing: "-0.01em",
+            color: C.ink,
+            whiteSpace: "pre",
+          }}
+        >
+          {before}
+          <span style={{ fontWeight: 800, color: C.canard }}>{strong}</span>
+          {after}
+        </span>
       </span>
     </div>
   );
@@ -404,7 +465,7 @@ function Offer({ local }: { local: number }) {
 /**
  * Trois temps enchaînés en fondu : (1) « Tout ça, vous le construisez en
  * formation. » — clarifie qu'il s'agit d'une formation, pas d'un logiciel ;
- * (2) payoff « 2 h rendues, chaque jour. » en grand (la barre est à 100 %) ;
+ * (2) payoff « 2 h gagnées, chaque jour. » en grand (la barre est à 100 %) ;
  * (3) clôture logo + cible + format, puis fondu de boucle.
  */
 function Finale({ local }: { local: number }) {
@@ -475,7 +536,7 @@ function Finale({ local }: { local: number }) {
               color: C.body,
             }}
           >
-            rendues, chaque jour.
+            gagnées, chaque jour.
           </span>
         </div>
       </AbsoluteFill>
