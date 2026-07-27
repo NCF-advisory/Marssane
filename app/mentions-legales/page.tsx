@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Footer } from "@/components/site/Footer";
 import { Nav } from "@/components/site/Nav";
 import { Kicker } from "@/components/ui/Kicker";
@@ -7,10 +8,59 @@ export const metadata: Metadata = {
   title: "Mentions légales · Marssane",
 };
 
-const SECTIONS = [
-  { titre: "Éditeur" },
-  { titre: "Hébergeur" },
-  { titre: "Contact" },
+const SECTIONS: { titre: string; corps: ReactNode }[] = [
+  {
+    titre: "Éditeur",
+    corps: (
+      <>
+        Le présent site est édité par NCF Advisory, société par actions
+        simplifiée (SAS) au capital de 1 000 euros, dont le siège social est
+        situé 3 Cité Rougemont, 75009 Paris. Société immatriculée au Registre du
+        commerce et des sociétés de Paris sous le numéro 800 285 363 (SIRET
+        800 285 363 00019). Marssane est une marque exploitée par NCF Advisory.
+      </>
+    ),
+  },
+  {
+    titre: "Directeur de la publication",
+    corps: <>Le représentant légal de NCF Advisory.</>,
+  },
+  {
+    titre: "Hébergeur",
+    corps: (
+      <>
+        Le site est hébergé par Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA
+        91789, États-Unis (vercel.com).
+      </>
+    ),
+  },
+  {
+    titre: "Contact",
+    corps: (
+      <>
+        Pour toute question relative au site ou à la formation :{" "}
+        <a
+          href="mailto:coullion@ncf-advisory.fr"
+          className="text-canard hover:text-canard-dark"
+        >
+          coullion@ncf-advisory.fr
+        </a>
+        .
+      </>
+    ),
+  },
+  {
+    titre: "Propriété intellectuelle",
+    corps: (
+      <>
+        L&apos;ensemble des contenus du site (textes, visuels, logo Marssane)
+        est protégé par le droit de la propriété intellectuelle et demeure la
+        propriété de NCF Advisory, sauf mention contraire. Toute reproduction ou
+        représentation, totale ou partielle, sans autorisation préalable est
+        interdite.
+      </>
+    ),
+  },
 ];
 
 export default function MentionsLegales() {
@@ -31,7 +81,7 @@ export default function MentionsLegales() {
                   {section.titre}
                 </h2>
                 <p className="mt-2 text-[15px] leading-[1.6] text-body">
-                  À compléter, en attente des textes définitifs (CDC §10).
+                  {section.corps}
                 </p>
               </div>
             ))}

@@ -10,12 +10,56 @@ export const metadata: Metadata = {
 
 const SECTIONS: { titre: string; corps: ReactNode }[] = [
   {
-    titre: "Finalités",
+    titre: "Responsable du traitement",
     corps: (
       <>
-        Vos données sont collectées pour deux finalités : la gestion des
-        pré-inscriptions aux sessions de formation et la réponse aux demandes
-        adressées via le formulaire de contact.
+        Le responsable du traitement de vos données est NCF Advisory (SAS), dont
+        le siège social est situé 3 Cité Rougemont, 75009 Paris, qui exploite la
+        marque Marssane. Pour toute question relative à vos données :{" "}
+        <a
+          href="mailto:coullion@ncf-advisory.fr"
+          className="text-canard hover:text-canard-dark"
+        >
+          coullion@ncf-advisory.fr
+        </a>
+        .
+      </>
+    ),
+  },
+  {
+    titre: "Données collectées",
+    corps: (
+      <>
+        Lors d&apos;une pré-inscription : prénom, nom, adresse email, téléphone,
+        métier et, le cas échéant, entreprise. Via le formulaire de contact
+        (« aller plus loin ») : nom, email, entreprise et message. Aucune donnée
+        n&apos;est collectée à votre insu.
+      </>
+    ),
+  },
+  {
+    titre: "Finalités et base légale",
+    corps: (
+      <>
+        Vos données servent à gérer les pré-inscriptions aux sessions de
+        formation (base légale : votre consentement) et à répondre aux demandes
+        adressées via le formulaire de contact (base légale : notre intérêt
+        légitime à traiter votre demande).
+      </>
+    ),
+  },
+  {
+    titre: "Destinataires et sous-traitants",
+    corps: (
+      <>
+        Vos données sont traitées par NCF Advisory. Elles ne sont ni vendues ni
+        cédées à des tiers à des fins commerciales. Leur traitement s&apos;appuie
+        sur des prestataires techniques agissant comme sous-traitants
+        (hébergement du site, base de données située dans l&apos;Union
+        européenne, envoi des emails de confirmation), tenus par contrat à la
+        confidentialité. Certains de ces prestataires peuvent opérer hors de
+        l&apos;Union européenne, dans le cadre des garanties contractuelles
+        appropriées.
       </>
     ),
   },
@@ -32,16 +76,28 @@ const SECTIONS: { titre: string; corps: ReactNode }[] = [
     titre: "Vos droits",
     corps: (
       <>
-        Vous disposez d&apos;un droit d&apos;accès à vos données et d&apos;un
-        droit d&apos;effacement. Pour l&apos;exercer, écrivez-nous : vos données
-        seront supprimées.
+        Vous disposez d&apos;un droit d&apos;accès, de rectification,
+        d&apos;effacement, d&apos;opposition et de portabilité de vos données,
+        ainsi que du droit de retirer votre consentement à tout moment. Pour
+        l&apos;exercer, écrivez-nous à{" "}
+        <a
+          href="mailto:coullion@ncf-advisory.fr"
+          className="text-canard hover:text-canard-dark"
+        >
+          coullion@ncf-advisory.fr
+        </a>
+        . Vous pouvez également introduire une réclamation auprès de la CNIL
+        (cnil.fr).
       </>
     ),
   },
   {
     titre: "Cookies",
     corps: (
-      <>Ce site n&apos;utilise ni cookies tiers ni outil de mesure d&apos;audience.</>
+      <>
+        Ce site n&apos;utilise ni cookies tiers ni outil de mesure
+        d&apos;audience.
+      </>
     ),
   },
 ];
