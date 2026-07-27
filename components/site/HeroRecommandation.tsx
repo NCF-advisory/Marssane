@@ -6,14 +6,12 @@
  *                       cout="≈ 21 €/M tokens" date="27 juillet 2026" />
  *
  * Dépendances : aucune (styles en ligne). Polices déjà chargées par le site
- * (Plus Jakarta Sans / Spline Sans Mono). Le logo réutilise votre composant
- * existant LogoMarssane — ajustez le chemin d'import ci-dessous.
+ * (Plus Jakarta Sans / Spline Sans Mono).
  *
  * Écran unique en fond encre : pas de dark mode ailleurs sur le site, la
  * section suivante repart sur la toile claire.
  */
 import React from "react";
-import { LogoMarssane } from "@/components/ui/LogoMarssane";
 
 const INK = "#0E0E12";
 const TURQUOISE = "#00D1BE";
@@ -119,12 +117,10 @@ export function HeroRecommandation({
           gap: "64px",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "24px" }}>
-          {/* Le M du logo suit --color-ink : on le repasse en blanc localement. */}
-          <span style={{ ["--color-ink" as string]: "#FFFFFF", display: "inline-flex" }}>
-            <LogoMarssane size={30} withWordmark />
-          </span>
-          <div style={{ fontFamily: MONO, fontSize: "11.5px", textTransform: "uppercase", letterSpacing: "0.16em", color: "#7A828E" }}>
+        {/* Le lockup Marssane est porté par la Nav du site (en tonalité encre sur
+            cette page) : ici on ne garde que la date de mise à jour, calée à droite. */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "24px" }}>
+          <div style={{ fontFamily: MONO, fontSize: "11.5px", textTransform: "uppercase", letterSpacing: "0.16em", color: "#7A828E", textAlign: "right" }}>
             Recommandation Marssane · {date}
           </div>
         </div>

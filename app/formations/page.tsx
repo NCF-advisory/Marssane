@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/site/Footer";
-import { Nav } from "@/components/site/Nav";
 import { NiveauBloc, type Niveau } from "@/components/site/NiveauBloc";
 import { ReservationDialog } from "@/components/site/ReservationDialog";
 import { ScrollCue } from "@/components/site/ScrollCue";
@@ -102,9 +101,6 @@ export default async function Formations() {
       {/* `snap-page-formations` active le scroll-snap racine, ciblé sur cette
           page via `html:has(...)` dans globals.css (aucune fuite ailleurs). */}
       <main className="snap-page-formations">
-        {/* Nav figée hors flux (fixed) : le composant Nav gère le positionnement via variant="fixed"
-            (fixed plutôt que sticky car WebKit gère mal sticky + scroll-snap racine). */}
-        <Nav variant="fixed" />
         {/* Écran 1 : intro centrée verticalement (reste sous la nav grâce au
             centrage ; la nav est hors flux et démarre l'intro à y=0). */}
         <section className="flex min-h-[100dvh] flex-col snap-start">

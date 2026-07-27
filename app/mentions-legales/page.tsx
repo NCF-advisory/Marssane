@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Footer } from "@/components/site/Footer";
-import { Nav } from "@/components/site/Nav";
 import { Kicker } from "@/components/ui/Kicker";
 
 export const metadata: Metadata = {
@@ -66,7 +65,6 @@ const SECTIONS: { titre: string; corps: ReactNode }[] = [
 export default function MentionsLegales() {
   return (
     <>
-      <Nav />
       <main>
         <section className="mx-auto max-w-[1180px] px-10 pb-[80px] pt-[72px]">
           <Kicker>Informations légales</Kicker>

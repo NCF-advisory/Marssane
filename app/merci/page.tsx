@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/site/Footer";
-import { Nav } from "@/components/site/Nav";
 import { Kicker } from "@/components/ui/Kicker";
 
 export const metadata: Metadata = {
@@ -42,7 +41,6 @@ export default async function Merci({
 
   return (
     <>
-      <Nav />
       <main>
         <section className="mx-auto max-w-[1180px] px-10 pb-[80px] pt-[72px]">
           <div className="max-w-[560px]">

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getClassementSafe } from "@/lib/benchmarks/classement";
-import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Kicker } from "@/components/ui/Kicker";
 import { HeroRecommandation } from "@/components/site/HeroRecommandation";
@@ -38,7 +37,6 @@ export default async function Page() {
   if (c.entries.length === 0) {
     return (
       <>
-        <Nav />
         <main>
           <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-2 pt-[84px]">
             <div className="max-w-[640px]">
@@ -66,7 +64,6 @@ export default async function Page() {
 
   return (
     <>
-      <Nav />
       <main>
         {/* effort : chaîne vide si la source ne l'a pas fourni — le hero masque alors la ligne
             (passer la prop évite le repli « medium », qui serait faux). */}

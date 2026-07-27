@@ -41,6 +41,14 @@ export function LogoMarssane({
   });
   const stroke = `${border}px solid var(--color-canard)`;
 
+  // Le « M » et le mot suivent `--color-ink`, que la nav surcharge en blanc sur
+  // les pages à héro sombre : on anime ce changement (même durée / courbe que la
+  // nav). Ailleurs la couleur ne varie jamais, la transition est donc inerte.
+  // La transition passe par une classe et non par le style inline, sinon
+  // `motion-reduce:transition-none` ne pourrait pas la neutraliser.
+  const transitionEncre =
+    "transition-colors duration-[320ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none";
+
   const inner = (
     <>
       <span
@@ -86,6 +94,7 @@ export function LogoMarssane({
         })}
       />
       <span
+        className={transitionEncre}
         style={{
           position: "absolute",
           left: "50%",
@@ -127,6 +136,7 @@ export function LogoMarssane({
         {inner}
       </span>
       <span
+        className={transitionEncre}
         style={{
           fontFamily: "var(--font-sans)",
           fontWeight: 700,

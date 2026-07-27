@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/site/ContactForm";
 import { Footer } from "@/components/site/Footer";
-import { Nav } from "@/components/site/Nav";
 import { Kicker } from "@/components/ui/Kicker";
 
 export const metadata: Metadata = {
@@ -13,7 +12,6 @@ export const metadata: Metadata = {
 export default function Implementation() {
   return (
     <>
-      <Nav />
       <main>
         <section className="mx-auto max-w-[1180px] px-10 pb-[80px] pt-[72px]">
           <Kicker>Aller plus loin · implémentation</Kicker>

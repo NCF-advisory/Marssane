@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Nav } from "@/components/site/Nav";
 import "./globals.css";
 
 const plusJakartaSans = localFont({
@@ -43,7 +44,12 @@ export default function RootLayout({
       lang="fr"
       className={`${plusJakartaSans.variable} ${splineSansMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      {/* La nav est montée ici, hors de `children` : elle survit aux changements
+          de route, ce qui rend sa transition de tonalité possible. */}
+      <body className="min-h-full flex flex-col">
+        <Nav />
+        {children}
+      </body>
     </html>
   );
 }

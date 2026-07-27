@@ -2,7 +2,6 @@ import { CasConcrets } from "@/components/site/CasConcrets";
 import { Footer } from "@/components/site/Footer";
 import { Formation } from "@/components/site/Formation";
 import { Hero } from "@/components/site/Hero";
-import { Nav } from "@/components/site/Nav";
 import { OutilsIA } from "@/components/site/OutilsIA";
 import { PourFaireQuoi } from "@/components/site/PourFaireQuoi";
 import { PourQui } from "@/components/site/PourQui";
@@ -23,7 +22,6 @@ export default async function Home() {
 
   return (
     <>
-      <Nav />
       <main>
         <Hero />
         <PourFaireQuoi />
