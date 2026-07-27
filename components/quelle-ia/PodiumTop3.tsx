@@ -4,6 +4,12 @@ import { BadgePays } from "@/components/quelle-ia/BadgePays";
 const fmt = (x: number) =>
   new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
 
+/** Temps de réflexion en secondes ; « non mesurée » si AA ne l'a pas chronométré. */
+const fmtSecondes = (s: number | null) =>
+  s == null
+    ? "non mesurée"
+    : `≈ ${new Intl.NumberFormat("fr-FR", { maximumFractionDigits: s < 10 ? 1 : 0 }).format(s)} s`;
+
 function pct(indice: number, max: number) {
   if (!max) return 0;
   return Math.max(4, Math.min(100, Math.round((indice / max) * 100)));
@@ -11,7 +17,7 @@ function pct(indice: number, max: number) {
 
 export function PodiumTop3({ entries }: { entries: ClassementEntry[] }) {
   const top3 = entries.slice(0, 3);
-  const max = Math.max(...top3.map((e) => e.indiceEfficacite), 1);
+  const max = Math.max(...top3.map((e) => e.score), 1);
 
   return (
     <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-2 pt-[84px]">
@@ -41,19 +47,22 @@ export function PodiumTop3({ entries }: { entries: ClassementEntry[] }) {
 
               <div className="mt-4">
                 <div className="mb-1 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.08em] text-slate">
-                  <span>niveau</span>
-                  <span className="text-ink-ecume">{e.indiceEfficacite}</span>
+                  <span>score</span>
+                  <span className="text-ink-ecume">{e.score}</span>
                 </div>
                 <div className="h-2 rounded bg-bar-track">
                   <div
                     className="h-full rounded bg-canard"
-                    style={{ width: `${pct(e.indiceEfficacite, max)}%` }}
+                    style={{ width: `${pct(e.score, max)}%` }}
                   />
                 </div>
               </div>
 
               <p className="mt-3 font-mono text-[13px] text-slate">
                 ≈ {fmt(e.coutEurM)} €/M tokens
+              </p>
+              <p className="mt-1 font-mono text-[13px] text-slate">
+                réflexion {fmtSecondes(e.latenceS)}
               </p>
             </div>
           );

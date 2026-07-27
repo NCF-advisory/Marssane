@@ -4,6 +4,12 @@ import { BadgePays } from "@/components/quelle-ia/BadgePays";
 const fmt = (x: number) =>
   new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
 
+/** Temps de réflexion en secondes ; « non mesurée » si AA ne l'a pas chronométré. */
+const fmtSecondes = (s: number | null) =>
+  s == null
+    ? "non mesurée"
+    : `≈ ${new Intl.NumberFormat("fr-FR", { maximumFractionDigits: s < 10 ? 1 : 0 }).format(s)} s`;
+
 function pct(indice: number, max: number) {
   if (!max) return 0;
   return Math.max(4, Math.min(100, Math.round((indice / max) * 100)));
@@ -13,7 +19,7 @@ export function ResteClassement({ entries }: { entries: ClassementEntry[] }) {
   const reste = entries.slice(3);
   if (reste.length === 0) return null;
 
-  const max = Math.max(...entries.map((e) => e.indiceEfficacite), 1);
+  const max = Math.max(...entries.map((e) => e.score), 1);
 
   return (
     <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-2 pt-[84px]">
@@ -40,14 +46,15 @@ export function ResteClassement({ entries }: { entries: ClassementEntry[] }) {
                 <div className="h-2 flex-1 rounded bg-bar-track">
                   <div
                     className="h-full rounded bg-canard"
-                    style={{ width: `${pct(e.indiceEfficacite, max)}%` }}
+                    style={{ width: `${pct(e.score, max)}%` }}
                   />
                 </div>
-                <span className="font-mono text-[12px] text-ink-ecume">{e.indiceEfficacite}</span>
+                <span className="font-mono text-[12px] text-ink-ecume">{e.score}</span>
               </div>
-              <span className="font-mono text-[13px] text-slate sm:w-[150px] sm:text-right">
-                ≈ {fmt(e.coutEurM)} €/M
-              </span>
+              <div className="font-mono text-[13px] text-slate sm:w-[150px] sm:text-right">
+                <span className="block">≈ {fmt(e.coutEurM)} €/M</span>
+                <span className="block">réflexion {fmtSecondes(e.latenceS)}</span>
+              </div>
             </li>
           ))}
         </ul>

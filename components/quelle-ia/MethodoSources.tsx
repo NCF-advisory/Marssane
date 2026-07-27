@@ -27,9 +27,15 @@ export function MethodoSources({ classement }: { classement: Classement }) {
           .
         </h2>
         <p className="mt-[14px] text-[16.5px] leading-[1.58] text-body">
-          On croise l&apos;intelligence des modèles (benchmarks indépendants) et leur coût réel par
-          million de tokens, en ne gardant que les modèles de niveau professionnel. L&apos;indice
-          d&apos;efficacité rapporte l&apos;intelligence au coût : 100 = meilleur rapport du moment.
+          On croise trois critères, mesurés par des benchmarks indépendants : l&apos;intelligence des
+          modèles, leur coût réel par million de tokens et leur réactivité — le temps que le modèle
+          passe à réfléchir avant de commencer à répondre. Le score global pèse 50 %
+          l&apos;intelligence, 25 % le coût et 25 % la réactivité : le niveau décide, le prix et
+          l&apos;attente départagent. Cette pondération est un choix éditorial, assumé et affiché
+          plutôt que caché. Nous ne gardons que les modèles de niveau professionnel : en dessous
+          d&apos;un plancher d&apos;intelligence, un modèle n&apos;est pas classé, même s&apos;il est
+          rapide ou peu coûteux. Claude Opus 5 est suivi à son réglage <i>high</i>, nettement plus
+          réactif que le réglage <i>max</i> pour un niveau d&apos;intelligence quasi identique.
         </p>
       </div>
 
