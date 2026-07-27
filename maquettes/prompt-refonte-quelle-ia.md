@@ -52,7 +52,6 @@ On ne traite que le hero / premier écran. Ignore tout ce qui vient dessous (gra
 
 **Interdits absolus**
 - Iconographie IA (cerveaux, circuits, réseaux de nœuds, glow)
-- Blobs, isométrie, émojis, glassmorphism, 3D « AI-gen »
 - Superlatifs marketing
 
 ### Les 5 directions (une page chacune)

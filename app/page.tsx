@@ -2,10 +2,9 @@ import { CasConcrets } from "@/components/site/CasConcrets";
 import { Footer } from "@/components/site/Footer";
 import { Formation } from "@/components/site/Formation";
 import { Hero } from "@/components/site/Hero";
-import { OutilsIA } from "@/components/site/OutilsIA";
 import { PourFaireQuoi } from "@/components/site/PourFaireQuoi";
-import { PourQui } from "@/components/site/PourQui";
 import { Preuves } from "@/components/site/Preuves";
+import { Reponse } from "@/components/site/Reponse";
 import { Reservation } from "@/components/site/Reservation";
 import { ReservationDialog } from "@/components/site/ReservationDialog";
 import { champSession, mentionSession } from "@/lib/session-display";
@@ -27,8 +26,7 @@ export default async function Home() {
         <PourFaireQuoi />
         <CasConcrets />
         <Preuves />
-        <PourQui />
-        <OutilsIA />
+        <Reponse />
         <Formation />
         <Reservation mention={mention} />
       </main>

@@ -7,8 +7,8 @@ import { ReservationTrigger } from "./ReservationTrigger";
 
 // « Les formations » et « implémenter l'IA » pointent vers leurs pages dédiées.
 const links = [
-  { href: "/quelle-ia", label: "Quelle IA choisir ?" },
   { href: "/formations", label: "Les formations" },
+  { href: "/quelle-ia", label: "Quelle IA choisir ?" },
   { href: "/implementation", label: "Je veux implémenter l'IA" },
 ];
 
@@ -35,7 +35,7 @@ const PAGES_FIXED = ["/formations"];
 /** Transition de tonalité, partagée par tout ce qui change de couleur.
  *  Même durée / courbe que celle du lockup (voir LogoMarssane). */
 const TRANSITION_TON =
-  "transition-colors duration-[320ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none";
+  "transition-colors duration-[160ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none";
 
 /**
  * Barre de navigation du site. Lockup logo (lien vers l'accueil) + liens
@@ -71,6 +71,11 @@ export function Nav() {
         // translucide flouté, comme partout ailleurs.
         encre ? "bg-ink" : "bg-toile/80",
         TRANSITION_TON,
+        // Élément persistant du fondu croisé de page : nommée, la barre est
+        // sortie de l'instantané de la vue et n'est donc pas happée par le
+        // fondu — sa propre transition de tonalité (160 ms) reste visible.
+        // Le nom est neutralisé côté CSS (voir globals.css).
+        "[view-transition-name:nav-marssane]",
       ].join(" ")}
     >
     <header className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-x-6 gap-y-4 px-10 pt-[26px]">

@@ -178,10 +178,17 @@ export function OutilsIA() {
         aria-hidden
         className="absolute left-[15.25px] top-0 -z-[1] hidden h-[48px] w-[1.5px] bg-repere lg:block"
       />
-      {/* Prolonge le trait continu à x=778.25px entre « Pour qui » et « La formation ». */}
+      {/* Naissance du trait continu à x=778.25px, prolongé jusqu'à « La formation ».
+          Le repère turquoise marque son origine ; le trait démarre juste dessous
+          (55px) pour partir en retrait du haut de section plutôt qu'au ras du bord. */}
+      <PlusMark
+        variant="turquoise"
+        size={19}
+        className="absolute left-[779px] top-[44px] -z-[1] hidden -translate-x-1/2 -translate-y-1/2 lg:block"
+      />
       <span
         aria-hidden
-        className="absolute bottom-0 left-[778.25px] top-0 -z-[1] hidden w-[1.5px] bg-repere lg:block"
+        className="absolute bottom-0 left-[778.25px] top-[55px] -z-[1] hidden w-[1.5px] bg-repere lg:block"
       />
       <PlusMark
         variant="turquoise"

@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+// `ViewTransition` vient du canal canary de React, celui que Next.js embarque
+// (types déclarés via react-canary.d.ts à la racine).
+import { ViewTransition } from "react";
 import localFont from "next/font/local";
 import { Nav } from "@/components/site/Nav";
 import "./globals.css";
@@ -48,7 +51,11 @@ export default function RootLayout({
           de route, ce qui rend sa transition de tonalité possible. */}
       <body className="min-h-full flex flex-col">
         <Nav />
-        {children}
+        {/* Le corps de page est la seule zone qui change à la navigation : c'est
+            lui qui fait le fondu croisé (voir « Fondu croisé entre pages » dans
+            globals.css). La nav, hors de ce périmètre, est traitée comme un
+            élément persistant de la transition. */}
+        <ViewTransition>{children}</ViewTransition>
       </body>
     </html>
   );

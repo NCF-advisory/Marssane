@@ -3,7 +3,7 @@
  * À déposer dans components/site/HeroRecommandation.tsx puis :
  *   import { HeroRecommandation } from "@/components/site/HeroRecommandation";
  *   <HeroRecommandation modele="Claude Opus 5" effort="medium" score="92,4"
- *                       cout="≈ 21 €/M tokens" date="27 juillet 2026" />
+ *                       date="27 juillet 2026" />
  *
  * Dépendances : aucune (styles en ligne). Polices déjà chargées par le site
  * (Plus Jakarta Sans / Spline Sans Mono).
@@ -12,18 +12,38 @@
  * section suivante repart sur la toile claire.
  */
 import React from "react";
+import { LogoIA } from "@/components/ui/LogoIA";
+import { PAYS } from "@/lib/pays";
+import type { Pays } from "@/lib/benchmarks/models";
 
 const INK = "#0E0E12";
 const TURQUOISE = "#00D1BE";
 const MONO = 'var(--font-mono, "Spline Sans Mono", ui-monospace, monospace)';
 const SANS = 'var(--font-sans, "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif)';
 
+/**
+ * Libellés français des niveaux d'effort renvoyés par Artificial Analysis.
+ * Traduction faite à l'affichage seulement : la prop `effort` reste le reflet
+ * fidèle de la donnée source. Une valeur absente de la table est affichée telle
+ * quelle — la source peut introduire un niveau qu'on ne connaît pas encore.
+ */
+const EFFORTS: Record<string, string> = {
+  low: "faible",
+  medium: "moyen",
+  high: "élevé",
+  xhigh: "très élevé",
+  max: "maximal",
+};
+
 type Props = {
   modele?: string;
   effort?: string;
   score?: string;
-  cout?: string;
   date?: string;
+  /** Éditeur du modèle — détermine aussi le glyphe de la tuile. */
+  editeur?: string;
+  /** Code pays de l'éditeur ; le libellé vient de la table partagée `PAYS`. */
+  pays?: Pays;
   baseline?: string;
   ancre?: string;
 };
@@ -48,12 +68,102 @@ function parse(rule: string): React.CSSProperties {
   return { [k]: v } as React.CSSProperties;
 }
 
+/** Équerre 30 × 30, trait 3 px — même motif que le logo Marssane, à l'échelle. */
+const EQUERRE: React.CSSProperties = { position: "absolute", width: "30px", height: "30px" };
+const TRAIT = "3px solid rgba(255,255,255,.55)";
+
+/**
+ * Tuile du logo de l'éditeur : carré tenu par trois équerres (haut-gauche,
+ * bas-gauche, bas-droit) et un « + » turquoise débordant au coin haut-droit,
+ * légende éditeur dessous. Cotes pilotées par `--tuile` / `--glyphe`, que les
+ * classes utilitaires réduisent sous 1100 px.
+ */
+function TuileLogo({
+  modele,
+  editeur,
+  pays,
+}: {
+  modele: string;
+  editeur: string;
+  pays: Pays;
+}) {
+  return (
+    // Empilée, la tuile plafonne à 240 px mais se réduit jusqu'à 132 px sur les
+    // petites largeurs, pour que le premier écran tienne dans la fenêtre. Le
+    // glyphe garde la proportion 176/344 ≈ 1/2.
+    <div
+      className="flex flex-col items-center justify-self-center [--glyphe:calc(var(--tuile)/2)] [--tuile:clamp(132px,24vw,240px)] min-[1100px]:justify-self-end min-[1100px]:[--glyphe:176px] min-[1100px]:[--tuile:344px]"
+    >
+      <div style={{ position: "relative", width: "var(--tuile)", height: "var(--tuile)" }}>
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(255,255,255,.035)",
+            border: "1px solid rgba(255,255,255,.10)",
+            borderRadius: "4px",
+            color: "#FFFFFF",
+          }}
+        >
+          <LogoIA editeur={editeur} size="var(--glyphe)" label={modele} />
+        </div>
+        <span
+          aria-hidden
+          style={{ ...EQUERRE, left: 0, top: 0, borderLeft: TRAIT, borderTop: TRAIT, borderRadius: "4px 0 0 0" }}
+        />
+        <span
+          aria-hidden
+          style={{ ...EQUERRE, left: 0, bottom: 0, borderLeft: TRAIT, borderBottom: TRAIT, borderRadius: "0 0 0 4px" }}
+        />
+        <span
+          aria-hidden
+          style={{ ...EQUERRE, right: 0, bottom: 0, borderRight: TRAIT, borderBottom: TRAIT, borderRadius: "0 0 4px 0" }}
+        />
+        <span
+          aria-hidden
+          style={{
+            position: "absolute",
+            right: "-7px",
+            top: "-14px",
+            fontFamily: SANS,
+            fontWeight: 500,
+            fontSize: "25px",
+            lineHeight: 1,
+            color: TURQUOISE,
+          }}
+        >
+          +
+        </span>
+      </div>
+      <div
+        style={{
+          marginTop: "18px",
+          width: "max-content",
+          maxWidth: "100%",
+          fontFamily: MONO,
+          fontSize: "12px",
+          textTransform: "uppercase",
+          letterSpacing: "0.16em",
+          color: "#7A828E",
+          textAlign: "center",
+        }}
+      >
+        Éditeur · {editeur} ({PAYS[pays].libelle})
+      </div>
+    </div>
+  );
+}
+
 export function HeroRecommandation({
   modele = "Claude Opus 5",
   effort = "medium",
   score = "92,4",
-  cout = "≈ 21 €/M tokens",
   date = "27 juillet 2026",
+  editeur = "Anthropic",
+  pays = "US",
   baseline = "Le meilleur compromis intelligence / prix du moment.",
   ancre = "#pourquoi",
 }: Props) {
@@ -105,16 +215,18 @@ export function HeroRecommandation({
         </span>
       ))}
 
+      {/* Paddings et gouttières en classes (et non en style inline) : sous
+          1100 px la tuile passe sous le texte et allonge l'écran, il faut donc
+          les resserrer par paliers pour rester dans la fenêtre. */}
       <div
+        className="gap-16 p-[64px_clamp(24px,6.6vw,96px)_56px] max-[1100px]:gap-10 max-[1100px]:p-[48px_clamp(24px,6.6vw,96px)_40px] max-[640px]:gap-8 max-[640px]:p-[64px_24px_28px]"
         style={{
           position: "relative",
           flex: 1,
           boxSizing: "border-box",
-          padding: "64px clamp(24px, 6.6vw, 96px) 56px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          gap: "64px",
         }}
       >
         {/* Le lockup Marssane est porté par la Nav du site (en tonalité encre sur
@@ -125,22 +237,27 @@ export function HeroRecommandation({
           </div>
         </div>
 
-        <div>
-          <div style={{ fontFamily: MONO, fontSize: "clamp(13px, 1.4vw, 20px)", textTransform: "uppercase", letterSpacing: "0.16em", color: "#98A1AC", marginBottom: "30px" }}>
-            L&apos;IA à utiliser aujourd&apos;hui
-          </div>
-          <h1 style={{ margin: 0, fontSize: "clamp(48px, 8.8vw, 126px)", fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 0.94, color: "#FFFFFF" }}>
-            {modele}
-          </h1>
-          {/* Effort absent de la source : on masque la ligne plutôt que d'afficher une valeur inventée. */}
-          {effort ? (
-            <div style={{ marginTop: "34px", fontFamily: MONO, fontWeight: 600, fontSize: "clamp(18px, 2.1vw, 30px)", textTransform: "uppercase", letterSpacing: "0.14em", color: TURQUOISE }}>
-              Effort {effort}
+        {/* Bloc central : texte à gauche, tuile logo dans la colonne de droite
+            (centrée verticalement) ; sous 1100 px la tuile passe dessous. */}
+        <div className="grid items-center gap-[clamp(24px,4vw,64px)] min-[1100px]:grid-cols-[minmax(0,1fr)_344px]">
+          <div>
+            <div style={{ fontFamily: MONO, fontSize: "clamp(13px, 1.4vw, 20px)", textTransform: "uppercase", letterSpacing: "0.16em", color: "#98A1AC", marginBottom: "30px" }}>
+              L&apos;IA à utiliser aujourd&apos;hui
             </div>
-          ) : null}
+            <h1 style={{ margin: 0, fontSize: "clamp(48px, 8.8vw, 126px)", fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 0.94, color: "#FFFFFF" }}>
+              {modele}
+            </h1>
+            {/* Effort absent de la source : on masque la ligne plutôt que d'afficher une valeur inventée. */}
+            {effort ? (
+              <div style={{ marginTop: "34px", fontFamily: MONO, fontWeight: 600, fontSize: "clamp(18px, 2.1vw, 30px)", textTransform: "uppercase", letterSpacing: "0.14em", color: TURQUOISE }}>
+                Effort {EFFORTS[effort.toLowerCase()] ?? effort}
+              </div>
+            ) : null}
+          </div>
+          <TuileLogo modele={modele} editeur={editeur} pays={pays} />
         </div>
 
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "32px", borderTop: "1px solid rgba(255,255,255,.14)", paddingTop: "26px" }}>
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-start", flexWrap: "wrap", gap: "32px", borderTop: "1px solid rgba(255,255,255,.14)", paddingTop: "26px" }}>
           <div style={{ display: "flex", alignItems: "flex-end", gap: "48px", flexWrap: "wrap" }}>
             <div>
               <div style={{ fontFamily: MONO, fontSize: "11.5px", textTransform: "uppercase", letterSpacing: "0.16em", color: "#7A828E", marginBottom: "10px" }}>
@@ -153,9 +270,6 @@ export function HeroRecommandation({
             </div>
             <p style={{ margin: "0 0 4px", fontSize: "18px", lineHeight: 1.55, color: "#C9CED6" }}>{baseline}</p>
           </div>
-          <div style={{ fontFamily: MONO, fontSize: "14px", textTransform: "uppercase", letterSpacing: "0.14em", color: "#7A828E" }}>
-            {cout}
-          </div>
         </div>
       </div>
 
@@ -163,9 +277,9 @@ export function HeroRecommandation({
       <a
         href={ancre}
         aria-label="Voir le détail plus bas"
+        className="h-[104px] max-[640px]:h-[88px]"
         style={{
           position: "relative",
-          height: "104px",
           borderTop: "1px solid rgba(255,255,255,.12)",
           display: "flex",
           alignItems: "center",

@@ -47,7 +47,7 @@ export function LogoMarssane({
   // La transition passe par une classe et non par le style inline, sinon
   // `motion-reduce:transition-none` ne pourrait pas la neutraliser.
   const transitionEncre =
-    "transition-colors duration-[320ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none";
+    "transition-colors duration-[160ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none";
 
   const inner = (
     <>

@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { BadgeEcume } from "@/components/ui/BadgeEcume";
-import { CasVideo } from "@/components/site/CasVideo";
-import { cas1Video, cas2Video, cas3Video } from "@/lib/site-config";
+import { CasVisuel } from "@/components/site/CasVisuel";
+import { cas1Visuel, cas2Visuel, cas3Visuel } from "@/lib/site-config";
 
 /**
  * Les trois cas concrets (« Ses mails de bout en bout », « Synthétiser &
@@ -188,12 +188,9 @@ function Cas1() {
           <VecuChez secteurs={["Experts-comptables", "Services B2B", "Négoce"]} />
         </div>
 
-        {cas1Video ? (
+        {cas1Visuel ? (
           <div className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-end">
-            <span className="sr-only">
-              Illustration : une boîte de 47 mails triée en 6 à traiter ce matin.
-            </span>
-            <CasVideo video={cas1Video} />
+            <CasVisuel visuel={cas1Visuel} />
           </div>
         ) : (
           <Visuel
@@ -319,13 +316,9 @@ function Cas2() {
     <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-5 pt-[74px]">
       <GridDecor side="left" top={50} height={440} maskX="42%" />
       <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
-        {cas2Video ? (
+        {cas2Visuel ? (
           <div className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-start">
-            <span className="sr-only">
-              Illustration : un PDF de 42 pages résumé en une synthèse de 12
-              lignes.
-            </span>
-            <CasVideo video={cas2Video} />
+            <CasVisuel visuel={cas2Visuel} />
           </div>
         ) : (
           <Visuel
@@ -449,13 +442,9 @@ function Cas3() {
           <VecuChez secteurs={["BTP", "Artisans", "Agences"]} />
         </div>
 
-        {cas3Video ? (
+        {cas3Visuel ? (
           <div className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-end">
-            <span className="sr-only">
-              Illustration : un process répétitif transformé en enchaînement
-              automatisé (relances, pièces, reporting).
-            </span>
-            <CasVideo video={cas3Video} />
+            <CasVisuel visuel={cas3Visuel} />
           </div>
         ) : (
           <Visuel

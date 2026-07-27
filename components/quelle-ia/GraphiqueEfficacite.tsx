@@ -16,6 +16,11 @@ const PLOT_Y1 = VB_H - M_BOTTOM; // bas (intelligence min)
 
 const X_TICKS = [1, 3, 10, 30];
 
+/** Nombres du repli lecteur d'écran : une décimale, virgule française. */
+const fmt1 = (x: number) => new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 1 }).format(x);
+const fmt2 = (x: number) =>
+  new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x);
+
 export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] }) {
   if (entries.length === 0) return null;
 
@@ -52,15 +57,15 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
   return (
     <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-2 pt-[84px]">
       <div className="max-w-[640px]">
-        <Kicker>D&apos;où vient ce classement</Kicker>
-        <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
+        <Kicker className="text-faint-sur-ink!">D&apos;où vient ce classement</Kicker>
+        <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] text-white sm:text-[38px]">
           Intelligence ×{" "}
           <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
             coût
           </span>
           .
         </h2>
-        <p className="mt-[14px] text-[16.5px] text-body">
+        <p className="mt-[14px] text-[16.5px] text-body-sur-ink">
           Chaque point est un modèle. Plus il est haut et à gauche, meilleur est
           son rapport intelligence-coût.
         </p>
@@ -73,20 +78,21 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
           role="img"
           aria-label={`Nuage intelligence contre coût ; en tête : ${top.nom}`}
         >
-          {/* Zone optimale */}
+          {/* Zone optimale — écume en alpha très faible : sur fond encre, la
+              teinte pleine brûlerait la zone et écraserait les points. */}
           <rect
             x={PLOT_X0}
             y={zoneY}
             width={PLOT_X1 - PLOT_X0}
             height={zoneH}
             fill="var(--color-ecume)"
-            opacity={0.5}
+            opacity={0.1}
           />
           <text
             x={PLOT_X0 + 8}
             y={zoneY + 14}
             className="font-mono text-[9px]"
-            fill="var(--color-ink-ecume)"
+            fill="var(--color-ecume)"
           >
             zone optimale
           </text>
@@ -97,14 +103,14 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
             y1={PLOT_Y0}
             x2={PLOT_X0}
             y2={PLOT_Y1}
-            stroke="var(--color-grid-line)"
+            stroke="var(--color-line-sur-ink)"
           />
           <line
             x1={PLOT_X0}
             y1={PLOT_Y1}
             x2={PLOT_X1}
             y2={PLOT_Y1}
-            stroke="var(--color-grid-line)"
+            stroke="var(--color-line-sur-ink)"
           />
 
           {/* Graduations X + libellés */}
@@ -118,14 +124,14 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
                   y1={PLOT_Y1}
                   x2={x}
                   y2={PLOT_Y1 + 5}
-                  stroke="var(--color-grid-line)"
+                  stroke="var(--color-line-sur-ink)"
                 />
                 <text
                   x={x}
                   y={PLOT_Y1 + 17}
                   textAnchor="middle"
                   className="font-mono text-[10px]"
-                  fill="var(--color-slate)"
+                  fill="var(--color-faint-sur-ink)"
                 >
                   {v}
                 </text>
@@ -139,7 +145,7 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
             y={VB_H - 6}
             textAnchor="middle"
             className="font-mono text-[10px]"
-            fill="var(--color-slate)"
+            fill="var(--color-faint-sur-ink)"
           >
             coût €/M tokens · échelle log
           </text>
@@ -149,7 +155,7 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
             transform={`translate(16 ${(PLOT_Y0 + PLOT_Y1) / 2}) rotate(-90)`}
             textAnchor="middle"
             className="font-mono text-[10px]"
-            fill="var(--color-slate)"
+            fill="var(--color-faint-sur-ink)"
           >
             intelligence
           </text>
@@ -169,7 +175,9 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
                   cx={cx}
                   cy={cy}
                   r={isTop ? 7 : 4.5}
-                  fill={isTop ? "var(--color-canard)" : "var(--color-quiet)"}
+                  // Sur encre le canard s'éteint : le TOP 3 passe en turquoise
+                  // (10,1:1), les autres restent en gris clair (8,2:1).
+                  fill={isTop ? "var(--color-turquoise)" : "var(--color-quiet)"}
                 />
                 {isTop ? (
                   <text
@@ -177,7 +185,7 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
                     y={cy + 3.5}
                     textAnchor={labelAnchor}
                     className="font-mono text-[10px]"
-                    fill="var(--color-ink)"
+                    fill="#FFFFFF"
                   >
                     {e.nom}
                   </text>
@@ -188,11 +196,15 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
         </svg>
       </div>
 
-      {/* Fallback lecteurs d'écran */}
+      {/* Repli lecteurs d'écran : on annonce les deux axes du nuage (intelligence
+          et coût) et le score de rang. Pas l'indice d'efficacité-coût, qui n'est
+          qu'un terme intermédiaire normalisé en min-max — le dernier du
+          classement vaut 0, ce qui serait trompeur annoncé tel quel. */}
       <ul className="absolute h-px w-px overflow-hidden">
         {entries.map((e) => (
           <li key={e.cle}>
-            {e.nom} : indice {e.indiceEfficacite}
+            {e.nom} : score {fmt1(e.score)} sur 100, intelligence {fmt1(e.intelligence)} sur 100,
+            coût {fmt2(e.coutEurM)} € par million de tokens.
           </li>
         ))}
       </ul>

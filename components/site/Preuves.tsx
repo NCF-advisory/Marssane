@@ -5,8 +5,7 @@ import { PlusMark } from "@/components/ui/PlusMark";
 /**
  * Section « Preuves » (entre les cas concrets et « Pour qui ») : kicker, H2 38px
  * et grille de trois cartes-statistiques (chiffre mono très grand, libellé,
- * source). Les chiffres proviennent d'études externes ; la ligne de bas de
- * grille rappelle que le gain propre à l'utilisateur se mesure en formation.
+ * source). Les chiffres proviennent d'études externes.
  */
 const STATS: { chiffre: string; libelle: string; source: string }[] = [
   {
@@ -74,11 +73,6 @@ export function Preuves() {
           </Fragment>
         ))}
       </div>
-
-      <p className="mt-[18px] text-[13px] leading-[1.55] text-soft">
-        Des chiffres d&apos;études, pas les nôtres : le vôtre se mesurera sur
-        votre propre cas, pendant la formation.
-      </p>
     </section>
   );
 }

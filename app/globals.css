@@ -39,6 +39,15 @@
   --color-ink-clay: #8c3a30; /* texte sur clay */
   --color-ink-periwinkle: #1b1442; /* texte sur lavande / périwinkle */
 
+  /* Textes & lignes SUR fond encre — exception assumée de la page /quelle-ia
+     (le reste du site est clair, cf. plus bas).
+     Convention : le suffixe `-sur-ink` désigne une couleur destinée à être
+     posée SUR --color-ink ; à ne pas confondre avec le préfixe `--color-ink-*`
+     ci-dessus, qui désigne les encres foncées posées sur les pastels. */
+  --color-body-sur-ink: #c9ced6; /* corps de texte (12,2:1) */
+  --color-faint-sur-ink: #98a1ac; /* atténué : kickers, axes, mentions (8,2:1) */
+  --color-line-sur-ink: rgba(255, 255, 255, 0.16); /* hairlines, cadre & axes */
+
   /* Fonds de barres (jauges) */
   --color-bar-track: #e6e9ed;
 
@@ -311,5 +320,70 @@ body,
       opacity: 1;
       transform: scale(1);
     }
+  }
+}
+
+/* ===== Fondu croisé entre pages (View Transitions) =====
+   Déclenché par le <ViewTransition> qui enveloppe le corps de page dans
+   app/layout.tsx : à chaque navigation client, l'ancienne image de la page
+   s'efface pendant que la nouvelle apparaît. Indispensable pour le passage
+   clair ↔ encre de /quelle-ia : un simple fondu de couleur de fond laisserait
+   du texte blanc sur un fond encore clair.
+
+   220 ms : un cran au-dessus des 160 ms de la nav (un fondu de pleine page
+   plus court clignote), assez proche pour que les deux se sentent
+   coordonnés. Même courbe que la transition de tonalité de la nav.
+
+   Le sélecteur `*` cible aussi les groupes nommés automatiquement par React
+   pour le corps de route. Si le navigateur ne le comprend pas, on retombe sur
+   le fondu par défaut de l'agent utilisateur (250 ms) — dégradation invisible. */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 220ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* La nav est un élément persistant de la transition : son instantané ne fait
+   aucun fondu (l'ancienne image est masquée, la nouvelle — qui est un rendu
+   vivant de la barre — est affichée d'emblée). C'est donc sa propre transition
+   de tonalité de 160 ms, réglée dans Nav.tsx, qui joue à l'écran, sans se
+   superposer au fondu du reste de la page. */
+::view-transition-group(nav-marssane) {
+  animation: none;
+  /* Les groupes sont empilés dans l'ordre du DOM, et l'instantané du corps de
+     page couvre toute sa hauteur : quand on navigue depuis une position
+     défilée, il remonte au-dessus de la barre et la masquerait. La barre
+     reprend donc la main, comme son `z-50` hors transition. */
+  z-index: 10;
+}
+::view-transition-old(nav-marssane) {
+  animation: none;
+  opacity: 0;
+}
+::view-transition-new(nav-marssane) {
+  animation: none;
+  opacity: 1;
+}
+
+/* Pendant une transition de vue, le retour en haut de page doit être immédiat :
+   sinon le `scroll-behavior: smooth` déclaré plus haut l'anime sur ~1 s, et la
+   barre — dont l'instantané est un rendu vivant d'un élément `sticky` — se
+   retrouve mal positionnée le temps du fondu (elle clignote). Le défilement
+   fluide des ancres, lui, n'est pas concerné. */
+html:active-view-transition {
+  scroll-behavior: auto;
+}
+
+/* Mouvement réduit : basculement instantané. Les deux instantanés restent
+   empilés le temps du commit, le nouveau (au-dessus) couvre l'ancien. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+  ::view-transition-old(*) {
+    opacity: 0;
   }
 }

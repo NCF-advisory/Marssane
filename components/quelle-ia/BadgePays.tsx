@@ -1,11 +1,7 @@
-const CONFIG = {
-  US: { libelle: "États-Unis", complet: "États-Unis", bandes: ["bg-slate", "#dce1e6", "bg-slate"] },
-  FR: { libelle: "France", complet: "France", bandes: ["bg-canard", "#dce1e6", "bg-clay"] },
-  CN: { libelle: "Chine · hors UE", complet: "Chine (hors Union européenne)", bandes: ["bg-clay", "#dce1e6", "bg-clay"] },
-} as const;
+import { PAYS } from "@/lib/pays";
 
 export function BadgePays({ pays }: { pays: "US" | "FR" | "CN" }) {
-  const cfg = CONFIG[pays];
+  const cfg = PAYS[pays];
   return (
     <span
       className="inline-flex items-center gap-[7px] font-mono text-[10px] uppercase tracking-[0.08em] text-slate"
