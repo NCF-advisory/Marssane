@@ -30,6 +30,8 @@ type LigneBrute = {
   cost_input_usd_m: number | null;
   cost_output_usd_m: number | null;
   effort: string | null;
+  /** Temps de réflexion en secondes (source `aa` seule ; null sinon). */
+  latence_s: number | null;
   source_date: string | null;
   fetched_at: Date;
 };
@@ -48,6 +50,7 @@ async function upsert(sql: Sql, lignes: LigneBrute[]): Promise<void> {
       "cost_input_usd_m",
       "cost_output_usd_m",
       "effort",
+      "latence_s",
       "source_date",
       "fetched_at",
     )}
@@ -56,6 +59,7 @@ async function upsert(sql: Sql, lignes: LigneBrute[]): Promise<void> {
       cost_input_usd_m  = excluded.cost_input_usd_m,
       cost_output_usd_m = excluded.cost_output_usd_m,
       effort            = excluded.effort,
+      latence_s         = excluded.latence_s,
       source_date       = excluded.source_date,
       fetched_at        = excluded.fetched_at
   `;
@@ -91,6 +95,7 @@ export async function GET(request: NextRequest) {
         cost_input_usd_m: c.inputUsdM,
         cost_output_usd_m: c.outputUsdM,
         effort: null,
+        latence_s: null, // non exposée par OpenRouter
         source_date: null,
         fetched_at: fetchedAt,
       })),
@@ -112,6 +117,7 @@ export async function GET(request: NextRequest) {
         cost_input_usd_m: null,
         cost_output_usd_m: null,
         effort: null,
+        latence_s: null, // non exposée par LMArena
         source_date: sourceDate,
         fetched_at: fetchedAt,
       })),
@@ -134,6 +140,7 @@ export async function GET(request: NextRequest) {
         cost_input_usd_m: m.inputUsdM,
         cost_output_usd_m: m.outputUsdM,
         effort: m.effort,
+        latence_s: m.latenceS,
         source_date: null,
         fetched_at: fetchedAt,
       })),

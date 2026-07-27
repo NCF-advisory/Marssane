@@ -34,6 +34,7 @@ export async function getClassement(): Promise<Classement> {
       cost_input_usd_m: number | null;
       cost_output_usd_m: number | null;
       effort: string | null;
+      latence_s: number | null;
       source_date: string | null;
       fetched_at: Date;
     }[]
@@ -45,6 +46,7 @@ export async function getClassement(): Promise<Classement> {
       cost_input_usd_m,
       cost_output_usd_m,
       effort,
+      latence_s,
       source_date::text as source_date,
       fetched_at
     from benchmark_sources
@@ -57,6 +59,7 @@ export async function getClassement(): Promise<Classement> {
     cost_input_usd_m: r.cost_input_usd_m,
     cost_output_usd_m: r.cost_output_usd_m,
     effort: r.effort,
+    latence_s: r.latence_s,
     source_date: r.source_date,
     fetched_at: r.fetched_at.toISOString(),
   }));
