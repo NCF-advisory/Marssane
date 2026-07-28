@@ -22,7 +22,8 @@ export const metadata: Metadata = {
    éditez seulement ce tableau (titre, accroche, points, infos). Les couleurs
    (accent/badge) suivent le kit de marque et n'ont pas à changer — chaque paire
    badgeBg/badgeText est choisie pour rester lisible sur le fond encre.
-   Pas de prix, aucune promesse chiffrée : à préciser plus tard. */
+   Pas de prix (décision du propriétaire, 29/07/2026 : le prix ne s'annonce
+   pas sur le site), aucune promesse chiffrée. */
 const NIVEAUX: Niveau[] = [
   {
     id: "debutant",
