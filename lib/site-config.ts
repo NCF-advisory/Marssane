@@ -44,18 +44,14 @@ export const cas3Video: { mp4: string; webm?: string; poster: string } | null =
  * `heroVideo` : `null` → la composition statique de la maquette ; objet → le
  * rendu WebP (5:4). Déposer le fichier dans `public/img/cas/` et renseigner
  * l'objet suffit à basculer, aucun composant à modifier.
+ * Visuels 3D retirés le 29/07/2026 (décision du propriétaire) : `null`,
+ * placeholders de la maquette en attendant les prochains rendus.
  */
-export const cas1Visuel: { src: string; alt: string } | null = {
-  src: "/img/cas/cas1.webp",
-  alt: "Des enveloppes en vrac d'un côté ; six enveloppes debout, triées et alignées dans un rail canard, de l'autre.",
-};
+export const cas1Visuel: { src: string; alt: string } | null = null;
 
 /**
  * `cas2Visuel` pilote le visuel 3D du cas concret n° 2. Même convention que
  * `cas1Visuel` : déposer le WebP dans `public/img/cas/` et renseigner l'objet
- * suffit à basculer.
+ * suffit à basculer. Retiré le 29/07/2026, cf. `cas1Visuel` : `null`.
  */
-export const cas2Visuel: { src: string; alt: string } | null = {
-  src: "/img/cas/cas2.webp",
-  alt: "Une note vocale, cinq barres d'onde, et le devis chiffré qui sort déjà sur son rail, prêt à valider.",
-};
+export const cas2Visuel: { src: string; alt: string } | null = null;
