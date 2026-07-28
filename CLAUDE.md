@@ -6,8 +6,8 @@ Règles de comportement et d'organisation pour la création de ce site.
 
 ## Orchestration des modèles (règle imposée par le propriétaire du projet)
 
-- La session principale tourne sur **Opus 5, effort medium** : elle orchestre — analyse des demandes, planification, découpage en tâches, revue et validation du travail.
-- **Toute écriture ou modification de code** doit être déléguée au sous-agent **`dev-opus`** (Opus 5, effort medium) via l'outil Agent, avec un brief précis : fichiers concernés, comportement attendu, contraintes.
+- La session principale tourne sur **Fable 5, effort high** : elle orchestre — analyse des demandes, planification, découpage en tâches, revue et validation du travail.
+- **Toute écriture ou modification de code** doit être déléguée au sous-agent **`dev-opus`** (Opus 5, effort high) via l'outil Agent, avec un brief précis : fichiers concernés, comportement attendu, contraintes.
 - L'orchestrateur n'écrit pas de code lui-même, à l'exception des micro-retouches triviales (typo, valeur de config d'une ligne) et des fichiers de configuration de l'orchestration elle-même (`.claude/`, `CLAUDE.md`).
 - Après chaque livraison de `dev-opus`, l'orchestrateur relit le résultat et vérifie qu'il répond au brief avant de le présenter à l'utilisateur.
 - Les questions de clarification sont posées à l'utilisateur par l'orchestrateur **avant** de déléguer ; `dev-opus` ne pouvant pas interroger l'utilisateur, il signale ses choix et ambiguïtés dans son rapport final.
