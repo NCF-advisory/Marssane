@@ -4,9 +4,9 @@ import { CasVisuel } from "@/components/site/CasVisuel";
 import { cas1Visuel, cas2Visuel, cas3Visuel } from "@/lib/site-config";
 
 /**
- * Les trois cas concrets (« Ses mails de bout en bout », « Synthétiser &
- * préparer ses réunions », « Automatiser un process »). Chaque cas : une grille
- * 2 colonnes (texte + visuel)
+ * Les trois cas concrets (« Ses mails de bout en bout », « Le devis qui part
+ * avant la concurrence », « Automatiser les relances d'impayés »). Chaque cas :
+ * une grille 2 colonnes (texte + visuel)
  * qui s'empile sous lg (texte d'abord, visuel ensuite). Les visuels sont des
  * compositions purement décoratives (aria-hidden) doublées d'un texte sr-only.
  *
@@ -185,7 +185,7 @@ function Cas1() {
             comptent, les réponses pré-rédigées dans votre ton. Rien ne part sans
             vous.
           </p>
-          <VecuChez secteurs={["Experts-comptables", "Services B2B", "Négoce"]} />
+          <VecuChez secteurs={["Experts-comptables", "Services B2B", "Juridique"]} />
         </div>
 
         {cas1Visuel ? (
@@ -321,6 +321,9 @@ function Cas2() {
             <CasVisuel visuel={cas2Visuel} />
           </div>
         ) : (
+          /* Composition de secours héritée de l'ancien cas 02 (« synthèse de
+             42 pages ») : à retravailler sur le thème du devis si cas2Visuel
+             repasse à null. L'alt décrit la composition telle qu'elle est. */
           <Visuel
             alt="Illustration : un PDF de 42 pages résumé en une synthèse de 12 lignes."
             className="lg:h-[430px]"
@@ -394,16 +397,18 @@ function Cas2() {
         <div className="order-first max-w-[450px] lg:order-last lg:justify-self-end">
           <BadgeEcume>02</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
+            Le devis part à 22 h, le client a signé{" "}
             <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-              42 pages
+              ailleurs
             </span>{" "}
-            à lire pour la réunion de demain ?
+            ?
           </h3>
           <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body">
-            La synthèse en 12 lignes, dans votre ton — et chaque point renvoie à
-            sa page source.
+            Une note vocale entre deux rendez-vous, et le devis chiffré est prêt
+            à valider — vos prix, vos conditions, votre mise en page. Le premier
+            qui répond signe.
           </p>
-          <VecuChez secteurs={["Juridique", "Immobilier", "Industrie"]} />
+          <VecuChez secteurs={["BTP", "Plomberie", "Industrie"]} />
         </div>
       </div>
     </section>
@@ -439,7 +444,7 @@ function Cas3() {
             Vous le dictez une fois, ça part tout seul — et c&apos;est toujours
             vous qui validez.
           </p>
-          <VecuChez secteurs={["BTP", "Artisans", "Agences"]} />
+          <VecuChez secteurs={["Artisans", "Agences", "Négoce"]} />
         </div>
 
         {cas3Visuel ? (

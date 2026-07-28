@@ -323,6 +323,44 @@ body,
   }
 }
 
+/* ===== Parallaxe des visuels de cas concrets =====
+   Un frémissement, pas un effet : le visuel 3D dérive de 16 px au total (de
+   +8 px à −8 px) pendant sa traversée du viewport, ce qui suffit à le
+   décoller du texte qui l'accompagne sans attirer l'œil.
+
+   Animation liée au scroll, en CSS pur : `view()` cale la timeline sur la
+   traversée de l'élément, `linear` évite tout à-coup, et le point mort
+   (translation nulle) tombe à mi-course, quand le visuel est centré.
+
+   La parallaxe est portée par l'enveloppe, le `hover:-translate-y-1` par
+   l'image : deux éléments, donc deux `transform` distincts qui se composent
+   naturellement au lieu de s'écraser l'un l'autre.
+
+   Le garde-fou `@supports` n'est pas décoratif : sans lui, un navigateur qui
+   ignore `animation-timeline` (Firefox à ce jour) jouerait l'animation sur la
+   timeline du document, avec une durée par défaut de 0 s — le `both` la
+   figerait aussitôt sur sa dernière frame et le visuel resterait décalé de
+   8 px vers le haut. Avec lui, la règle entière est ignorée : aucune
+   translation, visuel à sa place exacte. Idem en mouvement réduit. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .cas-visuel-parallaxe {
+      animation: cas-visuel-parallaxe linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    @keyframes cas-visuel-parallaxe {
+      from {
+        transform: translateY(8px);
+      }
+      to {
+        transform: translateY(-8px);
+      }
+    }
+  }
+}
+
 /* ===== Fondu croisé entre pages (View Transitions) =====
    Déclenché par le <ViewTransition> qui enveloppe le corps de page dans
    app/layout.tsx : à chaque navigation client, l'ancienne image de la page

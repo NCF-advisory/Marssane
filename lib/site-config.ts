@@ -45,18 +45,27 @@ export const cas3Video: { mp4: string; webm?: string; poster: string } | null =
  * rendu WebP (5:4). Déposer le fichier dans `public/img/cas/` et renseigner
  * l'objet suffit à basculer, aucun composant à modifier.
  */
-export const cas1Visuel: { src: string; alt: string } | null = null;
+export const cas1Visuel: { src: string; alt: string } | null = {
+  src: "/img/cas/cas1.webp",
+  alt: "Des enveloppes en vrac d'un côté ; six enveloppes debout, triées et alignées dans un rail canard, de l'autre.",
+};
 
 /**
  * `cas2Visuel` pilote le visuel 3D du cas concret n° 2. Même convention que
  * `cas1Visuel` : déposer le WebP dans `public/img/cas/` et renseigner l'objet
  * suffit à basculer.
  */
-export const cas2Visuel: { src: string; alt: string } | null = null;
+export const cas2Visuel: { src: string; alt: string } | null = {
+  src: "/img/cas/cas2.webp",
+  alt: "Une note vocale — cinq barres d'onde — et le devis chiffré qui sort déjà sur son rail, prêt à valider.",
+};
 
 /**
  * `cas3Visuel` pilote le visuel 3D du cas concret n° 3. Même convention que
  * `cas1Visuel` : déposer le WebP dans `public/img/cas/` et renseigner l'objet
  * suffit à basculer.
  */
-export const cas3Visuel: { src: string; alt: string } | null = null;
+export const cas3Visuel: { src: string; alt: string } | null = {
+  src: "/img/cas/cas3.webp",
+  alt: "Des jetons éparpillés d'un côté ; trois piles nettes encaissées sur un socle canard, de l'autre.",
+};
