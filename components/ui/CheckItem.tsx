@@ -14,12 +14,16 @@ type CheckItemProps = {
  * suivie d'un texte 14,5 px. Motif récurrent de la maquette.
  *
  * `dotBg`/`dotText` permettent de teinter la pastille (ex. accent d'un niveau
- * de formation) ; sans eux, le style écume d'origine est conservé.
+ * de formation, écume atténuée sur fond encre) ; sans eux, le style écume
+ * d'origine est conservé.
+ *
+ * Le texte n'impose aucune couleur : il hérite de la tonalité du contexte
+ * (encre sur la toile claire, blanc sur le fond encre du site vitrine).
  */
 export function CheckItem({ children, className, dotBg, dotText }: CheckItemProps) {
   return (
     <div
-      className={`flex items-center gap-2.5 text-[14.5px] text-ink ${className ?? ""}`}
+      className={`flex items-center gap-2.5 text-[14.5px] ${className ?? ""}`}
     >
       <span
         aria-hidden

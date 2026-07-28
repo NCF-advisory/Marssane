@@ -38,11 +38,11 @@ const POINTS: { titre: string; precision: string }[] = [
  */
 export function Reponse() {
   return (
-    <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-2 pt-[84px]">
+    <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[84px] sm:px-10">
       {/* Décorations motifFond (décoratives) */}
       <span
         aria-hidden
-        className="absolute left-[15.25px] top-0 -z-[1] hidden h-[48px] w-[1.5px] bg-repere lg:block"
+        className="absolute left-[15.25px] top-0 -z-[1] hidden h-[48px] w-[1.5px] bg-line-sur-ink lg:block"
       />
       {/* Naissance du trait continu à x=778.25px, prolongé jusqu'à « La formation ».
           Le repère turquoise marque son origine ; le trait démarre juste dessous
@@ -54,7 +54,7 @@ export function Reponse() {
       />
       <span
         aria-hidden
-        className="absolute bottom-0 left-[778.25px] top-[55px] -z-[1] hidden w-[1.5px] bg-repere lg:block"
+        className="absolute bottom-0 left-[778.25px] top-[55px] -z-[1] hidden w-[1.5px] bg-line-sur-ink lg:block"
       />
       <PlusMark
         variant="turquoise"
@@ -62,12 +62,13 @@ export function Reponse() {
         className="absolute left-[15px] top-[60px] -z-[1] hidden -translate-x-1/2 -translate-y-1/2 lg:block"
       />
       <PlusMark
+        variant="grey-sur-ink"
         size={16}
         className="absolute right-[90px] top-[60px] hidden lg:block"
       />
 
       <div className="max-w-[680px]">
-        <Kicker>La réponse · vous former</Kicker>
+        <Kicker className="text-faint-sur-ink!">La réponse · vous former</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
           Ces situations, vous apprenez à les régler{" "}
           <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
@@ -75,7 +76,7 @@ export function Reponse() {
           </span>
           .
         </h2>
-        <p className="mt-4 text-[16.5px] leading-[1.58] text-body">
+        <p className="mt-4 text-[16.5px] leading-[1.58] text-body-sur-ink">
           Pas un logiciel à installer, pas un prestataire à rappeler : des
           réflexes que vous gardez.
         </p>
@@ -87,15 +88,16 @@ export function Reponse() {
         {POINTS.map((point, i) => (
           <article
             key={point.titre}
-            className="rounded-card border border-hairline bg-surface p-6 shadow-card"
+            className="rounded-card border border-line-sur-ink bg-surface-sur-ink p-6"
           >
-            <div className="font-mono text-[11px] font-semibold text-canard">
+            {/* Le canard manque de contraste sur l'encre : numéros en turquoise. */}
+            <div className="font-mono text-[11px] font-semibold text-turquoise">
               {String(i + 1).padStart(2, "0")}
             </div>
             <h3 className="mt-[10px] text-[17px] font-bold leading-[1.35] tracking-[-0.01em]">
               {point.titre}
             </h3>
-            <p className="mt-2 text-[14.5px] leading-[1.55] text-muted">
+            <p className="mt-2 text-[14.5px] leading-[1.55] text-body-sur-ink">
               {point.precision}
             </p>
           </article>

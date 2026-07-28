@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
 import { ReservationTrigger } from "./ReservationTrigger";
 
@@ -25,75 +26,115 @@ const PAGES_SITE = [
   "/merci",
 ];
 
-/** Pages à héro sombre : la barre passe en tonalité encre. */
-const PAGES_ENCRE = ["/quelle-ia"];
-
 /** Pages où la barre doit sortir du flux (`fixed` plutôt que `sticky`) :
  *  /formations, car WebKit gère mal `sticky` + scroll-snap racine. */
 const PAGES_FIXED = ["/formations"];
 
-/** Transition de tonalité, partagée par tout ce qui change de couleur.
- *  Même durée / courbe que celle du lockup (voir LogoMarssane). */
-const TRANSITION_TON =
-  "transition-colors duration-[160ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none";
+/** id du panneau replié — cible de l'`aria-controls` du bouton menu. */
+const ID_PANNEAU = "nav-menu-mobile";
 
 /**
  * Barre de navigation du site. Lockup logo (lien vers l'accueil) + liens
  * d'ancrage + CTA secondaire « Réserver ma place ».
  *
  * Montée une seule fois dans `app/layout.tsx` : le nœud DOM survit aux
- * changements de route, ce qui permet d'animer le passage d'une tonalité à
- * l'autre. L'URL (`usePathname`) est donc la source unique de vérité pour ses
- * deux axes — la tonalité (clair / encre) et le positionnement (sticky / fixed).
+ * changements de route. Tout le site vitrine est en tonalité encre, la barre
+ * l'est donc aussi partout ; l'URL (`usePathname`) ne décide plus que de son
+ * positionnement (sticky / fixed).
  *
- * Responsive minimal (pas de menu burger) : sous ~1024px le groupe de liens
- * se replie sous le logo et ses éléments s'enroulent proprement.
+ * Responsive : sous `lg`, la barre tient sur une seule rangée (logo + bouton
+ * menu) et les liens passent dans un panneau qui se déplie juste dessous — sans
+ * quoi ils s'enroulaient sur quatre rangées et la barre mangeait un tiers de
+ * l'écran d'un téléphone. À partir de `lg`, tout revient dans la rangée.
  */
 export function Nav() {
   const pathname = usePathname();
+  const [ouvert, setOuvert] = useState(false);
+  const barreRef = useRef<HTMLDivElement>(null);
+
+  // Fermeture au clavier (Escape) et au clic hors de la barre. Les écouteurs ne
+  // sont posés que panneau ouvert : rien ne tourne à l'état de repos.
+  useEffect(() => {
+    if (!ouvert) return;
+    const surTouche = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOuvert(false);
+    };
+    const surPointeur = (e: PointerEvent) => {
+      if (!barreRef.current?.contains(e.target as Node)) setOuvert(false);
+    };
+    document.addEventListener("keydown", surTouche);
+    document.addEventListener("pointerdown", surPointeur);
+    return () => {
+      document.removeEventListener("keydown", surTouche);
+      document.removeEventListener("pointerdown", surPointeur);
+    };
+  }, [ouvert]);
+
   if (!PAGES_SITE.includes(pathname)) return null;
 
-  const encre = PAGES_ENCRE.includes(pathname);
   const fixed = PAGES_FIXED.includes(pathname);
+  const fermer = () => setOuvert(false);
 
   return (
     <div
+      ref={barreRef}
       className={[
         fixed ? "fixed inset-x-0 top-0" : "sticky top-0",
         "z-50",
-        // Le flou reste déclaré dans les deux tonalités : en encre le fond est
-        // opaque, il n'a donc aucun effet visible, mais le garder évite de
-        // basculer `backdrop-filter` en cours de transition (ce qui produirait
-        // une rupture au lieu d'un dégradé).
-        "backdrop-blur-md",
-        // Encre : fond opaque, sinon le fond de page clair remonte au travers et
-        // crée une rupture visible à la jointure avec le héro. Clair : voile
-        // translucide flouté, comme partout ailleurs.
-        encre ? "bg-ink" : "bg-toile/80",
-        TRANSITION_TON,
+        // Fond opaque : le contenu de la page ne doit pas remonter au travers de
+        // la barre quand il défile dessous.
+        "bg-ink",
         // Élément persistant du fondu croisé de page : nommée, la barre est
         // sortie de l'instantané de la vue et n'est donc pas happée par le
-        // fondu — sa propre transition de tonalité (160 ms) reste visible.
+        // fondu — elle reste parfaitement stable d'une page à l'autre.
         // Le nom est neutralisé côté CSS (voir globals.css).
         "[view-transition-name:nav-marssane]",
       ].join(" ")}
     >
-    <header className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-x-6 gap-y-4 px-10 pt-[26px]">
+    {/* Le `pb` mobile ferme la rangée sous le logo (le panneau se déplie en
+        dessous, hors flux) ; à partir de lg on revient au seul `pt-[26px]`
+        d'origine, le contenu de la barre refermant lui-même la bande. */}
+    <header className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-x-6 gap-y-4 px-6 pb-[14px] pt-[16px] sm:px-10 lg:pb-0 lg:pt-[26px]">
       <Link
         href="/"
         aria-label="Marssane · retour à l'accueil"
-        className={`inline-flex rounded-btn focus-visible:outline-2 focus-visible:outline-offset-4 ${
-          // Le canard manque de contraste sur l'encre : anneau turquoise en tonalité encre.
-          encre ? "focus-visible:outline-turquoise" : "focus-visible:outline-canard"
-        }`}
+        // Le canard manque de contraste sur l'encre : anneau turquoise.
+        className="inline-flex rounded-btn focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
         // Le « M » du logo suit --color-ink : on le repasse en blanc localement.
-        style={encre ? ({ ["--color-ink" as string]: "#FFFFFF" }) : undefined}
+        style={{ ["--color-ink" as string]: "#FFFFFF" }}
       >
         <LogoMarssane size={34} withWordmark />
       </Link>
+
+      {/* Bouton menu — sous lg seulement. Cadre et graisse du CTA de la barre :
+          trois traits sobres + le mot, pour rester dans la typographie du site.
+          `min-h-11` garantit les 44 px de cible tactile. */}
+      <button
+        type="button"
+        aria-expanded={ouvert}
+        aria-controls={ID_PANNEAU}
+        onClick={() => setOuvert((o) => !o)}
+        className="inline-flex min-h-11 cursor-pointer items-center gap-2.5 rounded-btn border-[1.5px] border-white/60 px-4 py-2.5 text-[14.5px] font-semibold text-white transition-colors hover:border-white lg:hidden"
+      >
+        <span aria-hidden className="flex flex-col gap-[4px]">
+          <span className="block h-[1.5px] w-[17px] bg-current" />
+          <span className="block h-[1.5px] w-[17px] bg-current" />
+          <span className="block h-[1.5px] w-[17px] bg-current" />
+        </span>
+        Menu
+      </button>
+
       <nav
+        id={ID_PANNEAU}
         aria-label="Navigation principale"
-        className="flex flex-wrap items-center gap-x-7 gap-y-3"
+        className={[
+          // Sous lg : panneau replié sous la barre (hors flux, il ne pousse donc
+          // pas le contenu de la page), liens en colonne pleine largeur.
+          ouvert ? "flex" : "hidden lg:flex",
+          "absolute inset-x-0 top-full flex-col items-stretch gap-y-1 border-y border-line-sur-ink bg-ink px-6 pb-5 pt-2 sm:px-10",
+          // À partir de lg : retour dans la rangée, à l'identique de l'origine.
+          "lg:static lg:flex-row lg:flex-wrap lg:items-center lg:gap-x-7 lg:gap-y-3 lg:border-0 lg:bg-transparent lg:p-0",
+        ].join(" ")}
       >
         {/* `Link` et non `<a>` : la navigation doit rester côté client, sinon le
             document est rechargé, la nav remontée, et la transition de tonalité
@@ -102,19 +143,19 @@ export function Nav() {
           <Link
             key={link.href}
             href={link.href}
-            className={`text-[14.5px] font-semibold ${TRANSITION_TON} ${
-              encre ? "text-white/70 hover:text-white" : "text-body hover:text-ink"
-            }`}
+            onClick={fermer}
+            // `py-3` sous lg : 45 px de cible tactile (le `lg:py-0` rend la
+            // rangée desktop identique à l'origine).
+            className="py-3 text-[14.5px] font-semibold text-white/70 transition-colors hover:text-white motion-reduce:transition-none lg:py-0"
           >
             {link.label}
           </Link>
         ))}
         <ReservationTrigger
-          className={
-            encre
-              ? `rounded-btn border-[1.5px] border-white/60 px-5 py-2.5 text-[14.5px] font-semibold text-white hover:border-white hover:bg-white hover:text-ink ${TRANSITION_TON}`
-              : `rounded-btn border-[1.5px] border-outline bg-surface px-5 py-2.5 text-[14.5px] font-semibold text-ink hover:bg-toile ${TRANSITION_TON}`
-          }
+          onClick={fermer}
+          // `min-h-11` : 44 px de cible dans le panneau, neutralisé en desktop
+          // où le bouton doit rester exactement celui d'origine.
+          className="mt-2 min-h-11 rounded-btn border-[1.5px] border-white/60 px-5 py-2.5 text-[14.5px] font-semibold text-white transition-colors hover:border-white hover:bg-white hover:text-ink motion-reduce:transition-none lg:mt-0 lg:min-h-0"
         >
           Réserver ma place
         </ReservationTrigger>

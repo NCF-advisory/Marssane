@@ -55,7 +55,7 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
   const zoneH = (PLOT_Y1 - PLOT_Y0) * 0.25;
 
   return (
-    <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-2 pt-[84px]">
+    <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[84px] sm:px-10">
       <div className="max-w-[640px]">
         <Kicker className="text-faint-sur-ink!">D&apos;où vient ce classement</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] text-white sm:text-[38px]">
@@ -71,9 +71,20 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
         </p>
       </div>
 
-      <div className="mt-8 overflow-x-auto">
+      {/* Amorce de défilement, posée AVANT le repère : haut de 394 px en
+          mobile, celui-ci renverrait la mention sous le pli si elle le
+          suivait. Même discrétion que les lignes de source. */}
+      <p className="mt-6 font-mono text-[10.5px] text-faint-sur-ink lg:hidden">
+        Glissez pour parcourir le graphe →
+      </p>
+
+      {/* Sous lg, le repère est plus large que la fenêtre : il se parcourt
+          horizontalement plutôt que d'être contracté (à 320 px, l'échelle
+          tombait à ×0,39 et les libellés se rendaient à moins de 4 px).
+          `tabIndex` rend la zone défilable au clavier aussi. */}
+      <div className="mt-2 overflow-x-auto lg:mt-8" tabIndex={0}>
         <svg
-          className="h-auto w-full"
+          className="h-auto w-full min-w-[680px] lg:min-w-0"
           viewBox={`0 0 ${VB_W} ${VB_H}`}
           role="img"
           aria-label={`Nuage intelligence contre coût ; en tête : ${top.nom}`}

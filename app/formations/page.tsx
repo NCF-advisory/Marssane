@@ -20,7 +20,8 @@ export const metadata: Metadata = {
 /* ===== CONTENU PROVISOIRE — modèle à remplir =====
    Source de vérité unique de la page : un objet par niveau. Pour mettre à jour,
    éditez seulement ce tableau (titre, accroche, points, infos). Les couleurs
-   (accent/badge) suivent le kit de marque et n'ont pas à changer.
+   (accent/badge) suivent le kit de marque et n'ont pas à changer — chaque paire
+   badgeBg/badgeText est choisie pour rester lisible sur le fond encre.
    Pas de prix, aucune promesse chiffrée : à préciser plus tard. */
 const NIVEAUX: Niveau[] = [
   {
@@ -75,8 +76,10 @@ const NIVEAUX: Niveau[] = [
     nom: "Expert",
     accent: "var(--color-canard)",
     accentText: "#fff",
-    badgeBg: "rgba(14, 114, 145, 0.1)",
-    badgeText: "var(--color-canard)",
+    // Canard plein + texte blanc (4,6:1) : le canard en texte sur l'encre ne
+    // passerait pas (3,6:1), et le surlignage canard est l'idiome du site.
+    badgeBg: "var(--color-canard)",
+    badgeText: "#fff",
     titre: "Construire son propre outil, de A à Z",
     accroche:
       "Concevoir avec l'IA l'outil qui manque à votre entreprise : un ERP maison, bâti sur vos règles métier.",
@@ -104,16 +107,16 @@ export default async function Formations() {
       <main className="snap-page-formations">
         {/* Écran 1 : intro + sommaire des trois niveaux. Le `pt` réserve la
             bande de la nav, qui est hors flux sur cette page et démarre donc
-            l'écran à y=0. Trois paliers, parce que la nav n'a pas de burger et
-            s'enroule quand la fenêtre rétrécit (hauteurs mesurées : ~188 px en
-            mobile, ~155 px vers 700 px de large, ~71 px dès 1024 px). */}
+            l'écran à y=0. Deux paliers seulement depuis le menu replié : la
+            barre tient sur une rangée de hauteur constante sous lg (mesurée :
+            ~75 px, et ~71 px dès 1024 px). */}
         <section className="flex min-h-[100dvh] flex-col snap-start">
-          <div className="mx-auto flex w-full max-w-[1180px] flex-1 flex-col justify-between px-6 pb-12 pt-[204px] sm:px-10 sm:pb-14 sm:pt-[172px] lg:pt-[118px]">
+          <div className="mx-auto flex w-full max-w-[1180px] flex-1 flex-col justify-between px-6 pb-12 pt-[92px] sm:px-10 sm:pb-14 lg:pt-[118px]">
             {/* Colonne qui guide l'œil vers le bas : intro en haut, sommaire
                 juste dessous, chevrons calés en bas de l'écran (`mt-auto`). */}
             <div>
               <div className="max-w-[640px]">
-                <Kicker>Nos formations</Kicker>
+                <Kicker className="text-faint-sur-ink!">Nos formations</Kicker>
                 <h1 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[40px]">
                   Trois niveaux, un même cap :{" "}
                   <span className="inline-block">
@@ -129,7 +132,7 @@ export default async function Formations() {
                     .
                   </span>
                 </h1>
-                <p className="mt-[14px] text-[16.5px] leading-[1.58] text-body">
+                <p className="mt-[14px] text-[16.5px] leading-[1.58] text-body-sur-ink">
                   Chacun progresse à son rythme, des premiers usages
                   jusqu&apos;à l&apos;outil construit sur mesure. Trois niveaux
                   à découvrir juste en dessous.
@@ -146,12 +149,15 @@ export default async function Formations() {
                 <li key={niveau.id}>
                   <a
                     href={`#${niveau.id}`}
-                    className="flex h-full items-center gap-4 rounded-card border border-hairline bg-surface p-4 shadow-card transition-[transform,box-shadow] duration-300 ease-out hover:shadow-float focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-canard motion-safe:hover:-translate-y-1 lg:p-5"
+                    className="flex h-full items-center gap-4 rounded-card border border-line-sur-ink bg-surface-sur-ink p-4 transition-[transform,border-color] duration-300 ease-out hover:border-white/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise motion-safe:hover:-translate-y-1 lg:p-5"
                   >
+                    {/* Le « M » du logo suit --color-ink : on le repasse en
+                        blanc localement, comme la nav et le pied de page. */}
                     <LogoNiveau
                       color={niveau.accent}
                       size={46}
                       className="shrink-0"
+                      style={{ ["--color-ink" as string]: "#FFFFFF" }}
                     />
                     <span className="min-w-0">
                       <span

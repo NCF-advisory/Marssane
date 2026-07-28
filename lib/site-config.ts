@@ -33,8 +33,8 @@ export const cas2Video: { mp4: string; webm?: string; poster: string } | null =
 
 /**
  * `cas3Video` pilotait le visuel du cas concret n° 3 (« Automatiser un process
- * de votre travail »). Même convention que `heroVideo` ; vidéo archivée, cf.
- * `cas3Visuel` : `null`.
+ * de votre travail »). Même convention que `heroVideo` ; vidéo archivée, et le
+ * cas n° 3 lui-même a été retiré de la page : `null`.
  */
 export const cas3Video: { mp4: string; webm?: string; poster: string } | null =
   null;
@@ -58,14 +58,4 @@ export const cas1Visuel: { src: string; alt: string } | null = {
 export const cas2Visuel: { src: string; alt: string } | null = {
   src: "/img/cas/cas2.webp",
   alt: "Une note vocale, cinq barres d'onde, et le devis chiffré qui sort déjà sur son rail, prêt à valider.",
-};
-
-/**
- * `cas3Visuel` pilote le visuel 3D du cas concret n° 3. Même convention que
- * `cas1Visuel` : déposer le WebP dans `public/img/cas/` et renseigner l'objet
- * suffit à basculer.
- */
-export const cas3Visuel: { src: string; alt: string } | null = {
-  src: "/img/cas/cas3.webp",
-  alt: "Des jetons éparpillés d'un côté ; trois piles nettes encaissées sur un socle canard, de l'autre.",
 };

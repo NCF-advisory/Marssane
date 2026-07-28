@@ -11,6 +11,9 @@ import { getCurrentAdmin } from "@/lib/admin-auth";
  *
  * Défense en profondeur : on revérifie la session ici (en plus du proxy). Les
  * pages enfants et les server actions la revérifient également.
+ *
+ * `toile-washes text-ink` : le tableau de bord reste en tonalité claire, alors
+ * que le site vitrine est en encre (portée par le body).
  */
 export default async function DashboardLayout({
   children,
@@ -21,7 +24,7 @@ export default async function DashboardLayout({
   if (!admin) redirect("/admin");
 
   return (
-    <div className="flex min-h-full flex-1 flex-col">
+    <div className="toile-washes flex min-h-full flex-1 flex-col text-ink">
       <header className="border-b border-hairline bg-surface">
         <div className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-3 px-6 py-4 sm:px-10">
           <a

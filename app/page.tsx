@@ -1,4 +1,6 @@
+import { AvantApres } from "@/components/site/AvantApres";
 import { CasConcrets } from "@/components/site/CasConcrets";
+import { Faq } from "@/components/site/Faq";
 import { Footer } from "@/components/site/Footer";
 import { Formation } from "@/components/site/Formation";
 import { Hero } from "@/components/site/Hero";
@@ -28,9 +30,11 @@ export default async function Home() {
         <PourFaireQuoi />
         <CasConcrets />
         <Preuves />
+        <AvantApres />
         <Reponse />
         <Formation />
         <Reservation mention={mention} />
+        <Faq />
       </main>
       <Footer />
       <ReservationDialog

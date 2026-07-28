@@ -20,8 +20,9 @@ const splineSansMono = localFont({
   display: "swap",
 });
 
+// Même ciblage que le kicker du héro : dirigeants de PME de moins de 20 salariés.
 const description =
-  "Marssane forme les dirigeants de PME et les professions libérales à l'utilisation de l'IA.";
+  "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l'IA sur leurs propres dossiers.";
 
 export const metadata: Metadata = {
   title: "Marssane · Formation IA",

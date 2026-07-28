@@ -5,7 +5,7 @@ import {
   type InscriptionState,
   submitInscription,
 } from "@/app/actions/inscription";
-import { controlClass, Field } from "@/components/ui/Field";
+import { controlClassSurInk, Field } from "@/components/ui/Field";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
 
 /**
@@ -97,13 +97,21 @@ export function ReservationDialog({
         // Clic sur le backdrop : la cible est le <dialog> lui-même.
         if (event.target === ref.current) close();
       }}
-      className="open:flex max-h-[calc(100vh-64px)] w-[640px] max-w-[calc(100vw-32px)] flex-col overflow-hidden rounded-card border-0 bg-surface p-0 shadow-hero backdrop:bg-[rgba(14,14,18,0.55)]"
+      // Tonalité encre : la carte est un cran plus claire que la page, que le
+      // ::backdrop assombrit encore — c'est ce qui la détache, l'ombre portée
+      // étant invisible sur l'encre.
+      // `100dvh` et non `100vh` : sur mobile, `vh` compte la barre d'URL
+      // rétractée, et la modale dépassait donc la fenêtre réellement visible.
+      className="open:flex max-h-[calc(100dvh-64px)] w-[640px] max-w-[calc(100vw-32px)] flex-col overflow-hidden rounded-card border border-line-sur-ink bg-surface-sur-ink p-0 backdrop:bg-[rgba(14,14,18,0.72)]"
     >
+      {/* 44 px de cible tactile, et fond opaque (couleur de la carte) : le
+          formulaire défile dessous, le bouton ne doit pas se superposer au
+          texte. Le survol ne change donc que la couleur du glyphe. */}
       <button
         type="button"
         onClick={close}
         aria-label="Fermer"
-        className="absolute right-4 top-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full text-[18px] leading-none text-soft transition-colors hover:bg-toile hover:text-ink"
+        className="absolute right-4 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-surface-sur-ink text-[18px] leading-none text-faint-sur-ink transition-colors hover:text-white"
       >
         <span aria-hidden>✕</span>
       </button>
@@ -112,7 +120,12 @@ export function ReservationDialog({
         key={runId}
         className="reservation-seq overflow-y-auto px-6 py-8 sm:px-10 sm:py-10"
       >
-        <div className="reservation-seq__logo mb-7 flex justify-center">
+        {/* Le « M » du logo suit --color-ink : on le repasse en blanc localement,
+            comme la nav et le pied de page. */}
+        <div
+          className="reservation-seq__logo mb-7 flex justify-center"
+          style={{ ["--color-ink" as string]: "#FFFFFF" }}
+        >
           <LogoMarssane withWordmark plusClassName="reservation-seq__plus" />
         </div>
 
@@ -125,7 +138,7 @@ export function ReservationDialog({
           </h2>
 
           {sessionComplete && (
-            <p className="mt-6 rounded-card bg-toile px-4 py-3 text-[13.5px] leading-[1.5] text-body">
+            <p className="mt-6 rounded-card bg-ink px-4 py-3 text-[13.5px] leading-[1.5] text-body-sur-ink">
               La session est complète : ce formulaire vous inscrit en liste
               d&apos;attente.
             </p>
@@ -139,7 +152,7 @@ export function ReservationDialog({
           {state.formError && (
             <div
               role="alert"
-              className="rounded-chip bg-[rgba(199,90,77,0.14)] px-4 py-3 text-[13.5px] leading-[1.5] text-ink-clay sm:col-span-2"
+              className="rounded-chip bg-[rgba(199,90,77,0.14)] px-4 py-3 text-[13.5px] leading-[1.5] text-erreur sm:col-span-2"
             >
               {state.formError}
             </div>
@@ -154,7 +167,7 @@ export function ReservationDialog({
               autoComplete="given-name"
               defaultValue={values.prenom ?? ""}
               {...errorAttrs("prenom", "f2-prenom")}
-              className={controlClass}
+              className={controlClassSurInk}
             />
           </Field>
           <Field id="f2-nom" label="Nom" required error={fieldErrors.nom}>
@@ -166,7 +179,7 @@ export function ReservationDialog({
               autoComplete="family-name"
               defaultValue={values.nom ?? ""}
               {...errorAttrs("nom", "f2-nom")}
-              className={controlClass}
+              className={controlClassSurInk}
             />
           </Field>
           <Field id="f2-email" label="Email" required error={fieldErrors.email}>
@@ -179,7 +192,7 @@ export function ReservationDialog({
               inputMode="email"
               defaultValue={values.email ?? ""}
               {...errorAttrs("email", "f2-email")}
-              className={controlClass}
+              className={controlClassSurInk}
             />
           </Field>
           <Field
@@ -197,7 +210,7 @@ export function ReservationDialog({
               inputMode="tel"
               defaultValue={values.telephone ?? ""}
               {...errorAttrs("telephone", "f2-telephone")}
-              className={controlClass}
+              className={controlClassSurInk}
             />
           </Field>
           <Field id="f2-metier" label="Métier" required error={fieldErrors.metier}>
@@ -207,7 +220,7 @@ export function ReservationDialog({
               required
               defaultValue={values.metier ?? ""}
               {...errorAttrs("metier", "f2-metier")}
-              className={controlClass}
+              className={controlClassSurInk}
             >
               <option value="" disabled>
                 Sélectionnez…
@@ -231,7 +244,7 @@ export function ReservationDialog({
               autoComplete="off"
               defaultValue={values.metier_autre ?? ""}
               {...errorAttrs("metier_autre", "f2-metier-autre")}
-              className={controlClass}
+              className={controlClassSurInk}
             />
           </Field>
           <Field
@@ -247,7 +260,7 @@ export function ReservationDialog({
               autoComplete="organization"
               defaultValue={values.entreprise ?? ""}
               {...errorAttrs("entreprise", "f2-entreprise")}
-              className={controlClass}
+              className={controlClassSurInk}
             />
           </Field>
           <Field id="f2-session" label="Session" required className="sm:col-span-2">
@@ -258,7 +271,9 @@ export function ReservationDialog({
               readOnly
               required
               value={sessionLabel}
-              className={`${controlClass} cursor-default bg-toile text-muted`}
+              // Champ en lecture seule : fond encre (en creux par rapport aux
+              // autres champs) et texte atténué.
+              className={`${controlClassSurInk} cursor-default bg-ink! text-body-sur-ink!`}
             />
           </Field>
 
@@ -272,20 +287,26 @@ export function ReservationDialog({
             className="absolute left-[-9999px] h-0 w-0 opacity-0"
           />
 
-          <label className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-soft sm:col-span-2">
-            <input
-              type="checkbox"
-              name="consentement"
-              required
-              defaultChecked={values.consentement === "on"}
-              className="mt-[3px] h-4 w-4 flex-none accent-canard"
-            />
+          <label className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-faint-sur-ink sm:col-span-2">
+            {/* La case reste visuellement à 16 px, mais son enveloppe de 24 px
+                — cliquable puisqu'à l'intérieur du <label> — donne la cible
+                tactile qui manquait. Le `-mt-px` conserve l'alignement exact de
+                la case sur la première ligne de texte. */}
+            <span className="-mt-px flex h-6 w-6 flex-none items-center justify-center">
+              <input
+                type="checkbox"
+                name="consentement"
+                required
+                defaultChecked={values.consentement === "on"}
+                className="h-4 w-4 accent-turquoise [color-scheme:dark]"
+              />
+            </span>
             <span>
               J&apos;accepte que mes données soient utilisées pour ma
               pré-inscription, conformément à la{" "}
               <a
                 href="/confidentialite"
-                className="text-canard underline hover:text-canard-dark"
+                className="text-turquoise underline hover:text-white"
               >
                 politique de confidentialité
               </a>

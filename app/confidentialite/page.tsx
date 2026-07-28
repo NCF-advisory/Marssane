@@ -17,7 +17,7 @@ const SECTIONS: { titre: string; corps: ReactNode }[] = [
         marque Marssane. Pour toute question relative à vos données :{" "}
         <a
           href="mailto:coullion@ncf-advisory.fr"
-          className="text-canard hover:text-canard-dark"
+          className="text-turquoise hover:text-white"
         >
           coullion@ncf-advisory.fr
         </a>
@@ -81,7 +81,7 @@ const SECTIONS: { titre: string; corps: ReactNode }[] = [
         l&apos;exercer, écrivez-nous à{" "}
         <a
           href="mailto:coullion@ncf-advisory.fr"
-          className="text-canard hover:text-canard-dark"
+          className="text-turquoise hover:text-white"
         >
           coullion@ncf-advisory.fr
         </a>
@@ -105,8 +105,8 @@ export default function Confidentialite() {
   return (
     <>
       <main>
-        <section className="mx-auto max-w-[1180px] px-10 pb-[80px] pt-[72px]">
-          <Kicker>Vos données</Kicker>
+        <section className="mx-auto max-w-[1180px] px-6 pb-[80px] pt-[72px] sm:px-10">
+          <Kicker className="text-faint-sur-ink!">Vos données</Kicker>
           <h1 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
             Politique de confidentialité
           </h1>
@@ -117,7 +117,7 @@ export default function Confidentialite() {
                 <h2 className="text-[18px] font-bold tracking-[-0.01em]">
                   {section.titre}
                 </h2>
-                <p className="mt-2 text-[15px] leading-[1.6] text-body">
+                <p className="mt-2 text-[15px] leading-[1.6] text-body-sur-ink">
                   {section.corps}
                 </p>
               </div>

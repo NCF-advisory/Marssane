@@ -7,8 +7,11 @@ export const metadata: Metadata = {
 };
 
 /**
- * Page de connexion admin (F3 · CDC §5.3). Sobre : toile (fond global) + carte
- * blanche centrée, logo, formulaire email / mot de passe.
+ * Page de connexion admin (F3 · CDC §5.3). Sobre : toile claire + carte blanche
+ * centrée, logo, formulaire email / mot de passe.
+ *
+ * `toile-washes text-ink flex-1` : l'espace d'administration reste en tonalité
+ * claire, alors que le site vitrine est en encre (portée par le body).
  *
  * La redirection « déjà connecté → /admin/dashboard » est assurée par le
  * middleware (source unique de la logique d'accès /admin/*), qui protège aussi
@@ -16,7 +19,7 @@ export const metadata: Metadata = {
  */
 export default function AdminLoginPage() {
   return (
-    <main className="flex min-h-full items-center justify-center px-4 py-16">
+    <main className="toile-washes flex min-h-full flex-1 items-center justify-center px-4 py-16 text-ink">
       <div className="w-full max-w-[420px] rounded-card border border-hairline bg-surface p-8 shadow-card sm:p-10">
         <div className="flex flex-col items-center text-center">
           <LogoMarssane size={40} withWordmark />

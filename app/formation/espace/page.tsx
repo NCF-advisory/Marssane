@@ -115,7 +115,9 @@ export default async function EspaceFormationPage() {
   const heures = data ? horaires(data) : null;
 
   return (
-    <div className="flex min-h-full flex-1 flex-col">
+    // `toile-washes text-ink` : l'espace client reste en tonalité claire, alors
+    // que le site vitrine est en encre (portée par le body).
+    <div className="toile-washes flex min-h-full flex-1 flex-col text-ink">
       <header className="border-b border-hairline bg-surface">
         <div className="mx-auto flex max-w-[900px] flex-wrap items-center justify-between gap-3 px-6 py-4 sm:px-10">
           <div className="flex items-center gap-3">

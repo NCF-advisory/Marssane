@@ -11,12 +11,12 @@ export function Reservation({ mention }: { mention?: string | null }) {
   return (
     <section
       id="contact"
-      className="relative isolate mx-auto max-w-[1180px] px-10 pb-[90px] pt-[100px]"
+      className="relative isolate mx-auto max-w-[1180px] px-6 pb-[90px] pt-[100px] sm:px-10"
     >
       {/* Décorations motifFond (décoratives) */}
       <span
         aria-hidden
-        className="absolute left-[619.25px] top-0 -z-[1] hidden h-[74px] w-[1.5px] bg-repere lg:block"
+        className="absolute left-[619.25px] top-0 -z-[1] hidden h-[74px] w-[1.5px] bg-line-sur-ink lg:block"
       />
       <PlusMark
         variant="turquoise"
@@ -24,20 +24,22 @@ export function Reservation({ mention }: { mention?: string | null }) {
         className="absolute left-[620px] top-[88px] -z-[1] hidden -translate-x-1/2 -translate-y-1/2 lg:block"
       />
 
-      <div
-        className="relative overflow-hidden rounded-card border border-hairline bg-surface px-6 py-12 text-center sm:px-10 sm:py-14"
-        style={{ boxShadow: "0 30px 60px -26px rgba(16,24,40,.25)" }}
-      >
-        <span className="absolute left-[26px] top-[22px] font-mono text-[15px] leading-none text-repere">
+      {/* Carte encre : pas d'ombre portée (invisible sur l'encre), le cadre
+          hairline blanc suffit à la détacher du fond. */}
+      <div className="relative overflow-hidden rounded-card border border-line-sur-ink bg-surface-sur-ink px-6 py-12 text-center sm:px-10 sm:py-14">
+        <span className="absolute left-[26px] top-[22px] font-mono text-[15px] leading-none text-line-sur-ink">
           +
         </span>
-        <span className="absolute bottom-[22px] right-[26px] font-mono text-[15px] leading-none text-repere">
+        <span className="absolute bottom-[22px] right-[26px] font-mono text-[15px] leading-none text-line-sur-ink">
           +
         </span>
 
-        <h2 className="text-[32px] font-extrabold leading-[1.06] tracking-[-0.028em] sm:text-[42px]">
-          Réservez votre place pour
-          <br />
+        {/* Palier mobile à 26 px et retour à la ligne forcé seulement à partir
+            de sm : dans les ~192 px de large qui restaient à 320 px, le titre
+            en 32 px se hachait sur sept lignes de deux ou trois mots. */}
+        <h2 className="text-[26px] font-extrabold leading-[1.06] tracking-[-0.028em] sm:text-[32px] md:text-[42px]">
+          Réservez votre place pour{" "}
+          <br className="hidden sm:inline" />
           <span className="inline-block">
             <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
               la prochaine session
@@ -51,7 +53,7 @@ export function Reservation({ mention }: { mention?: string | null }) {
             .
           </span>
         </h2>
-        <p className="mx-auto mt-[18px] max-w-[460px] text-[16.5px] leading-[1.55] text-body">
+        <p className="mx-auto mt-[18px] max-w-[460px] text-[16.5px] leading-[1.55] text-body-sur-ink">
           Deux demi-journées à caler selon votre agenda, de la pratique entre
           les deux. À la fin, votre boîte se trie toute seule, parce que vous
           l&apos;aurez construit.
@@ -64,7 +66,7 @@ export function Reservation({ mention }: { mention?: string | null }) {
           </span>
         </ReservationTrigger>
 
-        <div className="mt-4 text-[13px] text-soft">
+        <div className="mt-4 text-[13px] text-faint-sur-ink">
           {mention ??
             "Petits groupes · pré-inscription sans engagement · réponse sous 48 h."}
         </div>

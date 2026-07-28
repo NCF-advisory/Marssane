@@ -15,7 +15,7 @@ export function MethodoSources({ classement }: { classement: Classement }) {
     : "—";
 
   return (
-    <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-2 pt-8">
+    <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-8 sm:px-10">
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[12px] uppercase tracking-[0.08em] text-faint-sur-ink">
         <span>{sourceLabel}</span>
         <span>Mis à jour le {date}</span>
