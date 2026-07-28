@@ -405,7 +405,7 @@ function Cas2() {
           </h3>
           <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body">
             Une note vocale entre deux rendez-vous, et le devis chiffré est prêt
-            à valider — vos prix, vos conditions, votre mise en page. Le premier
+            à valider : vos prix, vos conditions, votre mise en page. Le premier
             qui répond signe.
           </p>
           <VecuChez secteurs={["BTP", "Plomberie", "Industrie"]} />
@@ -441,7 +441,7 @@ function Cas3() {
             sur les impayés ?
           </h3>
           <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body">
-            Vous le dictez une fois, ça part tout seul — et c&apos;est toujours
+            Vous le dictez une fois, ça part tout seul, et c&apos;est toujours
             vous qui validez.
           </p>
           <VecuChez secteurs={["Artisans", "Agences", "Négoce"]} />

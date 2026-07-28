@@ -49,6 +49,17 @@ export type InscriptionRow = {
   entreprise: string | null;
   statut: string;
   created_at: string;
+  /**
+   * Statut du dernier email destiné à l'inscrit (`emails_envoyes`, hors
+   * notification admin). `null` = aucun email tracé pour cette inscription.
+   */
+  email_statut: string | null;
+};
+
+/** Ligne d'inscription enrichie de la session rattachée (date ISO + lieu). */
+export type InscriptionAvecSessionRow = InscriptionRow & {
+  session_date: string;
+  session_lieu: string | null;
 };
 
 /** Ligne de demande de contact « implémentation » (F4 · vue contact §5.3). */
@@ -137,18 +148,58 @@ export async function getSessionById(id: string): Promise<SessionDetail | null> 
   return rows[0] ?? null;
 }
 
-/** Inscriptions rattachées à une session, de la plus récente à la plus ancienne. */
+/**
+ * Inscriptions rattachées à une session, de la plus récente à la plus ancienne.
+ *
+ * `email_statut` = statut du DERNIER email destiné à l'inscrit (type `admin`
+ * exclu : la notification interne ne dit rien de ce que la personne a reçu).
+ */
 export async function getInscriptionsBySession(
   sessionId: string,
 ): Promise<InscriptionRow[]> {
   const sql = getSql();
   return sql<InscriptionRow[]>`
     select
-      id, prenom, nom, email, telephone, metier, metier_autre, entreprise, statut,
-      to_char(created_at at time zone 'Europe/Paris', 'DD/MM/YYYY HH24:MI') as created_at
-    from inscriptions
-    where session_id = ${sessionId}
-    order by created_at desc
+      i.id, i.prenom, i.nom, i.email, i.telephone, i.metier, i.metier_autre,
+      i.entreprise, i.statut,
+      to_char(i.created_at at time zone 'Europe/Paris', 'DD/MM/YYYY HH24:MI') as created_at,
+      (
+        select e.statut from emails_envoyes e
+        where e.inscription_id = i.id and e.type <> 'admin'
+        order by e.created_at desc
+        limit 1
+      ) as email_statut
+    from inscriptions i
+    where i.session_id = ${sessionId}
+    order by i.created_at desc
+  `;
+}
+
+/**
+ * Toutes les inscriptions rattachées à une session, de la plus récente à la plus
+ * ancienne, avec la date (ISO) et le lieu de leur session.
+ */
+export async function listInscriptionsAvecSession(): Promise<
+  InscriptionAvecSessionRow[]
+> {
+  const sql = getSql();
+  return sql<InscriptionAvecSessionRow[]>`
+    select
+      i.id, i.prenom, i.nom, i.email, i.telephone, i.metier, i.metier_autre,
+      i.entreprise, i.statut,
+      to_char(i.created_at at time zone 'Europe/Paris', 'DD/MM/YYYY HH24:MI') as created_at,
+      (
+        select e.statut from emails_envoyes e
+        where e.inscription_id = i.id and e.type <> 'admin'
+        order by e.created_at desc
+        limit 1
+      ) as email_statut,
+      to_char(s.date, 'YYYY-MM-DD') as session_date,
+      s.lieu as session_lieu
+    from inscriptions i
+    join sessions s on s.id = i.session_id
+    where i.session_id is not null
+    order by i.created_at desc
   `;
 }
 
@@ -157,11 +208,18 @@ export async function getWaitlistGenerale(): Promise<InscriptionRow[]> {
   const sql = getSql();
   return sql<InscriptionRow[]>`
     select
-      id, prenom, nom, email, telephone, metier, metier_autre, entreprise, statut,
-      to_char(created_at at time zone 'Europe/Paris', 'DD/MM/YYYY HH24:MI') as created_at
-    from inscriptions
-    where session_id is null
-    order by created_at desc
+      i.id, i.prenom, i.nom, i.email, i.telephone, i.metier, i.metier_autre,
+      i.entreprise, i.statut,
+      to_char(i.created_at at time zone 'Europe/Paris', 'DD/MM/YYYY HH24:MI') as created_at,
+      (
+        select e.statut from emails_envoyes e
+        where e.inscription_id = i.id and e.type <> 'admin'
+        order by e.created_at desc
+        limit 1
+      ) as email_statut
+    from inscriptions i
+    where i.session_id is null
+    order by i.created_at desc
   `;
 }
 
@@ -241,22 +299,237 @@ async function recomputeSessionStatut(
 }
 
 /**
+ * Détails de session nécessaires pour composer un e-mail (date ISO, horaires
+ * « HH:MM », lieu). Vue réduite volontairement structurelle : la couche base
+ * n'importe rien du rendu des emails.
+ */
+export type SessionEmailDetails = {
+  date: string;
+  heure_debut: string | null;
+  heure_fin: string | null;
+  lieu: string | null;
+};
+
+/** Résultat d'un changement de statut : de quoi décider d'un envoi d'email. */
+export type InscriptionStatutChange = {
+  /** Statut avant l'écriture : égal à `statut` si l'admin a resoumis la même valeur. */
+  statutPrecedent: string;
+  statut: "confirme" | "attente" | "annule";
+  prenom: string;
+  email: string;
+  sessionId: string | null;
+  /** `null` si l'inscription n'est rattachée à aucune session. */
+  session: SessionEmailDetails | null;
+};
+
+/** Lignes de détail d'une session, pour un email (date ISO + horaires courts). */
+async function getSessionEmailDetails(
+  tx: TransactionSql,
+  sessionId: string,
+): Promise<SessionEmailDetails | null> {
+  const [row] = await tx<SessionEmailDetails[]>`
+    select
+      to_char(date, 'YYYY-MM-DD') as date,
+      to_char(heure_debut, 'HH24:MI') as heure_debut,
+      to_char(heure_fin, 'HH24:MI') as heure_fin,
+      lieu
+    from sessions
+    where id = ${sessionId}
+  `;
+  return row ?? null;
+}
+
+/**
  * Change le statut d'une inscription et réévalue le statut de sa session
  * (bascule complete ↔ publiee selon les places). Transaction + verrou de ligne.
+ *
+ * Retourne l'ancien et le nouveau statut, plus l'identité et la session de
+ * l'inscrit : l'appelant décide de l'envoi d'un email (promotion, annulation)
+ * et ne l'envoie pas si le statut n'a pas changé. `null` si l'inscription
+ * n'existe pas.
  */
 export async function updateInscriptionStatut(
   id: string,
   statut: "confirme" | "attente" | "annule",
-): Promise<void> {
+): Promise<InscriptionStatutChange | null> {
   const sql = getSql();
-  await sql.begin(async (tx) => {
-    const [row] = await tx<{ session_id: string | null }[]>`
-      update inscriptions set statut = ${statut}
+  return sql.begin(async (tx) => {
+    const [avant] = await tx<
+      { statut: string; session_id: string | null; prenom: string; email: string }[]
+    >`
+      select statut, session_id, prenom, email
+      from inscriptions
       where id = ${id}
-      returning session_id
+      for update
     `;
-    if (row?.session_id) await recomputeSessionStatut(tx, row.session_id);
+    if (!avant) return null;
+
+    await tx`update inscriptions set statut = ${statut} where id = ${id}`;
+    if (avant.session_id) await recomputeSessionStatut(tx, avant.session_id);
+
+    return {
+      statutPrecedent: avant.statut,
+      statut,
+      prenom: avant.prenom,
+      email: avant.email,
+      sessionId: avant.session_id,
+      session: avant.session_id
+        ? await getSessionEmailDetails(tx, avant.session_id)
+        : null,
+    };
   });
+}
+
+/** Session à laquelle on peut rattacher une inscription en attente générale. */
+export type SessionRattachable = {
+  id: string;
+  /** Date ISO « YYYY-MM-DD ». */
+  date: string;
+  lieu: string | null;
+  places_restantes: number;
+};
+
+/**
+ * Sessions auxquelles une inscription peut être rattachée : `publiee` ou
+ * `complete`, à venir, de la plus proche à la plus lointaine. Une session
+ * complète reste proposée (le rattachement se fera en liste d'attente de
+ * cette session, ce qui reste plus utile que l'attente générale).
+ */
+export async function listSessionsRattachables(): Promise<SessionRattachable[]> {
+  const sql = getSql();
+  return sql<SessionRattachable[]>`
+    select
+      s.id,
+      to_char(s.date, 'YYYY-MM-DD') as date,
+      s.lieu,
+      greatest(s.capacite - coalesce(c.confirmes, 0), 0)::int as places_restantes
+    from sessions s
+    left join (
+      select session_id, count(*)::int as confirmes
+      from inscriptions
+      where statut = 'confirme'
+      group by session_id
+    ) c on c.session_id = s.id
+    where s.statut in ('publiee', 'complete')
+      and s.date >= current_date
+    order by s.date asc, s.heure_debut asc nulls last
+  `;
+}
+
+/** Résultat d'un rattachement à une session. */
+export type RattachementResult =
+  | {
+      ok: true;
+      /** Statut d'arrivée, même règle que l'inscription publique. */
+      statut: "confirme" | "attente";
+      prenom: string;
+      email: string;
+      session: SessionEmailDetails;
+    }
+  | {
+      ok: false;
+      /**
+       * `introuvable` = inscription inconnue ; `deja_rattachee` = elle a déjà
+       * une session ; `session_introuvable` = session inconnue ; `doublon` =
+       * cet email est déjà inscrit à la session visée.
+       */
+      code: "introuvable" | "deja_rattachee" | "session_introuvable" | "doublon";
+    };
+
+/**
+ * Rattache une inscription de la liste d'attente générale (`session_id is
+ * null`) à une session. Transaction avec verrou `FOR UPDATE` sur la ligne
+ * session : sérialise le calcul des places, comme `createInscription`.
+ *
+ * Statut d'arrivée : même règle que l'inscription publique (voir
+ * `createInscription`) — `confirme` si la session est `publiee` et qu'il reste
+ * de la place, `attente` sinon. La session est ensuite réévaluée (bascule en
+ * `complete` si la capacité est atteinte).
+ *
+ * Les refus sont typés, sans exception fuitée : inscription inconnue, déjà
+ * rattachée, session inconnue, ou email déjà inscrit à cette session
+ * (violation de `inscriptions_session_email_uniq`).
+ */
+export async function rattacherInscriptionSession(
+  inscriptionId: string,
+  sessionId: string,
+): Promise<RattachementResult> {
+  const sql = getSql();
+
+  try {
+    return await sql.begin(async (tx): Promise<RattachementResult> => {
+      const [session] = await tx<
+        ({ capacite: number; statut: string } & SessionEmailDetails)[]
+      >`
+        select
+          capacite,
+          statut,
+          to_char(date, 'YYYY-MM-DD') as date,
+          to_char(heure_debut, 'HH24:MI') as heure_debut,
+          to_char(heure_fin, 'HH24:MI') as heure_fin,
+          lieu
+        from sessions
+        where id = ${sessionId}
+        for update
+      `;
+      if (!session) return { ok: false, code: "session_introuvable" };
+
+      const [inscription] = await tx<
+        { session_id: string | null; prenom: string; email: string }[]
+      >`
+        select session_id, prenom, email
+        from inscriptions
+        where id = ${inscriptionId}
+        for update
+      `;
+      if (!inscription) return { ok: false, code: "introuvable" };
+      if (inscription.session_id) return { ok: false, code: "deja_rattachee" };
+
+      const [{ confirmes }] = await tx<{ confirmes: number }[]>`
+        select count(*)::int as confirmes
+        from inscriptions
+        where session_id = ${sessionId} and statut = 'confirme'
+      `;
+      const statut: "confirme" | "attente" =
+        session.statut === "publiee" &&
+        Number(confirmes) < Number(session.capacite)
+          ? "confirme"
+          : "attente";
+
+      await tx`
+        update inscriptions
+        set session_id = ${sessionId}, statut = ${statut}
+        where id = ${inscriptionId}
+      `;
+      await recomputeSessionStatut(tx, sessionId);
+
+      return {
+        ok: true,
+        statut,
+        prenom: inscription.prenom,
+        email: inscription.email,
+        session: {
+          date: session.date,
+          heure_debut: session.heure_debut,
+          heure_fin: session.heure_fin,
+          lieu: session.lieu,
+        },
+      };
+    });
+  } catch (err) {
+    if (isUniqueViolation(err)) return { ok: false, code: "doublon" };
+    throw err;
+  }
+}
+
+/** Violation de contrainte d'unicité Postgres (SQLSTATE 23505). */
+function isUniqueViolation(err: unknown): boolean {
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "code" in err &&
+    (err as { code?: string }).code === "23505"
+  );
 }
 
 /**

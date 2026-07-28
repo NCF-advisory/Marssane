@@ -133,6 +133,7 @@ export async function submitInscription(
   try {
     const session = await getProchaineSession();
     await sendInscriptionEmails({
+      inscriptionId: result.id,
       inscription: { ...parsed.data, statut: result.statut },
       session,
       placesRestantes: session?.places_restantes ?? 0,

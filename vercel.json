@@ -3,6 +3,10 @@
     {
       "path": "/api/benchmarks/refresh",
       "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/rappels",
+      "schedule": "0 7 * * *"
     }
   ]
 }

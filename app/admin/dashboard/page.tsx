@@ -9,9 +9,13 @@ import { Button } from "@/components/ui/Button";
 import {
   getWaitlistGenerale,
   listContacts,
+  listInscriptionsAvecSession,
+  listSessionsRattachables,
   listSessionsWithCounts,
   type ContactRow,
+  type InscriptionAvecSessionRow,
   type InscriptionRow,
+  type SessionRattachable,
   type SessionRow,
 } from "@/lib/admin-queries";
 import { formatDateLongue } from "@/lib/session-display";
@@ -48,10 +52,14 @@ const ACTION_LINK =
 export default async function AdminDashboardPage() {
   let sessions: SessionRow[];
   let waitlist: InscriptionRow[];
+  let inscriptions: InscriptionAvecSessionRow[];
+  let rattachables: SessionRattachable[];
   try {
-    [sessions, waitlist] = await Promise.all([
+    [sessions, waitlist, inscriptions, rattachables] = await Promise.all([
       listSessionsWithCounts(),
       getWaitlistGenerale(),
+      listInscriptionsAvecSession(),
+      listSessionsRattachables(),
     ]);
   } catch {
     console.error("[admin] tableau de bord : base indisponible");
@@ -213,6 +221,27 @@ export default async function AdminDashboardPage() {
         )}
       </section>
 
+      {/* Inscriptions rattachées à une session, toutes sessions confondues. */}
+      <section className="space-y-4">
+        <div className="flex items-baseline gap-3">
+          <h2 className="text-[19px] font-bold tracking-[-0.01em]">
+            Inscriptions
+          </h2>
+          <span className="font-mono text-[13px] text-faint">
+            {inscriptions.length}
+          </span>
+        </div>
+        <p className="max-w-[640px] text-[13.5px] leading-[1.5] text-soft">
+          Personnes inscrites à une session, la plus récente d&apos;abord. Le
+          statut se modifie directement dans le tableau.
+        </p>
+        <InscriptionsTable
+          rows={inscriptions}
+          showSession
+          emptyLabel="Aucune inscription rattachée à une session."
+        />
+      </section>
+
       {/* Liste d'attente générale (inscriptions sans session rattachée). */}
       <section className="space-y-4">
         <div className="flex items-baseline gap-3">
@@ -224,11 +253,13 @@ export default async function AdminDashboardPage() {
           </span>
         </div>
         <p className="max-w-[640px] text-[13.5px] leading-[1.5] text-soft">
-          Inscriptions reçues sans session publiée (à recontacter dès qu&apos;une
-          session est ouverte).
+          Inscriptions reçues sans session publiée. Rattachez-les à une session
+          ouverte : la personne est prévenue par e-mail si une place lui est
+          réservée.
         </p>
         <InscriptionsTable
           rows={waitlist}
+          sessionsRattachables={rattachables}
           emptyLabel="Aucune inscription en liste d'attente générale."
         />
       </section>

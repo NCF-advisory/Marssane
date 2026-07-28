@@ -26,7 +26,7 @@ export type InscriptionInput = {
 };
 
 export type CreateInscriptionResult =
-  | { ok: true; statut: "confirme" | "attente" }
+  | { ok: true; id: string; statut: "confirme" | "attente" }
   | { ok: false; code: "doublon" };
 
 /**
@@ -116,6 +116,9 @@ export async function getProchaineSessionSafe(): Promise<ProchaineSession | null
  * Si la capacité est atteinte après cette inscription, la session bascule en
  * `complete`. Un doublon (email déjà inscrit sur la même session, ou déjà en
  * liste d'attente générale) est renvoyé de façon typée, sans exception fuitée.
+ *
+ * Retourne l'id de la ligne insérée : les emails transactionnels s'y rattachent
+ * pour être traçables (voir lib/emails-log).
  */
 export async function createInscription(
   data: InscriptionInput,
@@ -123,7 +126,7 @@ export async function createInscription(
   const sql = getSql();
 
   try {
-    const statut = await sql.begin(async (tx) => {
+    const created = await sql.begin(async (tx) => {
       // Verrou sur la session la plus proche (le cas échéant).
       const sessions = await tx<
         { id: string; capacite: number; statut: string }[]
@@ -154,7 +157,7 @@ export async function createInscription(
         }
       }
 
-      await tx`
+      const [inserted] = await tx<{ id: string }[]>`
         insert into inscriptions
           (session_id, prenom, nom, email, telephone, metier, metier_autre, entreprise, statut, consentement_at)
         values (
@@ -169,6 +172,7 @@ export async function createInscription(
           ${statutInscription},
           now()
         )
+        returning id
       `;
 
       // Bascule la session en « complète » si la capacité est atteinte.
@@ -185,10 +189,10 @@ export async function createInscription(
         }
       }
 
-      return statutInscription;
+      return { id: inserted.id, statut: statutInscription };
     });
 
-    return { ok: true, statut };
+    return { ok: true, id: created.id, statut: created.statut };
   } catch (err) {
     if (isUniqueViolation(err)) return { ok: false, code: "doublon" };
     throw err;

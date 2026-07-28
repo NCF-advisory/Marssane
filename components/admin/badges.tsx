@@ -1,4 +1,5 @@
 import {
+  EMAIL_STATUT_LABELS,
   INSCRIPTION_STATUT_LABELS,
   SESSION_STATUT_LABELS,
   statutLabel,
@@ -9,7 +10,9 @@ import {
  * `BadgeEcume`). Couleurs par statut (CDC §5.3) :
  *  - session : publiée = écume, complète = périwinkle, brouillon = toile,
  *    terminée = gris ;
- *  - inscription : confirmé = écume, liste d'attente = périwinkle, annulé = clay.
+ *  - inscription : confirmé = écume, liste d'attente = périwinkle, annulé = clay ;
+ *  - email : délivré = écume, différé = périwinkle, envoyé = toile (accepté par
+ *    Resend mais réception non confirmée), rebond / plainte / échec = clay.
  */
 
 const CHIP =
@@ -43,6 +46,29 @@ export function InscriptionStatutBadge({ statut }: { statut: string }) {
   return (
     <span className={`${CHIP} ${tone}`}>
       {statutLabel(INSCRIPTION_STATUT_LABELS, statut)}
+    </span>
+  );
+}
+
+const EMAIL_TONE: Record<string, string> = {
+  envoye: "border border-outline bg-toile text-body",
+  delivre: "bg-ecume text-ink-ecume",
+  differe: "bg-periwinkle text-ink-periwinkle",
+  rebond: "bg-[rgba(199,90,77,0.14)] text-ink-clay",
+  plainte: "bg-[rgba(199,90,77,0.14)] text-ink-clay",
+  echec: "bg-[rgba(199,90,77,0.14)] text-ink-clay",
+};
+
+/**
+ * Statut du dernier email destiné à un inscrit. `null` = aucun email tracé
+ * (inscription antérieure à la traçabilité) : tiret, pas de badge.
+ */
+export function EmailStatutBadge({ statut }: { statut: string | null }) {
+  if (!statut) return <span className="text-faint">—</span>;
+  const tone = EMAIL_TONE[statut] ?? "border border-outline bg-toile text-body";
+  return (
+    <span className={`${CHIP} ${tone}`}>
+      {statutLabel(EMAIL_STATUT_LABELS, statut)}
     </span>
   );
 }

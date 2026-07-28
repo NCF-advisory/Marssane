@@ -57,7 +57,7 @@ export const cas1Visuel: { src: string; alt: string } | null = {
  */
 export const cas2Visuel: { src: string; alt: string } | null = {
   src: "/img/cas/cas2.webp",
-  alt: "Une note vocale — cinq barres d'onde — et le devis chiffré qui sort déjà sur son rail, prêt à valider.",
+  alt: "Une note vocale, cinq barres d'onde, et le devis chiffré qui sort déjà sur son rail, prêt à valider.",
 };
 
 /**

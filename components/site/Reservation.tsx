@@ -53,7 +53,7 @@ export function Reservation({ mention }: { mention?: string | null }) {
         </h2>
         <p className="mx-auto mt-[18px] max-w-[460px] text-[16.5px] leading-[1.55] text-body">
           Deux demi-journées à caler selon votre agenda, de la pratique entre
-          les deux. À la fin, votre boîte se trie toute seule — parce que vous
+          les deux. À la fin, votre boîte se trie toute seule, parce que vous
           l&apos;aurez construit.
         </p>
 

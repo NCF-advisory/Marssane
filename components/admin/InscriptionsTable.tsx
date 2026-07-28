@@ -1,13 +1,32 @@
 import {
   deleteInscriptionAction,
 } from "@/app/admin/dashboard/actions";
-import type { InscriptionRow } from "@/lib/admin-queries";
+import type {
+  InscriptionRow,
+  SessionRattachable,
+} from "@/lib/admin-queries";
+import { formatDateLongue } from "@/lib/session-display";
+import { EmailStatutBadge } from "./badges";
 import { ConfirmButton } from "./ConfirmButton";
 import { InscriptionStatutSelect } from "./InscriptionStatutSelect";
+import { RattacherSessionSelect } from "./RattacherSessionSelect";
+
+/** Ligne du tableau : session rattachée facultative (colonne `showSession`). */
+type Row = InscriptionRow & {
+  session_date?: string;
+  session_lieu?: string | null;
+};
 
 /** Métier affiché avec sa précision éventuelle (« Autre · … »). */
 function metierLabel(row: InscriptionRow): string {
   return row.metier_autre ? `${row.metier} · ${row.metier_autre}` : row.metier;
+}
+
+/** Session rattachée : « 12 septembre 2026 · Marseille ». */
+function sessionLabel(row: Row): string {
+  if (!row.session_date) return "—";
+  const date = formatDateLongue(row.session_date);
+  return row.session_lieu ? `${date} · ${row.session_lieu}` : date;
 }
 
 const TH =
@@ -16,17 +35,29 @@ const TD = "whitespace-nowrap px-3 py-2.5 font-mono text-[13px] text-body";
 
 /**
  * Tableau des inscrits (CDC §5.3) : colonnes nom, prénom, email, téléphone,
- * métier (+ précision), entreprise, date d'inscription, statut. Données en mono
+ * métier (+ précision), entreprise, date d'inscription, statut d'envoi du
+ * dernier email destiné à l'inscrit, statut. Données en mono
  * 13 px. Par ligne : select de statut (action immédiate) et suppression
  * définitive (avec confirmation, droit à l'effacement RGPD). Tri : plus récent
  * d'abord (assuré par la requête). Responsive : défilement horizontal.
+ *
+ * `showSession` ajoute une colonne « Session » (listes qui mélangent plusieurs
+ * sessions) ; sans elle, le tableau est identique à celui d'une session unique.
+ *
+ * `sessionsRattachables` ajoute une colonne « Rattacher » (select de session +
+ * validation) : réservée à la liste d'attente générale, dont les inscriptions
+ * n'ont pas de session.
  */
 export function InscriptionsTable({
   rows,
   emptyLabel,
+  showSession = false,
+  sessionsRattachables,
 }: {
-  rows: InscriptionRow[];
+  rows: Row[];
   emptyLabel: string;
+  showSession?: boolean;
+  sessionsRattachables?: SessionRattachable[];
 }) {
   if (rows.length === 0) {
     return (
@@ -48,7 +79,10 @@ export function InscriptionsTable({
             <th className={TH}>Métier</th>
             <th className={TH}>Entreprise</th>
             <th className={TH}>Inscription</th>
+            {showSession && <th className={TH}>Session</th>}
+            <th className={TH}>E-mail</th>
             <th className={TH}>Statut</th>
+            {sessionsRattachables && <th className={TH}>Rattacher</th>}
             <th className={`${TH} text-right`}>Action</th>
           </tr>
         </thead>
@@ -65,9 +99,21 @@ export function InscriptionsTable({
               <td className={`${TD} whitespace-normal`}>{metierLabel(row)}</td>
               <td className={TD}>{row.entreprise ?? "—"}</td>
               <td className={`${TD} text-faint`}>{row.created_at}</td>
+              {showSession && <td className={TD}>{sessionLabel(row)}</td>}
+              <td className={TD}>
+                <EmailStatutBadge statut={row.email_statut} />
+              </td>
               <td className="px-3 py-2.5">
                 <InscriptionStatutSelect id={row.id} statut={row.statut} />
               </td>
+              {sessionsRattachables && (
+                <td className="px-3 py-2.5">
+                  <RattacherSessionSelect
+                    inscriptionId={row.id}
+                    sessions={sessionsRattachables}
+                  />
+                </td>
+              )}
               <td className="px-3 py-2.5 text-right">
                 <form action={deleteInscriptionAction} className="inline">
                   <input type="hidden" name="id" value={row.id} />

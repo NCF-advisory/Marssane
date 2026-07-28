@@ -239,8 +239,12 @@ export async function createParticipantInvite(args: {
   return rows[0]?.id ?? null;
 }
 
-/** Participant à ré-inviter (données pour l'e-mail de renvoi). */
-export type ResendTarget = { prenom: string; email: string };
+/** Participant à ré-inviter (données pour l'e-mail de renvoi et sa trace). */
+export type ResendTarget = {
+  inscription_id: string;
+  prenom: string;
+  email: string;
+};
 
 /**
  * Régénère le token d'invitation d'un participant non encore activé (renvoi de
@@ -262,7 +266,7 @@ export async function refreshParticipantInvite(args: {
     where p.id = ${args.participantId}
       and p.inscription_id = i.id
       and p.password_hash is null
-    returning i.prenom as prenom, p.email as email
+    returning p.inscription_id as inscription_id, i.prenom as prenom, p.email as email
   `;
   return rows[0] ?? null;
 }

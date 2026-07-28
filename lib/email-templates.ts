@@ -41,8 +41,18 @@ function formatHeure(heure: string | null): string | null {
   return heure.slice(0, 5);
 }
 
+/**
+ * Détails d'une session suffisants pour un rappel date / horaire / lieu. Vue
+ * réduite de `ProchaineSession` : les rappels sont construits depuis le cron,
+ * qui n'a pas besoin du décompte des places.
+ */
+export type SessionDetails = Pick<
+  ProchaineSession,
+  "date" | "heure_debut" | "heure_fin" | "lieu"
+>;
+
 /** « 09:00 – 17:00 », « à partir de 09:00 », ou `null` si aucune heure. */
-function formatHoraires(session: ProchaineSession): string | null {
+function formatHoraires(session: SessionDetails): string | null {
   const debut = formatHeure(session.heure_debut);
   const fin = formatHeure(session.heure_fin);
   if (debut && fin) return `${debut} – ${fin}`;
@@ -68,7 +78,7 @@ ${contentHtml}
 }
 
 /** Lignes de détail d'une session, pour la version texte. */
-function sessionDetailsText(session: ProchaineSession): string[] {
+function sessionDetailsText(session: SessionDetails): string[] {
   const lignes = [`- Date : ${formatDateLongue(session.date)}`];
   const horaires = formatHoraires(session);
   if (horaires) lignes.push(`- Horaires : ${horaires}`);
@@ -77,7 +87,7 @@ function sessionDetailsText(session: ProchaineSession): string[] {
 }
 
 /** Détails d'une session, version HTML (valeurs de session échappées). */
-function sessionDetailsHtml(session: ProchaineSession): string {
+function sessionDetailsHtml(session: SessionDetails): string {
   const items = [`Date : ${esc(formatDateLongue(session.date))}`];
   const horaires = formatHoraires(session);
   if (horaires) items.push(`Horaires : ${esc(horaires)}`);
@@ -88,8 +98,9 @@ function sessionDetailsHtml(session: ProchaineSession): string {
 }
 
 const PREREQUIS = [
-  "un ordinateur portable",
+  "un ordinateur portable avec l'application Claude installée",
   "un abonnement Claude Pro actif (20 €/mois)",
+  "l'accès à votre messagerie",
   "la validation de votre DSI si votre poste est géré par votre entreprise",
 ];
 
@@ -102,12 +113,19 @@ export function buildClientEmail(args: {
   const prenom = inscription.prenom;
 
   if (inscription.statut === "attente") {
+    // Deux cas d'attente : une session publiée mais complète, ou aucune session
+    // publiée (liste d'attente générale) — le texte ne doit pas affirmer qu'une
+    // session est complète quand il n'y en a aucune.
+    const attenteMessage = session
+      ? "La session actuelle est complète : vous êtes inscrit sur la liste d'attente. Nous vous recontactons dès qu'une place se libère ou qu'une nouvelle session est ouverte."
+      : "Aucune date n'est ouverte à l'inscription pour le moment : vous êtes inscrit sur la liste d'attente. Nous vous prévenons dès qu'une session est publiée.";
+
     const text = [
       `Bonjour ${prenom},`,
       "",
       "Merci pour votre pré-inscription à la formation IA Marssane.",
       "",
-      "La session actuelle est complète : vous êtes inscrit sur la liste d'attente. Nous vous recontactons dès qu'une place se libère ou qu'une nouvelle session est ouverte.",
+      attenteMessage,
       "",
       "Il s'agit d'une pré-inscription sans engagement.",
       "",
@@ -117,7 +135,7 @@ export function buildClientEmail(args: {
     const html = htmlLayout(
       `<p style="margin:0 0 16px;">Bonjour ${esc(prenom)},</p>` +
         `<p style="margin:0 0 16px;">Merci pour votre pré-inscription à la formation IA Marssane.</p>` +
-        `<p style="margin:0 0 16px;">La session actuelle est complète : vous êtes inscrit sur la liste d'attente. Nous vous recontactons dès qu'une place se libère ou qu'une nouvelle session est ouverte.</p>` +
+        `<p style="margin:0 0 16px;">${attenteMessage}</p>` +
         `<p style="margin:0 0 16px;">Il s'agit d'une pré-inscription sans engagement.</p>` +
         SIGNATURE_HTML,
     );
@@ -295,6 +313,206 @@ export function buildInvitationEmail(input: InvitationEmailInput): RenderedEmail
     subject: "Votre espace formation Marssane · activez votre compte",
     html: htmlLayout(htmlParts.join("")),
     text: textLines.join("\n"),
+  };
+}
+
+/* ===== Rappels avant la session (J-7 / J-1) ============================ */
+
+/** Détails d'un rappel avant session. */
+export type RappelEmailInput = {
+  prenom: string;
+  /** `j7` = rappel utile (prérequis) ; `j1` = rappel court (la veille). */
+  variante: "j7" | "j1";
+  session: SessionDetails;
+};
+
+/**
+ * E-mail de rappel envoyé aux inscrits confirmés avant leur session (cron
+ * quotidien, voir app/api/rappels). Deux variantes :
+ *  - J-7 : le rappel qui laisse encore le temps d'agir — date, horaire, lieu et
+ *    prérequis, en insistant sur les deux points à délai (abonnement Claude Pro
+ *    payant, validation DSI) ;
+ *  - J-1 : court — date, horaire, lieu, et comment signaler un empêchement.
+ * Sobre, « texte d'abord » (charte). Le prénom est échappé côté HTML.
+ */
+export function buildRappelEmail(input: RappelEmailInput): RenderedEmail {
+  const { prenom, variante, session } = input;
+
+  if (variante === "j1") {
+    const text = [
+      `Bonjour ${prenom},`,
+      "",
+      "Votre formation IA Marssane a lieu demain.",
+      "",
+      ...sessionDetailsText(session),
+      "",
+      "Si un empêchement survient, répondez à cet e-mail pour nous prévenir.",
+      "",
+      "À demain,",
+      "L'équipe Marssane",
+    ].join("\n");
+
+    const html = htmlLayout(
+      `<p style="margin:0 0 16px;">Bonjour ${esc(prenom)},</p>` +
+        `<p style="margin:0 0 8px;">Votre formation IA Marssane a lieu demain.</p>` +
+        sessionDetailsHtml(session) +
+        `<p style="margin:0 0 16px;">Si un empêchement survient, répondez à cet e-mail pour nous prévenir.</p>` +
+        `<p style="margin:32px 0 0;">À demain,<br>L'équipe Marssane</p>`,
+    );
+
+    return {
+      subject: "C'est demain · formation IA Marssane",
+      html,
+      text,
+    };
+  }
+
+  const delaiPhrase =
+    "Deux de ces points demandent parfois du délai : l'abonnement Claude Pro " +
+    "est payant et doit être actif le jour de la formation, et la validation " +
+    "de votre DSI peut prendre plusieurs jours. C'est le bon moment de vous en " +
+    "occuper.";
+
+  const text = [
+    `Bonjour ${prenom},`,
+    "",
+    "Votre formation IA Marssane a lieu dans une semaine.",
+    "",
+    ...sessionDetailsText(session),
+    "",
+    "À prévoir pour le jour J :",
+    ...PREREQUIS.map((p) => `- ${p}`),
+    "",
+    delaiPhrase,
+    "",
+    "Si un point vous bloque, répondez à cet e-mail : nous verrons ensemble comment faire.",
+    "",
+    "L'équipe Marssane",
+  ].join("\n");
+
+  const html = htmlLayout(
+    `<p style="margin:0 0 16px;">Bonjour ${esc(prenom)},</p>` +
+      `<p style="margin:0 0 8px;">Votre formation IA Marssane a lieu dans une semaine.</p>` +
+      sessionDetailsHtml(session) +
+      `<p style="margin:0 0 8px;">À prévoir pour le jour J :</p>` +
+      `<ul style="margin:0 0 16px;padding-left:20px;">${PREREQUIS.map(
+        (p) => `<li style="margin:0 0 4px;">${esc(p)}</li>`,
+      ).join("")}</ul>` +
+      `<p style="margin:0 0 16px;">${esc(delaiPhrase)}</p>` +
+      `<p style="margin:0 0 16px;">Si un point vous bloque, répondez à cet e-mail : nous verrons ensemble comment faire.</p>` +
+      SIGNATURE_HTML,
+  );
+
+  return {
+    subject: "Dans une semaine · votre formation IA Marssane",
+    html,
+    text,
+  };
+}
+
+/* ===== Décisions de l'admin (promotion / annulation) =================== */
+
+/** Détails d'une promotion depuis la liste d'attente. */
+export type PromotionEmailInput = {
+  prenom: string;
+  /**
+   * Session rattachée. `null` couvre le cas théorique d'une inscription
+   * confirmée sans session (la base l'autorise) : l'email reste juste, il
+   * annonce la confirmation sans inventer de date.
+   */
+  session: SessionDetails | null;
+};
+
+/**
+ * E-mail annonçant qu'une place s'est libérée et que l'inscription est
+ * désormais confirmée — envoyé quand l'admin promeut quelqu'un de la liste
+ * d'attente, ou rattache une inscription de la liste d'attente générale à une
+ * session avec de la place.
+ *
+ * La personne découvre peut-être seulement maintenant qu'elle participe : elle
+ * reçoit la même information qu'un inscrit confirmé (date, horaires, lieu,
+ * prérequis), plus une invitation à signaler une indisponibilité. Sobre,
+ * « texte d'abord » (charte) ; le prénom est échappé côté HTML.
+ */
+export function buildPromotionEmail(input: PromotionEmailInput): RenderedEmail {
+  const { prenom, session } = input;
+
+  const textLines = [
+    `Bonjour ${prenom},`,
+    "",
+    "Une place s'est libérée : votre inscription à la formation IA Marssane est confirmée.",
+    "",
+  ];
+  if (session) {
+    textLines.push("Détails de la session :", ...sessionDetailsText(session), "");
+  }
+  textLines.push(
+    "Pour suivre la formation dans de bonnes conditions, prévoyez :",
+    ...PREREQUIS.map((p) => `- ${p}`),
+    "",
+    "Si vous n'êtes plus disponible, répondez à cet e-mail : nous proposerons la place à la personne suivante.",
+    "",
+    "L'équipe Marssane",
+  );
+
+  const htmlParts = [
+    `<p style="margin:0 0 16px;">Bonjour ${esc(prenom)},</p>`,
+    `<p style="margin:0 0 16px;">Une place s'est libérée : votre inscription à la formation IA Marssane est confirmée.</p>`,
+  ];
+  if (session) {
+    htmlParts.push(
+      `<p style="margin:0 0 8px;">Détails de la session :</p>`,
+      sessionDetailsHtml(session),
+    );
+  }
+  htmlParts.push(
+    `<p style="margin:0 0 8px;">Pour suivre la formation dans de bonnes conditions, prévoyez :</p>`,
+    `<ul style="margin:0 0 16px;padding-left:20px;">${PREREQUIS.map(
+      (p) => `<li style="margin:0 0 4px;">${esc(p)}</li>`,
+    ).join("")}</ul>`,
+    `<p style="margin:0 0 16px;">Si vous n'êtes plus disponible, répondez à cet e-mail : nous proposerons la place à la personne suivante.</p>`,
+    SIGNATURE_HTML,
+  );
+
+  return {
+    subject: "Une place s'est libérée · votre inscription est confirmée",
+    html: htmlLayout(htmlParts.join("")),
+    text: textLines.join("\n"),
+  };
+}
+
+/**
+ * E-mail annonçant l'annulation d'une inscription (décision de l'admin). Bref
+ * et neutre : aucun motif n'est avancé (l'admin annule pour des raisons que
+ * l'e-mail ignore), aucune excuse appuyée. Indique comment se réinscrire ou
+ * nous joindre.
+ */
+export function buildAnnulationEmail(input: {
+  prenom: string;
+}): RenderedEmail {
+  const text = [
+    `Bonjour ${input.prenom},`,
+    "",
+    "Votre inscription à la formation IA Marssane a été annulée.",
+    "",
+    "Vous pouvez vous inscrire à une prochaine session sur marssane.fr. Pour toute question, répondez à cet e-mail.",
+    "",
+    "L'équipe Marssane",
+  ].join("\n");
+
+  const html = htmlLayout(
+    `<p style="margin:0 0 16px;">Bonjour ${esc(input.prenom)},</p>` +
+      `<p style="margin:0 0 16px;">Votre inscription à la formation IA Marssane a été annulée.</p>` +
+      `<p style="margin:0 0 16px;">Vous pouvez vous inscrire à une prochaine session sur ` +
+      `<a href="https://marssane.fr" style="color:#0e7291;font-weight:600;">marssane.fr</a>. ` +
+      `Pour toute question, répondez à cet e-mail.</p>` +
+      SIGNATURE_HTML,
+  );
+
+  return {
+    subject: "Votre inscription a été annulée · formation IA Marssane",
+    html,
+    text,
   };
 }
 

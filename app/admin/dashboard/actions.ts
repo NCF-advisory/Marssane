@@ -7,12 +7,17 @@ import {
   deleteInscription,
   getSessionById,
   insertSession,
+  rattacherInscriptionSession,
   updateContactTraite,
   updateInscriptionStatut,
   updateSession,
 } from "@/lib/admin-queries";
 import { getCurrentAdmin } from "@/lib/admin-auth";
-import { sendInvitationEmail } from "@/lib/emails";
+import {
+  sendAnnulationEmail,
+  sendInvitationEmail,
+  sendPromotionEmail,
+} from "@/lib/emails";
 import { insertAdminMessage, setMessagePinned } from "@/lib/formation-chat";
 import {
   createParticipantInvite,
@@ -135,7 +140,15 @@ export async function archiveSessionAction(formData: FormData): Promise<void> {
 
 /* ===== Inscriptions ==================================================== */
 
-/** Change le statut d'une inscription (confirmé / attente / annulé). */
+/**
+ * Change le statut d'une inscription (confirmé / attente / annulé) et prévient
+ * la personne quand la décision la concerne :
+ *  - `attente` → `confirme` : une place s'est libérée (email de promotion) ;
+ *  - n'importe quel statut → `annule` : email d'annulation.
+ * Aucun email si le statut est inchangé (le select peut être resoumis avec la
+ * même valeur). L'envoi ne peut pas faire échouer l'écriture, déjà commitée :
+ * les fonctions d'envoi ne lèvent jamais.
+ */
 export async function updateInscriptionStatutAction(
   formData: FormData,
 ): Promise<void> {
@@ -145,10 +158,59 @@ export async function updateInscriptionStatutAction(
   if (!id || !statut) return;
 
   try {
-    await updateInscriptionStatut(id, statut);
+    const change = await updateInscriptionStatut(id, statut);
+    if (change && change.statut !== change.statutPrecedent) {
+      if (statut === "confirme" && change.statutPrecedent === "attente") {
+        await sendPromotionEmail({
+          email: change.email,
+          inscriptionId: id,
+          prenom: change.prenom,
+          session: change.session,
+        });
+      } else if (statut === "annule") {
+        await sendAnnulationEmail({
+          email: change.email,
+          inscriptionId: id,
+          prenom: change.prenom,
+        });
+      }
+    }
     revalidateSessions();
   } catch {
     console.error("[admin] échec du changement de statut (incident)");
+  }
+}
+
+/**
+ * Rattache une inscription de la liste d'attente générale à une session, puis
+ * envoie l'email de promotion si elle arrive en `confirme` (une place lui est
+ * réservée). En `attente`, aucun email : rien de nouveau à annoncer.
+ */
+export async function rattacherInscriptionAction(
+  formData: FormData,
+): Promise<void> {
+  await requireAdmin();
+  const id = parseId(formData.get("id"));
+  const sessionId = parseId(formData.get("session_id"));
+  if (!id || !sessionId) return;
+
+  try {
+    const result = await rattacherInscriptionSession(id, sessionId);
+    if (!result.ok) {
+      console.error(`[admin] rattachement refusé (${result.code})`);
+      return;
+    }
+    if (result.statut === "confirme") {
+      await sendPromotionEmail({
+        email: result.email,
+        inscriptionId: id,
+        prenom: result.prenom,
+        session: result.session,
+      });
+    }
+    revalidateSessions();
+  } catch {
+    console.error("[admin] échec du rattachement à une session (incident)");
   }
 }
 
@@ -221,6 +283,7 @@ export async function lancerFormationAction(formData: FormData): Promise<void> {
       }
       const sent = await sendInvitationEmail({
         email: row.email,
+        inscriptionId: row.inscription_id,
         prenom: row.prenom,
         activationUrl: activationUrl(token),
         session: session ? { date: session.date, lieu: session.lieu } : null,
@@ -264,6 +327,7 @@ export async function renvoyerInvitationAction(
     if (target) {
       await sendInvitationEmail({
         email: target.email,
+        inscriptionId: target.inscription_id,
         prenom: target.prenom,
         activationUrl: activationUrl(token),
         session: session ? { date: session.date, lieu: session.lieu } : null,

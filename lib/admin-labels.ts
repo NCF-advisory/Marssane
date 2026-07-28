@@ -16,6 +16,16 @@ export const INSCRIPTION_STATUT_LABELS: Record<string, string> = {
   annule: "Annulé",
 };
 
+/** Statuts d'envoi d'un email transactionnel (événements Resend). */
+export const EMAIL_STATUT_LABELS: Record<string, string> = {
+  envoye: "Envoyé",
+  delivre: "Délivré",
+  rebond: "Rebond",
+  plainte: "Plainte",
+  differe: "Différé",
+  echec: "Échec",
+};
+
 /** Libellé d'un statut, avec repli sur la valeur brute si inconnue. */
 export function statutLabel(
   labels: Record<string, string>,
