@@ -31,8 +31,14 @@ export type Niveau = {
 const useBrowserLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-/** Diamètre du logo, en px. */
+/** Diamètre du logo en desktop, en px (attributs width/height du SVG). Sous
+ *  1024 px de large, la classe `TAILLE_LOGO` le réduit par-dessus. */
 const LOGO_PX = 200;
+
+/** Diamètre effectif du logo : fluide en mobile (où l'écran de niveau dépasse
+ *  déjà la hauteur de la fenêtre), 200 px dès que la place le permet — même
+ *  idiome que la tuile du héro de /quelle-ia. */
+const TAILLE_LOGO = "h-[clamp(104px,28vw,200px)] w-[clamp(104px,28vw,200px)]";
 
 /**
  * « Nos formations » : trois blocs empilés, un par niveau. Chaque bloc est une
@@ -105,18 +111,28 @@ export function NiveauBloc({ niveaux }: { niveaux: Niveau[] }) {
           id={niveau.id}
           data-reveal=""
           aria-labelledby={`niveau-${niveau.id}-titre`}
-          className="niveau-bloc flex min-h-[100dvh] snap-start items-center"
+          // `scroll-mt-6` (et non 0) sous lg : la nav est hors flux sur cette
+          // page, l'ancre atterrirait sous la barre. Neutralisé à partir de lg,
+          // où la marge de défilement décalerait aussi le point de snap.
+          className="niveau-bloc flex min-h-[100dvh] scroll-mt-6 snap-start items-center lg:scroll-mt-0"
         >
           {/* Contenu centré verticalement ; l'écartement vient du min-height.
               Même largeur/paddings que la section d'intro de la page. */}
           <div className="mx-auto grid w-full max-w-[1180px] grid-cols-1 items-center gap-8 px-6 py-16 sm:px-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.9fr)] lg:gap-14">
-            {/* Logo libre à gauche (au-dessus, centré, en mobile). */}
+            {/* Logo libre à gauche (au-dessus, centré, en mobile). Le « M » suit
+                --color-ink : on le repasse en blanc localement, comme la nav et
+                le pied de page. */}
             <div className="flex justify-center lg:justify-start">
-              <LogoNiveau color={niveau.accent} size={LOGO_PX} />
+              <LogoNiveau
+                color={niveau.accent}
+                size={LOGO_PX}
+                className={TAILLE_LOGO}
+                style={{ ["--color-ink" as string]: "#FFFFFF" }}
+              />
             </div>
 
             {/* Carte de contenu à droite. */}
-            <div className="relative overflow-hidden rounded-card border border-hairline bg-surface p-7 shadow-card sm:p-10">
+            <div className="relative overflow-hidden rounded-card border border-line-sur-ink bg-surface-sur-ink p-7 sm:p-10">
               <span
                 aria-hidden
                 className="absolute inset-x-0 top-0 h-[3px]"
@@ -138,7 +154,7 @@ export function NiveauBloc({ niveaux }: { niveaux: Niveau[] }) {
                 >
                   {niveau.titre}
                 </h2>
-                <p className="mt-3 max-w-[560px] text-[16px] leading-[1.58] text-body">
+                <p className="mt-3 max-w-[560px] text-[16px] leading-[1.58] text-body-sur-ink">
                   {niveau.accroche}
                 </p>
               </div>
@@ -156,18 +172,18 @@ export function NiveauBloc({ niveaux }: { niveaux: Niveau[] }) {
                 </ul>
 
                 {/* Infos pratiques — mono discret. */}
-                <dl className="mt-7 flex flex-wrap gap-x-7 gap-y-2 border-t border-hairline pt-5 font-mono text-[12px] text-soft">
+                <dl className="mt-7 flex flex-wrap gap-x-7 gap-y-2 border-t border-line-sur-ink pt-5 font-mono text-[12px] text-faint-sur-ink">
                   <div className="flex items-baseline gap-2">
                     <dt className="uppercase tracking-[0.1em]">Durée</dt>
-                    <dd className="font-semibold text-ink">{niveau.infos.duree}</dd>
+                    <dd className="font-semibold text-white">{niveau.infos.duree}</dd>
                   </div>
                   <div className="flex items-baseline gap-2">
                     <dt className="uppercase tracking-[0.1em]">Format</dt>
-                    <dd className="font-semibold text-ink">{niveau.infos.format}</dd>
+                    <dd className="font-semibold text-white">{niveau.infos.format}</dd>
                   </div>
                   <div className="flex items-baseline gap-2">
                     <dt className="uppercase tracking-[0.1em]">Prochaine session</dt>
-                    <dd className="font-semibold text-ink">
+                    <dd className="font-semibold text-white">
                       {niveau.infos.prochaineSession}
                     </dd>
                   </div>

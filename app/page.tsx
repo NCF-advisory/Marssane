@@ -1,7 +1,10 @@
+import { AvantApres } from "@/components/site/AvantApres";
 import { CasConcrets } from "@/components/site/CasConcrets";
+import { Faq } from "@/components/site/Faq";
 import { Footer } from "@/components/site/Footer";
 import { Formation } from "@/components/site/Formation";
 import { Hero } from "@/components/site/Hero";
+import { ParolesDirigeants } from "@/components/site/ParolesDirigeants";
 import { PourFaireQuoi } from "@/components/site/PourFaireQuoi";
 import { Preuves } from "@/components/site/Preuves";
 import { Reponse } from "@/components/site/Reponse";
@@ -23,12 +26,15 @@ export default async function Home() {
     <>
       <main>
         <Hero />
+        <ParolesDirigeants />
         <PourFaireQuoi />
         <CasConcrets />
         <Preuves />
+        <AvantApres />
         <Reponse />
         <Formation />
         <Reservation mention={mention} />
+        <Faq />
       </main>
       <Footer />
       <ReservationDialog

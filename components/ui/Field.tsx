@@ -1,12 +1,27 @@
 import type { ReactNode } from "react";
 
 /**
- * Classe partagée des contrôles de formulaire (input · select · textarea).
- * Bordure 1,5 px `outline`, rayon 3 px, padding 12/14, texte 15 px, focus
- * canard (bordure + anneau discret). Dérivée des cartes sobres de la charte.
+ * Classe partagée des contrôles de formulaire (input · select · textarea) en
+ * tonalité claire (/formation, /admin). Bordure 1,5 px `outline`, rayon 3 px,
+ * padding 12/14, texte 16 px, focus canard (bordure + anneau discret). Dérivée
+ * des cartes sobres de la charte.
+ *
+ * 16 px et pas moins : sous ce seuil, Safari iOS zoome sur le champ à la prise
+ * de focus et l'utilisateur se retrouve à devoir dézoomer entre deux champs.
  */
 export const controlClass =
-  "w-full rounded-btn border-[1.5px] border-outline bg-surface px-[14px] py-3 text-[15px] text-ink placeholder:text-quiet transition-colors focus:border-canard focus:outline-none focus:ring-2 focus:ring-canard/20";
+  "w-full rounded-btn border-[1.5px] border-outline bg-surface px-[14px] py-3 text-[16px] text-ink placeholder:text-quiet transition-colors focus:border-canard focus:outline-none focus:ring-2 focus:ring-canard/20";
+
+/**
+ * Même contrôle en tonalité encre (formulaires du site vitrine) : surface et
+ * cadre du système `-sur-ink`, texte blanc, focus turquoise (le canard manque de
+ * contraste sur l'encre). `color-scheme: dark` fait suivre ce que le navigateur
+ * dessine lui-même — liste déroulante d'un <select>, case à cocher, curseur de
+ * texte — sans quoi ces éléments restent clairs au milieu du formulaire.
+ * Texte 16 px, pour la même raison que ci-dessus (zoom de Safari iOS).
+ */
+export const controlClassSurInk =
+  "w-full rounded-btn border-[1.5px] border-line-sur-ink bg-surface-sur-ink px-[14px] py-3 text-[16px] text-white placeholder:text-faint-sur-ink transition-colors [color-scheme:dark] focus:border-turquoise focus:outline-none focus:ring-2 focus:ring-turquoise/25";
 
 type FieldProps = {
   /** id du contrôle — relie le <label> (htmlFor) au champ. */
@@ -24,9 +39,14 @@ type FieldProps = {
 };
 
 /**
- * Bloc label + contrôle. Label 13,5 px / 600 encre ; astérisque canard
- * (décoratif) sur les champs obligatoires — l'attribut `required` du contrôle
- * porte l'information pour les technologies d'assistance.
+ * Bloc label + contrôle. Label 13,5 px / 600 ; astérisque canard (décoratif) sur
+ * les champs obligatoires — l'attribut `required` du contrôle porte
+ * l'information pour les technologies d'assistance.
+ *
+ * Le composant est neutre vis-à-vis de la tonalité : le label hérite la couleur
+ * de son contexte (encre sur la toile claire, blanc sur le fond encre) et le
+ * message d'erreur suit `--color-erreur`, dont la valeur dépend de la tonalité
+ * (voir globals.css).
  */
 export function Field({
   id,
@@ -40,7 +60,7 @@ export function Field({
     <div className={className}>
       <label
         htmlFor={id}
-        className="mb-[7px] block text-[13.5px] font-semibold text-ink"
+        className="mb-[7px] block text-[13.5px] font-semibold"
       >
         {label}
         {required && (
@@ -54,7 +74,7 @@ export function Field({
       {error && (
         <p
           id={`${id}-error`}
-          className="mt-[6px] text-[12.5px] leading-[1.4] text-ink-clay"
+          className="mt-[6px] text-[12.5px] leading-[1.4] text-erreur"
         >
           {error}
         </p>

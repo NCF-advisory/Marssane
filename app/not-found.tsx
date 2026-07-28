@@ -13,20 +13,20 @@ export default function NotFound() {
   return (
     <>
       <main>
-        <section className="mx-auto max-w-[1180px] px-10 pb-[80px] pt-[72px]">
+        <section className="mx-auto max-w-[1180px] px-6 pb-[80px] pt-[72px] sm:px-10">
           <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
             <div className="max-w-[560px]">
-              <Kicker>Erreur 404</Kicker>
+              <Kicker className="text-faint-sur-ink!">Erreur 404</Kicker>
               <h1 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
                 Cette page n&apos;existe pas.
               </h1>
-              <p className="mt-[18px] text-[16.5px] leading-[1.58] text-body">
+              <p className="mt-[18px] text-[16.5px] leading-[1.58] text-body-sur-ink">
                 L&apos;adresse a peut-être changé, ou contient une coquille.
                 Rien de grave — tout le reste est à sa place.
               </p>
               <Link
                 href="/"
-                className="mt-7 inline-flex items-center gap-2 text-[15px] font-semibold text-canard hover:text-canard-dark"
+                className="mt-7 inline-flex items-center gap-2 text-[15px] font-semibold text-turquoise hover:text-white"
               >
                 <span aria-hidden className="text-[1.1em] leading-none">
                   ←

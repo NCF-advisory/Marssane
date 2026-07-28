@@ -174,7 +174,9 @@ export function HeroRecommandation({
         background: INK,
         overflow: "hidden",
         fontFamily: SANS,
-        minHeight: "min(900px, 100vh)",
+        // `dvh` et non `vh` : sur mobile, `vh` compte la barre d'URL rétractée,
+        // et le bas de l'écran (score + amorce de scroll) passait sous le pli.
+        minHeight: "min(900px, 100dvh)",
         display: "flex",
         flexDirection: "column",
       }}
@@ -244,7 +246,11 @@ export function HeroRecommandation({
             <div style={{ fontFamily: MONO, fontSize: "clamp(13px, 1.4vw, 20px)", textTransform: "uppercase", letterSpacing: "0.16em", color: "#98A1AC", marginBottom: "30px" }}>
               L&apos;IA à utiliser aujourd&apos;hui
             </div>
-            <h1 style={{ margin: 0, fontSize: "clamp(48px, 8.8vw, 126px)", fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 0.94, color: "#FFFFFF" }}>
+            {/* Plancher à 34 px (et non 48) : le nom du modèle vient d'une
+                source externe, un libellé long comme « gpt-5.1-codex-max »
+                débordait de la colonne à 320 px. `break-word` sert de garde-fou
+                pour un token qui resterait plus large que la colonne. */}
+            <h1 style={{ margin: 0, fontSize: "clamp(34px, 8.8vw, 126px)", fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 0.94, color: "#FFFFFF", overflowWrap: "break-word" }}>
               {modele}
             </h1>
             {/* Effort absent de la source : on masque la ligne plutôt que d'afficher une valeur inventée. */}

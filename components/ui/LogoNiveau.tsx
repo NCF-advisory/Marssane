@@ -1,7 +1,9 @@
 import type { CSSProperties } from "react";
 
 type LogoNiveauProps = {
-  /** Couleur du niveau : porte les équerres et le « + ». Le « M » reste encre. */
+  /** Couleur du niveau : porte les équerres et le « + ». Le « M » suit
+   *  `--color-ink`, que les contextes en tonalité encre repassent en blanc
+   *  (comme le lockup Marssane dans la nav et le pied de page). */
   color: string;
   /** Côté du carré en px. Défaut 256 (= viewBox). */
   size?: number;
@@ -11,8 +13,8 @@ type LogoNiveauProps = {
 
 /**
  * Logo de niveau, tracé du kit de marque officiel (viewBox 256×256).
- * Règle de marque : le « M » reste encre (#0E0E12) ; la couleur du niveau
- * porte les trois équerres et le « + ».
+ * Règle de marque : le « M » reste encre (#0E0E12 — blanc quand il est posé sur
+ * l'encre) ; la couleur du niveau porte les trois équerres et le « + ».
  *
  * Chaque élément animable est isolé dans un `<g data-part>` (bracket-tl,
  * bracket-bl, bracket-br, plus, m) pour pouvoir être transformé

@@ -64,6 +64,9 @@ function Notice({ title, body }: { title: string; body: string }) {
  * session (voir proxy). Le token est vérifié côté serveur avant d'afficher le
  * formulaire ; sinon un message explicite (invalide / expiré / déjà activé /
  * base indisponible) renvoie vers la connexion.
+ *
+ * `toile-washes text-ink flex-1` : l'espace client reste en tonalité claire,
+ * alors que le site vitrine est en encre (portée par le body).
  */
 export default async function ActivationPage({
   searchParams,
@@ -74,7 +77,7 @@ export default async function ActivationPage({
   const view = await resolveView(token);
 
   return (
-    <main className="flex min-h-full items-center justify-center px-4 py-16">
+    <main className="toile-washes flex min-h-full flex-1 items-center justify-center px-4 py-16 text-ink">
       <div className="w-full max-w-[420px] rounded-card border border-hairline bg-surface p-8 shadow-card sm:p-10">
         <div className="flex flex-col items-center text-center">
           <LogoMarssane size={40} withWordmark />

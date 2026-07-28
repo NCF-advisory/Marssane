@@ -30,7 +30,7 @@ const STATS: { chiffre: string; libelle: string; source: string }[] = [
 
 export function Preuves() {
   return (
-    <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-2 pt-[84px]">
+    <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[84px] sm:px-10">
       {/* Décorations motifFond (décoratives) */}
       <PlusMark
         variant="turquoise"
@@ -38,12 +38,13 @@ export function Preuves() {
         className="absolute left-[15px] top-[60px] -z-[1] hidden -translate-x-1/2 -translate-y-1/2 lg:block"
       />
       <PlusMark
+        variant="grey-sur-ink"
         size={16}
         className="absolute right-[90px] top-[60px] hidden lg:block"
       />
 
       <div className="max-w-[640px]">
-        <Kicker>La preuve · ce que mesurent les études</Kicker>
+        <Kicker className="text-faint-sur-ink!">La preuve · ce que mesurent les études</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
           Pendant ce temps, d&apos;autres dirigeants{" "}
           <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
@@ -55,18 +56,20 @@ export function Preuves() {
 
       {/* Bande chiffres — colonne empilée sous lg (séparateurs masqués),
           ligne répartie à partir de lg, calquée sur le bandeau du héro. */}
-      <div className="mt-[34px] flex flex-col gap-5 rounded-card border border-hairline-strong bg-white/65 px-7 py-[18px] lg:flex-row lg:items-stretch lg:gap-6">
+      <div className="mt-[34px] flex flex-col gap-5 rounded-card border border-line-sur-ink bg-surface-sur-ink px-5 py-[18px] sm:px-7 lg:flex-row lg:items-stretch lg:gap-6">
         {STATS.map((s, i) => (
           <Fragment key={s.source}>
             {i > 0 && <Separator />}
             <div className="flex-1">
-              <div className="font-mono text-[22px] font-semibold leading-[1.1] tracking-[-0.02em] text-ink-ecume">
+              {/* Chiffres en turquoise : sur l'encre, le vert écume s'éteint
+                  (même choix que le bandeau du héro). */}
+              <div className="font-mono text-[22px] font-semibold leading-[1.1] tracking-[-0.02em] text-turquoise">
                 {s.chiffre}
               </div>
-              <p className="mt-1.5 text-[12.5px] leading-[1.5] text-muted">
+              <p className="mt-1.5 text-[12.5px] leading-[1.5] text-body-sur-ink">
                 {s.libelle}
               </p>
-              <div className="mt-2 font-mono text-[10.5px] text-soft">
+              <div className="mt-2 font-mono text-[10.5px] text-faint-sur-ink">
                 {s.source}
               </div>
             </div>
@@ -79,6 +82,6 @@ export function Preuves() {
 
 function Separator() {
   return (
-    <span aria-hidden className="hidden w-px shrink-0 bg-grid-line lg:block" />
+    <span aria-hidden className="hidden w-px shrink-0 bg-line-sur-ink lg:block" />
   );
 }

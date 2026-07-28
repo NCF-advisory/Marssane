@@ -40,7 +40,7 @@ const SECTIONS: { titre: string; corps: ReactNode }[] = [
         Pour toute question relative au site ou à la formation :{" "}
         <a
           href="mailto:coullion@ncf-advisory.fr"
-          className="text-canard hover:text-canard-dark"
+          className="text-turquoise hover:text-white"
         >
           coullion@ncf-advisory.fr
         </a>
@@ -66,8 +66,8 @@ export default function MentionsLegales() {
   return (
     <>
       <main>
-        <section className="mx-auto max-w-[1180px] px-10 pb-[80px] pt-[72px]">
-          <Kicker>Informations légales</Kicker>
+        <section className="mx-auto max-w-[1180px] px-6 pb-[80px] pt-[72px] sm:px-10">
+          <Kicker className="text-faint-sur-ink!">Informations légales</Kicker>
           <h1 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
             Mentions légales
           </h1>
@@ -78,7 +78,7 @@ export default function MentionsLegales() {
                 <h2 className="text-[18px] font-bold tracking-[-0.01em]">
                   {section.titre}
                 </h2>
-                <p className="mt-2 text-[15px] leading-[1.6] text-body">
+                <p className="mt-2 text-[15px] leading-[1.6] text-body-sur-ink">
                   {section.corps}
                 </p>
               </div>

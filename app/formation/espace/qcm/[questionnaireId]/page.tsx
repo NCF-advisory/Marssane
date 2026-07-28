@@ -137,31 +137,36 @@ export default async function QcmPage({
   if (state.kind === "not-found") notFound();
 
   return (
-    <main className="mx-auto w-full max-w-[780px] px-4 py-8 sm:px-6">
-      <QcmTopbar />
-      {state.kind === "db-error" && <DbUnavailable />}
-      {state.kind === "results" && (
-        <QcmResults
-          questionnaire={state.questionnaire}
-          answers={state.answers}
-          score={state.score}
-        />
-      )}
-      {state.kind === "not-open" && (
-        <QcmNotice
-          title="QCM pas encore ouvert"
-          body="Le formateur ouvrira ce questionnaire en fin de session. Revenez à ce moment-là depuis votre espace."
-        />
-      )}
-      {state.kind === "closed" && (
-        <QcmNotice
-          title="QCM fermé"
-          body="Ce questionnaire est clôturé et n'accepte plus de réponse."
-        />
-      )}
-      {state.kind === "run" && (
-        <QcmRunner questions={state.questions} startIndex={state.startIndex} />
-      )}
+    // `toile-washes text-ink` : l'espace client reste en tonalité claire, alors
+    // que le site vitrine est en encre (portée par le body). La toile est portée
+    // par le <main> pleine largeur, le contenu reste dans sa colonne centrée.
+    <main className="toile-washes flex-1 text-ink">
+      <div className="mx-auto w-full max-w-[780px] px-4 py-8 sm:px-6">
+        <QcmTopbar />
+        {state.kind === "db-error" && <DbUnavailable />}
+        {state.kind === "results" && (
+          <QcmResults
+            questionnaire={state.questionnaire}
+            answers={state.answers}
+            score={state.score}
+          />
+        )}
+        {state.kind === "not-open" && (
+          <QcmNotice
+            title="QCM pas encore ouvert"
+            body="Le formateur ouvrira ce questionnaire en fin de session. Revenez à ce moment-là depuis votre espace."
+          />
+        )}
+        {state.kind === "closed" && (
+          <QcmNotice
+            title="QCM fermé"
+            body="Ce questionnaire est clôturé et n'accepte plus de réponse."
+          />
+        )}
+        {state.kind === "run" && (
+          <QcmRunner questions={state.questions} startIndex={state.startIndex} />
+        )}
+      </div>
     </main>
   );
 }

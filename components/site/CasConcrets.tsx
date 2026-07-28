@@ -1,11 +1,11 @@
 import type { CSSProperties, ReactNode } from "react";
 import { BadgeEcume } from "@/components/ui/BadgeEcume";
 import { CasVisuel } from "@/components/site/CasVisuel";
-import { cas1Visuel, cas2Visuel, cas3Visuel } from "@/lib/site-config";
+import { cas1Visuel, cas2Visuel } from "@/lib/site-config";
 
 /**
- * Les trois cas concrets (« Ses mails de bout en bout », « Le devis qui part
- * avant la concurrence », « Automatiser les relances d'impayés »). Chaque cas :
+ * Les deux cas concrets (« Ses mails de bout en bout », « Le devis qui part
+ * avant la concurrence »). Chaque cas :
  * une grille 2 colonnes (texte + visuel)
  * qui s'empile sous lg (texte d'abord, visuel ensuite). Les visuels sont des
  * compositions purement décoratives (aria-hidden) doublées d'un texte sr-only.
@@ -19,14 +19,19 @@ export function CasConcrets() {
     <>
       <Cas1 />
       <Cas2 />
-      <Cas3 />
     </>
   );
 }
 
 /* ============================ Helpers partagés ============================ */
 
-/** Fond quadrillé (.grid-toile, ligne .42) masqué en radial derrière un visuel. */
+/** Override écume des badges 01/02 sur fond encre : la teinte pleine
+ *  brûlerait, on garde l'écume en texte sur un fond en alpha très faible (même
+ *  traitement que la « zone optimale » du graphe de /quelle-ia). */
+const BADGE_SUR_INK = "bg-ecume-sur-ink! text-ecume!";
+
+/** Fond quadrillé (.grid-toile, ligne un peu plus discrète que le filigrane par
+ *  défaut) masqué en radial derrière un visuel. */
 function GridDecor({
   side,
   top,
@@ -49,7 +54,7 @@ function GridDecor({
     height: `${height}px`,
     WebkitMaskImage: mask,
     maskImage: mask,
-    ["--grid-line" as string]: "rgba(193, 201, 210, 0.42)",
+    ["--grid-line" as string]: "rgba(255, 255, 255, 0.05)",
   };
   return <div aria-hidden className="grid-toile -z-[1] hidden lg:block" style={style} />;
 }
@@ -79,17 +84,17 @@ function Connector({ className }: { className?: string }) {
 }
 
 /** Ligne d'auto-identification sous la phrase-réponse : label « Vécu chez » +
- *  chips secteurs (bg-toile). Aide le lecteur à se reconnaître dans le cas. */
+ *  chips secteurs (surface encre). Aide le lecteur à se reconnaître dans le cas. */
 function VecuChez({ secteurs }: { secteurs: string[] }) {
   return (
     <div className="mt-4 flex flex-wrap items-center gap-2">
-      <span className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-quiet">
+      <span className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-faint-sur-ink">
         Vécu chez
       </span>
       {secteurs.map((s) => (
         <span
           key={s}
-          className="rounded-chip bg-toile px-2 py-[3px] font-mono text-[10.5px] text-slate"
+          className="rounded-chip bg-surface-sur-ink px-2 py-[3px] font-mono text-[10.5px] text-faint-sur-ink"
         >
           {s}
         </span>
@@ -136,43 +141,15 @@ function Visuel({
   );
 }
 
-/**
- * Glyphe WhatsApp inline (la maquette référence assets/whatsapp-logo.png,
- * absent du projet — décision propriétaire). Tuile arrondie 23px verte avec
- * combiné téléphonique blanc dans une bulle. Décoratif.
- */
-function WhatsAppGlyph() {
-  return (
-    <svg
-      aria-hidden
-      width="23"
-      height="23"
-      viewBox="0 0 23 23"
-      className="flex-none"
-      style={{ display: "block" }}
-    >
-      <rect width="23" height="23" rx="5" fill="#25D366" />
-      <path
-        d="M11.5 4.6a6.6 6.6 0 0 0-5.7 9.9L4.8 18.4l4-1.05a6.6 6.6 0 1 0 2.7-12.75Z"
-        fill="#fff"
-      />
-      <path
-        d="M9.1 7.6c-.17-.38-.35-.39-.51-.4h-.44a.84.84 0 0 0-.61.29 2.57 2.57 0 0 0-.8 1.91c0 1.13.82 2.22.94 2.37.11.15 1.59 2.55 3.94 3.47 1.95.77 2.35.62 2.77.58.42-.04 1.36-.56 1.55-1.09.19-.53.19-.99.14-1.09-.06-.09-.21-.15-.44-.27-.23-.11-1.36-.67-1.57-.75-.21-.08-.36-.11-.52.12-.15.23-.59.75-.72.9-.13.15-.27.17-.5.06a6.3 6.3 0 0 1-1.85-1.14 6.94 6.94 0 0 1-1.28-1.59c-.13-.23-.01-.35.1-.47.11-.1.23-.27.35-.41.11-.14.15-.23.23-.39.08-.15.04-.29-.02-.41-.06-.11-.51-1.25-.72-1.71Z"
-        fill="#25D366"
-      />
-    </svg>
-  );
-}
-
 /* ================================= Cas 1 ================================= */
 
 function Cas1() {
   return (
-    <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-5 pt-[58px]">
+    <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-5 pt-[58px] sm:px-10">
       <GridDecor side="right" top={40} height={440} maskX="62%" />
       <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
         <div className="max-w-[450px]">
-          <BadgeEcume>01</BadgeEcume>
+          <BadgeEcume className={BADGE_SUR_INK}>01</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
             Relancé{" "}
             <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
@@ -180,7 +157,7 @@ function Cas1() {
             </span>{" "}
             par le même client ?
           </h3>
-          <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body">
+          <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body-sur-ink">
             Votre boîte se trie toute seule : il ne reste que les 6 mails qui
             comptent, les réponses pré-rédigées dans votre ton. Rien ne part sans
             vous.
@@ -313,7 +290,7 @@ function MailTrie({
 
 function Cas2() {
   return (
-    <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-5 pt-[74px]">
+    <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-5 pt-[74px] sm:px-10">
       <GridDecor side="left" top={50} height={440} maskX="42%" />
       <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
         {cas2Visuel ? (
@@ -395,7 +372,7 @@ function Cas2() {
         )}
 
         <div className="order-first max-w-[450px] lg:order-last lg:justify-self-end">
-          <BadgeEcume>02</BadgeEcume>
+          <BadgeEcume className={BADGE_SUR_INK}>02</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
             Le devis part à 22 h, le client a signé{" "}
             <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
@@ -403,13 +380,20 @@ function Cas2() {
             </span>{" "}
             ?
           </h3>
-          <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body">
+          <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body-sur-ink">
             Une note vocale entre deux rendez-vous, et le devis chiffré est prêt
             à valider : vos prix, vos conditions, votre mise en page. Le premier
             qui répond signe.
           </p>
           <VecuChez secteurs={["BTP", "Plomberie", "Industrie"]} />
         </div>
+      </div>
+
+      {/* CTA intermédiaire, à la sortie des cas : quatre écrans séparent
+          le héro de « La formation », ce lien y ramène sans concurrencer
+          « Réserver ma place ». */}
+      <div className="mt-7">
+        <LienProgramme />
       </div>
     </section>
   );
@@ -424,177 +408,20 @@ function Rubrique({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
-/* ================================= Cas 3 ================================= */
-
-function Cas3() {
+/**
+ * Lien secondaire vers « La formation » : idiome du lien turquoise sur l'encre
+ * (cf. FAQ) + la flèche des CTA. `min-h-11` porte la cible tactile à 44 px.
+ */
+function LienProgramme() {
   return (
-    <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-5 pt-[74px]">
-      <GridDecor side="right" top={40} height={460} maskX="60%" />
-      <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
-        <div className="max-w-[450px]">
-          <BadgeEcume>03</BadgeEcume>
-          <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
-            Encore un{" "}
-            <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-              vendredi soir
-            </span>{" "}
-            sur les impayés ?
-          </h3>
-          <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body">
-            Vous le dictez une fois, ça part tout seul, et c&apos;est toujours
-            vous qui validez.
-          </p>
-          <VecuChez secteurs={["Artisans", "Agences", "Négoce"]} />
-        </div>
-
-        {cas3Visuel ? (
-          <div className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-end">
-            <CasVisuel visuel={cas3Visuel} />
-          </div>
-        ) : (
-          <Visuel
-            alt="Illustration : un process répétitif transformé en enchaînement automatisé (relances, pièces, reporting)."
-            className="lg:h-[452px]"
-          >
-          {/* Conversation WhatsApp */}
-            <div className="w-[262px] max-w-full overflow-hidden rounded-[9px] border border-hairline bg-surface shadow-float lg:absolute lg:left-[2px] lg:top-2 lg:z-[1]">
-              <div className="flex items-center gap-[9px] px-3 py-[9px]" style={{ background: "#075E54" }}>
-                <WhatsAppGlyph />
-                <div className="min-w-0 leading-[1.2]">
-                  <div className="text-[12.5px] font-semibold text-white">Mon assistant</div>
-                  <div className="text-[9.5px]" style={{ color: "rgba(255,255,255,.62)" }}>
-                    en ligne
-                  </div>
-                </div>
-                <span
-                  aria-hidden
-                  className="ml-auto text-[15px] leading-none"
-                  style={{ color: "rgba(255,255,255,.5)" }}
-                >
-                  ⋮
-                </span>
-              </div>
-              <div
-                className="flex flex-col gap-2 px-3 pb-[13px] pt-[14px]"
-                style={{ background: "#ECE5DD" }}
-              >
-                {/* Note vocale */}
-                <div
-                  className="self-stretch px-[10px] pb-[7px] pt-2"
-                  style={{
-                    background: "#DCF8C6",
-                    borderRadius: "9px 2px 9px 9px",
-                    boxShadow: "0 1px 1px rgba(0,0,0,.09)",
-                  }}
-                >
-                  <div className="flex items-center gap-[9px]">
-                    <span
-                      className="inline-flex h-[26px] w-[26px] flex-none items-center justify-center rounded-full text-[10px] text-white"
-                      style={{ background: "#00A884" }}
-                    >
-                      ▶
-                    </span>
-                    <div className="relative flex h-[22px] flex-1 items-center gap-[2px]">
-                      <Wave h="36%" c="#00A884" />
-                      <Wave h="64%" c="#00A884" />
-                      <Wave h="48%" c="#00A884" />
-                      <Wave h="82%" c="#8FA98B" />
-                      <Wave h="56%" c="#8FA98B" />
-                      <Wave h="100%" c="#8FA98B" />
-                      <Wave h="70%" c="#8FA98B" />
-                      <Wave h="44%" c="#8FA98B" />
-                      <Wave h="66%" c="#8FA98B" />
-                      <Wave h="30%" c="#8FA98B" />
-                      <Wave h="52%" c="#8FA98B" />
-                      <Wave h="38%" c="#8FA98B" />
-                      <span
-                        className="absolute left-[24%] top-1/2 h-[9px] w-[9px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-                        style={{
-                          background: "#00A884",
-                          border: "1.5px solid #fff",
-                          boxShadow: "0 0 0 .5px rgba(0,0,0,.08)",
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className="mt-[5px] flex items-center justify-between">
-                    <span className="inline-flex items-center gap-[5px] text-[10.5px] text-faint">
-                      <span
-                        className="relative top-[1px] inline-block h-[9px] w-[5px] rounded-[3px]"
-                        style={{ background: "#7A828E" }}
-                      />
-                      <span className="font-mono">0:42</span>
-                    </span>
-                    <span className="font-mono text-[9.5px] text-quiet">18:06</span>
-                  </div>
-                </div>
-                {/* Transcription */}
-                <div
-                  className="max-w-[96%] self-start rounded-[9px] px-[10px] py-2"
-                  style={{ background: "#F4F1EA" }}
-                >
-                  <div
-                    className="font-mono text-[8.5px] uppercase tracking-[0.08em]"
-                    style={{ color: "#00A884" }}
-                  >
-                    Transcription auto
-                  </div>
-                  <div className="mt-1 text-[11.5px] leading-[1.45] text-body">
-                    « Courrier au bailleur : rappel de l&apos;échéance du bail,
-                    demande de renouvellement, mêmes conditions… »
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <Connector className="lg:absolute lg:left-[330px] lg:top-[80px]" />
-
-            {/* Courrier généré */}
-            <div className="w-[308px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface shadow-hero lg:absolute lg:bottom-[6px] lg:right-0 lg:z-[3]">
-              <div className="flex items-center justify-between border-b border-hairline px-[17px] pb-3 pt-[14px]">
-                <div>
-                  <div className="text-[14px] font-bold tracking-[-0.01em]">
-                    Courrier · Renouvellement de bail
-                  </div>
-                  <div className="mt-[2px] font-mono text-[10.5px] text-quiet">
-                    dossier bail · brouillon v1
-                  </div>
-                </div>
-                <span className="whitespace-nowrap rounded-chip bg-ecume px-2 py-1 font-mono text-[10px] text-ink-ecume">
-                  auto
-                </span>
-              </div>
-              <div className="px-[17px] py-[14px]">
-                <div className="text-[12.5px] leading-[1.6] text-body">
-                  Madame, Monsieur,
-                  <br />
-                  Le bail commercial nous liant arrive à échéance le 31 mars
-                  prochain. Conformément à nos échanges, nous souhaitons solliciter
-                  son renouvellement aux conditions actuelles…
-                </div>
-                <div className="mt-3 flex flex-col gap-[7px]">
-                  <Bar width="100%" />
-                  <Bar width="94%" />
-                  <Bar width="64%" />
-                </div>
-                <div className="mt-[14px] flex items-center justify-between">
-                  <span className="text-[11px] text-faint">Brouillon · à valider</span>
-                  <span className="rounded-[3px] bg-canard px-[15px] py-[7px] text-[12px] font-semibold text-white">
-                    Relire &amp; signer
-                  </span>
-                </div>
-              </div>
-            </div>
-          </Visuel>
-        )}
-      </div>
-    </section>
-  );
-}
-
-/** Barre de la forme d'onde (note vocale). */
-function Wave({ h, c }: { h: string; c: string }) {
-  return (
-    <i className="flex-1 rounded-[2px]" style={{ height: h, background: c }} />
+    <a
+      href="#formation"
+      className="inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold text-turquoise transition-colors hover:text-white motion-reduce:transition-none"
+    >
+      Voir le programme
+      <span aria-hidden className="text-[1.1em] leading-none">
+        →
+      </span>
+    </a>
   );
 }

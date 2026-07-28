@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getClassementSafe } from "@/lib/benchmarks/classement";
 import { Footer } from "@/components/site/Footer";
 import { Kicker } from "@/components/ui/Kicker";
@@ -32,11 +33,11 @@ export default async function Page() {
   if (c.entries.length === 0) {
     return (
       <>
-        {/* Page en tonalité encre : `flex-1` fait couvrir au <main> toute la
-            hauteur restante du body (min-h-full flex flex-col), sinon le fond
-            toile clair réapparaîtrait sous un contenu court. */}
-        <main className="flex-1 bg-ink">
-          <section className="relative isolate mx-auto max-w-[1180px] px-10 pb-2 pt-[84px]">
+        {/* `flex-1` fait couvrir au <main> toute la hauteur restante du body
+            (min-h-full flex flex-col), pour que le pied de page reste en bas
+            quand le contenu est court. Le fond encre est porté par le body. */}
+        <main className="flex-1">
+          <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[84px] sm:px-10">
             <div className="max-w-[640px]">
               <Kicker className="text-faint-sur-ink!">
                 Le comparateur · intelligence et prix
@@ -55,7 +56,7 @@ export default async function Page() {
             </div>
           </section>
         </main>
-        <Footer ton="encre" />
+        <Footer />
       </>
     );
   }
@@ -64,10 +65,8 @@ export default async function Page() {
 
   return (
     <>
-      {/* Page en tonalité encre : `flex-1` fait couvrir au <main> toute la
-          hauteur restante du body (min-h-full flex flex-col), sinon le fond
-          toile clair réapparaîtrait sous un contenu court. */}
-      <main className="flex-1 bg-ink">
+      {/* `flex-1` : cf. la branche « classement vide » ci-dessus. */}
+      <main className="flex-1">
         {/* effort : chaîne vide si la source ne l'a pas fourni — le hero masque alors la ligne
             (passer la prop évite le repli « medium », qui serait faux). */}
         <HeroRecommandation
@@ -81,14 +80,47 @@ export default async function Page() {
           ancre="#pourquoi"
         />
         {/* Cible de l'amorce de scroll du hero. `scroll-mt` dégage le kicker du
-            graphe de la barre collante, qui se replie sur plusieurs lignes sous
-            lg (mesurée : ~70px à partir de 1024px, jusqu'à ~221px à 320px). */}
-        <div id="pourquoi" className="scroll-mt-[168px] lg:scroll-mt-6">
+            graphe de la barre collante ; depuis le menu replié, celle-ci fait
+            ~75 px sous lg et ~71 px au-delà — le `pt` de la section du graphe
+            (84 px) suffit alors à passer sous la barre, une seule valeur
+            partout. */}
+        <div id="pourquoi" className="scroll-mt-6">
           <GraphiqueEfficacite entries={c.entries} />
         </div>
         <MethodoSources classement={c} />
+        <PontFormation />
       </main>
-      <Footer ton="encre" />
+      <Footer />
     </>
+  );
+}
+
+/**
+ * Pont vers l'offre en clôture de page : le comparateur répond à « quelle IA »,
+ * la formation à « comment s'en servir ». Carte encre (mêmes gabarit et filet que
+ * les cartes du site) et CTA canard plein, l'idiome CTA du site.
+ *
+ * `Link` et non `<a>` : la navigation vers l'accueil doit rester côté client,
+ * sinon le document est rechargé et le fondu croisé entre pages n'a pas lieu.
+ */
+function PontFormation() {
+  return (
+    <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-[90px] pt-14 sm:px-10">
+      <div className="rounded-card border border-line-sur-ink bg-surface-sur-ink px-6 py-9 sm:px-10 sm:py-10">
+        <p className="max-w-[560px] text-[18px] font-semibold leading-[1.45] tracking-[-0.01em] sm:text-[20px]">
+          Savoir quelle IA choisir, c&apos;est le début. Savoir s&apos;en servir
+          sur vos dossiers, c&apos;est la formation.
+        </p>
+        <Link
+          href="/#formation"
+          className="mt-6 inline-flex items-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-base font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark"
+        >
+          Découvrir la formation
+          <span aria-hidden className="text-[1.1em] leading-none">
+            →
+          </span>
+        </Link>
+      </div>
+    </section>
   );
 }

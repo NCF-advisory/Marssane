@@ -39,14 +39,32 @@
   --color-ink-clay: #8c3a30; /* texte sur clay */
   --color-ink-periwinkle: #1b1442; /* texte sur lavande / périwinkle */
 
-  /* Textes & lignes SUR fond encre — exception assumée de la page /quelle-ia
-     (le reste du site est clair, cf. plus bas).
+  /* Textes, lignes & surfaces SUR fond encre — la tonalité de tout le site
+     vitrine (le body porte l'encre, cf. plus bas). Les espaces protégés
+     (/formation, /admin, /styleguide) reposent la toile claire et utilisent la
+     palette ci-dessus.
      Convention : le suffixe `-sur-ink` désigne une couleur destinée à être
      posée SUR --color-ink ; à ne pas confondre avec le préfixe `--color-ink-*`
      ci-dessus, qui désigne les encres foncées posées sur les pastels. */
   --color-body-sur-ink: #c9ced6; /* corps de texte (12,2:1) */
   --color-faint-sur-ink: #98a1ac; /* atténué : kickers, axes, mentions (8,2:1) */
-  --color-line-sur-ink: rgba(255, 255, 255, 0.16); /* hairlines, cadre & axes */
+  --color-line-sur-ink: rgba(255, 255, 255, 0.16); /* hairlines, cadre, axes & repères « + » */
+  /* Cartes : équivalent OPAQUE de la tuile du héro /quelle-ia (blanc 3,5 % sur
+     l'encre). Opaque et non translucide, pour que les décorations de la toile
+     (fils conducteurs, quadrillage) passent derrière les cartes sans les
+     traverser. Blanc dessus : 18,7:1 · corps : 11,7:1. */
+  --color-surface-sur-ink: #16161a;
+  /* Fond des chips « validation » : écume en alpha très faible, comme la zone
+     optimale du graphe de /quelle-ia (la teinte pleine brûlerait sur l'encre).
+     Texte écume dessus : 14,6:1. */
+  --color-ecume-sur-ink: rgba(199, 247, 239, 0.1);
+
+  /* Messages d'erreur de formulaire — seule couleur du kit dont la valeur
+     dépend de la tonalité : le clay foncé passe AA sur la toile claire (7,9:1)
+     mais pas sur l'encre (2,2:1), et le clay clair l'inverse (4,0:1 / 4,8:1).
+     Valeur par défaut = tonalité encre (celle du site vitrine) ;
+     `.toile-washes` repose celle de la toile claire. */
+  --color-erreur: #c75a4d;
 
   /* Fonds de barres (jauges) */
   --color-bar-track: #e6e9ed;
@@ -68,10 +86,17 @@
   --radius-card: 4px;
 }
 
-/* Site clair uniquement. Le body porte l'encre et le fond toile + washes,
-   comme le conteneur racine pleine largeur de la maquette. */
+/* Le site vitrine est en tonalité encre : le body porte le fond #0E0E12 et
+   l'encre inversée (blanc), qui devient donc la couleur héritée par défaut —
+   titres, mots en gras et libellés n'ont rien à déclarer.
+   Le fond posé ici et non page par page : aucune page courte ne peut laisser
+   réapparaître un fond clair sous son contenu, et le rebond de défilement
+   (WebKit) reste encre.
+   Les espaces protégés (/formation, /admin, /styleguide), eux, reposent la
+   toile claire sur leur conteneur racine avec `.toile-washes text-ink`. */
 body {
-  color: var(--color-ink);
+  background-color: var(--color-ink);
+  color: #ffffff;
   font-family: var(--font-sans);
 }
 
@@ -94,16 +119,31 @@ body {
 /* Scroll-snap « forcé » ciblé sur la page /formations : le marqueur
    `.snap-page-formations` (posé sur son <main>) active le snap mandatory sur
    le scroll racine, sans fuiter sur les autres pages. Repli sans `:has()` =
-   scroll libre (acceptable). */
-html:has(.snap-page-formations) {
-  scroll-snap-type: y mandatory;
+   scroll libre (acceptable).
+
+   À partir de lg seulement : sous cette largeur, chaque écran de niveau fait
+   1,5 à 1,7 fois la hauteur d'un téléphone, et un snap mandatory ramène en
+   arrière tout défilement intermédiaire — les CTA « Réserver sa place », à
+   400 px sous la ligne de flottaison, devenaient inatteignables au doigt. Le
+   `proximity` souffre du même défaut dès que la cible reste dans sa zone
+   d'attraction. En mobile, donc, défilement libre ; les `snap-start` /
+   `snap-end` des enfants sont alors inertes. */
+@media (min-width: 1024px) {
+  html:has(.snap-page-formations) {
+    scroll-snap-type: y mandatory;
+  }
 }
 
-/* ===== Toile Marssane ===== */
+/* ===== Toile Marssane =====
+   Tonalité claire des espaces protégés (/formation, /admin, /styleguide) : à
+   poser avec `text-ink` sur le conteneur racine de la page, qui doit couvrir
+   toute la hauteur (`flex-1`, le body étant `min-h-full flex flex-col`). */
 
 /* Washes radiaux du fond de page (4 radial-gradients du <div> racine de la maquette). */
-body,
 .toile-washes {
+  /* Les erreurs de formulaire reprennent leur clay foncé sur la toile claire
+     (cf. --color-erreur). */
+  --color-erreur: var(--color-ink-clay);
   background-color: var(--color-toile);
   background-image:
     radial-gradient(34% 22% at 94% 0%, rgba(199, 247, 239, 0.55), rgba(199, 247, 239, 0) 70%),
@@ -113,10 +153,13 @@ body,
 }
 
 /* Quadrillage de la toile — pas 80 px (64 px en mobile), ligne 1 px.
-   Superposé en fond via <GridBackground>. */
+   Superposé en fond via <GridBackground>.
+   Ligne par défaut : le filigrane blanc de /quelle-ia (5,5 % de blanc), puisque
+   le site vitrine est en tonalité encre ; dans la tonalité claire, la règle
+   suivante repose la ligne grise de la maquette. */
 .grid-toile {
   --grid-step: 80px;
-  --grid-line: rgba(193, 201, 210, 0.45);
+  --grid-line: rgba(255, 255, 255, 0.055);
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -135,6 +178,10 @@ body,
       var(--grid-line) calc(var(--grid-step) - 1px),
       var(--grid-line) var(--grid-step)
     );
+}
+
+.toile-washes .grid-toile {
+  --grid-line: rgba(193, 201, 210, 0.45);
 }
 
 @media (max-width: 640px) {
@@ -361,16 +408,96 @@ body,
   }
 }
 
+/* ===== Mur « Paroles de dirigeants » : pistes verticales en boucle =====
+   Mécanique reprise du mur de témoignages de 8lab-ecosystem.com : le mur est un
+   conteneur à hauteur fixe qui rogne, et chaque colonne est une piste en
+   position absolue qui glisse en continu d'exactement −50 % de sa hauteur en
+   120 s, linéaire, à l'infini.
+
+   La boucle est sans couture parce que le contenu de chaque piste est dupliqué
+   (deux fois la même séquence de citations) : −50 % correspond alors très
+   exactement à un cycle, et l'image d'arrivée est identique à l'image de
+   départ. Les exemplaires dupliqués sont `aria-hidden` et leurs liens sortis de
+   la tabulation, côté composant.
+
+   L'espacement entre cartes est porté par une marge basse sur CHAQUE carte, et
+   non par `gap` : avec `gap`, la dernière carte de la séquence n'a pas de
+   gouttière derrière elle, la hauteur totale vaut 8 cartes + 7 gouttières, et
+   −50 % rate le raccord d'une demi-gouttière — un saut visible à chaque tour.
+
+   Une colonne sur deux prend la variante `-alt` (de −50 % vers 0) : les sens
+   de défilement alternent d'une colonne à l'autre, comme chez 8lab.
+
+   Deux écarts assumés par rapport à 8lab, parce qu'ils affichent des captures
+   d'écran là où nous affichons du texte à lire :
+     - le mur se met en pause au survol et dès qu'un lien de source prend le
+       focus au clavier (`animation-play-state: paused`) ;
+     - en mouvement réduit, il n'y a aucune animation : le composant masque le
+       mur et laisse le rail horizontal à défilement manuel, qui sert déjà de
+       rendu mobile. D'où l'enveloppe `prefers-reduced-motion: no-preference`
+       ici — ceinture et bretelles avec le `motion-safe:` du composant. */
+@media (prefers-reduced-motion: no-preference) {
+  .paroles-piste {
+    will-change: transform;
+    animation: paroles-piste-defile 120s linear infinite;
+  }
+
+  .paroles-piste[data-sens="bas"] {
+    animation-name: paroles-piste-defile-alt;
+  }
+
+  @keyframes paroles-piste-defile {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+
+  @keyframes paroles-piste-defile-alt {
+    from {
+      transform: translateY(-50%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .paroles-mur:hover .paroles-piste,
+  .paroles-mur:focus-within .paroles-piste {
+    animation-play-state: paused;
+  }
+}
+
+/* Le mur rogne au milieu des cartes, en haut comme en bas : un fondu vers le
+   fond encre évite la coupe nette et signale que la colonne continue. 72 px de
+   dégradé, soit un quart de carte environ. */
+.paroles-mur {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 72px,
+    #000 calc(100% - 72px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 72px,
+    #000 calc(100% - 72px),
+    transparent 100%
+  );
+}
+
 /* ===== Fondu croisé entre pages (View Transitions) =====
    Déclenché par le <ViewTransition> qui enveloppe le corps de page dans
    app/layout.tsx : à chaque navigation client, l'ancienne image de la page
-   s'efface pendant que la nouvelle apparaît. Indispensable pour le passage
-   clair ↔ encre de /quelle-ia : un simple fondu de couleur de fond laisserait
-   du texte blanc sur un fond encore clair.
+   s'efface pendant que la nouvelle apparaît — les contenus se relaient sans
+   à-coup sur le fond encre commun à toutes les pages.
 
-   220 ms : un cran au-dessus des 160 ms de la nav (un fondu de pleine page
-   plus court clignote), assez proche pour que les deux se sentent
-   coordonnés. Même courbe que la transition de tonalité de la nav.
+   220 ms : assez long pour qu'un fondu de pleine page ne clignote pas, assez
+   court pour rester au rythme de la barre.
 
    Le sélecteur `*` cible aussi les groupes nommés automatiquement par React
    pour le corps de route. Si le navigateur ne le comprend pas, on retombe sur
@@ -384,9 +511,8 @@ body,
 
 /* La nav est un élément persistant de la transition : son instantané ne fait
    aucun fondu (l'ancienne image est masquée, la nouvelle — qui est un rendu
-   vivant de la barre — est affichée d'emblée). C'est donc sa propre transition
-   de tonalité de 160 ms, réglée dans Nav.tsx, qui joue à l'écran, sans se
-   superposer au fondu du reste de la page. */
+   vivant de la barre — est affichée d'emblée). La barre reste donc parfaitement
+   stable pendant que le corps de page se relaie. */
 ::view-transition-group(nav-marssane) {
   animation: none;
   /* Les groupes sont empilés dans l'ordre du DOM, et l'instantané du corps de
