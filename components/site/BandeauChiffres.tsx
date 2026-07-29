@@ -35,7 +35,7 @@ const STATS: [Stat, Stat, Stat] = [
     label: "Dès la formation",
     valeur: "2",
     unite: "h",
-    legende: <strong>gagnées chaque semaine</strong>,
+    legende: <strong>gagnées chaque jour</strong>,
   },
   {
     label: "Pour les nouveaux utilisateurs",
