@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import type { MouseEvent } from "react";
 import { Chevron } from "@/components/ui/Chevron";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
 import { ReservationTrigger } from "./ReservationTrigger";
@@ -76,6 +77,22 @@ export function Nav() {
   const fixed = PAGES_FIXED.includes(pathname);
   const fermer = () => setOuvert(false);
 
+  /** Clic sur le lockup logo. Déjà sur l'accueil, un `Link` vers la route
+   *  courante ne déclenche ni navigation ni défilement : le clic paraît mort
+   *  alors que l'attente est de revenir en haut de page. On remonte donc
+   *  nous-mêmes. `scrollTo` sans `behavior` explicite suit le
+   *  `scroll-behavior` du document : fluide, et instantané en mouvement
+   *  réduit (voir globals.css). Les clics avec modificateur (nouvel onglet,
+   *  nouvelle fenêtre) restent des clics de lien normaux. */
+  const surLogo = (e: MouseEvent<HTMLAnchorElement>) => {
+    fermer();
+    if (pathname !== "/" || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+      return;
+    }
+    e.preventDefault();
+    window.scrollTo({ top: 0 });
+  };
+
   return (
     <div
       ref={barreRef}
@@ -99,6 +116,7 @@ export function Nav() {
       <Link
         href="/"
         aria-label="Marssane · retour à l'accueil"
+        onClick={surLogo}
         // Le canard manque de contraste sur l'encre : anneau turquoise.
         className="inline-flex rounded-btn focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
         // Le « M » du logo suit --color-ink : on le repasse en blanc localement.
