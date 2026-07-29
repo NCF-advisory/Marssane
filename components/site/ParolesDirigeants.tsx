@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { Kicker } from "@/components/ui/Kicker";
 import { PlusMark } from "@/components/ui/PlusMark";
 
@@ -6,11 +8,11 @@ import { PlusMark } from "@/components/ui/PlusMark";
  * de dirigeants français sur les bénéfices concrets de l'IA.
  *
  * IMPORTANT — ce ne sont PAS des avis clients Marssane. Le cadrage éditorial
- * (kicker « citations sourcées », lien source sur chaque carte, mention
- * légale en pied de section) est là pour qu'aucun visiteur ne puisse les
- * confondre avec des témoignages d'anciens participants. Ne pas retirer ces
- * garde-fous. (La mention d'intro sous le titre a été retirée à la demande
- * du propriétaire le 29/07/2026 ; les garde-fous restants suffisent.)
+ * (kicker « citations sourcées » + mention légale en pied de section) est là
+ * pour qu'aucun visiteur ne puisse les confondre avec des témoignages
+ * d'anciens participants. Ne pas retirer ces garde-fous. (La mention d'intro
+ * sous le titre, puis le lien de source sur chaque carte, ont été retirés à la
+ * demande du propriétaire le 29/07/2026 ; les garde-fous restants suffisent.)
  *
  * Tonalité encre : `*-sur-ink` partout (cf. Preuves / AvantApres).
  *
@@ -29,10 +31,29 @@ type Citation = {
   /** Verbatim, tel qu'il figure dans la source. Ne pas reformuler. */
   texte: string;
   auteur: string;
+  /**
+   * Société seule, affichée sous le nom. Champ propre plutôt qu'un découpage de
+   * `fonction` : « Directrice générale, Orange » → « Orange ».
+   */
+  societe: string;
+  /**
+   * Fichier de `public/img/logos-temoignages/` : logo officiel de la société,
+   * normalisé en 256 × 256 transparent (cf. le tableau des sources dans le
+   * rapport de mise à jour du 29/07/2026). 256 px et non 96 : à 20 px de côté
+   * sur un écran Retina, `next/image` demande la variante 2× (`w=256`), et
+   * l'optimiseur ne suragrandit jamais — un fichier source de 96 px plafonnait
+   * la variante 2× à 96 px et se voyait.
+   */
+  logo: string;
+  /* Les trois champs suivants ne sont PLUS affichés : sources conservées en
+     données pour vérification, non affichées — décision propriétaire du
+     29/07/2026. Ils restent la traçabilité de chaque verbatim ; ne pas les
+     supprimer, ne pas les modifier sans revérifier la source. */
+  /** Fonction exacte du dirigeant dans la source. */
   fonction: string;
-  /** Contexte affiché sous la fonction — doit être étayé par la source. */
+  /** Contexte de l'entreprise — doit être étayé par la source. */
   contexte: string;
-  /** Éditeur + date de la source, affichés en mono. */
+  /** Éditeur + date de la source. */
   source: string;
   url: string;
 };
@@ -42,6 +63,8 @@ const CITATIONS: Citation[] = [
     texte:
       "L’IA ne remplace pas notre expertise, mais elle nous aide à gagner du temps, à réduire les oublis et à mieux sécuriser les premiers échanges avec le client.",
     auteur: "Hugo Jauzac",
+    societe: "Bluetainer",
+    logo: "bluetainer.png",
     fonction: "Fondateur, Bluetainer",
     contexte: "Aménagement de conteneurs · Occitanie",
     source: "Bpifrance · Osez l’IA · juin 2026",
@@ -51,6 +74,8 @@ const CITATIONS: Citation[] = [
     texte:
       "Avant ce projet, l’information du planning atelier mettait des heures, voire des jours, à atteindre nos commerciaux. Aujourd’hui, chacun reçoit chaque matin la photo précise de ses dossiers, avec les vrais points d’attention. C’est devenu un outil quotidien indispensable.",
     auteur: "Guillaume Chouvin",
+    societe: "Publiscreen",
+    logo: "publiscreen.png",
     fonction: "Directeur général, Publiscreen",
     contexte: "PLV & industrie de transformation · Hauts-de-France",
     source: "Bpifrance · Osez l’IA · juin 2026",
@@ -60,6 +85,8 @@ const CITATIONS: Citation[] = [
     texte:
       "Comme beaucoup d’entreprises, on accumule des données depuis des années sans vraiment les regarder. En prenant un peu de recul, on se rend compte que l’on est assis sur une véritable mine d’or.",
     auteur: "Quentin De Pelichy",
+    societe: "Turboself",
+    logo: "turboself.png",
     fonction: "Dirigeant, Turboself",
     contexte: "Restauration scolaire · Centre-Val de Loire",
     source: "Bpifrance · Osez l’IA · juin 2026",
@@ -69,6 +96,8 @@ const CITATIONS: Citation[] = [
     texte:
       "… Notre objectif avec ces outils d’automatisation était de libérer nos équipes des tâches chronophages pour leur permettre de se focaliser sur leur réelle valeur ajoutée…",
     auteur: "Sébastien Hardy",
+    societe: "Diadem",
+    logo: "diadem.png",
     fonction: "Dirigeant, Diadem",
     contexte: "Impression & pré-presse · Nouvelle-Aquitaine",
     source: "Bpifrance · Osez l’IA · juin 2026",
@@ -78,6 +107,8 @@ const CITATIONS: Citation[] = [
     texte:
       "… Il n’y a pas de remplacement de l’emploi, il n’y a pas de remplacement de l’humain par l’IA. Il y a une complémentarité et surtout une aide dans le traitement générique des appels. Sautez le pas !…",
     auteur: "David Fayet",
+    societe: "OuestCall",
+    logo: "ouestcall.png",
     fonction: "Responsable, OuestCall",
     contexte: "Télésecrétariat médical · Nouvelle-Aquitaine",
     source: "Bpifrance · Osez l’IA · juin 2026",
@@ -87,6 +118,8 @@ const CITATIONS: Citation[] = [
     texte:
       "Si on ne fait pas de l’IA métier en 2025, on n’est pas bon. Il faut le voir comme de l’innovation.",
     auteur: "Pierre Voirin",
+    societe: "Eco-SI",
+    logo: "eco-si.png",
     fonction: "Directeur, Eco-SI",
     contexte: "Éditeur de logiciels · 14 collaborateurs",
     source: "Siparex × Bpifrance · Les audacieux de l’IA · avril 2026",
@@ -96,6 +129,8 @@ const CITATIONS: Citation[] = [
     texte:
       "Beaucoup utilisent l’IA pour remplacer une compétence. Nous avons choisi de l’utiliser pour transmettre et renforcer la nôtre.",
     auteur: "Delphine Cudelou",
+    societe: "Chambre des notaires de la Cour d’appel de Caen",
+    logo: "chambre-notaires-caen.png",
     fonction:
       "Directrice générale, Chambre des notaires de la Cour d’appel de Caen",
     contexte: "Profession réglementée · Normandie",
@@ -106,6 +141,8 @@ const CITATIONS: Citation[] = [
     texte:
       "Dans un contexte de forte croissance, le programme IA Booster a permis une transformation dans la fonction Administration des Ventes. Les saisies des commandes clients devenaient de plus en plus répétitives et fastidieuses mais néanmoins primordiales.",
     auteur: "Sylvie Hot",
+    societe: "Dedienne Aerospace",
+    logo: "dedienne-aerospace.png",
     fonction: "CEO, Dedienne Aerospace",
     contexte: "Aéronautique · ETI · Occitanie",
     source: "Bpifrance · Osez l’IA · juin 2026",
@@ -115,6 +152,8 @@ const CITATIONS: Citation[] = [
     texte:
       "Notre objectif était de prendre le train de l’IA sans attendre, en déployant des solutions simples et accessibles rapidement pour répondre concrètement aux besoins et aux usages de nos collaborateurs.",
     auteur: "Jérôme Fossat",
+    societe: "Patrimoine SA",
+    logo: "patrimoine-sa.png",
     fonction: "Directeur des SI et de l’organisation, Patrimoine SA",
     contexte: "Immobilier · Occitanie",
     source: "Bpifrance · Osez l’IA · juin 2026",
@@ -124,6 +163,8 @@ const CITATIONS: Citation[] = [
     texte:
       "Concrètement, l’implémentation de l’IA au sein du groupe a permis d’améliorer l’expérience client, de mieux cibler les besoins de nos parties prenantes, d’enrichir les tâches de nos collaborateurs, d’optimiser production et stocks tout en accroissant notre protection cyber. Et nous n’en sommes qu’au démarrage !",
     auteur: "Patrick Martin",
+    societe: "MEDEF",
+    logo: "medef.png",
     fonction: "Président du MEDEF",
     contexte: "Distribution BtoB bâtiment & industrie",
     source: "MEDEF · novembre 2024",
@@ -133,6 +174,8 @@ const CITATIONS: Citation[] = [
     texte:
       "Chez Orange, nous avons fait le choix de mettre l’IA dans la main des collaborateurs. Nous avons formé plus de 50 000 salariés.",
     auteur: "Christel Heydemann",
+    societe: "Orange",
+    logo: "orange.png",
     fonction: "Directrice générale, Orange",
     contexte: "Télécoms · CAC 40",
     source: "Maddyness · mars 2025",
@@ -142,6 +185,8 @@ const CITATIONS: Citation[] = [
     texte:
       "Il est urgent d’investir dans les compétences, avec plus de formations pour comprendre les IA avec leurs atouts et leurs limites, et pour pouvoir les intégrer à un niveau bien plus élevé dans les bureaux de travail et les business models.",
     auteur: "Elise Tissier",
+    societe: "Bpifrance Le Lab",
+    logo: "bpifrance-le-lab.png",
     fonction: "Directrice de Bpifrance Le Lab",
     contexte: "Enquête TPE-PME · 3 077 réponses de dirigeants",
     source: "Bpifrance Le Lab · mars 2024",
@@ -197,11 +242,11 @@ export function ParolesDirigeants() {
           plutôt que `gap`, pause au survol et au focus — est décrite en détail
           au-dessus de `.paroles-piste` dans globals.css.
 
-          `overflow-clip` et non `hidden` : `hidden` fait du mur un conteneur de
-          défilement, et le navigateur le fait alors défiler de plusieurs
-          centaines de pixels pour amener dans le cadre le lien de source qui
-          prend le focus au clavier — la piste reste décalée pour de bon.
-          `clip` rogne à l'identique sans créer ce contexte de défilement. */}
+          `overflow-clip` et non `hidden` : `hidden` ferait du mur un conteneur
+          de défilement, que le navigateur pourrait faire défiler de plusieurs
+          centaines de pixels pour amener un contenu dans le cadre — la piste
+          resterait décalée pour de bon. `clip` rogne à l'identique sans créer ce
+          contexte de défilement. */}
       <div
         className="paroles-mur relative mt-[30px] hidden h-[600px] overflow-clip motion-safe:lg:block"
         role="group"
@@ -216,7 +261,8 @@ export function ParolesDirigeants() {
               >
                 {/* La séquence est rendue deux fois : le second exemplaire ne
                     sert qu'à fermer la boucle, il est donc retiré aux
-                    technologies d'assistance et à la tabulation. */}
+                    technologies d'assistance. Les cartes ne contiennent plus
+                    d'élément focusable, rien à sortir de la tabulation. */}
                 {[false, true].map((duplicata) =>
                   colonne.map((c) => (
                     <li
@@ -224,7 +270,7 @@ export function ParolesDirigeants() {
                       className="mb-4"
                       aria-hidden={duplicata || undefined}
                     >
-                      <Carte citation={c} horsTabulation={duplicata} />
+                      <Carte citation={c} />
                     </li>
                   )),
                 )}
@@ -268,17 +314,17 @@ export function ParolesDirigeants() {
  * Carte de citation. Sa largeur est décidée par le conteneur (fixe dans le
  * rail, pleine colonne dans le mur), pas par la carte.
  *
- * `horsTabulation` sert aux exemplaires dupliqués du mur : `aria-hidden` sur un
- * ancêtre les retire des lecteurs d'écran mais pas de l'ordre de tabulation,
- * d'où le `tabIndex={-1}` sur le lien de source.
+ * La signature tient sur deux lignes — nom, puis société seule — précédées du
+ * logo de la société. Le logo est purement décoratif (`alt=""` + `aria-hidden`) :
+ * le nom de la société est juste à côté, en texte.
+ *
+ * La pastille est la même pour les douze logos : filet + fond blanc à 6 %, et
+ * non un fond blanc franc. Testé sur la carte encre, le blanc franc efface les
+ * trois logos clairs (Bluetainer en filaire blanc, le bonhomme crème de Diadem,
+ * le sceau blanc des notaires de Caen) alors que le fond discret laisse lire les
+ * douze — un seul gabarit, un seul fond, mur homogène.
  */
-function Carte({
-  citation,
-  horsTabulation,
-}: {
-  citation: Citation;
-  horsTabulation?: boolean;
-}) {
+function Carte({ citation }: { citation: Citation }) {
   return (
     <figure className="flex h-full w-full flex-col rounded-card border border-line-sur-ink bg-surface-sur-ink px-5 py-[20px] sm:px-6 sm:py-[22px]">
       <span
@@ -290,27 +336,27 @@ function Carte({
       <blockquote className="mt-2.5 grow text-[13.5px] leading-[1.62] text-body-sur-ink">
         {citation.texte}
       </blockquote>
-      <figcaption className="mt-4 border-t border-line-sur-ink pt-3.5">
-        <div className="text-[13px] font-semibold leading-[1.3] text-white">
-          {citation.auteur}
-        </div>
-        <div className="mt-1 text-[12px] leading-[1.4] text-body-sur-ink">
-          {citation.fonction}
-        </div>
-        <div className="mt-0.5 text-[11.5px] leading-[1.4] text-faint-sur-ink">
-          {citation.contexte}
-        </div>
-        <a
-          href={citation.url}
-          target="_blank"
-          rel="noopener noreferrer nofollow"
-          tabIndex={horsTabulation ? -1 : undefined}
-          className="mt-2.5 inline-flex items-baseline gap-1 font-mono text-[10.5px] text-faint-sur-ink underline decoration-line-sur-ink underline-offset-2 transition-colors hover:text-turquoise motion-reduce:transition-none"
+      <figcaption className="mt-4 flex items-center gap-2.5 border-t border-line-sur-ink pt-3.5">
+        <span
+          aria-hidden
+          className="flex size-[26px] shrink-0 items-center justify-center rounded-[7px] border border-line-sur-ink bg-white/[0.06]"
         >
-          {citation.source}
-          <span aria-hidden>↗</span>
-          <span className="sr-only">(nouvelle fenêtre)</span>
-        </a>
+          <Image
+            src={`/img/logos-temoignages/${citation.logo}`}
+            alt=""
+            width={96}
+            height={96}
+            className="size-5 object-contain"
+          />
+        </span>
+        <div className="min-w-0">
+          <div className="text-[13px] font-semibold leading-[1.3] text-white">
+            {citation.auteur}
+          </div>
+          <div className="mt-0.5 text-[12px] leading-[1.4] text-body-sur-ink">
+            {citation.societe}
+          </div>
+        </div>
       </figcaption>
     </figure>
   );
