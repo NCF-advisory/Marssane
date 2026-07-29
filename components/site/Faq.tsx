@@ -13,7 +13,7 @@ const QUESTIONS: { question: string; reponse: ReactNode }[] = [
     reponse: (
       <>
         Non. C&apos;est une formation de niveau débutant : la première session
-        reprend les bases — Claude, le prompt, la confidentialité. Seuls
+        reprend les bases (Claude, le prompt, la confidentialité). Seuls
         prérequis : votre ordinateur et un abonnement Claude Pro actif
         (20&nbsp;€/mois).
       </>
@@ -59,8 +59,8 @@ const QUESTIONS: { question: string; reponse: ReactNode }[] = [
     reponse: (
       <>
         Un tri automatique de votre boîte mail qui tourne réellement, construit
-        par vous en salle, puis votre propre cas d&apos;usage démontré au groupe
-        — et un certificat de participation.
+        par vous en salle, puis votre propre cas d&apos;usage démontré au
+        groupe, et un certificat de participation.
       </>
     ),
   },
@@ -78,10 +78,10 @@ const QUESTIONS: { question: string; reponse: ReactNode }[] = [
     question: "Pourquoi Claude et pas ChatGPT ?",
     reponse: (
       <>
-        Les réflexes que vous apprendrez valent pour les quatre grands outils —
-        ChatGPT, Claude, Mistral, GLM. La formation se fait sur Claude, considéré
-        comme l&apos;IA la plus efficace en entreprise en ce moment : rédaction
-        soignée, sérieux sur les documents longs.
+        Les réflexes que vous apprendrez valent pour les quatre grands
+        outils : ChatGPT, Claude, Mistral, GLM. La formation se fait sur Claude,
+        considéré comme l&apos;IA la plus efficace en entreprise en ce moment :
+        rédaction soignée, sérieux sur les documents longs.
       </>
     ),
   },

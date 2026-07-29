@@ -13,7 +13,7 @@ const TEMPS: {
   {
     repere: "01",
     titre: "Session 1 · en salle",
-    texte: "Les bases, puis votre tri de mails — il tourne avant la fin.",
+    texte: "Les bases, puis votre tri de mails : il tourne avant la fin.",
     vignette: <VignetteFormateur />,
   },
   {
@@ -60,8 +60,7 @@ export function Accompagnement() {
           chaque étape.
         </h2>
         <p className="mt-4 text-[16.5px] leading-[1.58] text-body-sur-ink">
-          Deux sessions en salle — et entre les deux, le chat commun reste
-          ouvert.
+          Deux sessions en salle. Entre les deux, le chat commun reste ouvert.
         </p>
       </div>
 

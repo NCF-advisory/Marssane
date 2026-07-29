@@ -23,7 +23,7 @@ export default function NotFound() {
               </h1>
               <p className="mt-[18px] text-[16.5px] leading-[1.58] text-body-sur-ink">
                 L&apos;adresse a peut-être changé, ou contient une coquille.
-                Rien de grave — tout le reste est à sa place.
+                Rien de grave : tout le reste est à sa place.
               </p>
               <Link
                 href="/"

@@ -39,7 +39,7 @@ export default function Error({
                 Quelque chose s&apos;est mal passé.
               </h1>
               <p className="mt-[18px] text-[16.5px] leading-[1.58] text-body-sur-ink">
-                Ce n&apos;est pas vous, c&apos;est nous. Réessayez — et si ça
+                Ce n&apos;est pas vous, c&apos;est nous. Réessayez, et si ça
                 persiste, revenez dans quelques minutes.
               </p>
               <div className="mt-7 flex flex-wrap items-center gap-6">
