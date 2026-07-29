@@ -66,8 +66,18 @@ export default async function Page() {
 
   return (
     <>
-      {/* `flex-1` : cf. la branche « classement vide » ci-dessus. */}
-      <main className="flex-1">
+      {/* `flex-1` : cf. la branche « classement vide » ci-dessus.
+          `snap-page-quelle-ia` active le scroll-snap racine, ciblé sur cette
+          page via `html:has(...)` dans globals.css (aucune fuite ailleurs) :
+          depuis le héro, le moindre défilement aimante le bloc du graphe. */}
+      <main className="flex-1 snap-page-quelle-ia">
+        {/* Cran du haut. Le snap mandatory exige un point d'arrêt à y = 0 :
+            sans lui, le graphe est le premier cran et la page s'y aimante dès le
+            chargement, héro sauté (constaté au banc). Marqueur de hauteur nulle
+            — aucun effet de mise en page — dont la marge de défilement, prise
+            plus grande que la barre (~71-75 px), borne le cran au sommet du
+            document. */}
+        <div aria-hidden className="snap-start scroll-mt-[200px]" />
         {/* effort : chaîne vide si la source ne l'a pas fourni — le hero masque alors la ligne
             (passer la prop évite le repli « medium », qui serait faux). */}
         <HeroRecommandation
@@ -80,18 +90,31 @@ export default async function Page() {
           baseline="Le meilleur compromis intelligence, prix et réactivité du moment."
           ancre="#pourquoi"
         />
-        {/* Cible de l'amorce de scroll du hero. `scroll-mt` dégage le kicker du
-            graphe de la barre collante ; depuis le menu replié, celle-ci fait
-            ~75 px sous lg et ~71 px au-delà — le `pt` de la section du graphe
-            (84 px) suffit alors à passer sous la barre, une seule valeur
-            partout. */}
-        <div id="pourquoi" className="scroll-mt-6">
+        {/* Cible de l'amorce de scroll du hero, et cran de snap du graphe.
+            `scroll-mt` dégage le kicker du graphe de la barre collante ; depuis
+            le menu replié, celle-ci fait ~75 px sous lg et ~71 px au-delà — le
+            `pt` de la section du graphe (84 px) suffit alors à passer sous la
+            barre, une seule valeur partout. La même marge sert au snap : clic
+            sur le chevron du héro et défilement libre atterrissent au pixel près
+            au même endroit, haut du bloc calé sous la barre.
+            `snap-always` interdit d'enjamber ce cran : aucune lancée, même
+            longue, ne peut passer du héro à la méthodo sans s'arrêter là.
+            Note de gabarit : le bloc entier (titre + carte) fait 880 px sur les
+            largeurs ≥ lg ; la carte du graphe n'est donc visible en entier qu'à
+            partir de ~900 px de fenêtre. Plus court, on cale le haut du bloc
+            (l'axe des coûts sort alors sous le pli) plutôt que de glisser le
+            titre sous la barre. */}
+        <div id="pourquoi" className="snap-start snap-always scroll-mt-6">
           <GraphiqueEfficacite entries={c.entries} />
         </div>
         <MethodoSources classement={c} />
         <PontFormation />
       </main>
-      <Footer />
+      {/* Dernier cran : sans point d'arrêt en bas de page, le snap mandatory
+          rappellerait le graphe et la fin de page serait inatteignable. */}
+      <div className="snap-end">
+        <Footer />
+      </div>
     </>
   );
 }

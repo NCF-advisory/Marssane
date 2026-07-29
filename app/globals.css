@@ -161,6 +161,39 @@ body {
   }
 }
 
+/* Scroll-snap « forcé » ciblé sur la page /quelle-ia : même idiome que
+   ci-dessus, le marqueur `.snap-page-quelle-ia` (posé sur son <main>) active le
+   snap mandatory sur le scroll racine, sans fuiter sur les autres pages. Repli
+   sans `:has()` = scroll libre (acceptable).
+
+   Trois crans seulement, tous posés dans la page : le sommet du document, le
+   bloc du graphe (`snap-start` + `snap-always`) et le pied de page (`snap-end`).
+   `mandatory` et non `proximity` : mesuré au banc (Playwright, 1280 × 800),
+   WebKit ne rattrape rien en proximity au-delà de ~50 px de la cible — un coup
+   de molette de 300 px s'arrêtait sur un graphe coupé en deux, exactement ce
+   qu'on veut supprimer. En mandatory, aucun repos intermédiaire n'est possible :
+   WebKit aimante le graphe dès le premier cran de molette ; Chromium, qui retient
+   le cran le PLUS PROCHE et non le suivant dans le sens du geste, ramène au
+   sommet en deçà de ~450 px de défilement puis bascule d'un coup sur le graphe.
+
+   Le cran de pied de page est ce qui empêche la zone piégée : sans lui,
+   `mandatory` ramène au graphe tout défilement plus bas et la fin de page
+   (méthodo, CTA, pied) devient inatteignable — vérifié, la page restait bloquée
+   sur le graphe. Avec lui, les deux vues se recouvrent (672 px entre les deux
+   crans pour 800 px de fenêtre à 1280 × 800) et tout le contenu reste
+   atteignable ; entre les deux, aucune aimantation.
+
+   Plancher de hauteur : à 760 px de fenêtre, la carte du graphe en mise en page
+   mobile (451 px) tient tout juste sous la barre. En dessous (iPhone SE et
+   consorts), l'aimantation ne ferait que caler un repère coupé et priverait le
+   pouce du défilement libre : snap désactivé, les `snap-*` des enfants sont
+   alors inertes. */
+@media (min-height: 760px) {
+  html:has(.snap-page-quelle-ia) {
+    scroll-snap-type: y mandatory;
+  }
+}
+
 /* ===== Toile Marssane =====
    Tonalité claire des espaces protégés (/formation, /admin, /styleguide) : à
    poser avec `text-ink` sur le conteneur racine de la page, qui doit couvrir
