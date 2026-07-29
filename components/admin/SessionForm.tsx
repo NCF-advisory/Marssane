@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import type { SessionFormState } from "@/app/admin/dashboard/actions";
-import { controlClass, Field } from "@/components/ui/Field";
+import { controlClass, Field, selectClass } from "@/components/ui/Field";
 import { SESSION_STATUTS } from "@/lib/validation";
 import { SESSION_STATUT_LABELS } from "@/lib/admin-labels";
 
@@ -130,7 +130,7 @@ export function SessionForm({
             name="statut"
             required
             defaultValue={values.statut ?? "brouillon"}
-            className={controlClass}
+            className={selectClass}
           >
             {SESSION_STATUTS.map((value) => (
               <option key={value} value={value}>

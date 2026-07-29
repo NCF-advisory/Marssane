@@ -6,7 +6,11 @@ import {
   submitInscription,
 } from "@/app/actions/inscription";
 import { Chevron } from "@/components/ui/Chevron";
-import { controlClassSurInk, Field } from "@/components/ui/Field";
+import {
+  controlClassSurInk,
+  Field,
+  selectClassSurInk,
+} from "@/components/ui/Field";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
 
 /**
@@ -229,7 +233,7 @@ export function ReservationDialog({
               required
               defaultValue={values.metier ?? ""}
               {...errorAttrs("metier", "f2-metier")}
-              className={controlClassSurInk}
+              className={selectClassSurInk}
             >
               <option value="" disabled>
                 Sélectionnez…

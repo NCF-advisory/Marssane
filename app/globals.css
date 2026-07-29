@@ -259,6 +259,39 @@ body {
   }
 }
 
+/* ===== <select> du kit Field =====
+   WebKit dessine les <select> en contrôle natif (`appearance: menulist`) et
+   ignore alors le padding ET la line-height : le rectangle du champ « Métier »
+   de la modale de réservation tombait à 26 px de haut, contre 50 px pour les
+   champs texte voisins — et son texte se collait au bord gauche, le padding
+   horizontal étant ignoré lui aussi. Chromium, plus mesuré, n'ignorait que la
+   line-height (49 px contre 50).
+   `appearance: none` remet le <select> dans le modèle de boîte ordinaire : même
+   padding, même line-height, donc exactement la même hauteur que les <input> du
+   kit — sans hauteur en dur à maintenir en miroir du reste du contrôle.
+   Contrepartie : la flèche native disparaît, on la redessine en image de fond,
+   sur le modèle du chevron de la charte (carré de 8 px dont deux côtés sont
+   tracés à 1,5 px, pivoté à 45° — d'où ces 12 × 7 px et ce trait de 1,5). Le
+   trait reprend le gris atténué de sa tonalité, `currentColor` étant hors de
+   portée dans une image de fond.
+   La liste déroulante, elle, reste dessinée par le navigateur — `appearance`
+   ne la touche pas : la modale la garde sombre via `[color-scheme:dark]`.
+   Le dégagement à droite pour la flèche est posé côté classe Tailwind
+   (`pr-[38px]`), avec le reste de la géométrie du contrôle. */
+.control-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='7'%20viewBox='0%200%2012%207'%3E%3Cpath%20d='M0.9%201.1%206%206.2%2011.1%201.1'%20fill='none'%20stroke='%235B6472'%20stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px 7px;
+}
+
+/* Tonalité encre (formulaires du site vitrine) : le slate disparaîtrait sur
+   l'encre, la flèche reprend le gris atténué de cette tonalité (#98A1AC). */
+.control-select-sur-ink {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='12'%20height='7'%20viewBox='0%200%2012%207'%3E%3Cpath%20d='M0.9%201.1%206%206.2%2011.1%201.1'%20fill='none'%20stroke='%2398A1AC'%20stroke-width='1.5'/%3E%3C/svg%3E");
+}
+
 /* Centrage de la modale de pré-inscription.
    Le preflight de Tailwind v4 remet `margin: 0` sur *tous* les éléments, ce qui
    neutralise le `margin: auto` que l'UA applique au <dialog> pour le centrer.

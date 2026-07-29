@@ -23,6 +23,17 @@ export const controlClass =
 export const controlClassSurInk =
   "w-full rounded-btn border-[1.5px] border-line-sur-ink bg-surface-sur-ink px-[14px] py-3 text-[16px] text-white placeholder:text-faint-sur-ink transition-colors [color-scheme:dark] focus:border-turquoise focus:outline-none focus:ring-2 focus:ring-turquoise/25";
 
+/**
+ * Variantes des deux classes ci-dessus pour un <select>. Un <select> laissé au
+ * rendu natif ignore le padding et la line-height du contrôle (WebKit : les
+ * deux ; Chromium : la line-height), et son rectangle est donc moins haut que
+ * celui des <input> voisins. `.control-select` le ramène à la boîte CSS et
+ * lui redessine sa flèche ; `pr-[38px]` dégage la place de celle-ci (voir
+ * globals.css).
+ */
+export const selectClass = `${controlClass} control-select pr-[38px]`;
+export const selectClassSurInk = `${controlClassSurInk} control-select control-select-sur-ink pr-[38px]`;
+
 type FieldProps = {
   /** id du contrôle — relie le <label> (htmlFor) au champ. */
   id: string;
