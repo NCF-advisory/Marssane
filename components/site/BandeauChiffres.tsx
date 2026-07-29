@@ -129,7 +129,7 @@ export function BandeauChiffres({
           size={16}
           className="absolute bottom-[44px] left-[640px] hidden opacity-10 lg:block"
         />
-        <div data-apparition="" className="flex flex-col gap-[26px]">
+        <div className="flex flex-col gap-[26px]">
           <Kicker className="text-faint-sur-ink!">{kicker}</Kicker>
           <h2 className="max-w-[900px] text-[34px] font-extrabold leading-[1.04] tracking-[-0.03em] sm:text-[62px]">
             {avant}

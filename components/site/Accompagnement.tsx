@@ -50,7 +50,7 @@ export function Accompagnement() {
         className="absolute right-[130px] top-[62px] hidden lg:block"
       />
 
-      <div data-apparition="" className="max-w-[680px]">
+      <div className="max-w-[680px]">
         <KickerPill>Vous n&apos;êtes jamais seul</KickerPill>
         <h2 className="mt-[20px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
           Vous construisez, le formateur{" "}

@@ -1,8 +1,8 @@
 import type { Niveau } from "@/components/site/NiveauBloc";
 
 /* ===== CONTENU PROVISOIRE — modèle à remplir =====
-   Source de vérité unique des trois niveaux, partagée par la page
-   « Nos formations » (/formations) et le Parcours de l'accueil. Pour mettre à
+   Source de vérité unique des trois niveaux, utilisée par la page
+   « Nos formations » (/formations). Pour mettre à
    jour, éditez seulement ce tableau (titre, accroche, points, infos). Les
    couleurs (accent/badge) suivent le kit de marque et n'ont pas à changer —
    chaque paire badgeBg/badgeText est choisie pour rester lisible sur le fond

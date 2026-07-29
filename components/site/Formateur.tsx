@@ -84,22 +84,18 @@ export function Formateur() {
         className="absolute left-[15px] top-[60px] -z-[1] hidden -translate-x-1/2 -translate-y-1/2 lg:block"
       />
 
-      <div data-apparition="" className="max-w-[640px]">
+      <div className="max-w-[640px]">
         <Kicker className="text-faint-sur-ink!">Qui vous forme</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-          Un interlocuteur,{" "}
+          Un formateur qui pratique l&apos;IA{" "}
           <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-            pas une plateforme
+            au quotidien
           </span>
           .
         </h2>
       </div>
 
-      <div
-        data-apparition=""
-        style={{ ["--apparition-delai" as string]: "150ms" }}
-        className="mt-[34px] flex max-w-[860px] flex-col gap-6 rounded-card border border-line-sur-ink bg-surface-sur-ink p-6 sm:flex-row sm:items-start sm:gap-8 sm:p-8"
-      >
+      <div className="mt-[34px] flex max-w-[860px] flex-col gap-6 rounded-card border border-line-sur-ink bg-surface-sur-ink p-6 sm:flex-row sm:items-start sm:gap-8 sm:p-8">
         {/* Le portrait est l'ancrage visuel de la section, d'où une tuile plus
             large que les vignettes du reste de la page. Le fond du cliché est
             un bleu-vert sombre, très proche de la carte : la bordure

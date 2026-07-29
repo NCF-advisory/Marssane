@@ -10,7 +10,6 @@ import { Footer } from "@/components/site/Footer";
 import { Formateur } from "@/components/site/Formateur";
 import { FormationsDeuxNiveaux } from "@/components/site/FormationsDeuxNiveaux";
 import { Hero } from "@/components/site/Hero";
-import { Parcours } from "@/components/site/Parcours";
 import { ParolesDirigeants } from "@/components/site/ParolesDirigeants";
 import { Reponse } from "@/components/site/Reponse";
 import { Reservation } from "@/components/site/Reservation";
@@ -65,7 +64,6 @@ export default async function Home() {
         </BandeToile>
         <Formateur />
         <CasConcrets />
-        <Parcours />
         <BandeToile className="mt-[68px] pb-[76px]">
           <Reponse />
           <AvantApres />
