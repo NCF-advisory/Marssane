@@ -6,7 +6,7 @@ import { ReservationTrigger } from "./ReservationTrigger";
 
 /**
  * Les cinq lignes du quotidien qui changent après la formation. Reprises des
- * cas concrets et de « La réponse » vus plus haut, cette fois en deux colonnes.
+ * cas concrets vus plus haut, cette fois en deux colonnes.
  */
 const PAIRES: { sans: string; apres: string }[] = [
   {
@@ -32,9 +32,9 @@ const PAIRES: { sans: string; apres: string }[] = [
 ];
 
 /**
- * Section « Comparatif avant / après » (sur la bande claire, après « La
- * réponse ») : le format deux colonnes de 8lab (« Ce qui sépare une marque qui
- * dure d'une boutique de plus ») — H2 à gauche, CTA à droite du titre, puis
+ * Section « Comparatif avant / après » (seule section de sa bande claire) : le
+ * format deux colonnes de 8lab (« Ce qui sépare une marque qui dure d'une
+ * boutique de plus ») — H2 à gauche, CTA à droite du titre, puis
  * colonne « Sans » (rangées × au contour discret, texte atténué) face à la
  * colonne « Avec » (rangées ✓ sur cartes blanches pleines). L'asymétrie
  * visuelle — terne contre blanc franc — porte le message.

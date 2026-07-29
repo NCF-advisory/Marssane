@@ -11,7 +11,6 @@ import { Formateur } from "@/components/site/Formateur";
 import { FormationsDeuxNiveaux } from "@/components/site/FormationsDeuxNiveaux";
 import { Hero } from "@/components/site/Hero";
 import { ParolesDirigeants } from "@/components/site/ParolesDirigeants";
-import { Reponse } from "@/components/site/Reponse";
 import { Reservation } from "@/components/site/Reservation";
 import { ReservationDialog } from "@/components/site/ReservationDialog";
 import { champSession, mentionSession } from "@/lib/session-display";
@@ -53,8 +52,8 @@ export default async function Home() {
       {/* Ordre des sections et alternance de tonalités repris du tunnel 8lab
           (relevé au navigateur le 29/07/2026). Héro et paroles de dirigeants
           restent en encre ; les bandes claires tombent sur l'accompagnement,
-          sur le couple réponse / avant-après, et sur la FAQ. Coupes franches,
-          sans filet de séparation — comme sur le modèle. */}
+          sur l'avant-après, et sur la FAQ. Coupes franches, sans filet de
+          séparation — comme sur le modèle. */}
       <main>
         <Hero />
         <ParolesDirigeants />
@@ -65,7 +64,6 @@ export default async function Home() {
         <Formateur />
         <CasConcrets />
         <BandeToile className="mt-[68px] pb-[76px]">
-          <Reponse />
           <AvantApres />
         </BandeToile>
         <Alignement />
