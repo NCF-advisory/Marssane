@@ -39,14 +39,18 @@ type FieldProps = {
 };
 
 /**
- * Bloc label + contrôle. Label 13,5 px / 600 ; astérisque canard (décoratif) sur
- * les champs obligatoires — l'attribut `required` du contrôle porte
- * l'information pour les technologies d'assistance.
+ * Bloc label + contrôle. Label 13,5 px / 600 ; astérisque (décoratif) sur les
+ * champs obligatoires — l'attribut `required` du contrôle porte l'information
+ * pour les technologies d'assistance.
  *
  * Le composant est neutre vis-à-vis de la tonalité : le label hérite la couleur
- * de son contexte (encre sur la toile claire, blanc sur le fond encre) et le
- * message d'erreur suit `--color-erreur`, dont la valeur dépend de la tonalité
- * (voir globals.css).
+ * de son contexte (encre sur la toile claire, blanc sur le fond encre) ;
+ * l'astérisque suit `--color-requis` et le message d'erreur `--color-erreur`,
+ * deux couleurs dont la valeur dépend de la tonalité (voir globals.css).
+ *
+ * Corollaire du label hérité : tout conteneur qui interrompt l'héritage de
+ * `color` doit reposer la couleur de sa tonalité — c'est le cas du <dialog>,
+ * auquel le navigateur applique `color: CanvasText` (cf. <ReservationDialog>).
  */
 export function Field({
   id,
@@ -64,7 +68,7 @@ export function Field({
       >
         {label}
         {required && (
-          <span aria-hidden className="text-canard">
+          <span aria-hidden className="text-requis">
             {" "}
             *
           </span>

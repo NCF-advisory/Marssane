@@ -2,6 +2,7 @@
 
 import { type CSSProperties, useEffect, useLayoutEffect, useRef } from "react";
 import { CheckItem } from "@/components/ui/CheckItem";
+import { Chevron } from "@/components/ui/Chevron";
 import { LogoNiveau } from "@/components/ui/LogoNiveau";
 import { ReservationTrigger } from "./ReservationTrigger";
 
@@ -191,7 +192,7 @@ export function NiveauBloc({ niveaux }: { niveaux: Niveau[] }) {
 
                 <div className="mt-7">
                   <ReservationTrigger
-                    className="inline-flex w-full items-center justify-center gap-2.5 rounded-btn bg-[var(--accent)] px-[27px] py-[15px] text-[15.5px] font-semibold text-[var(--accent-text)] shadow-cta transition-colors hover:bg-[var(--accent-hover)] sm:w-auto"
+                    className="inline-flex w-full items-center justify-center gap-[13px] rounded-btn bg-[var(--accent)] py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-[var(--accent-text)] shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-[var(--accent-hover)] sm:w-auto"
                     style={
                       {
                         "--accent": niveau.accent,
@@ -201,9 +202,7 @@ export function NiveauBloc({ niveaux }: { niveaux: Niveau[] }) {
                     }
                   >
                     Réserver sa place
-                    <span aria-hidden className="text-[17px] leading-none">
-                      →
-                    </span>
+                    <Chevron />
                   </ReservationTrigger>
                 </div>
               </div>

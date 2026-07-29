@@ -1,11 +1,12 @@
-import type { ReactNode } from "react";
 import { CheckItem } from "@/components/ui/CheckItem";
-import { Kicker } from "@/components/ui/Kicker";
+import { Chevron } from "@/components/ui/Chevron";
+import { KickerPill } from "@/components/ui/KickerPill";
 import { PlusMark } from "@/components/ui/PlusMark";
+import { ReservationTrigger } from "./ReservationTrigger";
 
 /**
- * Les quatre lignes du quotidien qui changent après la formation. Reprises des
- * cas concrets vus plus haut, cette fois côte à côte.
+ * Les cinq lignes du quotidien qui changent après la formation. Reprises des
+ * cas concrets et de « La réponse » vus plus haut, cette fois en deux colonnes.
  */
 const PAIRES: { sans: string; apres: string }[] = [
   {
@@ -24,17 +25,22 @@ const PAIRES: { sans: string; apres: string }[] = [
     sans: "Un abonnement IA qui dort",
     apres: "Des automatismes qui tournent sur votre poste",
   },
+  {
+    sans: "Le doute sur ce que l'IA peut voir de vos données",
+    apres: "Vous savez quoi confier, quoi garder",
+  },
 ];
 
 /**
- * Section « Comparatif avant / après » (entre « Preuves » et « La réponse ») :
- * kicker, H2 38px et quatre paires « Sans la formation » → « Après ».
+ * Section « Comparatif avant / après » (sur la bande claire, après « La
+ * réponse ») : le format deux colonnes de 8lab (« Ce qui sépare une marque qui
+ * dure d'une boutique de plus ») — H2 à gauche, CTA à droite du titre, puis
+ * colonne « Sans » (rangées × au contour discret, texte atténué) face à la
+ * colonne « Avec » (rangées ✓ sur cartes blanches pleines). L'asymétrie
+ * visuelle — terne contre blanc franc — porte le message.
  *
- * Une carte par paire, et non un tableau : sous sm les deux colonnes s'empilent,
- * et c'est le cadre de la carte qui garde l'avant et l'après d'une même ligne
- * associés — un tableau, lui, aurait dispersé les huit lignes.
- * La colonne « sans » est en retrait (texte atténué, marqueur × en anneau creux)
- * face à la colonne « après », affirmée (blanc semi-gras, pastille ✓ écume).
+ * Sous md, les deux colonnes s'empilent : « Sans » d'abord, « Avec » ensuite,
+ * dans l'ordre de lecture du récit.
  */
 export function AvantApres() {
   return (
@@ -46,29 +52,43 @@ export function AvantApres() {
         className="absolute right-[130px] top-[62px] hidden lg:block"
       />
 
-      <div className="max-w-[640px]">
-        <Kicker className="text-faint-sur-ink!">
-          Avant / après · votre quotidien, ligne à ligne
-        </Kicker>
-        <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-          Ce qui{" "}
-          <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-            change
-          </span>{" "}
-          après les deux demi-journées.
-        </h2>
+      <div
+        data-apparition=""
+        className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"
+      >
+        <div className="max-w-[640px]">
+          <KickerPill>Avant / après</KickerPill>
+          <h2 className="mt-[20px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
+            Ce qui{" "}
+            <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+              change
+            </span>{" "}
+            après les deux demi-journées.
+          </h2>
+        </div>
+        {/* CTA à droite du titre, comme le « Rejoindre maintenant » du modèle —
+            mais dans la charte : bouton canard, pas de point vert. */}
+        <ReservationTrigger className="inline-flex min-h-11 flex-none items-center gap-[13px] self-start rounded-btn bg-canard py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark lg:self-auto">
+          Réserver ma place
+          <Chevron />
+        </ReservationTrigger>
       </div>
 
-      {/* Même largeur de lecture et même rythme de liste que la FAQ. */}
-      <ul className="mt-[34px] flex max-w-[860px] flex-col gap-3">
-        {PAIRES.map((paire) => (
-          <li
-            key={paire.apres}
-            className="grid grid-cols-1 gap-3 rounded-card border border-line-sur-ink bg-surface-sur-ink px-5 py-[18px] sm:grid-cols-2 sm:gap-5 sm:px-6 sm:py-5"
-          >
-            <div>
-              <Etiquette>Sans la formation</Etiquette>
-              <div className="mt-2 flex items-center gap-2.5 text-[14.5px] leading-[1.5] text-faint-sur-ink">
+      <div className="mt-[34px] grid grid-cols-1 gap-9 md:grid-cols-2 md:gap-8">
+        {/* Colonne « Sans » : rangées ternes, contour discret. */}
+        <div data-apparition="">
+          <h3 className="text-[16px] font-bold tracking-[-0.01em]">
+            Sans la formation
+          </h3>
+          <p className="mt-2 text-[15px] leading-[1.55] text-body-sur-ink">
+            Chaque tâche répétitive reste la vôtre, soir après soir.
+          </p>
+          <ul className="mt-5 flex flex-col gap-3">
+            {PAIRES.map((paire) => (
+              <li
+                key={paire.sans}
+                className="flex items-center gap-3 rounded-card border border-line-sur-ink px-5 py-[15px] text-[14.5px] leading-[1.5] text-faint-sur-ink"
+              >
                 {/* Anneau creux, à l'opposé de la pastille ✓ pleine d'en face. */}
                 <span
                   aria-hidden
@@ -77,56 +97,43 @@ export function AvantApres() {
                   ×
                 </span>
                 <span>{paire.sans}</span>
-              </div>
-            </div>
-            {/* Le filet sépare les deux moitiés : horizontal quand elles sont
-                empilées, vertical dès qu'elles passent côte à côte. */}
-            <div className="border-t border-line-sur-ink pt-3 sm:border-l sm:border-t-0 sm:pl-5 sm:pt-0">
-              <Etiquette>Après</Etiquette>
-              <CheckItem
-                className="mt-2 font-semibold"
-                dotBg="var(--color-ecume-sur-ink)"
-                dotText="var(--color-ecume)"
-              >
-                {paire.apres}
-              </CheckItem>
-            </div>
-          </li>
-        ))}
-      </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      {/* CTA intermédiaire : quatre écrans séparent le héro de « La formation »,
-          ce lien y ramène sans concurrencer « Réserver ma place ». */}
-      <div className="mt-7">
-        <LienProgramme />
+        {/* Colonne « Avec » : rangées affirmées sur cartes pleines. */}
+        <div
+          data-apparition=""
+          style={{ ["--apparition-delai" as string]: "150ms" }}
+        >
+          <h3 className="text-[16px] font-bold tracking-[-0.01em]">
+            Avec Marssane
+          </h3>
+          <p className="mt-2 text-[15px] leading-[1.55] text-body-sur-ink">
+            Un système construit par vous, qui tourne dès la deuxième session.
+          </p>
+          <ul className="mt-5 flex flex-col gap-3">
+            {PAIRES.map((paire) => (
+              <li
+                key={paire.apres}
+                className="rounded-card border border-line-sur-ink bg-surface-sur-ink px-5 py-[15px]"
+              >
+                {/* Cette section traverse les deux tonalités (bande claire) :
+                    la pastille passe par les tokens `--color-check-*`, que
+                    `.sur-toile` repose sur l'écume pleine. */}
+                <CheckItem
+                  className="font-semibold"
+                  dotBg="var(--color-check-bg)"
+                  dotText="var(--color-check-mark)"
+                >
+                  {paire.apres}
+                </CheckItem>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
-  );
-}
-
-/** Étiquette de colonne : mono capitales atténué, comme le label « Vécu chez ». */
-function Etiquette({ children }: { children: ReactNode }) {
-  return (
-    <div className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-faint-sur-ink">
-      {children}
-    </div>
-  );
-}
-
-/**
- * Lien secondaire vers « La formation » : idiome du lien turquoise sur l'encre
- * (cf. FAQ) + la flèche des CTA. `min-h-11` porte la cible tactile à 44 px.
- */
-function LienProgramme() {
-  return (
-    <a
-      href="#formation"
-      className="inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold text-turquoise transition-colors hover:text-white motion-reduce:transition-none"
-    >
-      Voir le programme
-      <span aria-hidden className="text-[1.1em] leading-none">
-        →
-      </span>
-    </a>
   );
 }

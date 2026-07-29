@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/site/Footer";
+import { Chevron } from "@/components/ui/Chevron";
 import { Kicker } from "@/components/ui/Kicker";
 
 export const metadata: Metadata = {
@@ -26,11 +27,9 @@ export default function NotFound() {
               </p>
               <Link
                 href="/"
-                className="mt-7 inline-flex items-center gap-2 text-[15px] font-semibold text-turquoise hover:text-white"
+                className="mt-7 inline-flex items-center gap-2.5 text-[15px] font-semibold text-turquoise hover:text-white"
               >
-                <span aria-hidden className="text-[1.1em] leading-none">
-                  ←
-                </span>
+                <Chevron direction="left" />
                 Retour à l&apos;accueil
               </Link>
             </div>

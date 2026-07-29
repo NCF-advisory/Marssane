@@ -1,4 +1,4 @@
-import { Kicker } from "@/components/ui/Kicker";
+import { KickerPill } from "@/components/ui/KickerPill";
 import { PlusMark } from "@/components/ui/PlusMark";
 
 /**
@@ -67,9 +67,9 @@ export function Reponse() {
         className="absolute right-[90px] top-[60px] hidden lg:block"
       />
 
-      <div className="max-w-[680px]">
-        <Kicker className="text-faint-sur-ink!">La réponse · vous former</Kicker>
-        <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
+      <div data-apparition="" className="max-w-[680px]">
+        <KickerPill>La réponse</KickerPill>
+        <h2 className="mt-[20px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
           Ces situations, vous apprenez à les régler{" "}
           <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
             vous-même
@@ -88,6 +88,8 @@ export function Reponse() {
         {POINTS.map((point, i) => (
           <article
             key={point.titre}
+            data-apparition=""
+            style={{ ["--apparition-delai" as string]: `${i * 150}ms` }}
             className="rounded-card border border-line-sur-ink bg-surface-sur-ink p-6"
           >
             {/* Le canard manque de contraste sur l'encre : numéros en turquoise. */}

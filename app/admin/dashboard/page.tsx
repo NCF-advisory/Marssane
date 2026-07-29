@@ -92,7 +92,7 @@ export default async function AdminDashboardPage() {
         <h1 className="text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em]">
           Tableau de bord
         </h1>
-        <Button href="/admin/dashboard/sessions/new" arrow>
+        <Button href="/admin/dashboard/sessions/new" chevron>
           Créer une session
         </Button>
       </div>

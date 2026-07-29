@@ -1,3 +1,4 @@
+import { Chevron } from "@/components/ui/Chevron";
 import { PlusMark } from "@/components/ui/PlusMark";
 import { ReservationTrigger } from "./ReservationTrigger";
 
@@ -26,7 +27,10 @@ export function Reservation({ mention }: { mention?: string | null }) {
 
       {/* Carte encre : pas d'ombre portée (invisible sur l'encre), le cadre
           hairline blanc suffit à la détacher du fond. */}
-      <div className="relative overflow-hidden rounded-card border border-line-sur-ink bg-surface-sur-ink px-6 py-12 text-center sm:px-10 sm:py-14">
+      <div
+        data-apparition=""
+        className="relative overflow-hidden rounded-card border border-line-sur-ink bg-surface-sur-ink px-6 py-12 text-center sm:px-10 sm:py-14"
+      >
         <span className="absolute left-[26px] top-[22px] font-mono text-[15px] leading-none text-line-sur-ink">
           +
         </span>
@@ -54,16 +58,13 @@ export function Reservation({ mention }: { mention?: string | null }) {
           </span>
         </h2>
         <p className="mx-auto mt-[18px] max-w-[460px] text-[16.5px] leading-[1.55] text-body-sur-ink">
-          Deux demi-journées à caler selon votre agenda, de la pratique entre
-          les deux. À la fin, votre boîte se trie toute seule, parce que vous
-          l&apos;aurez construit.
+          Deux demi-journées à caler selon votre agenda : à la fin, votre boîte
+          se trie toute seule.
         </p>
 
-        <ReservationTrigger className="mt-7 inline-flex items-center gap-2.5 rounded-btn bg-canard px-[30px] py-4 text-[16.5px] font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark">
+        <ReservationTrigger className="mt-7 inline-flex items-center gap-[13px] rounded-btn bg-canard py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark">
           Réserver ma place
-          <span aria-hidden className="text-[18px] leading-none">
-            →
-          </span>
+          <Chevron />
         </ReservationTrigger>
 
         <div className="mt-4 text-[13px] text-faint-sur-ink">

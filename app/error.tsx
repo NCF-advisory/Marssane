@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/site/Footer";
+import { Chevron } from "@/components/ui/Chevron";
 import { Kicker } from "@/components/ui/Kicker";
 
 /**
@@ -45,17 +46,15 @@ export default function Error({
                 <button
                   type="button"
                   onClick={reset}
-                  className="inline-flex items-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-base font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark"
+                  className="inline-flex items-center gap-[13px] rounded-btn bg-canard py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark"
                 >
                   Réessayer
                 </button>
                 <Link
                   href="/"
-                  className="inline-flex items-center gap-2 text-[15px] font-semibold text-turquoise hover:text-white"
+                  className="inline-flex items-center gap-2.5 text-[15px] font-semibold text-turquoise hover:text-white"
                 >
-                  <span aria-hidden className="text-[1.1em] leading-none">
-                    ←
-                  </span>
+                  <Chevron direction="left" />
                   Retour à l&apos;accueil
                 </Link>
               </div>

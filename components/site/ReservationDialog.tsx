@@ -5,6 +5,7 @@ import {
   type InscriptionState,
   submitInscription,
 } from "@/app/actions/inscription";
+import { Chevron } from "@/components/ui/Chevron";
 import { controlClassSurInk, Field } from "@/components/ui/Field";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
 
@@ -100,9 +101,17 @@ export function ReservationDialog({
       // Tonalité encre : la carte est un cran plus claire que la page, que le
       // ::backdrop assombrit encore — c'est ce qui la détache, l'ombre portée
       // étant invisible sur l'encre.
+      // `text-white` est indispensable et n'est PAS redondant avec l'encre
+      // inversée du <body> : la feuille de style du navigateur déclare
+      // `dialog { color: CanvasText; background-color: Canvas }`, et une
+      // déclaration — même d'origine UA — l'emporte toujours sur une valeur
+      // héritée. Sans couleur explicite ici, tout le contenu de la modale qui
+      // n'en déclare pas (le titre, les libellés du kit Field) héritait donc du
+      // noir de `CanvasText`, illisible sur la carte. Poser la couleur sur le
+      // <dialog> rétablit le contexte de tonalité que le contenu suppose.
       // `100dvh` et non `100vh` : sur mobile, `vh` compte la barre d'URL
       // rétractée, et la modale dépassait donc la fenêtre réellement visible.
-      className="open:flex max-h-[calc(100dvh-64px)] w-[640px] max-w-[calc(100vw-32px)] flex-col overflow-hidden rounded-card border border-line-sur-ink bg-surface-sur-ink p-0 backdrop:bg-[rgba(14,14,18,0.72)]"
+      className="open:flex max-h-[calc(100dvh-64px)] w-[640px] max-w-[calc(100vw-32px)] flex-col overflow-hidden rounded-card border border-line-sur-ink bg-surface-sur-ink p-0 text-white backdrop:bg-[rgba(14,14,18,0.72)]"
     >
       {/* 44 px de cible tactile, et fond opaque (couleur de la carte) : le
           formulaire défile dessous, le bouton ne doit pas se superposer au
@@ -319,14 +328,10 @@ export function ReservationDialog({
               type="submit"
               disabled={isPending}
               aria-busy={isPending}
-              className="inline-flex items-center gap-2.5 rounded-btn bg-canard px-[30px] py-4 text-[16.5px] font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex items-center gap-[13px] rounded-btn bg-canard py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isPending ? "Envoi…" : "Réserver ma place"}
-              {!isPending && (
-                <span aria-hidden className="text-[1.1em] leading-none">
-                  →
-                </span>
-              )}
+              {!isPending && <Chevron />}
             </button>
           </div>
           </form>
