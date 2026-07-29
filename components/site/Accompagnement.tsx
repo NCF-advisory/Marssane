@@ -12,20 +12,20 @@ const TEMPS: {
 }[] = [
   {
     repere: "01",
-    titre: "Session 1 · en salle",
-    texte: "Les bases, puis votre tri de mails : il tourne avant la fin.",
+    titre: "Session 1 · en physique",
+    texte: "Les bases.",
     vignette: <VignetteFormateur />,
   },
   {
     repere: "01 → 02",
     titre: "Entre les deux · à votre rythme",
-    texte: "Vous transposez sur votre boîte, le chat commun reste ouvert.",
+    texte: "Un chat ouvert sur lequel vous pouvez poser vos questions.",
     vignette: <VignetteEntreDeux />,
   },
   {
     repere: "02",
     titre: "Session 2 · votre cas",
-    texte: "Chacun construit son propre cas et le démontre au groupe.",
+    texte: "Chacun construit sur son cas personnalisé.",
     vignette: <VignetteReseau />,
   },
 ];

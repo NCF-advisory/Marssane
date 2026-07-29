@@ -38,7 +38,7 @@ const STATS: [Stat, Stat, Stat] = [
     legende: <strong>gagnées chaque semaine</strong>,
   },
   {
-    label: "Nouveaux utilisateurs",
+    label: "Pour les nouveaux utilisateurs",
     valeur: "+34",
     unite: "%",
     legende: <strong>de productivité</strong>,
