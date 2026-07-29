@@ -573,11 +573,8 @@ body {
     }
   }
 
-  /* Pause à la lecture. (La variante :focus-within a été retirée : plus aucun
-     élément focalisable dans les cartes depuis le retrait des liens sources.) */
-  .paroles-mur:hover .paroles-piste {
-    animation-play-state: paused;
-  }
+  /* Pas de pause au survol : décision propriétaire du 29/07/2026 — le mur
+     défile en continu, curseur dessus ou non. */
 }
 
 /* Le mur rogne au milieu des cartes, en haut comme en bas : un fondu vers le
