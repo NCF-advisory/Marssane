@@ -12,7 +12,7 @@ const TEMPS: {
 }[] = [
   {
     repere: "01",
-    titre: "Session 1 · en physique",
+    titre: "Session 1 · Général",
     texte: "Les bases.",
     vignette: <VignetteFormateur />,
   },
