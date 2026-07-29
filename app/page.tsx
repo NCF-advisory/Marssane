@@ -8,8 +8,8 @@ import { CasConcrets } from "@/components/site/CasConcrets";
 import { Faq } from "@/components/site/Faq";
 import { Footer } from "@/components/site/Footer";
 import { Formateur } from "@/components/site/Formateur";
+import { FormationsDeuxNiveaux } from "@/components/site/FormationsDeuxNiveaux";
 import { Hero } from "@/components/site/Hero";
-import { OffresNiveaux } from "@/components/site/OffresNiveaux";
 import { Parcours } from "@/components/site/Parcours";
 import { ParolesDirigeants } from "@/components/site/ParolesDirigeants";
 import { Reponse } from "@/components/site/Reponse";
@@ -71,7 +71,7 @@ export default async function Home() {
           <AvantApres />
         </BandeToile>
         <Alignement />
-        <OffresNiveaux />
+        <FormationsDeuxNiveaux />
         <Reservation mention={mention} />
         {/* La réservation referme déjà sur 90 px d'encre : la bande n'a pas
             besoin de marge haute, seulement de rendre à la FAQ (talon de 8 px)
