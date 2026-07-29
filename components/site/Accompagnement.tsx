@@ -25,7 +25,7 @@ const TEMPS: {
   {
     repere: "02",
     titre: "Session 2 · votre cas",
-    texte: "Chacun construit sur son cas personnalisé.",
+    texte: "Chacun construit sur son cas personnalisé : automatisation, skill, MCP.",
     vignette: <VignetteReseau />,
   },
 ];
