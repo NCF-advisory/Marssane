@@ -172,20 +172,21 @@ export default function StyleguidePage() {
         {/* ===== Boutons ===== */}
         <Section index="03 · Boutons" title="Actions">
           <div className={`${card} flex flex-wrap items-center gap-4`}>
-            <Button variant="primary" href="#" arrow>
+            <Button variant="primary" href="#" chevron>
               Réserver ma place
             </Button>
-            <Button variant="secondary" href="#" arrow>
+            <Button variant="secondary" href="#" chevron>
               Parler de votre projet
             </Button>
-            <Button variant="link" href="#" arrow>
+            <Button variant="link" href="#" chevron>
               Voir le déroulé de la journée
             </Button>
-            <Button variant="primary">Sans flèche</Button>
+            <Button variant="primary">Sans chevron</Button>
           </div>
           <p className="mt-3 font-mono text-[10.5px] text-quiet">
-            rayon 3 · primaire : padding 15/27 + ombre CTA · hover primaire &amp;
-            lien : canard sombre #095B73
+            rayon 3 · primaire : padding 15/26/15/27 + ombre CTA · hover primaire
+            &amp; lien : canard sombre #095B73 · chevron 8 px / trait 1,5 px en
+            currentColor
           </p>
         </Section>
 

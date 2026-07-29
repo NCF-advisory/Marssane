@@ -1,6 +1,9 @@
 import type { CSSProperties, ReactNode } from "react";
 import { BadgeEcume } from "@/components/ui/BadgeEcume";
 import { CasVisuel } from "@/components/site/CasVisuel";
+import { Chevron } from "@/components/ui/Chevron";
+import { Kicker } from "@/components/ui/Kicker";
+import { PlusMark } from "@/components/ui/PlusMark";
 import { cas1Visuel, cas2Visuel } from "@/lib/site-config";
 
 /**
@@ -17,9 +20,54 @@ import { cas1Visuel, cas2Visuel } from "@/lib/site-config";
 export function CasConcrets() {
   return (
     <>
+      <Intro />
       <Cas1 />
       <Cas2 />
     </>
+  );
+}
+
+/**
+ * Chapeau des deux cas : kicker, H2 38px et paragraphe. Orienté sur ce que le
+ * dirigeant construit pendant la formation — et non sur un résultat déjà
+ * obtenu — tant qu'aucune promotion n'a été formée.
+ */
+function Intro() {
+  return (
+    <section
+      id="usages"
+      className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[100px] sm:px-10"
+    >
+      {/* Décorations motifFond (décoratives) — positions px : masquées sous lg
+          pour ne pas déborder de la fenêtre à 360px (cf. autres sections). */}
+      <PlusMark
+        variant="turquoise"
+        size={19}
+        className="absolute left-[15px] top-[112px] -z-[1] hidden -translate-x-1/2 -translate-y-1/2 lg:block"
+      />
+      <PlusMark
+        variant="grey-sur-ink"
+        size={16}
+        className="absolute right-[150px] top-[108px] hidden lg:block"
+      />
+
+      <div data-apparition="" className="max-w-[680px]">
+        <Kicker className="text-faint-sur-ink!">
+          Les cas · deux situations de votre semaine
+        </Kicker>
+        <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
+          Les cas auxquels vous{" "}
+          <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+            répondez
+          </span>{" "}
+          pendant la formation.
+        </h2>
+        <p className="mt-4 text-[16.5px] leading-[1.58] text-body-sur-ink">
+          Deux situations de votre semaine, réglées en salle sur vos propres
+          documents.
+        </p>
+      </div>
+    </section>
   );
 }
 
@@ -148,7 +196,7 @@ function Cas1() {
     <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-5 pt-[58px] sm:px-10">
       <GridDecor side="right" top={40} height={440} maskX="62%" />
       <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
-        <div className="max-w-[450px]">
+        <div data-apparition="" className="max-w-[450px]">
           <BadgeEcume className={BADGE_SUR_INK}>01</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
             Relancé{" "}
@@ -158,15 +206,18 @@ function Cas1() {
             par le même client ?
           </h3>
           <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body-sur-ink">
-            Votre boîte se trie toute seule : il ne reste que les 6 mails qui
-            comptent, les réponses pré-rédigées dans votre ton. Rien ne part sans
-            vous.
+            Votre boîte se trie toute seule : restent les 6 mails qui comptent,
+            les réponses pré-rédigées dans votre ton.
           </p>
           <VecuChez secteurs={["Experts-comptables", "Services B2B", "Juridique"]} />
         </div>
 
         {cas1Visuel ? (
-          <div className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-end">
+          <div
+            data-apparition=""
+            style={{ ["--apparition-delai" as string]: "150ms" }}
+            className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-end"
+          >
             <CasVisuel visuel={cas1Visuel} />
           </div>
         ) : (
@@ -294,7 +345,11 @@ function Cas2() {
       <GridDecor side="left" top={50} height={440} maskX="42%" />
       <div className="grid grid-cols-1 items-center gap-11 lg:grid-cols-2">
         {cas2Visuel ? (
-          <div className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-start">
+          <div
+            data-apparition=""
+            style={{ ["--apparition-delai" as string]: "150ms" }}
+            className="relative mx-auto w-full max-w-[540px] lg:mx-0 lg:justify-self-start"
+          >
             <CasVisuel visuel={cas2Visuel} />
           </div>
         ) : (
@@ -371,7 +426,10 @@ function Cas2() {
           </Visuel>
         )}
 
-        <div className="order-first max-w-[450px] lg:order-last lg:justify-self-end">
+        <div
+          data-apparition=""
+          className="order-first max-w-[450px] lg:order-last lg:justify-self-end"
+        >
           <BadgeEcume className={BADGE_SUR_INK}>02</BadgeEcume>
           <h3 className="mt-[14px] text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em] sm:text-[32px]">
             Le devis part à 22 h, le client a signé{" "}
@@ -381,9 +439,8 @@ function Cas2() {
             ?
           </h3>
           <p className="mt-4 max-w-[420px] text-[16.5px] leading-[1.58] text-body-sur-ink">
-            Une note vocale entre deux rendez-vous, et le devis chiffré est prêt
-            à valider : vos prix, vos conditions, votre mise en page. Le premier
-            qui répond signe.
+            Une note vocale entre deux rendez-vous, et le devis chiffré est
+            prêt à valider. Le premier qui répond signe.
           </p>
           <VecuChez secteurs={["BTP", "Plomberie", "Industrie"]} />
         </div>
@@ -410,18 +467,16 @@ function Rubrique({ label, children }: { label: string; children: ReactNode }) {
 
 /**
  * Lien secondaire vers « La formation » : idiome du lien turquoise sur l'encre
- * (cf. FAQ) + la flèche des CTA. `min-h-11` porte la cible tactile à 44 px.
+ * (cf. FAQ) + le chevron des CTA. `min-h-11` porte la cible tactile à 44 px.
  */
 function LienProgramme() {
   return (
     <a
       href="#formation"
-      className="inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold text-turquoise transition-colors hover:text-white motion-reduce:transition-none"
+      className="inline-flex min-h-11 items-center gap-2.5 text-[15px] font-semibold text-turquoise transition-colors hover:text-white motion-reduce:transition-none"
     >
       Voir le programme
-      <span aria-hidden className="text-[1.1em] leading-none">
-        →
-      </span>
+      <Chevron />
     </a>
   );
 }

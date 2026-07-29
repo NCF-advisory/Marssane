@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { type ContactState, submitContact } from "@/app/actions/contact";
+import { Chevron } from "@/components/ui/Chevron";
 import { controlClassSurInk, Field } from "@/components/ui/Field";
 
 /**
@@ -187,15 +188,13 @@ export function ContactForm() {
           aria-busy={isPending}
           // Palier mobile sur le padding et le corps du libellé : dans la carte
           // de /implementation, il ne reste que 230 px à 320 px de large, et
-          // « Envoyer ma demande → » passait sur deux lignes.
-          className="inline-flex items-center gap-2.5 rounded-btn bg-canard px-5 py-[15px] text-[15px] font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark disabled:cursor-not-allowed disabled:opacity-70 sm:px-[27px] sm:text-base"
+          // « Envoyer ma demande » suivi du chevron passait sur deux lignes.
+          // À partir de sm, le bouton reprend exactement le gabarit du CTA
+          // primaire (16,5 px / 700, padding 15/26/15/27).
+          className="inline-flex items-center gap-[13px] rounded-btn bg-canard px-5 py-[15px] text-[15px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark disabled:cursor-not-allowed disabled:opacity-70 sm:pl-[27px] sm:pr-[26px] sm:text-[16.5px]"
         >
           {isPending ? "Envoi…" : "Envoyer ma demande"}
-          {!isPending && (
-            <span aria-hidden className="text-[1.1em] leading-none">
-              →
-            </span>
-          )}
+          {!isPending && <Chevron />}
         </button>
       </div>
     </form>

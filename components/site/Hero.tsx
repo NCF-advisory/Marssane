@@ -1,3 +1,4 @@
+import { Chevron } from "@/components/ui/Chevron";
 import { GridBackground } from "@/components/ui/GridBackground";
 import { PlusMark } from "@/components/ui/PlusMark";
 import { HeroMedia } from "./HeroMedia";
@@ -45,11 +46,9 @@ export function Hero() {
             </span>
           </h1>
           <div className="mt-[30px] flex flex-wrap items-center gap-4">
-            <ReservationTrigger className="inline-flex items-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-base font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark">
+            <ReservationTrigger className="inline-flex items-center gap-[13px] rounded-btn bg-canard py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark">
               Réserver ma place
-              <span aria-hidden className="text-[1.1em] leading-none">
-                →
-              </span>
+              <Chevron />
             </ReservationTrigger>
           </div>
         </div>
@@ -59,10 +58,9 @@ export function Hero() {
       </div>
 
       {/* Accroche sous la grille (remplace l'ancien bandeau chiffres) : une
-          seule phrase, en turquoise — la couleur « flash » de la charte sur
-          l'encre. */}
-      <p className="mt-16 text-center font-mono text-[19px] font-semibold leading-[1.35] text-turquoise sm:text-[24px]">
-        Marssane, c&apos;est la formation IA des dirigeants de PME.
+          seule phrase, en blanc et en grand. */}
+      <p className="mt-16 text-center font-mono text-[26px] font-semibold leading-[1.35] text-white sm:text-[38px]">
+        La formation IA pensée pour votre quotidien de dirigeant.
       </p>
     </section>
   );

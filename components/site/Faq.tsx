@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Kicker } from "@/components/ui/Kicker";
+import { KickerPill } from "@/components/ui/KickerPill";
 
 /**
  * Les huit questions qui reviennent avant une pré-inscription, dans l'ordre où
@@ -27,7 +27,7 @@ const QUESTIONS: { question: string; reponse: ReactNode }[] = [
         passer du chat aux automatismes qui tournent seuls. Si vous êtes déjà à
         l&apos;aise, le niveau confirmé est fait pour vous : structurer vos
         usages et gagner du temps sur vos vrais dossiers.{" "}
-        <Link href="/formations" className="text-turquoise underline hover:text-white">
+        <Link href="/formations" className="text-turquoise underline hover:text-fort">
           Voir les trois niveaux
         </Link>
         .
@@ -112,9 +112,9 @@ export function Faq() {
       id="faq"
       className="relative isolate mx-auto max-w-[1180px] px-6 pb-[90px] pt-2 sm:px-10"
     >
-      <div className="max-w-[640px]">
-        <Kicker className="text-faint-sur-ink!">Questions · avant de vous inscrire</Kicker>
-        <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
+      <div data-apparition="" className="max-w-[640px]">
+        <KickerPill>Vos questions</KickerPill>
+        <h2 className="mt-[20px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
           Les questions{" "}
           <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
             qu&apos;on nous pose
@@ -125,7 +125,11 @@ export function Faq() {
 
       {/* Liste sur une colonne, bornée à une largeur de lecture confortable :
           l'accordéon s'ouvre sans faire sauter de voisin. */}
-      <div className="mt-[34px] flex max-w-[860px] flex-col gap-3">
+      <div
+        data-apparition=""
+        style={{ ["--apparition-delai" as string]: "150ms" }}
+        className="mt-[34px] flex max-w-[860px] flex-col gap-3"
+      >
         {QUESTIONS.map((item) => (
           <details
             key={item.question}

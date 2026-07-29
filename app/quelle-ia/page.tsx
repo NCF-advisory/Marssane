@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getClassementSafe } from "@/lib/benchmarks/classement";
 import { Footer } from "@/components/site/Footer";
+import { Chevron } from "@/components/ui/Chevron";
 import { Kicker } from "@/components/ui/Kicker";
 import { HeroRecommandation } from "@/components/site/HeroRecommandation";
 import { GraphiqueEfficacite } from "@/components/quelle-ia/GraphiqueEfficacite";
@@ -113,12 +114,10 @@ function PontFormation() {
         </p>
         <Link
           href="/#formation"
-          className="mt-6 inline-flex items-center gap-2.5 rounded-btn bg-canard px-[27px] py-[15px] text-base font-semibold text-white shadow-cta transition-colors hover:bg-canard-dark"
+          className="mt-6 inline-flex items-center gap-[13px] rounded-btn bg-canard py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark"
         >
           Découvrir la formation
-          <span aria-hidden className="text-[1.1em] leading-none">
-            →
-          </span>
+          <Chevron />
         </Link>
       </div>
     </section>

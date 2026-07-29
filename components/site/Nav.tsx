@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { Chevron } from "@/components/ui/Chevron";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
 import { ReservationTrigger } from "./ReservationTrigger";
 
@@ -155,9 +156,10 @@ export function Nav() {
           onClick={fermer}
           // `min-h-11` : 44 px de cible dans le panneau, neutralisé en desktop
           // où le bouton doit rester exactement celui d'origine.
-          className="mt-2 min-h-11 rounded-btn border-[1.5px] border-white/60 px-5 py-2.5 text-[14.5px] font-semibold text-white transition-colors hover:border-white hover:bg-white hover:text-ink motion-reduce:transition-none lg:mt-0 lg:min-h-0"
+          className="mt-2 flex min-h-11 items-center justify-center gap-[13px] rounded-btn border-[1.5px] border-white/60 px-5 py-2.5 text-[14.5px] font-semibold text-white transition-colors hover:border-white hover:bg-white hover:text-ink motion-reduce:transition-none lg:mt-0 lg:min-h-0"
         >
           Réserver ma place
+          <Chevron />
         </ReservationTrigger>
       </nav>
     </header>

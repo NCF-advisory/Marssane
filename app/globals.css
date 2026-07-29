@@ -59,12 +59,39 @@
      Texte écume dessus : 14,6:1. */
   --color-ecume-sur-ink: rgba(199, 247, 239, 0.1);
 
-  /* Messages d'erreur de formulaire — seule couleur du kit dont la valeur
-     dépend de la tonalité : le clay foncé passe AA sur la toile claire (7,9:1)
-     mais pas sur l'encre (2,2:1), et le clay clair l'inverse (4,0:1 / 4,8:1).
+  /* Couleur de texte la plus affirmée de la tonalité courante : blanc sur
+     l'encre, encre sur la toile. Sert aux survols de liens des sections de la
+     landing, qui traversent désormais les deux tonalités (cf. `.sur-toile`). */
+  --color-fort: #ffffff;
+
+  /* Pastille ✓ des listes qui traversent les deux tonalités. Sur l'encre,
+     l'écume pleine brûlerait : on garde l'écume en texte sur un fond en alpha
+     très faible ; `.sur-toile` repose l'écume pleine et son encre. */
+  --color-check-bg: var(--color-ecume-sur-ink);
+  --color-check-mark: var(--color-ecume);
+
+  /* Astérisque des champs obligatoires du kit `Field`, qui traverse les deux
+     tonalités. Le canard, couleur d'action de la maquette claire, ne fait que
+     3,3:1 sur la carte encre #16161A où sont posés les deux formulaires du site
+     vitrine : d'où ce token plutôt qu'une couleur en dur. Le turquoise, lui,
+     donne 9,3:1 sur cette carte — et les bandes claires de la landing sont
+     couvertes sans rien ajouter, `.sur-toile` remappant déjà le turquoise vers
+     le canard ; seuls les espaces protégés (`.toile-washes`, où le turquoise
+     reste turquoise pour les usages décoratifs) le reposent explicitement. */
+  --color-requis: var(--color-turquoise);
+
+  /* Messages d'erreur de formulaire — couleur du kit dont la valeur dépend de la
+     tonalité : le clay foncé passe AA sur la toile claire (#8C3A30, 6,7:1) mais
+     pas sur l'encre, et le clay clair l'inverse.
      Valeur par défaut = tonalité encre (celle du site vitrine) ;
-     `.toile-washes` repose celle de la toile claire. */
-  --color-erreur: #c75a4d;
+     `.toile-washes` repose celle de la toile claire.
+     Le clay plein #C75A4D avait été retenu ici sur une mesure faite contre le
+     fond de page (#0E0E12, 4,6:1) ; or les deux formulaires du site vitrine sont
+     posés sur une carte #16161A, où il retombait à 4,3:1 — et à 3,7:1 dans le
+     bandeau d'erreur globale, qui pose le clay à 14 % sous le texte. Éclairci de
+     16 % vers le blanc, à teinte constante : carte 5,5:1 · bandeau 4,8:1 ·
+     fond de page 5,9:1. */
+  --color-erreur: #d07469;
 
   /* Fonds de barres (jauges) */
   --color-bar-track: #e6e9ed;
@@ -142,14 +169,56 @@ body {
 /* Washes radiaux du fond de page (4 radial-gradients du <div> racine de la maquette). */
 .toile-washes {
   /* Les erreurs de formulaire reprennent leur clay foncé sur la toile claire
-     (cf. --color-erreur). */
+     (cf. --color-erreur), et l'astérisque des champs obligatoires le canard
+     (5,5:1 sur les cartes blanches ; le turquoise n'y ferait que 1,7:1). */
   --color-erreur: var(--color-ink-clay);
+  --color-requis: var(--color-canard);
   background-color: var(--color-toile);
   background-image:
     radial-gradient(34% 22% at 94% 0%, rgba(199, 247, 239, 0.55), rgba(199, 247, 239, 0) 70%),
     radial-gradient(30% 18% at 2% 10%, rgba(199, 210, 247, 0.5), rgba(199, 210, 247, 0) 70%),
     radial-gradient(28% 14% at 98% 46%, rgba(199, 210, 247, 0.32), rgba(199, 210, 247, 0) 72%),
     radial-gradient(30% 12% at 4% 78%, rgba(199, 247, 239, 0.4), rgba(199, 247, 239, 0) 72%);
+}
+
+/* ===== Bande de tonalité claire dans la landing =====
+   L'accueil alterne bandes encre et bandes toile, sur le modèle relevé chez
+   8lab-ecosystem.com le 29/07/2026 : leurs sections claires (#F7F7F8)
+   succèdent directement aux sections noires, sans filet, sans marge et sans
+   rayon — coupes franches. C'est ce qui est reproduit ici.
+
+   Plutôt que de dupliquer les classes de chaque section, `.sur-toile` REMAPPE
+   les tokens `-sur-ink` vers leurs équivalents clairs : le même markup rend
+   correctement dans les deux tonalités, et les sections conservées (Réponse,
+   avant / après, FAQ) basculent sans être réécrites.
+
+   À poser sur un conteneur pleine largeur qui enveloppe la ou les sections
+   concernées — les sections gardent leur `mx-auto max-w-[1180px]`.
+
+   Contrastes vérifiés sur la toile #EEF1F3 :
+   encre 17,3:1 · corps #3C4654 8,6:1 · atténué #5B6472 5,3:1 ·
+   canard #0E7291 4,9:1 · encre écume #006560 sur écume 6,9:1. */
+.sur-toile {
+  background-color: var(--color-toile);
+  color: var(--color-ink);
+
+  --color-body-sur-ink: var(--color-body);
+  /* Le gris atténué de l'encre (#98A1AC) tombe à 2,1:1 sur la toile : kickers,
+     étiquettes et mentions reprennent le slate de la maquette claire. */
+  --color-faint-sur-ink: var(--color-slate);
+  /* Miroir exact du filet blanc à 16 % : noir à 16 % sur la toile. */
+  --color-line-sur-ink: var(--color-outline);
+  --color-surface-sur-ink: var(--color-surface);
+  --color-ecume-sur-ink: var(--color-ecume);
+  --color-check-bg: var(--color-ecume);
+  --color-check-mark: var(--color-ink-ecume);
+  /* Le turquoise ne fait que 1,9:1 sur la toile. La tonalité claire lui
+     substitue le canard (4,9:1), qui est la couleur d'action de la maquette
+     d'origine : numéros, liens, chevrons et repères « + » suivent. Le
+     surlignage `bg-canard` + texte blanc, lui, marche sur les deux fonds et ne
+     bouge pas. */
+  --color-turquoise: var(--color-canard);
+  --color-fort: var(--color-ink);
 }
 
 /* Quadrillage de la toile — pas 80 px (64 px en mobile), ligne 1 px.
@@ -346,6 +415,41 @@ body {
   }
 }
 
+/* ===== Apparition au défilement des blocs de la landing =====
+   Valeurs relevées au navigateur sur 8lab-ecosystem.com (1280 × 900, le
+   29/07/2026), qui est le modèle de tunnel retenu pour la page d'accueil :
+     - état armé   : opacity 0 · translateY(24px)
+     - état révélé : opacity 1 · translateY(0)
+     - transition  : 700 ms, easing `ease` (défaut CSS), sur opacity + transform
+     - cascade     : 150 ms entre les éléments d'un même groupe
+                     (mesuré 0 s / 0,15 s / 0,30 s / 0,45 s sur une rangée)
+     - déclencheur : dès l'entrée de l'élément dans le viewport
+   Le décalage de cascade se pose élément par élément via `--apparition-delai`.
+
+   Piloté par l'attribut `data-apparition` que <Apparitions> pose côté client
+   (« pending » avant le paint, « in » au passage dans le viewport) — même
+   idiome que la révélation des blocs de /formations. La transition n'est
+   déclarée que pour l'état « in » : l'armement est donc instantané.
+
+   Écart assumé par rapport au modèle : tout est enveloppé dans
+   `prefers-reduced-motion: no-preference`. En mouvement réduit — comme sans JS,
+   où l'attribut n'est jamais armé — aucune règle ne s'applique et le contenu
+   est visible d'emblée, sans le moindre décalage. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-apparition="pending"] {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  [data-apparition="in"] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 700ms ease var(--apparition-delai, 0ms),
+      transform 700ms ease var(--apparition-delai, 0ms);
+  }
+}
+
 /* Indicateur de scroll du héro (/formations) : le « + » du cue « pop » une
    seule fois au montage, comme le « + » de la modale de pré-inscription. Hors
    reduced-motion uniquement ; sinon le « + » est directement visible (état de
@@ -412,13 +516,19 @@ body {
    Mécanique reprise du mur de témoignages de 8lab-ecosystem.com : le mur est un
    conteneur à hauteur fixe qui rogne, et chaque colonne est une piste en
    position absolue qui glisse en continu d'exactement −50 % de sa hauteur en
-   120 s, linéaire, à l'infini.
+   60 s, linéaire, à l'infini.
+
+   60 s et non les 120 s de 8lab : un cycle vaut ici ≈ 1 000 à 1 070 px (les
+   cartes sont de hauteur libre, les trois colonnes diffèrent un peu), soit
+   ≈ 9 px/s à 120 s — un mouvement qu'on ne voit pas sans faire défiler la page,
+   et le mur passe pour figé. À 60 s on est à ≈ 17 à 18 px/s : le glissement se
+   lit d'emblée à l'arrêt, et une carte reste sous les yeux une quinzaine de
+   secondes — assez pour lire la citation, d'autant que le survol met en pause.
 
    La boucle est sans couture parce que le contenu de chaque piste est dupliqué
    (deux fois la même séquence de citations) : −50 % correspond alors très
    exactement à un cycle, et l'image d'arrivée est identique à l'image de
-   départ. Les exemplaires dupliqués sont `aria-hidden` et leurs liens sortis de
-   la tabulation, côté composant.
+   départ. Les exemplaires dupliqués sont `aria-hidden`, côté composant.
 
    L'espacement entre cartes est porté par une marge basse sur CHAQUE carte, et
    non par `gap` : avec `gap`, la dernière carte de la séquence n'a pas de
@@ -439,7 +549,7 @@ body {
 @media (prefers-reduced-motion: no-preference) {
   .paroles-piste {
     will-change: transform;
-    animation: paroles-piste-defile 120s linear infinite;
+    animation: paroles-piste-defile 60s linear infinite;
   }
 
   .paroles-piste[data-sens="bas"] {
@@ -464,10 +574,8 @@ body {
     }
   }
 
-  .paroles-mur:hover .paroles-piste,
-  .paroles-mur:focus-within .paroles-piste {
-    animation-play-state: paused;
-  }
+  /* Pas de pause au survol : décision propriétaire du 29/07/2026 — le mur
+     défile en continu, curseur dessus ou non. */
 }
 
 /* Le mur rogne au milieu des cartes, en haut comme en bas : un fondu vers le
