@@ -39,10 +39,11 @@ type Citation = {
   /**
    * Fichier de `public/img/logos-temoignages/` : logo officiel de la société,
    * normalisé en 256 × 256 transparent (cf. le tableau des sources dans le
-   * rapport de mise à jour du 29/07/2026). 256 px et non 96 : à 20 px de côté
-   * sur un écran Retina, `next/image` demande la variante 2× (`w=256`), et
-   * l'optimiseur ne suragrandit jamais — un fichier source de 96 px plafonnait
-   * la variante 2× à 96 px et se voyait.
+   * rapport de mise à jour du 29/07/2026). 256 px et non 96 : `next/image`
+   * demande la variante 2× sur un écran Retina, et l'optimiseur ne suragrandit
+   * JAMAIS — un fichier source trop petit plafonne la variante 2× à sa propre
+   * taille, et ça se voit. C'est ce qui rend l'agrandissement de la tuile à
+   * 64 px indolore : le logo affiché à 50 px reçoit toujours 256 px réels.
    */
   logo: string;
   /* Les trois champs suivants ne sont PLUS affichés : sources conservées en
@@ -197,9 +198,12 @@ const CITATIONS: Citation[] = [
 /**
  * Répartition des citations dans les trois colonnes du mur animé, en
  * tourniquet (`i % 3`). Distribution volontairement mécanique plutôt que
- * réglée à la main : elle conserve l'ordre éditorial en lecture verticale et
- * équilibre déjà les colonnes (≈ 750 / 870 / 700 caractères), ce qui suffit
- * pour des pistes qui défilent.
+ * réglée à la main : elle conserve l'ordre éditorial en lecture verticale.
+ *
+ * Depuis que la citation est clampée à 4 lignes avec un plancher de même
+ * hauteur (cf. `Carte`), les cartes sont toutes identiques : les trois colonnes
+ * portent 4 cartes chacune et ont donc exactement le même cycle, sans qu'il y
+ * ait plus rien à équilibrer à la main.
  */
 const COLONNES = [0, 1, 2].map((colonne) =>
   CITATIONS.filter((_, i) => i % 3 === colonne),
@@ -314,50 +318,65 @@ export function ParolesDirigeants() {
  * Carte de citation. Sa largeur est décidée par le conteneur (fixe dans le
  * rail, pleine colonne dans le mur), pas par la carte.
  *
- * La signature tient sur deux lignes — nom, puis société seule — précédées du
- * logo de la société. Le logo est purement décoratif (`alt=""` + `aria-hidden`) :
- * le nom de la société est juste à côté, en texte.
+ * Composition voulue par le propriétaire le 29/07/2026 : le logo domine, le
+ * texte passe au second plan. D'où l'identité en TÊTE de carte (`figcaption`
+ * premier enfant du `figure`, ce que la spec autorise au même titre que
+ * dernier) — tuile logo de 64 px, soit un peu moins d'un tiers de la hauteur de
+ * carte, avec nom et société à côté — puis la citation sous un filet.
  *
- * La pastille est la même pour les douze logos : filet + fond blanc à 6 %, et
- * non un fond blanc franc. Testé sur la carte encre, le blanc franc efface les
+ * Le guillemet turquoise est passé en tête de paragraphe au lieu d'occuper sa
+ * propre ligne : il garde l'accent de couleur sans coûter les ~34 px de hauteur
+ * qui servent maintenant à la tuile.
+ *
+ * TRONCATURE — `line-clamp-4` est un choix d'AFFICHAGE, pas une coupe
+ * éditoriale : les verbatims restent intégraux dans `CITATIONS` (convention du
+ * fichier : ne pas reformuler, cf. le docblock en tête). Le clamp CSS a été
+ * préféré à une coupe dans les données parce qu'il n'engage aucune réécriture
+ * des citations, qu'il est réversible d'une classe, et qu'il aligne les cartes
+ * sur une hauteur commune — ce qui équilibre les trois pistes du mur.
+ *
+ * La tuile est la même pour les douze logos : filet + fond blanc à 6 %, et non
+ * un fond blanc franc. Testé sur la carte encre, le blanc franc efface les
  * trois logos clairs (Bluetainer en filaire blanc, le bonhomme crème de Diadem,
  * le sceau blanc des notaires de Caen) alors que le fond discret laisse lire les
  * douze — un seul gabarit, un seul fond, mur homogène.
  */
 function Carte({ citation }: { citation: Citation }) {
   return (
-    <figure className="flex h-full w-full flex-col rounded-card border border-line-sur-ink bg-surface-sur-ink px-5 py-[20px] sm:px-6 sm:py-[22px]">
-      <span
-        aria-hidden
-        className="font-mono text-[26px] leading-none text-turquoise"
-      >
-        &ldquo;
-      </span>
-      <blockquote className="mt-2.5 grow text-[13.5px] leading-[1.62] text-body-sur-ink">
-        {citation.texte}
-      </blockquote>
-      <figcaption className="mt-4 flex items-center gap-2.5 border-t border-line-sur-ink pt-3.5">
+    <figure className="flex h-full w-full flex-col rounded-card border border-line-sur-ink bg-surface-sur-ink px-5 py-[18px] sm:px-6 sm:py-5">
+      <figcaption className="flex items-center gap-3.5">
         <span
           aria-hidden
-          className="flex size-[26px] shrink-0 items-center justify-center rounded-[7px] border border-line-sur-ink bg-white/[0.06]"
+          className="flex size-16 shrink-0 items-center justify-center rounded-[14px] border border-line-sur-ink bg-white/[0.06]"
         >
           <Image
             src={`/img/logos-temoignages/${citation.logo}`}
             alt=""
-            width={96}
-            height={96}
-            className="size-5 object-contain"
+            width={128}
+            height={128}
+            className="size-[50px] object-contain"
           />
         </span>
         <div className="min-w-0">
-          <div className="text-[13px] font-semibold leading-[1.3] text-white">
+          <div className="text-[14px] font-semibold leading-[1.25] text-white">
             {citation.auteur}
           </div>
-          <div className="mt-0.5 text-[12px] leading-[1.4] text-body-sur-ink">
+          <div className="mt-1 line-clamp-2 text-[12.5px] leading-[1.35] text-body-sur-ink">
             {citation.societe}
           </div>
         </div>
       </figcaption>
+      <blockquote className="mt-[18px] grow border-t border-line-sur-ink pt-4">
+        {/* `min-h` = les 4 lignes du clamp (4 × 13,5 px × 1,62). Le plancher et
+            le plafond se rejoignent : toutes les cartes font la même hauteur,
+            les trois pistes du mur ont donc exactement le même cycle. */}
+        <p className="line-clamp-4 min-h-[88px] text-[13.5px] leading-[1.62] text-body-sur-ink">
+          <span aria-hidden className="font-mono text-turquoise">
+            &ldquo;
+          </span>
+          {citation.texte}
+        </p>
+      </blockquote>
     </figure>
   );
 }
