@@ -13,7 +13,7 @@ const TEMPS: {
   {
     repere: "01",
     titre: "Session 1 · Général",
-    texte: "Les bases.",
+    texte: "Vous apprenez les bases : contexte, prompt, modèles.",
     vignette: <VignetteFormateur />,
   },
   {
