@@ -12,8 +12,8 @@ import { PlusMark } from "@/components/ui/PlusMark";
  * sélectionné à droite. Un seul cas est ouvert à la fois, le premier par défaut.
  *
  * Ordre strict du panneau, comme sur le modèle : titre descriptif sobre (pas de
- * surlignage canard, réservé au H2 du chapeau) → description → chips secteurs →
- * visuel en dessous. Rien d'autre.
+ * surlignage canard, réservé au H2 du chapeau) → description → visuel en
+ * dessous. Rien d'autre.
  *
  * À partir de lg, la carte garde la même hauteur quel que soit le cas ouvert :
  * les six panneaux sont empilés dans la même zone de grille et les inactifs sont
@@ -42,7 +42,6 @@ type Cas = {
    */
   titre: string;
   description: string;
-  secteurs: string[];
   /**
    * Visuel 3D du cas (WebP 5:4 dans `public/img/cas/`, même convention que
    * `heroVideo` dans lib/site-config.ts) : `null` → la composition de la
@@ -59,7 +58,6 @@ const CAS: Cas[] = [
     titre: "Relancé 25 fois par le même client\u00A0?",
     description:
       "Votre boîte se trie toute seule : restent les 6 mails qui comptent, les réponses pré-rédigées dans votre ton.",
-    secteurs: ["Experts-comptables", "Services B2B", "Juridique"],
     visuel: null,
     composition: <CompositionMails />,
   },
@@ -68,15 +66,14 @@ const CAS: Cas[] = [
     titre: "Le devis part à 22 h, le client a signé ailleurs\u00A0?",
     description:
       "Une note vocale entre deux rendez-vous, et le devis chiffré est prêt à valider. Le premier qui répond signe.",
-    secteurs: ["BTP", "Plomberie", "Industrie"],
     visuel: null,
+    composition: <CompositionDevis />,
   },
   {
     titreCourt: "Un contrat de 42 pages à éplucher",
     titre: "Un contrat de 42 pages à éplucher avant de signer\u00A0?",
     description:
       "Une synthèse de 12 lignes, les points d’attention sourcés page par page.",
-    secteurs: ["Commerce", "Immobilier", "Juridique"],
     visuel: null,
     composition: <CompositionSynthese />,
   },
@@ -85,24 +82,24 @@ const CAS: Cas[] = [
     titre: "Deux heures de réunion, zéro compte-rendu\u00A0?",
     description:
       "L’enregistrement devient un CR structuré : décisions, qui fait quoi, pour quand.",
-    secteurs: ["Agences", "Cabinets", "Associations"],
     visuel: null,
+    composition: <CompositionReunion />,
   },
   {
     titreCourt: "L’impayé qui traîne depuis 60 jours",
     titre: "L’impayé traîne depuis 60 jours\u00A0?",
     description:
       "Des relances graduées, fermes mais dans votre ton, prêtes à partir au bon rythme.",
-    secteurs: ["Artisans", "Services B2B", "Commerce"],
     visuel: null,
+    composition: <CompositionImpaye />,
   },
   {
     titreCourt: "Le rendez-vous dans 20 minutes",
     titre: "Rendez-vous dans 20 minutes, dossier pas rouvert depuis 3 mois\u00A0?",
     description:
       "Une fiche de synthèse client : historique, encours, points de friction, en une page.",
-    secteurs: ["Conseil", "Assurance", "Artisans"],
     visuel: null,
+    composition: <CompositionFicheClient />,
   },
 ];
 
@@ -152,14 +149,23 @@ export function CasConcrets() {
           colonne 2. La hauteur du panneau étant la plus grande, elle se répartit
           entre les lignes — les items de la liste s'étirent donc pour remplir la
           carte au lieu de laisser un vide sous le dernier. Sous lg le conteneur
-          n'est pas une grille : la déclaration y est inerte. */}
+          n'est pas une grille : la déclaration y est inerte.
+
+          Colonnes : c'est la colonne des titres qui est élastique et le panneau
+          de droite qui est borné, à l'inverse de l'usage. Les compositions
+          mesurent 580px et leurs cartes sont posées en absolu à des offsets en
+          dur : en dessous, elles se chevauchent. 580 + 2 × 24px de padding =
+          628px, arrondis à 636 pour la marge de sécurité — la liste prend tout
+          ce qui reste, soit ~42 % de la carte à partir de 1180px (largeur
+          maximale du conteneur) et ~33 % à 1024px, où il n'y a pas plus de
+          place. */}
       <div
         data-apparition=""
         style={{
           ["--apparition-delai" as string]: "150ms",
           gridTemplateRows: `repeat(${CAS.length}, auto)`,
         }}
-        className="mt-[30px] overflow-hidden rounded-card border border-line-sur-ink bg-white/[0.02] lg:grid lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)]"
+        className="mt-[30px] overflow-hidden rounded-card border border-line-sur-ink bg-white/[0.02] lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,636px)]"
       >
         {CAS.map((cas, i) => {
           const ouvert = i === actif;
@@ -184,14 +190,15 @@ export function CasConcrets() {
                 }`}
               >
                 <span className="min-w-0 flex-1">{cas.titreCourt}</span>
-                <span
-                  aria-hidden
-                  className={`flex-none text-[14px] leading-none transition-transform duration-150 group-hover:translate-x-[2px] motion-reduce:transition-none ${
-                    ouvert ? "text-turquoise" : "text-faint-sur-ink"
+                {/* Même chevron que le connecteur des compositions, à l'échelle
+                    du texte : blanc sur les items au repos, turquoise sur l'item
+                    ouvert (le turquoise est la ponctuation de l'état actif, déjà
+                    porté par l'ancienne flèche). */}
+                <ChevronTrait
+                  className={`h-[15px] w-[15px] transition-transform duration-150 group-hover:translate-x-[2px] motion-reduce:transition-none ${
+                    ouvert ? "text-turquoise" : "text-white"
                   }`}
-                >
-                  →
-                </span>
+                />
               </button>
 
               {/* Panneau de détail : sous l'item en accordéon sous lg, en
@@ -222,7 +229,6 @@ export function CasConcrets() {
                 <p className="mt-3 max-w-[460px] text-[15px] leading-[1.5] text-body-sur-ink">
                   {cas.description}
                 </p>
-                <VecuChez secteurs={cas.secteurs} />
                 <div className="mt-5">
                   {cas.visuel ? (
                     <div className="w-full max-w-[460px]">
@@ -250,48 +256,48 @@ export function CasConcrets() {
 
 /* ============================ Helpers partagés ============================ */
 
-/** Connecteur pointillé canard + pastille ↓. Positionné en absolu sous lg. */
-function Connector({ className }: { className?: string }) {
+/**
+ * Chevron « > » à trait épais et bouts arrondis, décoratif : le connecteur des
+ * compositions et la flèche des items de la liste sont la même forme, à deux
+ * échelles. `stroke-current` : la couleur vient du `text-*` posé par l'appelant,
+ * comme le fait `components/ui/Chevron`. La taille aussi (`h-*`/`w-*`) — le
+ * viewBox de 24 s'y adapte, l'épaisseur du trait suit donc l'échelle.
+ *
+ * Dessiné ici plutôt qu'avec `components/ui/Chevron` : celui-ci est le chevron
+ * des CTA, un carré de 8 px tracé à la bordure — angles vifs, taille figée dans
+ * ses classes de base, il ne monte pas à cette échelle et il est partagé par
+ * tous les CTA du site.
+ */
+function ChevronTrait({ className }: { className?: string }) {
   return (
-    <div
+    <svg
       aria-hidden
-      className={`z-[2] flex flex-col items-center gap-[5px] ${className ?? ""}`}
+      viewBox="0 0 24 24"
+      fill="none"
+      className={`flex-none stroke-current ${className ?? ""}`}
     >
-      <span
-        className="h-[26px] w-[1.5px]"
-        style={{
-          background:
-            "repeating-linear-gradient(180deg,#0E7291 0 5px,rgba(14,114,145,0) 5px 9px)",
-        }}
+      <path
+        d="m9 5 7 7-7 7"
+        strokeWidth="2.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
-      <span
-        className="inline-flex h-[26px] w-[26px] items-center justify-center rounded-full bg-canard text-[13px] text-white"
-        style={{ boxShadow: "0 8px 18px -6px rgba(14,114,145,.6)" }}
-      >
-        ↓
-      </span>
-    </div>
+    </svg>
   );
 }
 
-/** Ligne d'auto-identification sous la description : label « Vécu chez » + chips
- *  secteurs. Aide le lecteur à se reconnaître dans le cas, sans concurrencer le
- *  titre du panneau : filet discret plutôt qu'une surface pleine. */
-function VecuChez({ secteurs }: { secteurs: string[] }) {
+/**
+ * Connecteur entre les deux cartes d'une composition : le chevron en turquoise,
+ * pointant vers la droite dans la diagonale (à partir de lg) et pivoté vers le
+ * bas quand les cartes s'empilent. Positionné en absolu à partir de lg (le
+ * `className` porte les offsets, propres à chaque composition), simple élément
+ * de la colonne en dessous.
+ */
+function Connector({ className }: { className?: string }) {
   return (
-    <div className="mt-[14px] flex flex-wrap items-center gap-[6px]">
-      <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-faint-sur-ink">
-        Vécu chez
-      </span>
-      {secteurs.map((s) => (
-        <span
-          key={s}
-          className="rounded-chip border border-line-sur-ink px-[7px] py-[2px] font-mono text-[10px] text-faint-sur-ink"
-        >
-          {s}
-        </span>
-      ))}
-    </div>
+    <ChevronTrait
+      className={`z-[2] h-[22px] w-[22px] rotate-90 text-turquoise lg:rotate-0 ${className ?? ""}`}
+    />
   );
 }
 
@@ -386,7 +392,7 @@ function CompositionMails() {
         </div>
       </div>
 
-      <Connector className="lg:absolute lg:left-[263px] lg:top-[142px]" />
+      <Connector className="lg:absolute lg:left-[265px] lg:top-[160px]" />
 
       {/* Boîte triée */}
       <div className="w-[280px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface text-ink shadow-hero lg:absolute lg:bottom-0 lg:right-0 lg:z-[3]">
@@ -515,7 +521,7 @@ function CompositionSynthese() {
         </div>
       </div>
 
-      <Connector className="lg:absolute lg:left-[245px] lg:top-[142px]" />
+      <Connector className="lg:absolute lg:left-[247px] lg:top-[160px]" />
 
       {/* Synthèse */}
       <div className="w-[300px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface text-ink shadow-hero lg:absolute lg:bottom-0 lg:right-0 lg:z-[3]">
@@ -557,6 +563,364 @@ function Rubrique({ label, children }: { label: string; children: ReactNode }) {
     <div className="flex gap-[10px]">
       <span className="flex-none pt-[2px] font-mono text-[10px] text-quiet">{label}</span>
       <span>{children}</span>
+    </div>
+  );
+}
+
+/** Hauteurs (px) des barres de la forme d'onde de la note vocale. */
+const ONDE_NOTE_VOCALE = [
+  6, 11, 17, 23, 14, 9, 20, 27, 16, 10, 24, 30, 13, 8, 18, 22, 12, 26, 19, 7,
+  15, 28, 21, 11, 25, 9, 17, 29, 14, 10, 20, 7,
+];
+
+/** Cas « devis » : une note vocale du soir devenue un devis chiffré. */
+function CompositionDevis() {
+  return (
+    <Composition
+      alt="Illustration : une note vocale dictée le soir devient un devis chiffré de 3 540 € HT, prêt à valider cinq minutes plus tard."
+      className="w-full max-w-[580px] lg:h-[350px]"
+    >
+      {/* Note vocale */}
+      <div className="w-[252px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface text-ink shadow-float lg:absolute lg:left-0 lg:top-0 lg:z-[1]">
+        <div className="flex items-center justify-between border-b border-[rgba(16,24,40,0.05)] px-[15px] py-3">
+          <span className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-quiet">
+            Note vocale · 18:47
+          </span>
+          <span className="font-mono text-[10px] text-quiet">1:12</span>
+        </div>
+        <div className="px-[15px] pb-[18px] pt-4">
+          <div className="text-[13.5px] font-bold tracking-[-0.01em]">
+            Chaudière · M. Duverger
+          </div>
+          <div className="mt-[13px] flex h-[30px] items-center justify-between">
+            {ONDE_NOTE_VOCALE.map((hauteur, i) => (
+              <span
+                key={i}
+                className="w-[2px] rounded-chip bg-bar-track"
+                style={{ height: hauteur }}
+              />
+            ))}
+          </div>
+          <div className="mt-[7px] flex items-center justify-between font-mono text-[9.5px] text-quiet">
+            <span>0:00</span>
+            <span>1:12</span>
+          </div>
+          <div className="mt-[13px] text-[11px] italic leading-[1.5] text-faint">
+            « …remplacement chaudière, comptez la dépose, le client veut… »
+          </div>
+        </div>
+      </div>
+
+      <Connector className="lg:absolute lg:left-[265px] lg:top-[160px]" />
+
+      {/* Devis chiffré */}
+      <div className="w-[280px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface text-ink shadow-hero lg:absolute lg:bottom-0 lg:right-0 lg:z-[3]">
+        <div className="h-[3px] bg-turquoise" />
+        <div className="flex items-center justify-between border-b border-hairline px-4 py-[13px]">
+          <div className="text-[13.5px] font-bold tracking-[-0.01em]">
+            Devis n°&nbsp;2026-084
+          </div>
+          <span className="rounded-chip bg-ecume px-2 py-1 font-mono text-[10px] text-ink-ecume">
+            3 postes
+          </span>
+        </div>
+        <div className="px-4 pb-[15px] pt-[13px]">
+          <div className="flex flex-col gap-[9px]">
+            <LigneDevis
+              designation="Dépose ancienne chaudière"
+              montant="380 €"
+            />
+            <LigneDevis designation="Fourniture et pose" montant="2 940 €" />
+            <LigneDevis designation="Mise en service" montant="220 €" />
+          </div>
+          <div className="mt-[11px] flex items-center justify-between border-t border-hairline-strong pt-[11px] text-[12.5px] font-bold">
+            <span>Total</span>
+            <span className="font-mono">3&nbsp;540&nbsp;€&nbsp;HT</span>
+          </div>
+        </div>
+        <div className="flex items-center justify-between border-t border-hairline-strong px-4 py-[10px] text-[11px]">
+          <span className="text-faint">prêt à valider</span>
+          <span className="font-mono font-semibold text-ink-ecume">
+            18:52 · 5 min
+          </span>
+        </div>
+      </div>
+    </Composition>
+  );
+}
+
+function LigneDevis({
+  designation,
+  montant,
+}: {
+  designation: string;
+  montant: string;
+}) {
+  return (
+    <div className="flex items-baseline justify-between gap-3 text-[12.5px]">
+      <span className="min-w-0 text-body">{designation}</span>
+      <span className="flex-none font-mono text-[11.5px] font-semibold">
+        {montant}
+      </span>
+    </div>
+  );
+}
+
+/** Cas « réunion » : 1 h 54 d'enregistrement devenues un CR d'une page. */
+function CompositionReunion() {
+  return (
+    <Composition
+      alt="Illustration : 1 h 54 d'enregistrement de réunion de chantier devient un compte-rendu d'une page — décisions, actions, suivi."
+      className="w-full max-w-[580px] lg:h-[350px]"
+    >
+      {/* Enregistrement */}
+      <div className="w-[252px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface text-ink shadow-float lg:absolute lg:left-0 lg:top-0 lg:z-[1]">
+        <div className="flex items-center justify-between border-b border-[rgba(16,24,40,0.05)] px-[15px] py-3">
+          <span className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-quiet">
+            Enregistrement
+          </span>
+          <span className="font-mono text-[10px] text-quiet">réunion chantier</span>
+        </div>
+        <div className="px-[15px] pb-[18px] pt-4">
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="font-mono text-[18px] font-semibold tracking-[-0.02em]">
+              1&nbsp;h&nbsp;54
+            </span>
+            <span className="text-[11px] text-faint">4 intervenants</span>
+          </div>
+          <div className="mt-[15px] flex items-center gap-[3px]">
+            <Bar width="17%" className="flex-none" />
+            <Bar width="8%" className="flex-none" />
+            <Bar width="23%" className="flex-none" />
+            <Bar width="6%" className="flex-none" />
+            <Bar width="13%" className="flex-none" />
+            <Bar width="19%" className="flex-none" />
+            <Bar width="7%" className="flex-none" />
+          </div>
+          <div className="mt-[7px] flex items-center justify-between font-mono text-[9.5px] text-quiet">
+            <span>0:00</span>
+            <span>1:54</span>
+          </div>
+          <div className="mt-[14px] font-mono text-[10px] text-quiet">
+            « Sors-moi les décisions et les actions. »
+          </div>
+        </div>
+      </div>
+
+      <Connector className="lg:absolute lg:left-[265px] lg:top-[160px]" />
+
+      {/* Compte-rendu */}
+      <div className="w-[280px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface text-ink shadow-hero lg:absolute lg:bottom-0 lg:right-0 lg:z-[3]">
+        <div className="flex items-center justify-between border-b border-hairline px-4 py-[13px]">
+          <div className="text-[13.5px] font-bold tracking-[-0.01em]">
+            Compte-rendu · 12 juin
+          </div>
+          <span className="rounded-chip bg-ecume px-2 py-1 font-mono text-[10px] text-ink-ecume">
+            à diffuser
+          </span>
+        </div>
+        <div className="px-4 pb-[15px] pt-[13px]">
+          <div className="flex flex-col gap-[10px] text-[12.5px] leading-[1.5] text-body">
+            <Rubrique label="DÉCISIONS">
+              Livraison lot B avancée au 3 juillet
+            </Rubrique>
+            <Rubrique label="ACTIONS">
+              M. Rivière&nbsp;: devis étanchéité → vendredi
+            </Rubrique>
+            <Rubrique label="SUIVI">Point hebdo fixé au mardi 9&nbsp;h</Rubrique>
+          </div>
+        </div>
+        <div className="flex items-center justify-between border-t border-hairline-strong px-4 py-[10px] text-[11px]">
+          <span className="text-faint">décisions · qui · pour quand</span>
+          <span className="font-mono font-semibold text-ink-ecume">1 page</span>
+        </div>
+      </div>
+    </Composition>
+  );
+}
+
+/** Cas « impayé » : une facture à +60 jours devenue une séquence de relances. */
+function CompositionImpaye() {
+  return (
+    <Composition
+      alt="Illustration : une facture de 4 820 € impayée depuis 60 jours devient une séquence de trois relances graduées, prêtes à partir."
+      className="w-full max-w-[580px] lg:h-[350px]"
+    >
+      {/* Facture impayée */}
+      <div className="w-[252px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface text-ink shadow-float lg:absolute lg:left-0 lg:top-0 lg:z-[1]">
+        <div className="flex items-center justify-between border-b border-[rgba(16,24,40,0.05)] px-[15px] py-3">
+          <span className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-quiet">
+            Facture F-2026-031
+          </span>
+          <span className="font-mono text-[10px] text-quiet">Sarl Ledoux</span>
+        </div>
+        <div className="px-[15px] pb-[18px] pt-4">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[17px] font-bold tracking-[-0.02em]">
+              4&nbsp;820&nbsp;€
+            </span>
+            <span className="flex-none rounded-chip bg-canard px-2 py-[2px] text-[10.5px] font-semibold text-white">
+              +60&nbsp;j
+            </span>
+          </div>
+          <div className="mt-[11px] text-[11px] leading-[1.5] text-faint">
+            échéance&nbsp;: 28 mai · 2 relances sans réponse
+          </div>
+          <div className="mt-[14px] font-mono text-[10px] text-quiet">
+            « Relance-la, fermement mais correctement. »
+          </div>
+        </div>
+      </div>
+
+      <Connector className="lg:absolute lg:left-[265px] lg:top-[160px]" />
+
+      {/* Séquence de relance */}
+      <div className="w-[280px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface text-ink shadow-hero lg:absolute lg:bottom-0 lg:right-0 lg:z-[3]">
+        <div className="h-[3px] bg-turquoise" />
+        <div className="flex items-center justify-between border-b border-hairline px-4 py-[13px]">
+          <div className="text-[13.5px] font-bold tracking-[-0.01em]">
+            Séquence de relance
+          </div>
+          <span className="font-mono text-[10px] text-quiet">F-2026-031</span>
+        </div>
+        <div className="flex flex-col gap-[9px] px-4 pb-[15px] pt-[13px]">
+          <EtapeRelance
+            etat="Envoyée · J+62"
+            etatClass="bg-ecume text-ink-ecume"
+            extrait="« Sauf erreur de notre part, cette facture reste impayée. »"
+          />
+          <EtapeRelance
+            etat="Programmée · J+70"
+            etatClass="bg-periwinkle text-ink-periwinkle"
+            extrait="« Sans règlement sous 8 jours, nous suspendons les livraisons. »"
+          />
+          <EtapeRelance
+            etat="Si besoin · J+80"
+            etatClass="bg-toile text-slate"
+            extrait="Mise en demeure — dernier rappel amiable"
+          />
+        </div>
+        <div className="flex items-center justify-between border-t border-hairline-strong px-4 py-[10px] text-[11px]">
+          <span className="text-faint">fermes, dans votre ton</span>
+          <span className="font-mono font-semibold text-ink-ecume">
+            3 relances prêtes
+          </span>
+        </div>
+      </div>
+    </Composition>
+  );
+}
+
+function EtapeRelance({
+  etat,
+  etatClass,
+  extrait,
+}: {
+  etat: string;
+  etatClass: string;
+  extrait: string;
+}) {
+  return (
+    <div className="border-t border-[rgba(16,24,40,0.05)] pt-[9px] first:border-t-0 first:pt-0">
+      <span
+        className={`inline-block rounded-chip px-2 py-[2px] text-[10.5px] font-semibold ${etatClass}`}
+      >
+        {etat}
+      </span>
+      <div className="mt-[5px] text-[11.5px] leading-[1.5] text-body">
+        {extrait}
+      </div>
+    </div>
+  );
+}
+
+/** Cas « fiche client » : un dossier dormant devenu une fiche d'une page. */
+function CompositionFicheClient() {
+  return (
+    <Composition
+      alt="Illustration : un dossier client resté fermé depuis trois mois devient une fiche de synthèse d'une page — historique, encours, points de friction."
+      className="w-full max-w-[580px] lg:h-[350px]"
+    >
+      {/* Dossier client */}
+      <div className="w-[252px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface text-ink shadow-float lg:absolute lg:left-0 lg:top-0 lg:z-[1]">
+        <div className="flex items-center justify-between border-b border-[rgba(16,24,40,0.05)] px-[15px] py-3">
+          <span className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-quiet">
+            Dossier client
+          </span>
+          <span className="font-mono text-[10px] text-quiet">Sarl Bréhat</span>
+        </div>
+        <div className="px-[15px] pb-[18px] pt-4">
+          <div className="flex flex-col gap-[13px]">
+            <PileDocuments intitule="Devis 2024" largeurs={["100%", "82%"]} />
+            <PileDocuments intitule="Mails · 132" largeurs={["94%", "100%", "71%"]} />
+            <PileDocuments intitule="CR visite 03/2025" largeurs={["100%", "88%"]} />
+          </div>
+          <div className="mt-[14px] text-[11px] leading-[1.5] text-faint">
+            dernière ouverture&nbsp;: il y a 3 mois
+          </div>
+        </div>
+      </div>
+
+      <Connector className="lg:absolute lg:left-[265px] lg:top-[160px]" />
+
+      {/* Fiche de synthèse */}
+      <div className="w-[280px] max-w-full overflow-hidden rounded-card border border-hairline bg-surface text-ink shadow-hero lg:absolute lg:bottom-0 lg:right-0 lg:z-[3]">
+        <div className="flex items-center justify-between border-b border-hairline px-4 py-[13px]">
+          <div className="text-[13.5px] font-bold tracking-[-0.01em]">
+            Fiche de synthèse
+          </div>
+          <span className="font-mono text-[10px] text-quiet">Sarl Bréhat</span>
+        </div>
+        <div className="px-4 pb-[15px] pt-[13px]">
+          <div className="flex flex-col gap-[10px] text-[12.5px] leading-[1.5] text-body">
+            <Rubrique label="HISTORIQUE">
+              Client depuis 2019 · 11 commandes
+            </Rubrique>
+            <Rubrique label="ENCOURS">
+              12&nbsp;400&nbsp;€ · règlement à 45&nbsp;j
+            </Rubrique>
+            <Rubrique label="FRICTION">
+              Litige livraison sept. 2025, résolu
+            </Rubrique>
+          </div>
+          <div
+            className="mt-[13px] rounded-[3px] px-3 py-[10px]"
+            style={{ background: "#F5F7F9" }}
+          >
+            <div className="text-[11px] font-bold text-ink">À aborder</div>
+            <div className="mt-[5px] text-[11.5px] leading-[1.5] text-body">
+              Renouvellement du contrat cadre · échéance octobre
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center justify-between border-t border-hairline-strong px-4 py-[10px] text-[11px]">
+          <span className="text-faint">une page, à jour</span>
+          <span className="font-mono font-semibold text-ink-ecume">
+            prête en 4 min
+          </span>
+        </div>
+      </div>
+    </Composition>
+  );
+}
+
+function PileDocuments({
+  intitule,
+  largeurs,
+}: {
+  intitule: string;
+  largeurs: string[];
+}) {
+  return (
+    <div>
+      <div className="font-mono text-[9.5px] uppercase tracking-[0.1em] text-quiet">
+        {intitule}
+      </div>
+      <div className="mt-[7px] flex flex-col gap-[5px]">
+        {largeurs.map((largeur, i) => (
+          <Bar key={i} width={largeur} />
+        ))}
+      </div>
     </div>
   );
 }
