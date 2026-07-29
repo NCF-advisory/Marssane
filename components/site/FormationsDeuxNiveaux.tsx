@@ -72,11 +72,14 @@ const NIVEAUX_LANDING: [Niveau, Niveau] = [
  * largeur → cinq coches. Le bouton passe AVANT la liste (structure du bloc
  * « programmes » du modèle).
  *
- * Deux écarts locaux revendiqués, qui ne se propagent nulle part ailleurs :
+ * Trois écarts locaux revendiqués, qui ne se propagent nulle part ailleurs :
  * — rayon 20 px sur les cartes et boutons pill (999 px), là où la charte pose
  *   4 px / 3 px ;
  * — flèche « → » en fin de libellé de bouton, là où tout le reste du site
- *   utilise le chevron seul (<Chevron />).
+ *   utilise le chevron seul (<Chevron />) ;
+ * — carte sombre en dégradé vertical (`--color-surface-sur-ink` en haut,
+ *   #101013 en bas) et halo blanc sous le bouton clair, là où les autres
+ *   cartes sur l'encre posent `bg-surface-sur-ink` à plat.
  *
  * Les pastilles ✓ sont une variante locale (22 px, fond plein, relief) : le
  * composant <CheckItem> du design system n'est volontairement pas touché.
@@ -197,8 +200,10 @@ function CarteNiveau({ niveau, ton }: { niveau: Niveau; ton: "sombre" | "clair" 
       : "bg-ink text-white hover:bg-[#26262E]"
   }`;
   const styleBouton = {
+    // Bouton blanc : l'ombre portée est doublée d'un halo lumineux blanc en
+    // deux couches (cf. JSDoc), qui détache le pill du fond noir de la carte.
     boxShadow: sombre
-      ? "0 2px 10px rgba(0,0,0,.35)"
+      ? "0 2px 10px rgba(0,0,0,.35), 0 0 14px rgba(255,255,255,.16), 0 0 30px rgba(255,255,255,.07)"
       : "0 2px 10px rgba(16,24,40,.28)",
   };
   const libelleBouton = (
@@ -219,7 +224,7 @@ function CarteNiveau({ niveau, ton }: { niveau: Niveau; ton: "sombre" | "clair" 
     <article
       className={`${CARTE} ${
         sombre
-          ? "border border-white/[0.08] bg-white/[0.045]"
+          ? "border border-white/[0.08] bg-surface-sur-ink bg-[linear-gradient(180deg,var(--color-surface-sur-ink)_0%,#101013_100%)]"
           : "bg-surface shadow-float"
       }`}
     >
