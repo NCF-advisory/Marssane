@@ -7,12 +7,16 @@ import { PlusMark } from "@/components/ui/PlusMark";
  * Section « Paroles de dirigeants » (juste sous le héro) : mur de citations
  * de dirigeants français sur les bénéfices concrets de l'IA.
  *
- * IMPORTANT — ce ne sont PAS des avis clients Marssane. Le cadrage éditorial
- * (kicker « citations sourcées » + mention légale en pied de section) est là
- * pour qu'aucun visiteur ne puisse les confondre avec des témoignages
- * d'anciens participants. Ne pas retirer ces garde-fous. (La mention d'intro
- * sous le titre, puis le lien de source sur chaque carte, ont été retirés à la
- * demande du propriétaire le 29/07/2026 ; les garde-fous restants suffisent.)
+ * IMPORTANT — ce ne sont PAS des avis clients Marssane.
+ *
+ * Tous les garde-fous d'affichage (mention d'intro sous le titre, lien de source
+ * sur chaque carte, note légale en pied de section) ont été retirés sur
+ * décisions du propriétaire du 29/07/2026 ; seul le kicker « citations
+ * sourcées » subsiste — ne pas le retirer. Les données conservent la
+ * traçabilité complète des sources (`fonction`, `contexte`, `source`, `url`).
+ *
+ * AVERTISSEMENT : avant mise en ligne publique, vérifier le cadrage juridique
+ * (propos et marques de tiers présentés sous un titre « témoignent »).
  *
  * Tonalité encre : `*-sur-ink` partout (cf. Preuves / AvantApres).
  *
@@ -200,10 +204,13 @@ const CITATIONS: Citation[] = [
  * tourniquet (`i % 3`). Distribution volontairement mécanique plutôt que
  * réglée à la main : elle conserve l'ordre éditorial en lecture verticale.
  *
- * Depuis que la citation est clampée à 4 lignes avec un plancher de même
- * hauteur (cf. `Carte`), les cartes sont toutes identiques : les trois colonnes
- * portent 4 cartes chacune et ont donc exactement le même cycle, sans qu'il y
- * ait plus rien à équilibrer à la main.
+ * Les cartes étant de hauteur libre (cf. `Carte`), les trois colonnes ne font
+ * plus exactement la même hauteur. Le tourniquet les laisse malgré tout très
+ * proches — 1 002 / 1 067 / 1 002 px de cycle mesurés au format du mur, soit 6 %
+ * d'écart de vitesse entre la colonne la plus longue et les deux autres,
+ * invisible à l'œil : rien à régler à la main. Si une modification des
+ * verbatims déséquilibrait franchement une colonne, c'est ici qu'il faudrait
+ * reprendre la répartition.
  */
 const COLONNES = [0, 1, 2].map((colonne) =>
   CITATIONS.filter((_, i) => i % 3 === colonne),
@@ -294,21 +301,15 @@ export function ParolesDirigeants() {
         aria-label={`${CITATIONS.length} citations de dirigeants sur l'IA`}
         tabIndex={0}
       >
-        <ul className="flex w-max list-none gap-4 px-6 sm:px-10 xl:px-[calc((100vw-1180px)/2+40px)]">
+        {/* `items-start` : les cartes n'ont plus la même hauteur, elles
+            s'alignent en haut du rail au lieu de s'étirer sur la plus haute. */}
+        <ul className="flex w-max list-none items-start gap-4 px-6 sm:px-10 xl:px-[calc((100vw-1180px)/2+40px)]">
           {CITATIONS.map((c) => (
             <li key={c.auteur} className="w-[286px] snap-start sm:w-[352px]">
               <Carte citation={c} />
             </li>
           ))}
         </ul>
-      </div>
-
-      <div className="mx-auto mt-4 max-w-[1180px] px-6 sm:px-10">
-        <p className="max-w-[760px] font-mono text-[10.5px] leading-[1.6] text-faint-sur-ink">
-          Citations de tiers, reproduites à titre d&apos;illustration du marché.
-          Elles ne constituent pas un avis sur la formation Marssane et
-          n&apos;impliquent aucun lien entre ces entreprises et Marssane.
-        </p>
       </div>
     </section>
   );
@@ -328,12 +329,20 @@ export function ParolesDirigeants() {
  * propre ligne : il garde l'accent de couleur sans coûter les ~34 px de hauteur
  * qui servent maintenant à la tuile.
  *
- * TRONCATURE — `line-clamp-4` est un choix d'AFFICHAGE, pas une coupe
+ * HAUTEUR LIBRE — la carte n'a plus de plancher de hauteur (décision
+ * propriétaire du 29/07/2026, asymétrie à la Trustpilot / 8lab) : seul l'en-tête
+ * est de gabarit fixe, la citation prend la place qu'il lui faut et la carte
+ * suit. Au format du mur (306 px de texte), ça donne des cartes de 2 à 6 lignes,
+ * soit 185 à 273 px.
+ *
+ * TRONCATURE — `line-clamp-6` est un choix d'AFFICHAGE, pas une coupe
  * éditoriale : les verbatims restent intégraux dans `CITATIONS` (convention du
  * fichier : ne pas reformuler, cf. le docblock en tête). Le clamp CSS a été
  * préféré à une coupe dans les données parce qu'il n'engage aucune réécriture
- * des citations, qu'il est réversible d'une classe, et qu'il aligne les cartes
- * sur une hauteur commune — ce qui équilibre les trois pistes du mur.
+ * des citations et qu'il est réversible d'une classe. Il ne sert plus qu'à
+ * plafonner les citations les plus longues : au format du mur, seule celle de
+ * Patrick Martin (7 lignes) est rognée ; dans le rail mobile (286 px de carte),
+ * plus étroit, quatre le sont — Chouvin, Hot, Martin, Tissier.
  *
  * La tuile est la même pour les douze logos : filet + fond blanc à 6 %, et non
  * un fond blanc franc. Testé sur la carte encre, le blanc franc efface les
@@ -367,10 +376,10 @@ function Carte({ citation }: { citation: Citation }) {
         </div>
       </figcaption>
       <blockquote className="mt-[18px] grow border-t border-line-sur-ink pt-4">
-        {/* `min-h` = les 4 lignes du clamp (4 × 13,5 px × 1,62). Le plancher et
-            le plafond se rejoignent : toutes les cartes font la même hauteur,
-            les trois pistes du mur ont donc exactement le même cycle. */}
-        <p className="line-clamp-4 min-h-[88px] text-[13.5px] leading-[1.62] text-body-sur-ink">
+        {/* Aucun plancher de hauteur : une citation courte donne une carte
+            courte. Le clamp à 6 lignes n'est plus qu'un plafond pour les
+            citations les plus longues. */}
+        <p className="line-clamp-6 text-[13.5px] leading-[1.62] text-body-sur-ink">
           <span aria-hidden className="font-mono text-turquoise">
             &ldquo;
           </span>

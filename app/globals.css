@@ -518,7 +518,8 @@ body {
    position absolue qui glisse en continu d'exactement −50 % de sa hauteur en
    60 s, linéaire, à l'infini.
 
-   60 s et non les 120 s de 8lab : un cycle vaut ici ≈ 1 030 à 1 100 px, soit
+   60 s et non les 120 s de 8lab : un cycle vaut ici ≈ 1 000 à 1 070 px (les
+   cartes sont de hauteur libre, les trois colonnes diffèrent un peu), soit
    ≈ 9 px/s à 120 s — un mouvement qu'on ne voit pas sans faire défiler la page,
    et le mur passe pour figé. À 60 s on est à ≈ 17 à 18 px/s : le glissement se
    lit d'emblée à l'arrêt, et une carte reste sous les yeux une quinzaine de
