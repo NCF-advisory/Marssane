@@ -91,8 +91,13 @@ function TuileLogo({
     // Empilée, la tuile plafonne à 240 px mais se réduit jusqu'à 132 px sur les
     // petites largeurs, pour que le premier écran tienne dans la fenêtre. Le
     // glyphe garde la proportion 176/344 ≈ 1/2.
+    // C'est le poste vertical le plus lourd du premier écran : sa cote est donc
+    // aussi bornée par la hauteur de fenêtre, empilée (20 svh — elle s'ajoute
+    // alors au bloc de texte, d'où la borne plus sévère) comme en colonne
+    // (34 svh, où elle se compare au texte au lieu de s'y ajouter). Sur les
+    // hauteurs confortables les plafonds en px l'emportent : rien ne change.
     <div
-      className="flex flex-col items-center justify-self-center [--glyphe:calc(var(--tuile)/2)] [--tuile:clamp(132px,24vw,240px)] min-[1100px]:justify-self-end min-[1100px]:[--glyphe:176px] min-[1100px]:[--tuile:344px]"
+      className="flex flex-col items-center justify-self-center [--glyphe:calc(var(--tuile)/2)] [--tuile:clamp(132px,min(24vw,20svh),240px)] min-[1100px]:justify-self-end min-[1100px]:[--tuile:min(344px,34svh)]"
     >
       <div style={{ position: "relative", width: "var(--tuile)", height: "var(--tuile)" }}>
         <div
@@ -140,7 +145,7 @@ function TuileLogo({
       </div>
       <div
         style={{
-          marginTop: "18px",
+          marginTop: "clamp(10px, 1.8svh, 18px)",
           width: "max-content",
           maxWidth: "100%",
           fontFamily: MONO,
@@ -169,14 +174,29 @@ export function HeroRecommandation({
 }: Props) {
   return (
     <section
+      // Hauteur du premier écran : la fenêtre moins la barre de navigation
+      // (`sticky`, donc dans le flux, juste au-dessus du héro) — 74 px sous
+      // `lg`, où elle porte le bouton menu, 70 px au-delà. Le héro se termine
+      // ainsi pile au bas du pli : l'amorce de scroll, ancrée en bas de
+      // section, est visible sans défiler.
+      //
+      // `svh` et non `vh` ni `dvh` : `vh` compte la barre d'URL rétractée, et
+      // le bas de l'écran passait sous le pli ; `dvh` colle au pli du moment,
+      // mais toutes les cotes verticales du héro en dépendent maintenant et
+      // elles se seraient recalculées à chaque rétraction de la barre, pendant
+      // le défilement. `svh` = le pli le plus petit (barre visible), celui de
+      // l'arrivée sur la page : le premier écran tient, sans reflux.
+      //
+      // `minHeight` et non `height` : sur une fenêtre très basse (moins de
+      // ~700 px) le contenu ne peut plus se comprimer davantage, il allonge
+      // alors le héro et l'amorce repasse sous le pli — plutôt que d'être
+      // rognée.
+      className="min-h-[calc(100svh-74px)] lg:min-h-[calc(100svh-70px)]"
       style={{
         position: "relative",
         background: INK,
         overflow: "hidden",
         fontFamily: SANS,
-        // `dvh` et non `vh` : sur mobile, `vh` compte la barre d'URL rétractée,
-        // et le bas de l'écran (score + amorce de scroll) passait sous le pli.
-        minHeight: "min(900px, 100dvh)",
         display: "flex",
         flexDirection: "column",
       }}
@@ -219,9 +239,18 @@ export function HeroRecommandation({
 
       {/* Paddings et gouttières en classes (et non en style inline) : sous
           1100 px la tuile passe sous le texte et allonge l'écran, il faut donc
-          les resserrer par paliers pour rester dans la fenêtre. */}
+          les resserrer par paliers pour rester dans la fenêtre.
+          Chaque cote verticale est en outre proportionnelle à la hauteur de
+          fenêtre, plafonnée à sa valeur de référence (atteinte vers 1000 px de
+          fenêtre) et planchée pour ne pas coller : sur une fenêtre courte, le
+          rythme se resserre au lieu de pousser l'amorce de scroll sous le pli.
+          Les cotes horizontales, elles, ne changent pas.
+          Les gouttières sont volontairement plus élastiques que les paddings :
+          la colonne étant en `space-between`, tout jeu leur revient de toute
+          façon — un minimum plus bas ne se voit pas sur une fenêtre confortable
+          et sert de réserve sur une fenêtre courte. */}
       <div
-        className="gap-16 p-[64px_clamp(24px,6.6vw,96px)_56px] max-[1100px]:gap-10 max-[1100px]:p-[48px_clamp(24px,6.6vw,96px)_40px] max-[640px]:gap-8 max-[640px]:p-[64px_24px_28px]"
+        className="gap-[clamp(20px,4.2svh,64px)] p-[clamp(28px,6.4svh,64px)_clamp(24px,6.6vw,96px)_clamp(24px,5.6svh,56px)] max-[1100px]:gap-[clamp(16px,2.4svh,40px)] max-[1100px]:p-[clamp(24px,5.2svh,48px)_clamp(24px,6.6vw,96px)_clamp(20px,4.4svh,40px)] max-[640px]:gap-[clamp(16px,3.4svh,32px)] max-[640px]:p-[clamp(24px,4.8svh,64px)_24px_clamp(20px,3.2svh,28px)]"
         style={{
           position: "relative",
           flex: 1,
@@ -241,9 +270,11 @@ export function HeroRecommandation({
 
         {/* Bloc central : texte à gauche, tuile logo dans la colonne de droite
             (centrée verticalement) ; sous 1100 px la tuile passe dessous. */}
-        <div className="grid items-center gap-[clamp(24px,4vw,64px)] min-[1100px]:grid-cols-[minmax(0,1fr)_344px]">
+        {/* La gouttière ne compte en vertical que sous 1100 px, tuile empilée :
+            elle suit alors la hauteur de fenêtre comme le reste du rythme. */}
+        <div className="grid items-center gap-[clamp(20px,min(4vw,3svh),64px)] min-[1100px]:grid-cols-[minmax(0,1fr)_344px]">
           <div>
-            <div style={{ fontFamily: MONO, fontSize: "clamp(13px, 1.4vw, 20px)", textTransform: "uppercase", letterSpacing: "0.16em", color: "#98A1AC", marginBottom: "30px" }}>
+            <div style={{ fontFamily: MONO, fontSize: "clamp(13px, 1.4vw, 20px)", textTransform: "uppercase", letterSpacing: "0.16em", color: "#98A1AC", marginBottom: "clamp(14px, 3svh, 30px)" }}>
               L&apos;IA à utiliser aujourd&apos;hui
             </div>
             {/* Plancher à 34 px (et non 48) : le nom du modèle vient d'une
@@ -255,7 +286,7 @@ export function HeroRecommandation({
             </h1>
             {/* Effort absent de la source : on masque la ligne plutôt que d'afficher une valeur inventée. */}
             {effort ? (
-              <div style={{ marginTop: "34px", fontFamily: MONO, fontWeight: 600, fontSize: "clamp(18px, 2.1vw, 30px)", textTransform: "uppercase", letterSpacing: "0.14em", color: TURQUOISE }}>
+              <div style={{ marginTop: "clamp(16px, 3.4svh, 34px)", fontFamily: MONO, fontWeight: 600, fontSize: "clamp(18px, 2.1vw, 30px)", textTransform: "uppercase", letterSpacing: "0.14em", color: TURQUOISE }}>
                 Effort {EFFORTS[effort.toLowerCase()] ?? effort}
               </div>
             ) : null}
@@ -263,14 +294,17 @@ export function HeroRecommandation({
           <TuileLogo modele={modele} editeur={editeur} pays={pays} />
         </div>
 
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-start", flexWrap: "wrap", gap: "32px", borderTop: "1px solid rgba(255,255,255,.14)", paddingTop: "26px" }}>
-          <div style={{ display: "flex", alignItems: "flex-end", gap: "48px", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-start", flexWrap: "wrap", gap: "32px", borderTop: "1px solid rgba(255,255,255,.14)", paddingTop: "clamp(14px, 2.6svh, 26px)" }}>
+          {/* La gouttière ne compte en vertical que sur les petites largeurs,
+              où la baseline passe sous le score : elle suit donc la hauteur de
+              fenêtre comme le reste du rythme vertical. */}
+          <div style={{ display: "flex", alignItems: "flex-end", gap: "clamp(20px, 4.4svh, 48px)", flexWrap: "wrap" }}>
             <div>
               <div style={{ fontFamily: MONO, fontSize: "11.5px", textTransform: "uppercase", letterSpacing: "0.16em", color: "#7A828E", marginBottom: "10px" }}>
                 Score global
               </div>
               <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
-                <span style={{ fontFamily: MONO, fontWeight: 600, fontSize: "56px", letterSpacing: "-0.03em", lineHeight: 1, color: TURQUOISE }}>{score}</span>
+                <span style={{ fontFamily: MONO, fontWeight: 600, fontSize: "clamp(40px, 5.6svh, 56px)", letterSpacing: "-0.03em", lineHeight: 1, color: TURQUOISE }}>{score}</span>
                 <span style={{ fontFamily: MONO, fontSize: "16px", color: "#6B7480" }}>/100</span>
               </div>
             </div>
@@ -283,7 +317,7 @@ export function HeroRecommandation({
       <a
         href={ancre}
         aria-label="Voir le détail plus bas"
-        className="h-[104px] max-[640px]:h-[88px]"
+        className="h-[clamp(72px,10.4svh,104px)] shrink-0 max-[640px]:h-[clamp(64px,9svh,88px)]"
         style={{
           position: "relative",
           borderTop: "1px solid rgba(255,255,255,.12)",
