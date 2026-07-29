@@ -47,8 +47,8 @@ export function Alignement() {
           .
         </h2>
         <p className="mt-4 text-[16.5px] leading-[1.58] text-body-sur-ink">
-          Un petit groupe, pas d&apos;abonnement : vous repartez avec un système
-          qui tourne sans nous.
+          Un petit groupe, pas d&apos;abonnement : vous repartez plus productif,
+          avec des heures gagnées sur votre semaine.
         </p>
       </div>
 

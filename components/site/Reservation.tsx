@@ -58,8 +58,8 @@ export function Reservation({ mention }: { mention?: string | null }) {
           </span>
         </h2>
         <p className="mx-auto mt-[18px] max-w-[460px] text-[16.5px] leading-[1.55] text-body-sur-ink">
-          Deux demi-journées à caler selon votre agenda : à la fin, votre boîte
-          se trie toute seule.
+          Deux demi-journées à caler selon votre agenda : vous repartez plus
+          productif, avec des heures gagnées chaque semaine.
         </p>
 
         <ReservationTrigger className="mt-7 inline-flex items-center gap-[13px] rounded-btn bg-canard py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark">
