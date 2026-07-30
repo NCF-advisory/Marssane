@@ -163,8 +163,8 @@ export function NiveauBloc({ niveaux }: { niveaux: Niveau[] }) {
               {/* Corps — se dévoile ensuite. */}
               <div data-reveal-body>
                 <ul className="mt-6 flex flex-col gap-3">
-                  {niveau.points.map((point) => (
-                    <li key={point}>
+                  {niveau.points.map((point, i) => (
+                    <li key={`${point}-${i}`}>
                       <CheckItem dotBg={niveau.accent} dotText={niveau.accentText}>
                         {point}
                       </CheckItem>

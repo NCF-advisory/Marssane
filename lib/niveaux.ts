@@ -44,14 +44,16 @@ export const NIVEAUX: Niveau[] = [
     titre: "Structurer ses usages et gagner du temps",
     accroche:
       "Passer des usages ponctuels à des méthodes fiables, réutilisables au fil des journées.",
+    // TODO contenu niveau confirmé : les quatre lignes ci-dessous sont des
+    // gabarits (le programme n'est pas arrêté).
     points: [
-      "Construire des consignes réutilisables",
-      "Enchaîner plusieurs tâches sans se perdre",
-      "Fiabiliser ses résultats et savoir les vérifier",
-      "Partager ses méthodes avec son équipe",
+      "À définir",
+      "À définir",
+      "À définir",
+      "À définir",
     ],
     infos: {
-      duree: "1 journée",
+      duree: "À définir",
       format: "Présentiel",
       prochaineSession: "À venir",
     },
@@ -69,11 +71,13 @@ export const NIVEAUX: Niveau[] = [
     titre: "Construire son propre outil, de A à Z",
     accroche:
       "Concevoir avec l'IA l'outil qui manque à votre entreprise : un ERP maison, bâti sur vos règles métier.",
+    // TODO contenu niveau expert : les quatre lignes ci-dessous sont des
+    // gabarits (le programme n'est pas arrêté).
     points: [
-      "Cadrer son outil : besoins, données, règles métier",
-      "Construire un ERP maison avec Claude, sans être développeur",
-      "Le connecter à ses données réelles : mails, fichiers, tableurs",
-      "Fiabiliser, faire évoluer et garder le contrôle",
+      "À définir",
+      "À définir",
+      "À définir",
+      "À définir",
     ],
     infos: {
       duree: "À définir",
