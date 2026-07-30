@@ -100,8 +100,6 @@ function sessionDetailsHtml(session: SessionDetails): string {
 const PREREQUIS = [
   "un ordinateur portable avec l'application Claude installée",
   "un abonnement Claude Pro actif (20 €/mois)",
-  "l'accès à votre messagerie",
-  "la validation de votre DSI si votre poste est géré par votre entreprise",
 ];
 
 /** Email destiné à l'inscrit (confirmation ou liste d'attente). */
@@ -330,8 +328,8 @@ export type RappelEmailInput = {
  * E-mail de rappel envoyé aux inscrits confirmés avant leur session (cron
  * quotidien, voir app/api/rappels). Deux variantes :
  *  - J-7 : le rappel qui laisse encore le temps d'agir — date, horaire, lieu et
- *    prérequis, en insistant sur les deux points à délai (abonnement Claude Pro
- *    payant, validation DSI) ;
+ *    prérequis, en insistant sur le point à délai (abonnement Claude Pro
+ *    payant) ;
  *  - J-1 : court — date, horaire, lieu, et comment signaler un empêchement.
  * Sobre, « texte d'abord » (charte). Le prénom est échappé côté HTML.
  */
@@ -368,10 +366,9 @@ export function buildRappelEmail(input: RappelEmailInput): RenderedEmail {
   }
 
   const delaiPhrase =
-    "Deux de ces points demandent parfois du délai : l'abonnement Claude Pro " +
-    "est payant et doit être actif le jour de la formation, et la validation " +
-    "de votre DSI peut prendre plusieurs jours. C'est le bon moment de vous en " +
-    "occuper.";
+    "Un de ces points demande parfois du délai : l'abonnement Claude Pro est " +
+    "payant et doit être actif le jour de la formation. C'est le bon moment de " +
+    "vous en occuper.";
 
   const text = [
     `Bonjour ${prenom},`,

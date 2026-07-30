@@ -13,9 +13,9 @@ import { rappelDejaEnvoye } from "@/lib/emails-log";
  * table (index unique partiel) garantit qu'un rappel ne part qu'une fois, même
  * si deux exécutions se chevauchent.
  *
- * Motivation : la formation exige un abonnement Claude Pro payant et, souvent,
- * l'accord de la DSI. Le rappel J-7 laisse le temps d'agir ; le J-1 est un
- * simple pense-bête.
+ * Motivation : la formation exige un abonnement Claude Pro payant, actif le
+ * jour J. Le rappel J-7 laisse le temps d'agir ; le J-1 est un simple
+ * pense-bête.
  *
  * Protégée par `Authorization: Bearer ${CRON_SECRET}` (en-tête que Vercel Cron
  * envoie automatiquement). Sans clé configurée ou en-tête invalide → 401.
