@@ -145,47 +145,36 @@ export function buildClientEmail(args: {
     };
   }
 
-  // Statut « confirme ».
+  // Statut « confirme ». Ni date ni horaires ici : la session n'est pas encore
+  // datée côté public (le site affiche « Prochainement »), ce sont les rappels
+  // J-7 / J-1 qui portent les détails une fois la date arrêtée.
   const textLines = [
     `Bonjour ${prenom},`,
     "",
     "Nous confirmons la réception de votre pré-inscription à la formation IA Marssane.",
     "",
-  ];
-  if (session) {
-    textLines.push("Détails de la session :", ...sessionDetailsText(session), "");
-  }
-  textLines.push(
     "Pour suivre la formation dans de bonnes conditions, prévoyez :",
     ...PREREQUIS.map((p) => `- ${p}`),
     "",
     "Il s'agit d'une pré-inscription sans engagement : nous revenons vers vous prochainement.",
     "",
     "L'équipe Marssane",
-  );
-
-  const htmlParts = [
-    `<p style="margin:0 0 16px;">Bonjour ${esc(prenom)},</p>`,
-    `<p style="margin:0 0 16px;">Nous confirmons la réception de votre pré-inscription à la formation IA Marssane.</p>`,
   ];
-  if (session) {
-    htmlParts.push(
-      `<p style="margin:0 0 8px;">Détails de la session :</p>`,
-      sessionDetailsHtml(session),
-    );
-  }
-  htmlParts.push(
-    `<p style="margin:0 0 8px;">Pour suivre la formation dans de bonnes conditions, prévoyez :</p>`,
-    `<ul style="margin:0 0 16px;padding-left:20px;">${PREREQUIS.map(
-      (p) => `<li style="margin:0 0 4px;">${esc(p)}</li>`,
-    ).join("")}</ul>`,
-    `<p style="margin:0 0 16px;">Il s'agit d'une pré-inscription sans engagement : nous revenons vers vous prochainement.</p>`,
-    SIGNATURE_HTML,
+
+  const html = htmlLayout(
+    `<p style="margin:0 0 16px;">Bonjour ${esc(prenom)},</p>` +
+      `<p style="margin:0 0 16px;">Nous confirmons la réception de votre pré-inscription à la formation IA Marssane.</p>` +
+      `<p style="margin:0 0 8px;">Pour suivre la formation dans de bonnes conditions, prévoyez :</p>` +
+      `<ul style="margin:0 0 16px;padding-left:20px;">${PREREQUIS.map(
+        (p) => `<li style="margin:0 0 4px;">${esc(p)}</li>`,
+      ).join("")}</ul>` +
+      `<p style="margin:0 0 16px;">Il s'agit d'une pré-inscription sans engagement : nous revenons vers vous prochainement.</p>` +
+      SIGNATURE_HTML,
   );
 
   return {
     subject: "Votre pré-inscription · formation IA Marssane",
-    html: htmlLayout(htmlParts.join("")),
+    html,
     text: textLines.join("\n"),
   };
 }

@@ -34,8 +34,8 @@ const EMAIL_FROM = process.env.EMAIL_FROM || "Marssane <onboarding@resend.dev>";
 
 /**
  * Emails transactionnels de pré-inscription (F5 · CDC §5.5) : confirmation ou
- * liste d'attente à l'inscrit (rappel date/lieu + prérequis) et notification aux
- * administrateurs (`CONTACT_EMAIL`).
+ * liste d'attente à l'inscrit (prérequis ; la date et le lieu sont réservés aux
+ * rappels J-7 / J-1) et notification aux administrateurs (`CONTACT_EMAIL`).
  *
  * Ne lève jamais : une inscription déjà enregistrée ne doit pas échouer à cause
  * de l'envoi d'un email. Sans `RESEND_API_KEY`/`CONTACT_EMAIL`, l'envoi est sauté
