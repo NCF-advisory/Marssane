@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { sendInscriptionEmails } from "@/lib/emails";
@@ -141,11 +140,6 @@ export async function submitInscription(
   } catch {
     console.error("[inscription] échec de l'envoi des emails");
   }
-
-  // Rafraîchit tout le site (compteur de places, bascule « complète ») : la
-  // modale de réservation est montée dans le layout racine, donc présente sur
-  // toutes les routes — d'où le type "layout" plutôt que la seule page « / ».
-  revalidatePath("/", "layout");
 
   // redirect() lève une exception : appelé hors de tout try/catch. Pas de
   // statut dans l'URL : la page de merci est la même pour tous les inscrits.

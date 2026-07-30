@@ -8,7 +8,7 @@ import { ReservationTrigger } from "./ReservationTrigger";
  * modale de pré-inscription (<ReservationDialog>). Décorations motifFond masquées
  * sous lg.
  */
-export function Reservation({ mention }: { mention?: string | null }) {
+export function Reservation() {
   return (
     <section
       id="contact"
@@ -67,9 +67,10 @@ export function Reservation({ mention }: { mention?: string | null }) {
           <Chevron />
         </ReservationTrigger>
 
+        {/* Mention neutre, jamais la date ni le compteur de places : côté
+            public, le site n'annonce pas de session datée. */}
         <div className="mt-4 text-[13px] text-faint-sur-ink">
-          {mention ??
-            "Petits groupes · pré-inscription sans engagement · réponse rapide."}
+          Petits groupes · pré-inscription sans engagement · réponse rapide.
         </div>
       </div>
     </section>

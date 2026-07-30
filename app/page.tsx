@@ -12,13 +12,6 @@ import { FormationsDeuxNiveaux } from "@/components/site/FormationsDeuxNiveaux";
 import { Hero } from "@/components/site/Hero";
 import { ParolesDirigeants } from "@/components/site/ParolesDirigeants";
 import { Reservation } from "@/components/site/Reservation";
-import { mentionSession } from "@/lib/session-display";
-import { getProchaineSessionSafe } from "@/lib/sessions";
-
-// Page dynamique contrôlée : revalidation périodique + `revalidatePath("/",
-// "layout")` depuis la server action, pour que le compteur de places se
-// rafraîchisse.
-export const revalidate = 60;
 
 /**
  * Bande de tonalité claire : conteneur pleine largeur qui repose la toile sous
@@ -42,11 +35,7 @@ function BandeToile({
   return <div className={`sur-toile ${className}`}>{children}</div>;
 }
 
-export default async function Home() {
-  // Repli sans base : `null` → wording « liste d'attente » (voir getProchaineSessionSafe).
-  const session = await getProchaineSessionSafe();
-  const mention = session ? mentionSession(session) : null;
-
+export default function Home() {
   return (
     <>
       {/* Ordre des sections et alternance de tonalités repris du tunnel 8lab
@@ -68,7 +57,7 @@ export default async function Home() {
         </BandeToile>
         <Alignement />
         <FormationsDeuxNiveaux />
-        <Reservation mention={mention} />
+        <Reservation />
         {/* La réservation referme déjà sur 90 px d'encre : la bande n'a pas
             besoin de marge haute, seulement de rendre à la FAQ (talon de 8 px)
             la respiration que les autres sections tiennent de leur `pt`. */}
@@ -81,3 +70,34 @@ export default async function Home() {
     </>
   );
 }
+
+export const metadata = {
+  title: "Marssane · Formation IA",
+  description:
+    "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Marssane · Formation IA",
+    description:
+      "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
+    url: "/",
+    locale: "fr_FR",
+    type: "website",
+    siteName: "Marssane",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Marssane · La formation IA des dirigeants de PME",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Marssane · Formation IA",
+    description:
+      "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
+    images: ["/opengraph-image.png"],
+  },
+} satisfies import("next").Metadata;
