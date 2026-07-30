@@ -25,7 +25,7 @@ export const NIVEAUX: Niveau[] = [
       "Choisir le bon modèle et formuler le bon prompt",
       "Confier à Claude des tâches concrètes : fichiers, mails, recherche",
       "Créer un skill réutilisable et brancher un connecteur",
-      "Vérifier une sortie et savoir ce qu'on peut confier (confidentialité)",
+      "Optimiser vos processus",
     ],
     infos: {
       duree: "2 demi-journées · selon votre agenda",
