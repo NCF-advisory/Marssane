@@ -12,12 +12,12 @@ import { FormationsDeuxNiveaux } from "@/components/site/FormationsDeuxNiveaux";
 import { Hero } from "@/components/site/Hero";
 import { ParolesDirigeants } from "@/components/site/ParolesDirigeants";
 import { Reservation } from "@/components/site/Reservation";
-import { ReservationDialog } from "@/components/site/ReservationDialog";
-import { champSession, mentionSession } from "@/lib/session-display";
+import { mentionSession } from "@/lib/session-display";
 import { getProchaineSessionSafe } from "@/lib/sessions";
 
-// Page dynamique contrôlée : revalidation périodique + `revalidatePath("/")`
-// depuis la server action, pour que le compteur de places se rafraîchisse.
+// Page dynamique contrôlée : revalidation périodique + `revalidatePath("/",
+// "layout")` depuis la server action, pour que le compteur de places se
+// rafraîchisse.
 export const revalidate = 60;
 
 /**
@@ -77,10 +77,6 @@ export default async function Home() {
         </BandeToile>
       </main>
       <Footer />
-      <ReservationDialog
-        sessionLabel={champSession(session)}
-        sessionComplete={session?.complete ?? false}
-      />
       <Apparitions />
     </>
   );

@@ -142,8 +142,10 @@ export async function submitInscription(
     console.error("[inscription] échec de l'envoi des emails");
   }
 
-  // Rafraîchit la landing (compteur de places, bascule « complète »).
-  revalidatePath("/");
+  // Rafraîchit tout le site (compteur de places, bascule « complète ») : la
+  // modale de réservation est montée dans le layout racine, donc présente sur
+  // toutes les routes — d'où le type "layout" plutôt que la seule page « / ».
+  revalidatePath("/", "layout");
 
   // redirect() lève une exception : appelé hors de tout try/catch.
   redirect(`/merci?statut=${result.statut}`);

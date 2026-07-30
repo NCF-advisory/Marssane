@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/site/Footer";
 import { NiveauBloc } from "@/components/site/NiveauBloc";
-import { ReservationDialog } from "@/components/site/ReservationDialog";
 import { ScrollCue } from "@/components/site/ScrollCue";
 import { Kicker } from "@/components/ui/Kicker";
 import { LogoNiveau } from "@/components/ui/LogoNiveau";
 import { NIVEAUX } from "@/lib/niveaux";
-import { champSession } from "@/lib/session-display";
-import { getProchaineSessionSafe } from "@/lib/sessions";
-
-// Dynamique contrôlée (comme l'accueil) : la modale affiche la prochaine session.
-export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Nos formations · Marssane",
@@ -18,9 +12,7 @@ export const metadata: Metadata = {
     "Trois niveaux de formation à l'IA (Débutant, Confirmé, Expert) pour progresser à son rythme, des premiers usages jusqu'à l'outil construit sur mesure.",
 };
 
-export default async function Formations() {
-  const session = await getProchaineSessionSafe();
-
+export default function Formations() {
   return (
     <>
       {/* `snap-page-formations` active le scroll-snap racine, ciblé sur cette
@@ -124,10 +116,6 @@ export default async function Formations() {
       <div className="snap-end">
         <Footer />
       </div>
-      <ReservationDialog
-        sessionLabel={champSession(session)}
-        sessionComplete={session?.complete ?? false}
-      />
     </>
   );
 }
