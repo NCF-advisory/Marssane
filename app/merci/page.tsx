@@ -14,7 +14,7 @@ const CONTENUS = {
   confirme: {
     titre: "Votre pré-inscription est bien enregistrée.",
     texte:
-      "Vous recevrez un email de confirmation avec les prérequis de la formation : un ordinateur portable avec l'application Claude installée, un abonnement Claude Pro (20 €/mois), l'accès à votre messagerie et, si votre poste est géré, un point avec votre DSI.",
+      "Vous recevrez un email de confirmation avec les prérequis de la formation : un ordinateur portable avec l'application Claude installée et un abonnement Claude Pro (20 €/mois).",
   },
   attente: {
     titre: "Vous êtes sur liste d'attente.",
@@ -24,7 +24,7 @@ const CONTENUS = {
   defaut: {
     titre: "Votre pré-inscription est bien enregistrée.",
     texte:
-      "Vous recevrez un email de confirmation avec les prérequis de la formation (ordinateur portable avec l'application Claude, abonnement Claude Pro, accès à votre messagerie, point DSI si votre poste est géré).",
+      "Vous recevrez un email de confirmation avec les prérequis de la formation (ordinateur portable avec l'application Claude, abonnement Claude Pro).",
   },
 } as const;
 
