@@ -38,11 +38,13 @@ export function mentionSession(session: ProchaineSession): string {
   )} · sans engagement.`;
 }
 
-/** Libellé du champ « Session » (lecture seule) de la modale F2. */
+/**
+ * Libellé du champ « Session » (lecture seule) de la modale F2. Une session
+ * publiée n'affiche ni sa date ni son lieu : « Prochainement » tout court.
+ */
 export function champSession(session: ProchaineSession | null): string {
   if (!session) {
     return "Liste d'attente : vous serez prévenu dès qu'une session est publiée";
   }
-  const lieu = session.lieu ?? "lieu à préciser";
-  return `${formatDateLongue(session.date)} · ${lieu}`;
+  return "Prochainement";
 }
