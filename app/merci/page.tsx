@@ -4,9 +4,15 @@ import Link from "next/link";
 import { Footer } from "@/components/site/Footer";
 import { Chevron } from "@/components/ui/Chevron";
 import { Kicker } from "@/components/ui/Kicker";
+import { createPublicMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Merci · Marssane",
+  ...createPublicMetadata({
+    title: "Merci · Marssane",
+    description: "Votre pré-inscription à la formation Marssane est bien enregistrée.",
+    path: "/merci",
+  }),
+  robots: { index: false, follow: false },
 };
 
 /**

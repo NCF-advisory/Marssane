@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { getClassementSafe } from "@/lib/benchmarks/classement";
 import { Footer } from "@/components/site/Footer";
@@ -7,6 +6,7 @@ import { Kicker } from "@/components/ui/Kicker";
 import { HeroRecommandation } from "@/components/site/HeroRecommandation";
 import { GraphiqueEfficacite } from "@/components/quelle-ia/GraphiqueEfficacite";
 import { MethodoSources } from "@/components/quelle-ia/MethodoSources";
+import { createPublicMetadata } from "@/lib/seo";
 
 export const revalidate = 3600;
 
@@ -22,11 +22,12 @@ const fmtDate = (iso: string | null) =>
       )
     : "—";
 
-export const metadata: Metadata = {
+export const metadata = createPublicMetadata({
   title: "Quelle IA utiliser aujourd'hui ? · Marssane",
   description:
     "Le classement des IA au meilleur compromis intelligence, prix et réactivité pour les dirigeants de PME, mis à jour automatiquement.",
-};
+  path: "/quelle-ia",
+});
 
 export default async function Page() {
   const c = await getClassementSafe();

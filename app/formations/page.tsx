@@ -1,16 +1,17 @@
-import type { Metadata } from "next";
 import { Footer } from "@/components/site/Footer";
 import { NiveauBloc } from "@/components/site/NiveauBloc";
 import { ScrollCue } from "@/components/site/ScrollCue";
 import { Kicker } from "@/components/ui/Kicker";
 import { LogoNiveau } from "@/components/ui/LogoNiveau";
 import { NIVEAUX } from "@/lib/niveaux";
+import { createPublicMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = createPublicMetadata({
   title: "Nos formations · Marssane",
   description:
     "Trois niveaux de formation à l'IA (Débutant, Confirmé, Expert) pour progresser à son rythme, des premiers usages jusqu'à l'outil construit sur mesure.",
-};
+  path: "/formations",
+});
 
 export default function Formations() {
   return (

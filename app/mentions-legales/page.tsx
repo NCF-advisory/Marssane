@@ -1,11 +1,14 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Footer } from "@/components/site/Footer";
 import { Kicker } from "@/components/ui/Kicker";
+import { createPublicMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = createPublicMetadata({
   title: "Mentions légales · Marssane",
-};
+  description:
+    "Consultez les mentions légales de Marssane : éditeur NCF Advisory, hébergeur du site, directeur de publication, contact et règles de propriété intellectuelle.",
+  path: "/mentions-legales",
+});
 
 const SECTIONS: { titre: string; corps: ReactNode }[] = [
   {

@@ -1,11 +1,14 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Footer } from "@/components/site/Footer";
 import { Kicker } from "@/components/ui/Kicker";
+import { createPublicMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = createPublicMetadata({
   title: "Politique de confidentialité · Marssane",
-};
+  description:
+    "Consultez la politique de confidentialité de Marssane : données collectées, finalités, durée de conservation, sous-traitants et exercice de vos droits.",
+  path: "/confidentialite",
+});
 
 const SECTIONS: { titre: string; corps: ReactNode }[] = [
   {

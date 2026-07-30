@@ -14,7 +14,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/quelle-ia",
     "/formations",
     "/implementation",
-    "/merci",
     "/mentions-legales",
     "/confidentialite",
   ];

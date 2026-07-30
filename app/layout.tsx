@@ -6,6 +6,7 @@ import localFont from "next/font/local";
 import { Nav } from "@/components/site/Nav";
 import { ReservationDialog } from "@/components/site/ReservationDialog";
 import { champSession } from "@/lib/session-display";
+import { HOME_DESCRIPTION, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 const plusJakartaSans = localFont({
@@ -22,21 +23,31 @@ const splineSansMono = localFont({
   display: "swap",
 });
 
-// Même ciblage que le kicker du héro : dirigeants de PME de moins de 20 salariés.
-const description =
-  "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l'IA sur leurs propres dossiers.";
-
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Marssane · Formation IA",
-  description,
-  robots: { index: false, follow: false },
-  // og:image reste à produire (aucun asset visuel disponible à ce jalon).
+  description: HOME_DESCRIPTION,
   openGraph: {
     title: "Marssane · Formation IA",
-    description,
+    description: HOME_DESCRIPTION,
+    url: "/",
     locale: "fr_FR",
     type: "website",
     siteName: "Marssane",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Marssane · La formation IA des dirigeants de PME",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Marssane · Formation IA",
+    description: HOME_DESCRIPTION,
+    images: ["/opengraph-image.png"],
   },
 };
 

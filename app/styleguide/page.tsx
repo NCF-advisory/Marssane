@@ -10,6 +10,7 @@ import { PlusMark } from "@/components/ui/PlusMark";
 
 export const metadata: Metadata = {
   title: "Styleguide · Marssane",
+  robots: { index: false, follow: false },
 };
 
 const palette: { name: string; hex: string }[] = [

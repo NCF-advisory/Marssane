@@ -274,16 +274,16 @@ export function HeroRecommandation({
             elle suit alors la hauteur de fenêtre comme le reste du rythme. */}
         <div className="grid items-center gap-[clamp(20px,min(4vw,3svh),64px)] min-[1100px]:grid-cols-[minmax(0,1fr)_344px]">
           <div>
-            <div style={{ fontFamily: MONO, fontSize: "clamp(13px, 1.4vw, 20px)", textTransform: "uppercase", letterSpacing: "0.16em", color: "#98A1AC", marginBottom: "clamp(14px, 3svh, 30px)" }}>
-              L&apos;IA à utiliser aujourd&apos;hui
-            </div>
+            <h1 style={{ marginTop: 0, fontFamily: MONO, fontSize: "clamp(13px, 1.4vw, 20px)", textTransform: "uppercase", letterSpacing: "0.16em", color: "#98A1AC", marginBottom: "clamp(14px, 3svh, 30px)" }}>
+              Quelle IA utiliser aujourd&apos;hui ?
+            </h1>
             {/* Plancher à 34 px (et non 48) : le nom du modèle vient d'une
                 source externe, un libellé long comme « gpt-5.1-codex-max »
                 débordait de la colonne à 320 px. `break-word` sert de garde-fou
                 pour un token qui resterait plus large que la colonne. */}
-            <h1 style={{ margin: 0, fontSize: "clamp(34px, 8.8vw, 126px)", fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 0.94, color: "#FFFFFF", overflowWrap: "break-word" }}>
+            <h2 style={{ margin: 0, fontSize: "clamp(34px, 8.8vw, 126px)", fontWeight: 800, letterSpacing: "-0.035em", lineHeight: 0.94, color: "#FFFFFF", overflowWrap: "break-word" }}>
               {modele}
-            </h1>
+            </h2>
             {/* Effort absent de la source : on masque la ligne plutôt que d'afficher une valeur inventée. */}
             {effort ? (
               <div style={{ marginTop: "clamp(16px, 3.4svh, 34px)", fontFamily: MONO, fontWeight: 600, fontSize: "clamp(18px, 2.1vw, 30px)", textTransform: "uppercase", letterSpacing: "0.14em", color: TURQUOISE }}>
