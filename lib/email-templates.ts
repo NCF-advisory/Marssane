@@ -163,8 +163,9 @@ export function buildAdminEmail(args: {
       ? `Autre (${inscription.metier_autre})`
       : inscription.metier;
   const entreprise = inscription.entreprise || "—";
+  // Pas de date dans la notification : « Prochainement », comme côté public.
   const sessionLibelle = session
-    ? `${formatDateLongue(session.date)}${session.lieu ? ` · ${session.lieu}` : ""}`
+    ? "Prochainement"
     : "Liste d'attente (aucune session publiée)";
 
   const champs: [string, string][] = [
