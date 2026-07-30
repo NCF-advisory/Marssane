@@ -8,11 +8,12 @@ import { Chevron } from "@/components/ui/Chevron";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
 import { ReservationTrigger } from "./ReservationTrigger";
 
-// « Les formations » et « implémenter l'IA » pointent vers leurs pages dédiées.
+// « Les formations » pointe vers sa page dédiée. « /implementation » est
+// masquée de la barre (offre pas encore lancée) mais reste dans PAGES_SITE :
+// la page existe toujours par lien direct et doit porter la nav.
 const links = [
   { href: "/formations", label: "Les formations" },
   { href: "/quelle-ia", label: "Quelle IA choisir ?" },
-  { href: "/implementation", label: "Je veux implémenter l'IA" },
 ];
 
 /** Pages du site vitrine qui portent la barre. Liste explicite (et non une

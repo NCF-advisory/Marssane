@@ -13,7 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/",
     "/quelle-ia",
     "/formations",
-    "/implementation",
     "/mentions-legales",
     "/confidentialite",
   ];

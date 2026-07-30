@@ -3,12 +3,17 @@ import { Footer } from "@/components/site/Footer";
 import { Kicker } from "@/components/ui/Kicker";
 import { createPublicMetadata } from "@/lib/seo";
 
-export const metadata = createPublicMetadata({
-  title: "Implémenter l'IA · Marssane",
-  description:
-    "Décrivez votre projet d'implémentation de l'IA dans votre entreprise : nous revenons vers vous prochainement.",
-  path: "/implementation",
-});
+export const metadata = {
+  ...createPublicMetadata({
+    title: "Implémenter l'IA · Marssane",
+    description:
+      "Décrivez votre projet d'implémentation de l'IA dans votre entreprise : nous revenons vers vous prochainement.",
+    path: "/implementation",
+  }),
+  // Page masquée (hors nav et hors sitemap) en attendant le lancement de
+  // l'offre : accessible par lien direct, mais exclue des moteurs.
+  robots: { index: false, follow: false },
+};
 
 export default function Implementation() {
   return (
