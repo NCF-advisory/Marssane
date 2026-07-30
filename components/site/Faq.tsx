@@ -1,11 +1,10 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { KickerPill } from "@/components/ui/KickerPill";
 
 /**
- * Les huit questions qui reviennent avant une pré-inscription, dans l'ordre où
- * on se les pose : le niveau, puis le déroulé, puis ce qu'on en retire, puis les
- * réserves (données, outil, engagement).
+ * Les six questions qui reviennent avant une pré-inscription, dans l'ordre où
+ * on se les pose : le niveau, puis le déroulé, puis les réserves (outil,
+ * engagement).
  */
 const QUESTIONS: { question: string; reponse: ReactNode }[] = [
   {
@@ -26,11 +25,7 @@ const QUESTIONS: { question: string; reponse: ReactNode }[] = [
         Si vous en êtes aux usages occasionnels, la formation débutant vous fera
         passer du chat aux automatismes qui tournent seuls. Si vous êtes déjà à
         l&apos;aise, le niveau confirmé est fait pour vous : structurer vos
-        usages et gagner du temps sur vos vrais dossiers.{" "}
-        <Link href="/formations" className="text-turquoise underline hover:text-fort">
-          Voir les trois niveaux
-        </Link>
-        .
+        usages et gagner du temps sur vos vrais dossiers.
       </>
     ),
   },
@@ -38,7 +33,7 @@ const QUESTIONS: { question: string; reponse: ReactNode }[] = [
     question: "Comment la formation se déroule-t-elle concrètement ?",
     reponse: (
       <>
-        Deux demi-journées en salle (3 h 45 puis 5 h), à caler selon votre
+        Deux demi-journées en salle (4 h puis 4 h), à caler selon votre
         agenda, avec de la pratique chez vous entre les deux. Vous ne regardez
         pas une démonstration : vous construisez.
       </>
@@ -48,29 +43,7 @@ const QUESTIONS: { question: string; reponse: ReactNode }[] = [
     question: "Que se passe-t-il entre les deux sessions ?",
     reponse: (
       <>
-        Vous transposez le cas mail sur votre propre boîte, à votre rythme. Un
-        chat commun reste ouvert et le formateur publie une FAQ groupée à
-        mi-parcours.
-      </>
-    ),
-  },
-  {
-    question: "Avec quoi est-ce que je repars ?",
-    reponse: (
-      <>
-        Un tri automatique de votre boîte mail qui tourne réellement, construit
-        par vous en salle, puis votre propre cas d&apos;usage démontré au
-        groupe, et un certificat de participation.
-      </>
-    ),
-  },
-  {
-    question: "Mes données restent-elles confidentielles ?",
-    reponse: (
-      <>
-        La question est traitée dès les premières heures de la formation : ce que
-        Claude fait de vos données, les réglages à activer, ce qu&apos;on lui
-        confie ou pas.
+        Vous prenez en main les outils et vous posez des questions si besoin.
       </>
     ),
   },
