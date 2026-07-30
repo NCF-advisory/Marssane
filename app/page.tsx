@@ -12,6 +12,7 @@ import { FormationsDeuxNiveaux } from "@/components/site/FormationsDeuxNiveaux";
 import { Hero } from "@/components/site/Hero";
 import { ParolesDirigeants } from "@/components/site/ParolesDirigeants";
 import { Reservation } from "@/components/site/Reservation";
+import { createPublicMetadata, HOME_DESCRIPTION } from "@/lib/seo";
 
 /**
  * Bande de tonalité claire : conteneur pleine largeur qui repose la toile sous
@@ -71,33 +72,8 @@ export default function Home() {
   );
 }
 
-export const metadata = {
+export const metadata = createPublicMetadata({
   title: "Marssane · Formation IA",
-  description:
-    "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
-  alternates: { canonical: "/" },
-  openGraph: {
-    title: "Marssane · Formation IA",
-    description:
-      "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
-    url: "/",
-    locale: "fr_FR",
-    type: "website",
-    siteName: "Marssane",
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Marssane · La formation IA des dirigeants de PME",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Marssane · Formation IA",
-    description:
-      "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
-    images: ["/opengraph-image.png"],
-  },
-} satisfies import("next").Metadata;
+  description: HOME_DESCRIPTION,
+  path: "/",
+});
