@@ -102,52 +102,19 @@ const PREREQUIS = [
   "un abonnement Claude Pro actif (20 €/mois)",
 ];
 
-/** Email destiné à l'inscrit (confirmation ou liste d'attente). */
-export function buildClientEmail(args: {
-  inscription: Inscription;
-  session: ProchaineSession | null;
-}): RenderedEmail {
-  const { inscription, session } = args;
-  const prenom = inscription.prenom;
+/**
+ * Email destiné à l'inscrit. Identique quel que soit le statut réel
+ * (`confirme` ou `attente`) : côté public, une pré-inscription est toujours
+ * enregistrée, le tri se fait dans l'admin (qui reçoit, lui, le statut réel via
+ * `buildAdminEmail`).
+ *
+ * Ni date ni horaires : la session n'est pas encore datée côté public (le site
+ * affiche « Prochainement »), ce sont les rappels J-7 / J-1 qui portent les
+ * détails une fois la date arrêtée.
+ */
+export function buildClientEmail(args: { prenom: string }): RenderedEmail {
+  const { prenom } = args;
 
-  if (inscription.statut === "attente") {
-    // Deux cas d'attente : une session publiée mais complète, ou aucune session
-    // publiée (liste d'attente générale) — le texte ne doit pas affirmer qu'une
-    // session est complète quand il n'y en a aucune.
-    const attenteMessage = session
-      ? "La session actuelle est complète : vous êtes inscrit sur la liste d'attente. Nous vous recontactons dès qu'une place se libère ou qu'une nouvelle session est ouverte."
-      : "Aucune date n'est ouverte à l'inscription pour le moment : vous êtes inscrit sur la liste d'attente. Nous vous prévenons dès qu'une session est publiée.";
-
-    const text = [
-      `Bonjour ${prenom},`,
-      "",
-      "Merci pour votre pré-inscription à la formation IA Marssane.",
-      "",
-      attenteMessage,
-      "",
-      "Il s'agit d'une pré-inscription sans engagement.",
-      "",
-      "L'équipe Marssane",
-    ].join("\n");
-
-    const html = htmlLayout(
-      `<p style="margin:0 0 16px;">Bonjour ${esc(prenom)},</p>` +
-        `<p style="margin:0 0 16px;">Merci pour votre pré-inscription à la formation IA Marssane.</p>` +
-        `<p style="margin:0 0 16px;">${attenteMessage}</p>` +
-        `<p style="margin:0 0 16px;">Il s'agit d'une pré-inscription sans engagement.</p>` +
-        SIGNATURE_HTML,
-    );
-
-    return {
-      subject: "Vous êtes sur liste d'attente · Marssane",
-      html,
-      text,
-    };
-  }
-
-  // Statut « confirme ». Ni date ni horaires ici : la session n'est pas encore
-  // datée côté public (le site affiche « Prochainement »), ce sont les rappels
-  // J-7 / J-1 qui portent les détails une fois la date arrêtée.
   const textLines = [
     `Bonjour ${prenom},`,
     "",

@@ -6,7 +6,6 @@ import localFont from "next/font/local";
 import { Nav } from "@/components/site/Nav";
 import { ReservationDialog } from "@/components/site/ReservationDialog";
 import { champSession } from "@/lib/session-display";
-import { getProchaineSessionSafe } from "@/lib/sessions";
 import "./globals.css";
 
 const plusJakartaSans = localFont({
@@ -27,11 +26,6 @@ const splineSansMono = localFont({
 const description =
   "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l'IA sur leurs propres dossiers.";
 
-// La modale de réservation est montée dans ce layout : ses données de session
-// doivent donc se rafraîchir sur TOUTES les routes, pas seulement sur celles qui
-// déclaraient déjà leur propre revalidation (accueil, formations).
-export const revalidate = 60;
-
 export const metadata: Metadata = {
   title: "Marssane · Formation IA",
   description,
@@ -46,14 +40,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Repli sans base : `null` → wording « liste d'attente » (voir getProchaineSessionSafe).
-  const session = await getProchaineSessionSafe();
-
   return (
     <html
       lang="fr"
@@ -71,10 +62,7 @@ export default async function RootLayout({
         {/* Montée ici, hors de `children` : le bouton « Réserver ma place » de
             la nav est présent sur tout le site, la modale qu'il ouvre doit
             l'être aussi (un seul id="reservation-dialog" dans le DOM). */}
-        <ReservationDialog
-          sessionLabel={champSession(session)}
-          sessionComplete={session?.complete ?? false}
-        />
+        <ReservationDialog sessionLabel={champSession()} />
       </body>
     </html>
   );

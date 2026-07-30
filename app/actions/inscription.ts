@@ -147,6 +147,7 @@ export async function submitInscription(
   // toutes les routes — d'où le type "layout" plutôt que la seule page « / ».
   revalidatePath("/", "layout");
 
-  // redirect() lève une exception : appelé hors de tout try/catch.
-  redirect(`/merci?statut=${result.statut}`);
+  // redirect() lève une exception : appelé hors de tout try/catch. Pas de
+  // statut dans l'URL : la page de merci est la même pour tous les inscrits.
+  redirect("/merci");
 }

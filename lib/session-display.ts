@@ -25,12 +25,23 @@ function placesRestantes(n: number): string {
 }
 
 /**
+ * Repli neutre quand la session ne peut pas être annoncée telle quelle : mêmes
+ * mots que le wording par défaut de la section Réservation.
+ */
+const MENTION_NEUTRE =
+  "Petits groupes · pré-inscription sans engagement · réponse rapide.";
+
+/**
  * Mention affichée sous les CTA (héro, carte finale) pour une session publiée.
  * `null` en amont (aucune session) → chaque composant garde son wording de repli.
+ *
+ * Une session complète n'est jamais annoncée comme telle : côté public, une
+ * pré-inscription est toujours enregistrée (le tri se fait dans l'admin), donc
+ * la mention retombe sur le repli neutre.
  */
 export function mentionSession(session: ProchaineSession): string {
   if (session.complete) {
-    return "Session complète : inscrivez-vous en liste d'attente.";
+    return MENTION_NEUTRE;
   }
   const lieu = session.lieu ?? "lieu à préciser";
   return `Prochaine session le ${formatDateLongue(session.date)} à ${lieu} · ${placesRestantes(
@@ -39,12 +50,11 @@ export function mentionSession(session: ProchaineSession): string {
 }
 
 /**
- * Libellé du champ « Session » (lecture seule) de la modale F2. Une session
- * publiée n'affiche ni sa date ni son lieu : « Prochainement » tout court.
+ * Libellé du champ « Session » (lecture seule) de la modale F2. Toujours
+ * « Prochainement » : ni date ni lieu quand une session est publiée, et pas
+ * davantage de mention de liste d'attente quand il n'y en a aucune — côté
+ * public, le formulaire enregistre toujours une pré-inscription.
  */
-export function champSession(session: ProchaineSession | null): string {
-  if (!session) {
-    return "Liste d'attente : vous serez prévenu dès qu'une session est publiée";
-  }
+export function champSession(): string {
   return "Prochainement";
 }

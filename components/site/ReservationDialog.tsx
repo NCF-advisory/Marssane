@@ -28,10 +28,8 @@ const METIERS = [
 ];
 
 type ReservationDialogProps = {
-  /** Libellé du champ « Session » (lecture seule) — date + lieu ou liste d'attente. */
+  /** Libellé du champ « Session » (lecture seule). */
   sessionLabel: string;
-  /** `true` si la prochaine session est complète : inscription en liste d'attente. */
-  sessionComplete: boolean;
 };
 
 /**
@@ -43,10 +41,7 @@ type ReservationDialogProps = {
  * `useActionState` : erreurs par champ + erreur globale, état « pending », et
  * repeuplement des valeurs sans JS (progressive enhancement).
  */
-export function ReservationDialog({
-  sessionLabel,
-  sessionComplete,
-}: ReservationDialogProps) {
+export function ReservationDialog({ sessionLabel }: ReservationDialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const [state, formAction, isPending] = useActionState(
     submitInscription,
@@ -149,13 +144,6 @@ export function ReservationDialog({
           >
             Réserver ma place
           </h2>
-
-          {sessionComplete && (
-            <p className="mt-6 rounded-card bg-ink px-4 py-3 text-[13.5px] leading-[1.5] text-body-sur-ink">
-              La session est complète : ce formulaire vous inscrit en liste
-              d&apos;attente.
-            </p>
-          )}
 
           {/* Formulaire de pré-inscription (F2) */}
           <form

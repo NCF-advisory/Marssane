@@ -33,9 +33,10 @@ export type InscriptionEmailPayload = {
 const EMAIL_FROM = process.env.EMAIL_FROM || "Marssane <onboarding@resend.dev>";
 
 /**
- * Emails transactionnels de pré-inscription (F5 · CDC §5.5) : confirmation ou
- * liste d'attente à l'inscrit (prérequis ; la date et le lieu sont réservés aux
- * rappels J-7 / J-1) et notification aux administrateurs (`CONTACT_EMAIL`).
+ * Emails transactionnels de pré-inscription (F5 · CDC §5.5) : confirmation à
+ * l'inscrit (prérequis ; la date et le lieu sont réservés aux rappels
+ * J-7 / J-1) et notification aux administrateurs (`CONTACT_EMAIL`), seule à
+ * porter le statut réel et les places restantes.
  *
  * Ne lève jamais : une inscription déjà enregistrée ne doit pas échouer à cause
  * de l'envoi d'un email. Sans `RESEND_API_KEY`/`CONTACT_EMAIL`, l'envoi est sauté
@@ -60,7 +61,7 @@ export async function sendInscriptionEmails(
   const { inscription, session, placesRestantes } = payload;
   const resend = new Resend(apiKey);
 
-  const client = buildClientEmail({ inscription, session });
+  const client = buildClientEmail({ prenom: inscription.prenom });
   const admin = buildAdminEmail({ inscription, session, placesRestantes });
 
   const results = await Promise.allSettled([
@@ -82,11 +83,10 @@ export async function sendInscriptionEmails(
     }),
   ]);
 
-  // Index 0 = email de l'inscrit (type selon son statut), index 1 = admin.
-  const types: EmailType[] = [
-    inscription.statut === "attente" ? "attente" : "confirmation",
-    "admin",
-  ];
+  // Index 0 = email de l'inscrit, index 1 = admin. L'inscrit reçoit toujours la
+  // confirmation, quel que soit son statut réel : le type `attente` n'est donc
+  // plus produit (il reste dans `EmailType` pour les lignes déjà tracées).
+  const types: EmailType[] = ["confirmation", "admin"];
 
   for (const [index, result] of results.entries()) {
     const cible = index === 0 ? "client" : "admin";
