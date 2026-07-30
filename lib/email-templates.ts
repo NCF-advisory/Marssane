@@ -123,6 +123,8 @@ export function buildClientEmail(args: { prenom: string }): RenderedEmail {
     "Pour suivre la formation dans de bonnes conditions, prévoyez :",
     ...PREREQUIS.map((p) => `- ${p}`),
     "",
+    "Si vous rencontrez la moindre difficulté pour installer l'application Claude, répondez à cet e-mail : nous vous aiderons.",
+    "",
     "Il s'agit d'une pré-inscription sans engagement : nous revenons vers vous prochainement.",
     "",
     "L'équipe Marssane",
@@ -135,6 +137,7 @@ export function buildClientEmail(args: { prenom: string }): RenderedEmail {
       `<ul style="margin:0 0 16px;padding-left:20px;">${PREREQUIS.map(
         (p) => `<li style="margin:0 0 4px;">${esc(p)}</li>`,
       ).join("")}</ul>` +
+      `<p style="margin:0 0 16px;">Si vous rencontrez la moindre difficulté pour installer l'application Claude, répondez à cet e-mail : nous vous aiderons.</p>` +
       `<p style="margin:0 0 16px;">Il s'agit d'une pré-inscription sans engagement : nous revenons vers vous prochainement.</p>` +
       SIGNATURE_HTML,
   );
