@@ -69,7 +69,7 @@ export function Reservation({ mention }: { mention?: string | null }) {
 
         <div className="mt-4 text-[13px] text-faint-sur-ink">
           {mention ??
-            "Petits groupes · pré-inscription sans engagement · réponse sous 48 h."}
+            "Petits groupes · pré-inscription sans engagement · réponse rapide."}
         </div>
       </div>
     </section>

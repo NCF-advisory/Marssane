@@ -42,7 +42,7 @@ export function ContactForm() {
         role="status"
         className="mt-7 rounded-card bg-ecume-sur-ink px-5 py-4 text-[14.5px] leading-[1.55] text-ecume"
       >
-        Votre demande est bien envoyée. Nous revenons vers vous sous 48&nbsp;h.
+        Votre demande est bien envoyée. Nous revenons vers vous prochainement.
       </div>
     );
   }

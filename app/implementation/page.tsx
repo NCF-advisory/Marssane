@@ -6,7 +6,7 @@ import { Kicker } from "@/components/ui/Kicker";
 export const metadata: Metadata = {
   title: "Implémenter l'IA · Marssane",
   description:
-    "Décrivez votre projet d'implémentation de l'IA dans votre entreprise : nous revenons vers vous sous 48 h.",
+    "Décrivez votre projet d'implémentation de l'IA dans votre entreprise : nous revenons vers vous prochainement.",
 };
 
 export default function Implementation() {
@@ -20,7 +20,7 @@ export default function Implementation() {
           </h1>
           <p className="mt-[14px] max-w-[560px] text-[16.5px] leading-[1.58] text-body-sur-ink">
             Décrivez votre besoin en quelques lignes : nous revenons vers vous
-            sous 48&nbsp;h.
+            prochainement.
           </p>
 
           {/* `p-5` en mobile : imbriqué dans la gouttière de section, un `p-8`

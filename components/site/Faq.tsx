@@ -89,8 +89,8 @@ const QUESTIONS: { question: string; reponse: ReactNode }[] = [
     question: "La pré-inscription m'engage-t-elle ?",
     reponse: (
       <>
-        Non. Elle est sans engagement, en petit groupe, avec une réponse sous
-        48&nbsp;h.
+        Non. Elle est sans engagement, en petit groupe, avec une réponse
+        rapide.
       </>
     ),
   },
