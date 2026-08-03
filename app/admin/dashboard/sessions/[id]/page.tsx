@@ -8,11 +8,17 @@ import { FormationQcm, type QcmBlock } from "@/components/admin/FormationQcm";
 import { InscriptionsTable } from "@/components/admin/InscriptionsTable";
 import { InvitationsTable } from "@/components/admin/InvitationsTable";
 import { LancerFormationButton } from "@/components/admin/LancerFormationButton";
+import {
+  RappelsSession,
+  type RappelsResultat,
+} from "@/components/admin/RappelsSession";
 import { SessionForm } from "@/components/admin/SessionForm";
 import {
   getInscriptionsBySession,
+  getRappelsEtat,
   getSessionById,
   type InscriptionRow,
+  type RappelsEtat,
   type SessionDetail,
 } from "@/lib/admin-queries";
 import { listMessages } from "@/lib/formation-chat";
@@ -83,6 +89,9 @@ export default async function SessionDetailPage({
     invites?: string;
     deja?: string;
     echecs?: string;
+    rappels?: string;
+    envoyes?: string;
+    sautes?: string;
   }>;
 }) {
   const { id: rawId } = await params;
@@ -115,6 +124,25 @@ export default async function SessionDetailPage({
   if (!session) notFound();
 
   const confirmes = inscriptions.filter((i) => i.statut === "confirme").length;
+
+  // Rappels J-7 / J-1 : état déduit de `emails_envoyes`, chargé à part avec
+  // repli propre (le reste de la page reste lisible si la table est indisponible).
+  let rappels: RappelsEtat | null;
+  try {
+    rappels = await getRappelsEtat(id);
+  } catch {
+    console.error("[admin] état des rappels : base indisponible");
+    rappels = null;
+  }
+  const rappelsResultat: RappelsResultat | undefined =
+    banner.rappels === "j7" || banner.rappels === "j1"
+      ? {
+          variante: banner.rappels,
+          envoyes: Number(banner.envoyes ?? 0),
+          sautes: Number(banner.sautes ?? 0),
+          echecs: Number(banner.echecs ?? 0),
+        }
+      : undefined;
 
   // Invitations à l'espace formation : chargées à part avec repli propre, pour
   // que la migration 004 non appliquée ne masque pas le reste de la page.
@@ -219,6 +247,31 @@ export default async function SessionDetailPage({
           rows={inscriptions}
           emptyLabel="Aucune inscription pour cette session."
         />
+      </section>
+
+      {/* Rappels J-7 / J-1 : envoi validé à la main (le cron ne fait que signaler). */}
+      <section
+        id="rappels"
+        className="space-y-4 border-t border-hairline pt-8 scroll-mt-6"
+      >
+        <h2 className="text-[19px] font-bold tracking-[-0.01em]">Rappels</h2>
+        <p className="max-w-[640px] text-[13.5px] leading-[1.5] text-soft">
+          Aucun rappel ne part automatiquement. Le cron quotidien vous signale
+          par e-mail les rappels prêts à l&apos;approche de la session ;
+          l&apos;envoi se déclenche ici, après votre validation. Chaque inscrit
+          confirmé ne reçoit qu&apos;une fois le rappel J-7 et une fois le J-1.
+        </p>
+        {rappels === null ? (
+          <DbUnavailable />
+        ) : (
+          <RappelsSession
+            sessionId={id}
+            date={session.date}
+            statut={session.statut}
+            etat={rappels}
+            resultat={rappelsResultat}
+          />
+        )}
       </section>
 
       {/* Espace formation : invitations des inscrits confirmés (phase 1). */}

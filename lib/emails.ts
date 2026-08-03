@@ -7,10 +7,12 @@ import {
   buildInvitationEmail,
   buildPromotionEmail,
   buildRappelEmail,
+  buildRappelsAValiderEmail,
   type ContactEmailInput,
   type InvitationEmailInput,
   type PromotionEmailInput,
   type RappelEmailInput,
+  type RappelsAValiderEmailInput,
   type RenderedEmail,
 } from "./email-templates";
 import { logEmailEnvoye, type EmailType } from "./emails-log";
@@ -159,10 +161,10 @@ export async function sendInvitationEmail(
 }
 
 /**
- * E-mail de rappel avant la session (J-7 ou J-1), envoyé par le cron quotidien
- * (`/api/rappels`) aux inscrits confirmés. `replyTo` = adresse de contact si
- * configurée (le rappel invite à répondre en cas d'empêchement ou de prérequis
- * manquant).
+ * E-mail de rappel avant la session (J-7 ou J-1), envoyé aux inscrits confirmés
+ * quand l'administrateur valide l'envoi depuis le détail de la session (aucun
+ * rappel ne part automatiquement). `replyTo` = adresse de contact si configurée
+ * (le rappel invite à répondre en cas d'empêchement ou de prérequis manquant).
  *
  * Ne lève jamais : retourne `true` si l'e-mail est parti (et a été tracé),
  * `false` s'il a échoué ou a été sauté (emails non configurés). L'enregistrement
@@ -205,6 +207,52 @@ export async function sendRappelEmail(
     return true;
   } catch {
     console.error("[emails] échec envoi rappel (erreur réseau)");
+    return false;
+  }
+}
+
+/**
+ * Notification interne aux administrateurs (`CONTACT_EMAIL`) : des rappels J-7
+ * ou J-1 sont prêts à partir pour une session et attendent une validation.
+ * Envoyée par le cron quotidien (`/api/rappels`), qui ne contacte plus jamais
+ * les inscrits lui-même.
+ *
+ * Ne lève jamais : retourne `true` si la notification est partie, `false` si
+ * l'envoi a échoué ou a été sauté (emails non configurés). Non tracée dans
+ * `emails_envoyes` (la table rattache chaque envoi à une inscription). Aucune
+ * donnée personnelle n'est journalisée (RGPD).
+ */
+export async function sendRappelsAValiderEmail(
+  input: RappelsAValiderEmailInput,
+): Promise<boolean> {
+  const apiKey = process.env.RESEND_API_KEY;
+  const contactEmail = process.env.CONTACT_EMAIL;
+
+  if (!apiKey || !contactEmail) {
+    console.warn("[emails] non configurés : notification rappels sautée");
+    return false;
+  }
+
+  const resend = new Resend(apiKey);
+  const mail = buildRappelsAValiderEmail(input);
+
+  try {
+    const { error } = await resend.emails.send({
+      from: EMAIL_FROM,
+      to: contactEmail,
+      subject: mail.subject,
+      html: mail.html,
+      text: mail.text,
+    });
+    if (error) {
+      console.error(
+        `[emails] échec envoi notification rappels (code: ${error.name})`,
+      );
+      return false;
+    }
+    return true;
+  } catch {
+    console.error("[emails] échec envoi notification rappels (erreur réseau)");
     return false;
   }
 }

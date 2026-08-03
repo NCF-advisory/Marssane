@@ -205,6 +205,80 @@ export async function listInscriptionsAvecSession(): Promise<
   `;
 }
 
+/**
+ * État des rappels d'une session, déduit de `emails_envoyes` : un rappel tracé
+ * est un rappel parti, les autres inscrits confirmés sont « en attente ». Aucun
+ * autre stockage — l'envoi est validé à la main depuis le détail de la session.
+ */
+export type RappelsEtat = {
+  /** `true` si la session est datée et pas encore passée (date de la base). */
+  aVenir: boolean;
+  j7: { envoyes: number; enAttente: number };
+  j1: { envoyes: number; enAttente: number };
+};
+
+/** Rappels déjà partis / restant à envoyer pour une session (J-7 et J-1). */
+export async function getRappelsEtat(sessionId: string): Promise<RappelsEtat> {
+  const sql = getSql();
+  const rows = await sql<
+    {
+      a_venir: boolean;
+      j7_envoyes: number;
+      j7_attente: number;
+      j1_envoyes: number;
+      j1_attente: number;
+    }[]
+  >`
+    select
+      coalesce(s.date >= current_date, false) as a_venir,
+      count(i.id) filter (where e7.id is not null)::int as j7_envoyes,
+      count(i.id) filter (where e7.id is null)::int as j7_attente,
+      count(i.id) filter (where e1.id is not null)::int as j1_envoyes,
+      count(i.id) filter (where e1.id is null)::int as j1_attente
+    from sessions s
+    left join inscriptions i on i.session_id = s.id and i.statut = 'confirme'
+    left join emails_envoyes e7
+      on e7.inscription_id = i.id and e7.type = 'rappel_j7'
+    left join emails_envoyes e1
+      on e1.inscription_id = i.id and e1.type = 'rappel_j1'
+    where s.id = ${sessionId}
+    group by s.id, s.date
+  `;
+  const row = rows[0];
+  if (!row) {
+    return {
+      aVenir: false,
+      j7: { envoyes: 0, enAttente: 0 },
+      j1: { envoyes: 0, enAttente: 0 },
+    };
+  }
+  return {
+    aVenir: row.a_venir,
+    j7: { envoyes: row.j7_envoyes, enAttente: row.j7_attente },
+    j1: { envoyes: row.j1_envoyes, enAttente: row.j1_attente },
+  };
+}
+
+/** Destinataire possible d'un rappel (données nécessaires à l'e-mail). */
+export type RappelCible = {
+  inscription_id: string;
+  prenom: string;
+  email: string;
+};
+
+/** Inscrits confirmés d'une session, dans leur ordre d'inscription. */
+export async function listConfirmesPourRappel(
+  sessionId: string,
+): Promise<RappelCible[]> {
+  const sql = getSql();
+  return sql<RappelCible[]>`
+    select i.id as inscription_id, i.prenom, i.email
+    from inscriptions i
+    where i.session_id = ${sessionId} and i.statut = 'confirme'
+    order by i.created_at asc
+  `;
+}
+
 /** Inscriptions en liste d'attente générale (aucune session rattachée). */
 export async function getWaitlistGenerale(): Promise<InscriptionRow[]> {
   const sql = getSql();

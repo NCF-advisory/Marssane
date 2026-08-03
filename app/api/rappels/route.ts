@@ -1,43 +1,51 @@
 import type { NextRequest } from "next/server";
 import { getSql } from "@/lib/db";
-import { sendRappelEmail } from "@/lib/emails";
-import { rappelDejaEnvoye } from "@/lib/emails-log";
+import { sendRappelsAValiderEmail } from "@/lib/emails";
 
 /**
- * Rappels avant session (J-7 et J-1).
+ * Rappels avant session (J-7 et J-1) : signalement à l'administrateur.
  *
- * Route CRON quotidienne (voir vercel.json) : une seule passe traite les deux
- * échéances. Sont visées les sessions `publiee`/`complete` dont la date vaut
- * exactement `current_date + 7` ou `current_date + 1`, et leurs inscrits
- * `confirme`. Un rappel déjà enregistré dans `emails_envoyes` est sauté — la
- * table (index unique partiel) garantit qu'un rappel ne part qu'une fois, même
- * si deux exécutions se chevauchent.
+ * Route CRON quotidienne (voir vercel.json) : une seule passe couvre les deux
+ * échéances. Depuis l'incident du 03/08/2026, le cron ne contacte plus jamais
+ * les inscrits — il repère les rappels prêts à partir et prévient
+ * l'administrateur (`CONTACT_EMAIL`), qui valide et déclenche l'envoi depuis le
+ * détail de la session (`envoyerRappels`).
  *
- * Motivation : la formation exige un abonnement Claude Pro payant, actif le
- * jour J. Le rappel J-7 laisse le temps d'agir ; le J-1 est un simple
+ * Sont repérées les sessions `publiee`/`complete` dont la date vaut exactement
+ * `current_date + 7` ou `current_date + 1`, et leurs inscrits `confirme` dont le
+ * rappel de ce type n'est pas déjà enregistré dans `emails_envoyes` (rappel
+ * tracé = rappel parti). Une notification par (session, échéance) ; aucune si
+ * plus personne n'est en attente.
+ *
+ * Motivation des rappels : la formation exige un abonnement Claude Pro payant,
+ * actif le jour J. Le rappel J-7 laisse le temps d'agir ; le J-1 est un simple
  * pense-bête.
  *
  * Protégée par `Authorization: Bearer ${CRON_SECRET}` (en-tête que Vercel Cron
  * envoie automatiquement). Sans clé configurée ou en-tête invalide → 401.
- * La réponse ne contient que des compteurs, aucune donnée personnelle (RGPD).
+ * Ni la notification ni la réponse JSON ne portent de donnée personnelle : le
+ * décompte et la session, rien d'autre (RGPD).
  *
  * Runtime nodejs (client postgres). Jamais mise en cache.
  */
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/** Inscrit à rappeler, avec les détails de sa session. */
-type Cible = {
-  inscription_id: string;
+/**
+ * URL de base pour le lien vers l'admin (même variable que le sitemap). Défaut
+ * en production plutôt que localhost : la notification n'est émise que par le
+ * cron, et son lien doit rester cliquable depuis une boîte mail.
+ */
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marssane.fr";
+
+/** Échéance de rappels d'une session, avec son nombre de destinataires. */
+type Echeance = {
   session_id: string;
-  prenom: string;
-  email: string;
   /** Nombre de jours avant la session : 7 ou 1. */
   jours: number;
   date: string;
-  heure_debut: string | null;
-  heure_fin: string | null;
-  lieu: string | null;
+  /** Inscrits confirmés dont le rappel n'est pas encore parti. */
+  en_attente: number;
 };
 
 export async function GET(request: NextRequest) {
@@ -49,17 +57,12 @@ export async function GET(request: NextRequest) {
 
   const sql = getSql();
 
-  const cibles = await sql<Cible[]>`
+  const echeances = await sql<Echeance[]>`
     select
-      i.id as inscription_id,
       s.id as session_id,
-      i.prenom,
-      i.email,
       (s.date - current_date)::int as jours,
       to_char(s.date, 'YYYY-MM-DD') as date,
-      to_char(s.heure_debut, 'HH24:MI') as heure_debut,
-      to_char(s.heure_fin, 'HH24:MI') as heure_fin,
-      s.lieu
+      count(*)::int as en_attente
     from inscriptions i
     join sessions s on s.id = i.session_id
     where s.statut in ('publiee', 'complete')
@@ -67,38 +70,40 @@ export async function GET(request: NextRequest) {
       and s.date is not null
       and s.date in (current_date + 7, current_date + 1)
       and i.statut = 'confirme'
-    order by s.date asc, i.created_at asc
+      -- Un rappel déjà tracé est un rappel parti : la personne n'est plus en attente.
+      and not exists (
+        select 1 from emails_envoyes e
+        where e.inscription_id = i.id
+          and e.type = case
+            when s.date = current_date + 7 then 'rappel_j7'
+            else 'rappel_j1'
+          end
+      )
+    group by s.id, s.date
+    order by s.date asc
   `;
 
-  let envoyes = 0;
-  let sautes = 0;
+  let destinataires = 0;
+  let notifications = 0;
   let echecs = 0;
 
-  for (const cible of cibles) {
-    const variante = Number(cible.jours) === 7 ? "j7" : "j1";
-    const type = variante === "j7" ? "rappel_j7" : "rappel_j1";
+  for (const echeance of echeances) {
+    destinataires += echeance.en_attente;
 
-    if (await rappelDejaEnvoye(cible.inscription_id, type)) {
-      sautes += 1;
-      continue;
-    }
-
-    const envoye = await sendRappelEmail({
-      inscriptionId: cible.inscription_id,
-      email: cible.email,
-      prenom: cible.prenom,
-      variante,
-      session: {
-        date: cible.date,
-        heure_debut: cible.heure_debut,
-        heure_fin: cible.heure_fin,
-        lieu: cible.lieu,
-      },
+    const envoyee = await sendRappelsAValiderEmail({
+      variante: Number(echeance.jours) === 7 ? "j7" : "j1",
+      date: echeance.date,
+      enAttente: echeance.en_attente,
+      sessionUrl: `${SITE_URL}/admin/dashboard/sessions/${echeance.session_id}`,
     });
-    if (envoye) envoyes += 1;
+    if (envoyee) notifications += 1;
     else echecs += 1;
   }
 
-  const sessions = new Set(cibles.map((c) => c.session_id)).size;
-  return Response.json({ sessions, envoyes, sautes, echecs });
+  return Response.json({
+    sessions: echeances.length,
+    destinataires,
+    notifications,
+    echecs,
+  });
 }

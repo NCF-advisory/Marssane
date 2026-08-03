@@ -374,6 +374,51 @@ export function buildRappelEmail(input: RappelEmailInput): RenderedEmail {
   };
 }
 
+/** Signalement d'une échéance de rappels en attente de validation. */
+export type RappelsAValiderEmailInput = {
+  /** Échéance concernée : `j7` (dans une semaine) ou `j1` (la veille). */
+  variante: "j7" | "j1";
+  /** Date ISO « YYYY-MM-DD » de la session. */
+  date: string;
+  /** Inscrits confirmés dont le rappel n'est pas encore parti. */
+  enAttente: number;
+  /** Lien direct vers le détail de la session dans l'administration. */
+  sessionUrl: string;
+};
+
+/**
+ * Notification interne (`CONTACT_EMAIL`) : des rappels J-7 / J-1 sont prêts à
+ * partir pour une session. Depuis l'incident du 03/08/2026, le cron quotidien
+ * ne contacte plus les inscrits — il signale, l'administrateur valide l'envoi
+ * depuis l'admin. Décompte et session seulement : aucune donnée personnelle
+ * d'inscrit (RGPD).
+ */
+export function buildRappelsAValiderEmail(
+  input: RappelsAValiderEmailInput,
+): RenderedEmail {
+  const { variante, date, enAttente, sessionUrl } = input;
+  const echeance = variante === "j7" ? "J-7" : "J-1";
+  const dateLongue = formatDateLongue(date);
+  const s = enAttente > 1 ? "s" : "";
+  const titre = `${enAttente} rappel${s} ${echeance} prêt${s} pour la session du ${dateLongue}`;
+  const consigne =
+    "Aucun rappel ne part automatiquement : validez l'envoi dans l'administration.";
+
+  const text = [`${titre}.`, "", consigne, "", sessionUrl].join("\n");
+
+  const html = htmlLayout(
+    `<p style="margin:0 0 16px;font-weight:600;">${esc(titre)}.</p>` +
+      `<p style="margin:0 0 16px;">${esc(consigne)}</p>` +
+      `<p style="margin:0;"><a href="${esc(sessionUrl)}" style="color:#0e7291;font-weight:600;">Ouvrir la session</a></p>`,
+  );
+
+  return {
+    subject: `${enAttente} rappel${s} ${echeance} à valider · session du ${dateLongue}`,
+    html,
+    text,
+  };
+}
+
 /* ===== Décisions de l'admin (promotion / annulation) =================== */
 
 /** Détails d'une promotion depuis la liste d'attente. */

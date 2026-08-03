@@ -12,6 +12,14 @@ Règles de comportement et d'organisation pour la création de ce site.
 - Après chaque livraison de `dev-opus`, l'orchestrateur relit le résultat et vérifie qu'il répond au brief avant de le présenter à l'utilisateur.
 - Les questions de clarification sont posées à l'utilisateur par l'orchestrateur **avant** de déléguer ; `dev-opus` ne pouvant pas interroger l'utilisateur, il signale ses choix et ambiguïtés dans son rapport final.
 
+## E-mails : validation obligatoire (règle imposée par le propriétaire, 03/08/2026)
+
+**Aucun e-mail ne part sans validation explicite du propriétaire, quel que soit le canal.**
+
+- Claude (session principale ou sous-agent) ne déclenche JAMAIS un envoi d'e-mail — script local, API Resend, Outlook, test « pour voir », relance, quoi que ce soit — sans que le propriétaire ait validé dans la conversation le contenu exact ET les destinataires de cet envoi précis. Une validation vaut pour un envoi, pas pour les suivants.
+- Côté site : les e-mails transactionnels immédiats (confirmation d'inscription, notification admin, accusé de contact) restent automatiques — ils sont déclenchés par l'action du client et n'annoncent jamais de date. Tout envoi différé ou programmé (rappels J-7/J-1 notamment) doit passer par une validation manuelle dans l'admin : le cron signale, le propriétaire déclenche.
+- En cas de doute sur la nature d'un envoi : demander d'abord. Origine de la règle : incident du 03/08/2026 (rappel automatique parti sur une date de test).
+
 ## 1. Réfléchir avant de coder
 
 **Ne pas supposer. Ne pas masquer sa confusion. Exposer les compromis.**

@@ -7,6 +7,7 @@ import {
   deleteInscription,
   getSessionById,
   insertSession,
+  listConfirmesPourRappel,
   rattacherInscriptionSession,
   updateContactTraite,
   updateInscriptionStatut,
@@ -17,7 +18,9 @@ import {
   sendAnnulationEmail,
   sendInvitationEmail,
   sendPromotionEmail,
+  sendRappelEmail,
 } from "@/lib/emails";
+import { rappelDejaEnvoye } from "@/lib/emails-log";
 import { insertAdminMessage, setMessagePinned } from "@/lib/formation-chat";
 import {
   createParticipantInvite,
@@ -337,6 +340,84 @@ export async function renvoyerInvitationAction(
   } catch {
     console.error("[admin] échec du renvoi d'invitation (incident)");
   }
+}
+
+/* ===== Rappels avant session (J-7 / J-1) ============================== */
+
+/** Décompte d'un envoi de rappels. */
+export type RappelsEnvoi = { envoyes: number; sautes: number; echecs: number };
+
+/**
+ * Envoie le rappel J-7 ou J-1 d'une session à ses inscrits confirmés. Depuis
+ * l'incident du 03/08/2026, aucun rappel ne part automatiquement : le cron
+ * quotidien signale les échéances, l'administrateur valide l'envoi ici.
+ *
+ * Les inscrits dont le rappel est déjà tracé sont sautés (`emails_envoyes` ;
+ * l'index unique de la table verrouille de toute façon le doublon). Sans date
+ * arrêtée, aucun envoi n'est possible : un rappel sans date n'a pas de sens.
+ * Ne lève pas — retourne les compteurs (envoyés / sautés / échecs).
+ */
+export async function envoyerRappels(
+  sessionId: string,
+  variante: "j7" | "j1",
+): Promise<RappelsEnvoi> {
+  await requireAdmin();
+  const envoi: RappelsEnvoi = { envoyes: 0, sautes: 0, echecs: 0 };
+
+  try {
+    const session = await getSessionById(sessionId);
+    if (!session?.date) return envoi;
+
+    const type = variante === "j7" ? "rappel_j7" : "rappel_j1";
+    const cibles = await listConfirmesPourRappel(sessionId);
+
+    for (const cible of cibles) {
+      if (await rappelDejaEnvoye(cible.inscription_id, type)) {
+        envoi.sautes += 1;
+        continue;
+      }
+      const envoye = await sendRappelEmail({
+        inscriptionId: cible.inscription_id,
+        email: cible.email,
+        prenom: cible.prenom,
+        variante,
+        session: {
+          date: session.date,
+          heure_debut: session.heure_debut,
+          heure_fin: session.heure_fin,
+          lieu: session.lieu,
+        },
+      });
+      if (envoye) envoi.envoyes += 1;
+      else envoi.echecs += 1;
+    }
+  } catch {
+    console.error("[admin] échec de l'envoi des rappels (incident)");
+  }
+
+  return envoi;
+}
+
+/**
+ * Déclenche l'envoi des rappels depuis le détail de session (bouton confirmé),
+ * puis y revient avec le décompte en query, affiché en bandeau. Action de
+ * formulaire simple (session_id + variante en champs cachés).
+ */
+export async function envoyerRappelsAction(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const sessionId = parseId(formData.get("session_id"));
+  const brute = formData.get("variante");
+  const variante = brute === "j7" || brute === "j1" ? brute : null;
+  if (!sessionId || !variante) return;
+
+  const envoi = await envoyerRappels(sessionId, variante);
+
+  revalidateSessionDetail(sessionId);
+  redirect(
+    `${DASHBOARD}/sessions/${sessionId}?rappels=${variante}` +
+      `&envoyes=${envoi.envoyes}&sautes=${envoi.sautes}` +
+      `&echecs=${envoi.echecs}#rappels`,
+  );
 }
 
 /* ===== Chat de promotion (réponses du formateur) ====================== */
