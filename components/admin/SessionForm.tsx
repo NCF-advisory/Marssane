@@ -10,7 +10,7 @@ const initialSessionFormState: SessionFormState = { status: "idle" };
 
 /** Valeurs de préremplissage (édition). Vides en création. */
 export type SessionFormValues = {
-  date?: string;
+  date?: string | null;
   heure_debut?: string | null;
   heure_fin?: string | null;
   lieu?: string | null;
@@ -53,15 +53,21 @@ export function SessionForm({
         </div>
       )}
 
-      <Field id="session-date" label="Date" required error={errors.date}>
+      {/* Date optionnelle : vide = « à définir ». Une session peut être
+          publiée sans date — le site annonce alors « Prochainement » et aucun
+          rappel ne part. */}
+      <Field id="session-date" label="Date" error={errors.date}>
         <input
           id="session-date"
           name="date"
           type="date"
-          required
+          aria-describedby="session-date-aide"
           defaultValue={values.date ?? ""}
           className={controlClass}
         />
+        <p id="session-date-aide" className="mt-[6px] text-[12.5px] leading-[1.4] text-soft">
+          Laissez vide tant que la date n&apos;est pas arrêtée.
+        </p>
       </Field>
 
       <div className="grid grid-cols-1 gap-x-4 gap-y-[18px] sm:grid-cols-2">

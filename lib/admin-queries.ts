@@ -15,7 +15,8 @@ import type { SessionData } from "./validation";
 /** Ligne de session avec le décompte des inscriptions par statut. */
 export type SessionRow = {
   id: string;
-  date: string;
+  /** Date ISO « YYYY-MM-DD », ou `null` : date à définir (migration 008). */
+  date: string | null;
   heure_debut: string | null;
   heure_fin: string | null;
   lieu: string | null;
@@ -29,7 +30,7 @@ export type SessionRow = {
 /** Session seule (pour préremplir le formulaire d'édition). */
 export type SessionDetail = {
   id: string;
-  date: string;
+  date: string | null;
   heure_debut: string | null;
   heure_fin: string | null;
   lieu: string | null;
@@ -58,7 +59,7 @@ export type InscriptionRow = {
 
 /** Ligne d'inscription enrichie de la session rattachée (date ISO + lieu). */
 export type InscriptionAvecSessionRow = InscriptionRow & {
-  session_date: string;
+  session_date: string | null;
   session_lieu: string | null;
 };
 
@@ -98,7 +99,8 @@ export async function updateContactTraite(
 
 /**
  * Toutes les sessions, avec le décompte d'inscriptions par statut. Triées de la
- * plus récente à la plus ancienne (les sessions à venir en tête).
+ * plus récente à la plus ancienne (les sessions à venir en tête). Une session
+ * sans date compte comme la plus lointaine : elle vient donc en tête.
  */
 export async function listSessionsWithCounts(): Promise<SessionRow[]> {
   const sql = getSql();
@@ -125,7 +127,7 @@ export async function listSessionsWithCounts(): Promise<SessionRow[]> {
       where session_id is not null
       group by session_id
     ) cnt on cnt.session_id = s.id
-    order by s.date desc, s.heure_debut desc nulls last
+    order by s.date desc nulls first, s.heure_debut desc nulls last
   `;
 }
 
@@ -304,7 +306,8 @@ async function recomputeSessionStatut(
  * n'importe rien du rendu des emails.
  */
 export type SessionEmailDetails = {
-  date: string;
+  /** `null` = date à définir : l'email n'annonce alors aucune date. */
+  date: string | null;
   heure_debut: string | null;
   heure_fin: string | null;
   lieu: string | null;
@@ -383,17 +386,18 @@ export async function updateInscriptionStatut(
 /** Session à laquelle on peut rattacher une inscription en attente générale. */
 export type SessionRattachable = {
   id: string;
-  /** Date ISO « YYYY-MM-DD ». */
-  date: string;
+  /** Date ISO « YYYY-MM-DD », ou `null` : date à définir. */
+  date: string | null;
   lieu: string | null;
   places_restantes: number;
 };
 
 /**
  * Sessions auxquelles une inscription peut être rattachée : `publiee` ou
- * `complete`, à venir, de la plus proche à la plus lointaine. Une session
- * complète reste proposée (le rattachement se fera en liste d'attente de
- * cette session, ce qui reste plus utile que l'attente générale).
+ * `complete`, à venir (une session sans date en fait partie, en dernier), de la
+ * plus proche à la plus lointaine. Une session complète reste proposée (le
+ * rattachement se fera en liste d'attente de cette session, ce qui reste plus
+ * utile que l'attente générale).
  */
 export async function listSessionsRattachables(): Promise<SessionRattachable[]> {
   const sql = getSql();
@@ -411,8 +415,8 @@ export async function listSessionsRattachables(): Promise<SessionRattachable[]> 
       group by session_id
     ) c on c.session_id = s.id
     where s.statut in ('publiee', 'complete')
-      and s.date >= current_date
-    order by s.date asc, s.heure_debut asc nulls last
+      and (s.date is null or s.date >= current_date)
+    order by s.date asc nulls last, s.heure_debut asc nulls last
   `;
 }
 

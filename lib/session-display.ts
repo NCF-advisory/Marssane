@@ -17,6 +17,15 @@ export function formatDateLongue(dateISO: string): string {
 }
 
 /**
+ * Même formatage, mais « À définir » quand la date n'est pas arrêtée (NULL en
+ * base, migration 008). Réservé aux écrans d'administration : côté public,
+ * aucune date n'est annoncée (voir `champSession`).
+ */
+export function formatDateLongueOuADefinir(dateISO: string | null): string {
+  return dateISO ? formatDateLongue(dateISO) : "À définir";
+}
+
+/**
  * Libellé du champ « Session » (lecture seule) de la modale F2. Toujours
  * « Prochainement » : ni date ni lieu quand une session est publiée, et pas
  * davantage de mention de liste d'attente quand il n'y en a aucune — côté

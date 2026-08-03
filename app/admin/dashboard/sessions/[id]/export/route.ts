@@ -75,7 +75,7 @@ export async function GET(
     r.created_at,
   ]);
   const csv = toCsv(HEADERS, rows);
-  const filename = `inscriptions-${session.date}.csv`;
+  const filename = `inscriptions-${session.date ?? "a-definir"}.csv`;
 
   return new Response(csv, {
     headers: {

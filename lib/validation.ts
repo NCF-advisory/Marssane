@@ -199,10 +199,16 @@ function optionalTrimmed<T extends z.ZodTypeAny>(schema: T) {
 /** Schéma de validation d'une session (création / édition admin). */
 export const sessionSchema = z
   .object({
-    date: z
-      .string()
-      .trim()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "La date est requise."),
+    // Optionnelle : champ vide → `null` en base, « date à définir »
+    // (migration 008). Une session peut être publiée sans date.
+    date: z.preprocess(
+      (value) =>
+        typeof value === "string" && value.trim() !== "" ? value.trim() : null,
+      z
+        .string()
+        .regex(/^\d{4}-\d{2}-\d{2}$/, "Date invalide.")
+        .nullable(),
+    ),
     heure_debut: optionalTrimmed(
       z.string().regex(HEURE, "Heure de début invalide."),
     ),

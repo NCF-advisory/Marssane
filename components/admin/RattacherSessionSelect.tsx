@@ -1,10 +1,10 @@
 import { rattacherInscriptionAction } from "@/app/admin/dashboard/actions";
 import type { SessionRattachable } from "@/lib/admin-queries";
-import { formatDateLongue } from "@/lib/session-display";
+import { formatDateLongueOuADefinir } from "@/lib/session-display";
 
-/** « 12 septembre 2026 · Marseille · 3 pl. » */
+/** « 12 septembre 2026 · Marseille · 3 pl. » (« À définir » si pas de date). */
 function optionLabel(session: SessionRattachable): string {
-  const date = formatDateLongue(session.date);
+  const date = formatDateLongueOuADefinir(session.date);
   const lieu = session.lieu ? ` · ${session.lieu}` : "";
   return `${date}${lieu} · ${session.places_restantes} pl.`;
 }

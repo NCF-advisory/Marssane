@@ -150,9 +150,11 @@ export default async function EspaceFormationPage() {
             </h1>
             {data && (
               <p className="text-[15px] leading-[1.6] text-body">
-                Formation du{" "}
+                Formation{" "}
                 <span className="font-semibold text-ink">
-                  {formatDateLongue(data.session_date)}
+                  {data.session_date
+                    ? `du ${formatDateLongue(data.session_date)}`
+                    : "— date à venir"}
                 </span>
                 {heures ? ` · ${heures}` : ""}
                 {lieu ? ` · ${lieu}` : ""}.

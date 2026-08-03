@@ -111,7 +111,8 @@ export async function activateParticipant(
 export type ParticipantEspace = {
   prenom: string;
   email: string;
-  session_date: string;
+  /** Date ISO « YYYY-MM-DD », ou `null` si la date n'est pas encore arrêtée. */
+  session_date: string | null;
   session_lieu: string | null;
   session_heure_debut: string | null;
   session_heure_fin: string | null;

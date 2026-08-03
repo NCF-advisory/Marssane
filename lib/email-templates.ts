@@ -45,11 +45,15 @@ function formatHeure(heure: string | null): string | null {
  * Détails d'une session suffisants pour un rappel date / horaire / lieu. Vue
  * réduite de `ProchaineSession` : les rappels sont construits depuis le cron,
  * qui n'a pas besoin du décompte des places.
+ *
+ * `date` reste obligatoire ici, alors qu'elle est nullable en base (migration
+ * 008) : le cron ne cible que les sessions datées, et aucun rappel ne doit
+ * pouvoir se construire sans date.
  */
 export type SessionDetails = Pick<
   ProchaineSession,
-  "date" | "heure_debut" | "heure_fin" | "lieu"
->;
+  "heure_debut" | "heure_fin" | "lieu"
+> & { date: string };
 
 /** « 09:00 – 17:00 », « à partir de 09:00 », ou `null` si aucune heure. */
 function formatHoraires(session: SessionDetails): string | null {
@@ -217,8 +221,11 @@ export type InvitationEmailInput = {
   prenom: string;
   /** Lien personnel d'activation (token en query). */
   activationUrl: string;
-  /** Session rattachée (date ISO + lieu) pour rappeler la date, le cas échéant. */
-  session?: { date: string; lieu: string | null } | null;
+  /**
+   * Session rattachée (date ISO + lieu) pour rappeler la date, le cas échéant.
+   * `date` peut être `null` (date non arrêtée) : la ligne est alors omise.
+   */
+  session?: { date: string | null; lieu: string | null } | null;
 };
 
 /**
@@ -231,7 +238,7 @@ export type InvitationEmailInput = {
 export function buildInvitationEmail(input: InvitationEmailInput): RenderedEmail {
   const { prenom, activationUrl, session } = input;
 
-  const dateLigne = session
+  const dateLigne = session?.date
     ? `Votre formation démarre le ${formatDateLongue(session.date)}${
         session.lieu ? ` à ${session.lieu}` : ""
       }.`
@@ -374,10 +381,12 @@ export type PromotionEmailInput = {
   prenom: string;
   /**
    * Session rattachée. `null` couvre le cas théorique d'une inscription
-   * confirmée sans session (la base l'autorise) : l'email reste juste, il
-   * annonce la confirmation sans inventer de date.
+   * confirmée sans session (la base l'autorise) ; `date` nulle couvre la
+   * session dont la date n'est pas encore arrêtée (migration 008). Dans les
+   * deux cas, l'email reste juste : il annonce la confirmation sans inventer
+   * de date.
    */
-  session: SessionDetails | null;
+  session: (Omit<SessionDetails, "date"> & { date: string | null }) | null;
 };
 
 /**
@@ -393,6 +402,9 @@ export type PromotionEmailInput = {
  */
 export function buildPromotionEmail(input: PromotionEmailInput): RenderedEmail {
   const { prenom, session } = input;
+  // Détails seulement si la date est arrêtée : sinon l'e-mail dit la même chose
+  // que la confirmation d'inscription, qui n'annonce aucune date.
+  const details = session?.date ? { ...session, date: session.date } : null;
 
   const textLines = [
     `Bonjour ${prenom},`,
@@ -400,8 +412,8 @@ export function buildPromotionEmail(input: PromotionEmailInput): RenderedEmail {
     "Une place s'est libérée : votre inscription à la formation IA Marssane est confirmée.",
     "",
   ];
-  if (session) {
-    textLines.push("Détails de la session :", ...sessionDetailsText(session), "");
+  if (details) {
+    textLines.push("Détails de la session :", ...sessionDetailsText(details), "");
   }
   textLines.push(
     "Pour suivre la formation dans de bonnes conditions, prévoyez :",
@@ -416,10 +428,10 @@ export function buildPromotionEmail(input: PromotionEmailInput): RenderedEmail {
     `<p style="margin:0 0 16px;">Bonjour ${esc(prenom)},</p>`,
     `<p style="margin:0 0 16px;">Une place s'est libérée : votre inscription à la formation IA Marssane est confirmée.</p>`,
   ];
-  if (session) {
+  if (details) {
     htmlParts.push(
       `<p style="margin:0 0 8px;">Détails de la session :</p>`,
-      sessionDetailsHtml(session),
+      sessionDetailsHtml(details),
     );
   }
   htmlParts.push(

@@ -63,6 +63,8 @@ export async function GET(request: NextRequest) {
     from inscriptions i
     join sessions s on s.id = i.session_id
     where s.statut in ('publiee', 'complete')
+      -- Jamais de rappel pour une session sans date arrêtée (migration 008).
+      and s.date is not null
       and s.date in (current_date + 7, current_date + 1)
       and i.statut = 'confirme'
     order by s.date asc, i.created_at asc

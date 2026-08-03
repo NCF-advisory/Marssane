@@ -18,7 +18,10 @@ import {
   type SessionRattachable,
   type SessionRow,
 } from "@/lib/admin-queries";
-import { formatDateLongue } from "@/lib/session-display";
+import {
+  formatDateLongue,
+  formatDateLongueOuADefinir,
+} from "@/lib/session-display";
 
 export const metadata: Metadata = {
   title: "Tableau de bord · Administration Marssane",
@@ -32,6 +35,11 @@ function horaires(row: SessionRow): string {
   return row.heure_debut ?? "—";
 }
 
+/** Clé de tri : une session sans date compte comme la plus lointaine à venir. */
+function cleDate(session: SessionRow): string {
+  return session.date ?? "9999-12-31";
+}
+
 /** Prochaine session publiée / complète à venir (pour le compteur en tête). */
 function prochaineSession(sessions: SessionRow[]): SessionRow | null {
   const today = new Date().toISOString().slice(0, 10);
@@ -40,9 +48,9 @@ function prochaineSession(sessions: SessionRow[]): SessionRow | null {
       .filter(
         (s) =>
           (s.statut === "publiee" || s.statut === "complete") &&
-          s.date >= today,
+          cleDate(s) >= today,
       )
-      .sort((a, b) => a.date.localeCompare(b.date))[0] ?? null
+      .sort((a, b) => cleDate(a).localeCompare(cleDate(b)))[0] ?? null
   );
 }
 
@@ -108,9 +116,11 @@ export default async function AdminDashboardPage() {
               / {prochaine.capacite}
             </span>
             <span className="text-[14px] text-body">
-              inscrits confirmés · session du{" "}
+              inscrits confirmés · session{" "}
               <span className="font-semibold text-ink">
-                {formatDateLongue(prochaine.date)}
+                {prochaine.date
+                  ? `du ${formatDateLongue(prochaine.date)}`
+                  : "à définir"}
               </span>
             </span>
           </div>
@@ -161,7 +171,7 @@ export default async function AdminDashboardPage() {
                     className="border-b border-hairline last:border-0 align-middle hover:bg-toile/60"
                   >
                     <td className="whitespace-nowrap px-4 py-3 text-[14px] font-semibold text-ink">
-                      {formatDateLongue(s.date)}
+                      {formatDateLongueOuADefinir(s.date)}
                     </td>
                     <td className="whitespace-nowrap px-4 py-3 font-mono text-[13px] text-body">
                       {horaires(s)}
@@ -204,7 +214,7 @@ export default async function AdminDashboardPage() {
                           <form action={archiveSessionAction} className="inline">
                             <input type="hidden" name="id" value={s.id} />
                             <ConfirmButton
-                              message={`Archiver la session du ${formatDateLongue(s.date)} ? Elle passera au statut « Terminée » et ne sera plus proposée à l'inscription.`}
+                              message={`Archiver la session ${s.date ? `du ${formatDateLongue(s.date)}` : "à définir"} ? Elle passera au statut « Terminée » et ne sera plus proposée à l'inscription.`}
                               className="font-mono text-[12px] font-medium text-soft transition-colors hover:text-ink"
                             >
                               Archiver

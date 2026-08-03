@@ -176,7 +176,9 @@ export default async function SessionDetailPage({
         </a>
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em]">
-            Session du {formatDateLongue(session.date)}
+            {session.date
+              ? `Session du ${formatDateLongue(session.date)}`
+              : "Session — date à définir"}
           </h1>
           <SessionStatutBadge statut={session.statut} />
         </div>

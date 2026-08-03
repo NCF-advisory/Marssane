@@ -3,7 +3,8 @@ import { getSql } from "./db";
 /** Session publiée alimentant la landing (CDC §5.1), avec places restantes. */
 export type ProchaineSession = {
   id: string;
-  date: string;
+  /** Date ISO « YYYY-MM-DD », ou `null` si elle n'est pas encore arrêtée. */
+  date: string | null;
   heure_debut: string | null;
   heure_fin: string | null;
   lieu: string | null;
@@ -33,6 +34,10 @@ export type CreateInscriptionResult =
  * Retourne la session `publiee`/`complete` la plus proche à venir, avec le
  * nombre de places restantes (capacité − inscriptions confirmées). `null` s'il
  * n'y en a aucune (mode liste d'attente générale).
+ *
+ * Une session sans date (« à définir », migration 008) est retenue elle aussi,
+ * après les sessions datées : c'est le cas normal tant qu'aucune date n'est
+ * arrêtée.
  */
 export async function getProchaineSession(): Promise<ProchaineSession | null> {
   const sql = getSql();
@@ -40,7 +45,7 @@ export async function getProchaineSession(): Promise<ProchaineSession | null> {
   const rows = await sql<
     {
       id: string;
-      date: string;
+      date: string | null;
       heure_debut: string | null;
       heure_fin: string | null;
       lieu: string | null;
@@ -66,8 +71,8 @@ export async function getProchaineSession(): Promise<ProchaineSession | null> {
       group by session_id
     ) c on c.session_id = s.id
     where s.statut in ('publiee', 'complete')
-      and s.date >= current_date
-    order by s.date asc, s.heure_debut asc nulls last
+      and (s.date is null or s.date >= current_date)
+    order by s.date asc nulls last, s.heure_debut asc nulls last
     limit 1
   `;
 
@@ -134,8 +139,8 @@ export async function createInscription(
         select id, capacite, statut
         from sessions
         where statut in ('publiee', 'complete')
-          and date >= current_date
-        order by date asc, heure_debut asc nulls last
+          and (date is null or date >= current_date)
+        order by date asc nulls last, heure_debut asc nulls last
         limit 1
         for update
       `;

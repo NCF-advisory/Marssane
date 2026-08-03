@@ -5,7 +5,7 @@ import type {
   InscriptionRow,
   SessionRattachable,
 } from "@/lib/admin-queries";
-import { formatDateLongue } from "@/lib/session-display";
+import { formatDateLongueOuADefinir } from "@/lib/session-display";
 import { EmailStatutBadge } from "./badges";
 import { ConfirmButton } from "./ConfirmButton";
 import { InscriptionStatutSelect } from "./InscriptionStatutSelect";
@@ -13,7 +13,7 @@ import { RattacherSessionSelect } from "./RattacherSessionSelect";
 
 /** Ligne du tableau : session rattachée facultative (colonne `showSession`). */
 type Row = InscriptionRow & {
-  session_date?: string;
+  session_date?: string | null;
   session_lieu?: string | null;
 };
 
@@ -22,10 +22,13 @@ function metierLabel(row: InscriptionRow): string {
   return row.metier_autre ? `${row.metier} · ${row.metier_autre}` : row.metier;
 }
 
-/** Session rattachée : « 12 septembre 2026 · Marseille ». */
+/**
+ * Session rattachée : « 12 septembre 2026 · Marseille ». « — » si aucune
+ * session, « À définir » si la session n'a pas encore de date.
+ */
 function sessionLabel(row: Row): string {
-  if (!row.session_date) return "—";
-  const date = formatDateLongue(row.session_date);
+  if (row.session_date === undefined) return "—";
+  const date = formatDateLongueOuADefinir(row.session_date);
   return row.session_lieu ? `${date} · ${row.session_lieu}` : date;
 }
 
