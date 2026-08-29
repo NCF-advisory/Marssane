@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/admin", "/styleguide", "/formation", "/api"],
+      disallow: ["/admin", "/styleguide", "/formation$", "/formation/", "/api"],
     },
     sitemap: "https://marssane.fr/sitemap.xml",
   };
