@@ -63,7 +63,13 @@ export default async function Page() {
     );
   }
 
-  const top = c.entries[0];
+  // Épingle éditoriale temporaire (01/09/2026) : le héro montre Claude Opus 5
+  // plutôt que le premier du classement. En l'état, la formule hisse en tête les
+  // Flash bon marché, alors que le graphe du bas de page désigne Opus 5 au
+  // sommet de la frontière intelligence/coût. Repli sur le premier du classement
+  // si l'entrée manque (elle est exclue tant que ses sources ne donnent pas
+  // d'intelligence exploitable). À retirer une fois la formule recalibrée.
+  const top = c.entries.find((e) => e.cle === "claude-opus-5") ?? c.entries[0];
 
   return (
     <>
