@@ -725,3 +725,77 @@ html:active-view-transition {
     opacity: 0;
   }
 }
+
+/* Coche de validation (/merci) : le cercle se trace depuis 12 h, puis la coche
+   se dessine, puis l'ensemble « pop » légèrement — même ressort que le « + »
+   de la modale de pré-inscription. Fin ≈ 1020 ms.
+   Les styles de base sont l'état final (les deux tracés complets, dashoffset
+   nul) : en mouvement réduit — ou si les animations ne s'appliquent pas — le
+   visuel est entier et immédiat, aucune règle ici ne le masque.
+   `pathLength="1"` est posé sur le cercle et sur la coche (voir
+   <CocheValidation>) : dasharray et dashoffset travaillent donc en unités
+   normalisées, de 1 (rien de tracé) à 0 (tracé complet), sans mesurer les
+   longueurs réelles. Le `both` de fill-mode garde chaque tracé à sa frame 0
+   (invisible) pendant son delay, donc rien ne « flashe » avant son tour.
+   Frame 0 à 1,05 (et non 1) avec un espace de 2 dans le dasharray : sinon le
+   bout arrondi du trait (`round`) dépasse du début du tracé et laisse un point
+   visible avant que le dessin ne commence. */
+.coche-validation__cercle,
+.coche-validation__trait {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Le tracé d'un cercle SVG démarre à 3 h : la rotation d'un quart de tour le
+     fait partir de 12 h, lecture plus naturelle. `fill-box` cale l'origine sur
+     la boîte du cercle lui-même, pas sur celle du <svg>. */
+  .coche-validation__cercle {
+    stroke-dasharray: 1 2;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    transform-box: fill-box;
+    animation: coche-cercle-trace 520ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  .coche-validation__trait {
+    stroke-dasharray: 1 2;
+    animation: coche-trait-trace 360ms cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation-delay: 420ms;
+  }
+
+  .coche-validation {
+    transform-origin: center;
+    animation: coche-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 700ms;
+  }
+
+  @keyframes coche-cercle-trace {
+    from {
+      stroke-dashoffset: 1.05;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes coche-trait-trace {
+    from {
+      stroke-dashoffset: 1.05;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes coche-pop {
+    from {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.06);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+}
