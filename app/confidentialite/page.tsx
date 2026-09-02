@@ -19,10 +19,10 @@ const SECTIONS: { titre: string; corps: ReactNode }[] = [
         le siège social est situé 3 Cité Rougemont, 75009 Paris, qui exploite la
         marque Marssane. Pour toute question relative à vos données :{" "}
         <a
-          href="mailto:coullion@ncf-advisory.fr"
+          href="mailto:contact@marssane.fr"
           className="text-turquoise hover:text-white"
         >
-          coullion@ncf-advisory.fr
+          contact@marssane.fr
         </a>
         .
       </>
@@ -83,10 +83,10 @@ const SECTIONS: { titre: string; corps: ReactNode }[] = [
         ainsi que du droit de retirer votre consentement à tout moment. Pour
         l&apos;exercer, écrivez-nous à{" "}
         <a
-          href="mailto:coullion@ncf-advisory.fr"
+          href="mailto:contact@marssane.fr"
           className="text-turquoise hover:text-white"
         >
-          coullion@ncf-advisory.fr
+          contact@marssane.fr
         </a>
         . Vous pouvez également introduire une réclamation auprès de la CNIL
         (cnil.fr).

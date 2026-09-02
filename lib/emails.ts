@@ -33,6 +33,7 @@ export type InscriptionEmailPayload = {
  * développement local : il ne délivre qu'à l'adresse du titulaire du compte Resend.
  */
 const EMAIL_FROM = process.env.EMAIL_FROM || "Marssane <onboarding@resend.dev>";
+const contactEmail = "contact@marssane.fr";
 
 /**
  * Emails transactionnels de pré-inscription (F5 · CDC §5.5) : confirmation à
@@ -53,9 +54,7 @@ export async function sendInscriptionEmails(
   payload: InscriptionEmailPayload,
 ): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
-  const contactEmail = process.env.CONTACT_EMAIL;
-
-  if (!apiKey || !contactEmail) {
+  if (!apiKey) {
     console.warn("[emails] non configurés : envoi sauté");
     return;
   }
@@ -125,8 +124,6 @@ export async function sendInvitationEmail(
   input: InvitationEmailInput & { email: string; inscriptionId: string },
 ): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
-  const contactEmail = process.env.CONTACT_EMAIL;
-
   if (!apiKey) {
     console.warn("[emails] non configurés : invitation sautée");
     return false;
@@ -139,7 +136,7 @@ export async function sendInvitationEmail(
     const { data, error } = await resend.emails.send({
       from: EMAIL_FROM,
       to: input.email,
-      ...(contactEmail ? { replyTo: contactEmail } : {}),
+      replyTo: contactEmail,
       subject: mail.subject,
       html: mail.html,
       text: mail.text,
@@ -176,8 +173,6 @@ export async function sendRappelEmail(
   input: RappelEmailInput & { email: string; inscriptionId: string },
 ): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
-  const contactEmail = process.env.CONTACT_EMAIL;
-
   if (!apiKey) {
     console.warn("[emails] non configurés : rappel sauté");
     return false;
@@ -190,7 +185,7 @@ export async function sendRappelEmail(
     const { data, error } = await resend.emails.send({
       from: EMAIL_FROM,
       to: input.email,
-      ...(contactEmail ? { replyTo: contactEmail } : {}),
+      replyTo: contactEmail,
       subject: mail.subject,
       html: mail.html,
       text: mail.text,
@@ -226,9 +221,7 @@ export async function sendRappelsAValiderEmail(
   input: RappelsAValiderEmailInput,
 ): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
-  const contactEmail = process.env.CONTACT_EMAIL;
-
-  if (!apiKey || !contactEmail) {
+  if (!apiKey) {
     console.warn("[emails] non configurés : notification rappels sautée");
     return false;
   }
@@ -272,8 +265,6 @@ async function sendToInscrit(input: {
   mail: RenderedEmail;
 }): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
-  const contactEmail = process.env.CONTACT_EMAIL;
-
   if (!apiKey) {
     console.warn(`[emails] non configurés : ${input.libelle} sauté`);
     return false;
@@ -285,7 +276,7 @@ async function sendToInscrit(input: {
     const { data, error } = await resend.emails.send({
       from: EMAIL_FROM,
       to: input.email,
-      ...(contactEmail ? { replyTo: contactEmail } : {}),
+      replyTo: contactEmail,
       subject: input.mail.subject,
       html: input.mail.html,
       text: input.mail.text,
@@ -358,9 +349,7 @@ export async function sendContactEmail(payload: {
   contact: ContactEmailInput;
 }): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
-  const contactEmail = process.env.CONTACT_EMAIL;
-
-  if (!apiKey || !contactEmail) {
+  if (!apiKey) {
     console.warn("[emails] non configurés : envoi contact sauté");
     return;
   }

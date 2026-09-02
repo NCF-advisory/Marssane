@@ -42,10 +42,10 @@ const SECTIONS: { titre: string; corps: ReactNode }[] = [
       <>
         Pour toute question relative au site ou à la formation :{" "}
         <a
-          href="mailto:coullion@ncf-advisory.fr"
+          href="mailto:contact@marssane.fr"
           className="text-turquoise hover:text-white"
         >
-          coullion@ncf-advisory.fr
+          contact@marssane.fr
         </a>
         .
       </>
