@@ -54,13 +54,13 @@ export const NIVEAUX: Niveau[] = [
     // TODO contenu niveau confirmé : les quatre lignes ci-dessous sont des
     // gabarits (le programme n'est pas arrêté).
     points: [
-      "À définir",
-      "À définir",
-      "À définir",
-      "À définir",
+      "Prochainement",
+      "Prochainement",
+      "Prochainement",
+      "Prochainement",
     ],
     infos: {
-      duree: "À définir",
+      duree: "Prochainement",
       format: "Présentiel",
       prochaineSession: "À venir",
     },
@@ -81,13 +81,13 @@ export const NIVEAUX: Niveau[] = [
     // TODO contenu niveau expert : les quatre lignes ci-dessous sont des
     // gabarits (le programme n'est pas arrêté).
     points: [
-      "À définir",
-      "À définir",
-      "À définir",
-      "À définir",
+      "Prochainement",
+      "Prochainement",
+      "Prochainement",
+      "Prochainement",
     ],
     infos: {
-      duree: "À définir",
+      duree: "Prochainement",
       format: "Présentiel",
       prochaineSession: "À venir",
     },

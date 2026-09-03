@@ -60,11 +60,11 @@ const NIVEAUX_LANDING: [Niveau, Niveau] = [
     // gabarits (le programme n'est pas arrêté). Cinq lignes exactement, pour
     // que les deux cartes restent de même hauteur en bureau.
     points: [
-      "À définir",
-      "À définir",
-      "À définir",
-      "À définir",
-      "À définir",
+      "Prochainement",
+      "Prochainement",
+      "Prochainement",
+      "Prochainement",
+      "Prochainement",
     ],
   },
 ];
