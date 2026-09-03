@@ -5,7 +5,6 @@ import { ViewTransition } from "react";
 import localFont from "next/font/local";
 import { Nav } from "@/components/site/Nav";
 import { ReservationDialog } from "@/components/site/ReservationDialog";
-import { champSession } from "@/lib/session-display";
 import { HOME_DESCRIPTION, SITE_URL } from "@/lib/seo";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -74,7 +73,7 @@ export default function RootLayout({
         {/* Montée ici, hors de `children` : le bouton « Réserver ma place » de
             la nav est présent sur tout le site, la modale qu'il ouvre doit
             l'être aussi (un seul id="reservation-dialog" dans le DOM). */}
-        <ReservationDialog sessionLabel={champSession()} />
+        <ReservationDialog />
         <Analytics />
       </body>
     </html>

@@ -12,6 +12,11 @@ import {
   selectClassSurInk,
 } from "@/components/ui/Field";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
+import {
+  CRENEAU_HORAIRE,
+  CRENEAU_LIEU,
+  CRENEAUX_OPTIONS,
+} from "@/lib/creneaux";
 
 /**
  * État initial de `useActionState`. Défini côté client (pas dans le fichier
@@ -27,11 +32,6 @@ const METIERS = [
   "Autre",
 ];
 
-type ReservationDialogProps = {
-  /** Libellé du champ « Session » (lecture seule). */
-  sessionLabel: string;
-};
-
 /**
  * Modale de pré-inscription (F2). <dialog> natif : focus trap, Esc et ::backdrop
  * gratuits. Ouverte par <ReservationTrigger> via document.getElementById +
@@ -41,7 +41,7 @@ type ReservationDialogProps = {
  * `useActionState` : erreurs par champ + erreur globale, état « pending », et
  * repeuplement des valeurs sans JS (progressive enhancement).
  */
-export function ReservationDialog({ sessionLabel }: ReservationDialogProps) {
+export function ReservationDialog() {
   const ref = useRef<HTMLDialogElement>(null);
   const [state, formAction, isPending] = useActionState(
     submitInscription,
@@ -264,18 +264,34 @@ export function ReservationDialog({ sessionLabel }: ReservationDialogProps) {
               className={controlClassSurInk}
             />
           </Field>
-          <Field id="f2-session" label="Session" required className="sm:col-span-2">
-            <input
-              id="f2-session"
-              name="session"
-              type="text"
-              readOnly
+          <Field
+            id="f2-creneau"
+            label="Créneau souhaité"
+            required
+            className="sm:col-span-2"
+            error={fieldErrors.creneau}
+          >
+            <select
+              id="f2-creneau"
+              name="creneau"
               required
-              value={sessionLabel}
-              // Champ en lecture seule : fond encre (en creux par rapport aux
-              // autres champs) et texte atténué.
-              className={`${controlClassSurInk} cursor-default bg-ink! text-body-sur-ink!`}
-            />
+              defaultValue={values.creneau ?? ""}
+              {...errorAttrs("creneau", "f2-creneau")}
+              className={selectClassSurInk}
+            >
+              <option value="" disabled>
+                Sélectionnez…
+              </option>
+              {CRENEAUX_OPTIONS.map((creneau) => (
+                <option key={creneau} value={creneau}>
+                  {creneau}
+                </option>
+              ))}
+            </select>
+            {/* Ce qui ne varie pas d'un créneau à l'autre : horaire et lieu. */}
+            <p className="mt-[7px] text-[12.5px] leading-[1.45] text-faint-sur-ink">
+              Chaque créneau : {CRENEAU_HORAIRE} · {CRENEAU_LIEU}
+            </p>
           </Field>
 
           {/* Honeypot anti-spam — inerte, hors écran (F2 · CDC §5.2). */}

@@ -32,6 +32,7 @@ function submittedValues(formData: FormData): Record<string, string> {
     metier: str("metier"),
     metier_autre: str("metier_autre"),
     entreprise: str("entreprise"),
+    creneau: str("creneau"),
     consentement: str("consentement") === "on" ? "on" : "",
   };
 }
@@ -134,7 +135,6 @@ export async function submitInscription(
     await sendInscriptionEmails({
       inscriptionId: result.id,
       inscription: { ...parsed.data, statut: result.statut },
-      session,
       placesRestantes: session?.places_restantes ?? 0,
     });
   } catch {

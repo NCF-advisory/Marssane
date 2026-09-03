@@ -24,6 +24,8 @@ export type InscriptionInput = {
   metier: string;
   metier_autre?: string;
   entreprise?: string;
+  /** Créneau souhaité : l'un de `CRENEAUX` ou « Sans préférence ». */
+  creneau: string;
 };
 
 export type CreateInscriptionResult =
@@ -164,7 +166,7 @@ export async function createInscription(
 
       const [inserted] = await tx<{ id: string }[]>`
         insert into inscriptions
-          (session_id, prenom, nom, email, telephone, metier, metier_autre, entreprise, statut, consentement_at)
+          (session_id, prenom, nom, email, telephone, metier, metier_autre, entreprise, creneau, statut, consentement_at)
         values (
           ${sessionId},
           ${data.prenom},
@@ -174,6 +176,7 @@ export async function createInscription(
           ${data.metier},
           ${data.metier_autre || null},
           ${data.entreprise || null},
+          ${data.creneau},
           ${statutInscription},
           now()
         )

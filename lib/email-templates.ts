@@ -112,9 +112,10 @@ const PREREQUIS = [
  * enregistrée, le tri se fait dans l'admin (qui reçoit, lui, le statut réel via
  * `buildAdminEmail`).
  *
- * Ni date ni horaires : la session n'est pas encore datée côté public (le site
- * affiche « Prochainement »), ce sont les rappels J-7 / J-1 qui portent les
- * détails une fois la date arrêtée.
+ * Ni date ni horaires : le site propose des créneaux souhaités (voir
+ * lib/creneaux), jamais une session confirmée — ce sont les rappels J-7 / J-1
+ * qui portent les détails une fois la date arrêtée. Le créneau demandé n'est
+ * pas repris ici : le confirmer reviendrait à annoncer une date.
  */
 export function buildClientEmail(args: { prenom: string }): RenderedEmail {
   const { prenom } = args;
@@ -153,13 +154,16 @@ export function buildClientEmail(args: { prenom: string }): RenderedEmail {
   };
 }
 
-/** Email de notification destiné aux administrateurs (`CONTACT_EMAIL`). */
+/**
+ * Email de notification destiné aux administrateurs (`CONTACT_EMAIL`). Pas de
+ * ligne « Session » : le site ne propose que des créneaux souhaités (voir
+ * lib/creneaux), c'est « Créneau souhaité » qui porte l'information utile.
+ */
 export function buildAdminEmail(args: {
   inscription: Inscription;
-  session: ProchaineSession | null;
   placesRestantes: number;
 }): RenderedEmail {
-  const { inscription, session, placesRestantes } = args;
+  const { inscription, placesRestantes } = args;
   const statutLabel = STATUT_LABEL[inscription.statut];
 
   const metier =
@@ -167,10 +171,6 @@ export function buildAdminEmail(args: {
       ? `Autre (${inscription.metier_autre})`
       : inscription.metier;
   const entreprise = inscription.entreprise || "—";
-  // Pas de date dans la notification : « Prochainement », comme côté public.
-  const sessionLibelle = session
-    ? "Prochainement"
-    : "Liste d'attente (aucune session publiée)";
 
   const champs: [string, string][] = [
     ["Statut", statutLabel],
@@ -180,7 +180,7 @@ export function buildAdminEmail(args: {
     ["Téléphone", inscription.telephone],
     ["Métier", metier],
     ["Entreprise", entreprise],
-    ["Session", sessionLibelle],
+    ["Créneau souhaité", inscription.creneau],
     ["Places restantes", String(placesRestantes)],
   ];
 

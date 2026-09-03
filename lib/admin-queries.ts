@@ -48,6 +48,8 @@ export type InscriptionRow = {
   metier: string;
   metier_autre: string | null;
   entreprise: string | null;
+  /** Créneau souhaité (migration 012) ; `null` pour les inscriptions antérieures. */
+  creneau: string | null;
   statut: string;
   created_at: string;
   /**
@@ -163,7 +165,7 @@ export async function getInscriptionsBySession(
   return sql<InscriptionRow[]>`
     select
       i.id, i.prenom, i.nom, i.email, i.telephone, i.metier, i.metier_autre,
-      i.entreprise, i.statut,
+      i.entreprise, i.creneau, i.statut,
       to_char(i.created_at at time zone 'Europe/Paris', 'DD/MM/YYYY HH24:MI') as created_at,
       (
         select e.statut from emails_envoyes e
@@ -188,7 +190,7 @@ export async function listInscriptionsAvecSession(): Promise<
   return sql<InscriptionAvecSessionRow[]>`
     select
       i.id, i.prenom, i.nom, i.email, i.telephone, i.metier, i.metier_autre,
-      i.entreprise, i.statut,
+      i.entreprise, i.creneau, i.statut,
       to_char(i.created_at at time zone 'Europe/Paris', 'DD/MM/YYYY HH24:MI') as created_at,
       (
         select e.statut from emails_envoyes e
@@ -285,7 +287,7 @@ export async function getWaitlistGenerale(): Promise<InscriptionRow[]> {
   return sql<InscriptionRow[]>`
     select
       i.id, i.prenom, i.nom, i.email, i.telephone, i.metier, i.metier_autre,
-      i.entreprise, i.statut,
+      i.entreprise, i.creneau, i.statut,
       to_char(i.created_at at time zone 'Europe/Paris', 'DD/MM/YYYY HH24:MI') as created_at,
       (
         select e.statut from emails_envoyes e

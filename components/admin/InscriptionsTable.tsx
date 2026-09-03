@@ -38,8 +38,8 @@ const TD = "whitespace-nowrap px-3 py-2.5 font-mono text-[13px] text-body";
 
 /**
  * Tableau des inscrits (CDC §5.3) : colonnes nom, prénom, email, téléphone,
- * métier (+ précision), entreprise, date d'inscription, statut d'envoi du
- * dernier email destiné à l'inscrit, statut. Données en mono
+ * métier (+ précision), entreprise, créneau souhaité, date d'inscription,
+ * statut d'envoi du dernier email destiné à l'inscrit, statut. Données en mono
  * 13 px. Par ligne : select de statut (action immédiate) et suppression
  * définitive (avec confirmation, droit à l'effacement RGPD). Tri : plus récent
  * d'abord (assuré par la requête). Responsive : défilement horizontal.
@@ -81,6 +81,7 @@ export function InscriptionsTable({
             <th className={TH}>Téléphone</th>
             <th className={TH}>Métier</th>
             <th className={TH}>Entreprise</th>
+            <th className={TH}>Créneau souhaité</th>
             <th className={TH}>Inscription</th>
             {showSession && <th className={TH}>Session</th>}
             <th className={TH}>E-mail</th>
@@ -101,6 +102,7 @@ export function InscriptionsTable({
               <td className={TD}>{row.telephone}</td>
               <td className={`${TD} whitespace-normal`}>{metierLabel(row)}</td>
               <td className={TD}>{row.entreprise ?? "—"}</td>
+              <td className={`${TD} whitespace-normal`}>{row.creneau ?? "—"}</td>
               <td className={`${TD} text-faint`}>{row.created_at}</td>
               {showSession && <td className={TD}>{sessionLabel(row)}</td>}
               <td className={TD}>

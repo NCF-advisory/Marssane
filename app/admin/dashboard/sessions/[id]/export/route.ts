@@ -13,8 +13,9 @@ import { parseId } from "@/lib/validation";
  *
  * Vérification de session admin explicite dans le handler (défense en
  * profondeur, en plus du proxy). Colonnes : nom, prénom, email, téléphone,
- * métier, entreprise, statut, date d'inscription. Format Excel fr (voir lib/csv :
- * BOM UTF-8, séparateur `;`, garde-fou anti-injection de formule).
+ * métier, entreprise, créneau souhaité, statut, date d'inscription. Format Excel
+ * fr (voir lib/csv : BOM UTF-8, séparateur `;`, garde-fou anti-injection de
+ * formule).
  */
 
 const HEADERS = [
@@ -24,6 +25,7 @@ const HEADERS = [
   "Téléphone",
   "Métier",
   "Entreprise",
+  "Créneau souhaité",
   "Statut",
   "Date d'inscription",
 ];
@@ -71,6 +73,7 @@ export async function GET(
     r.telephone,
     metier(r),
     r.entreprise ?? "",
+    r.creneau ?? "",
     statutLabel(INSCRIPTION_STATUT_LABELS, r.statut),
     r.created_at,
   ]);

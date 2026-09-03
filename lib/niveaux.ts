@@ -1,4 +1,5 @@
 import type { Niveau } from "@/components/site/NiveauBloc";
+import { CRENEAU_LIEU_COURT, CRENEAUX_COMPACT } from "@/lib/creneaux";
 
 /* ===== CONTENU PROVISOIRE — modèle à remplir =====
    Source de vérité unique des trois niveaux, utilisée par la page
@@ -30,7 +31,10 @@ export const NIVEAUX: Niveau[] = [
     infos: {
       duree: "2 demi-journées · selon votre agenda",
       format: "Présentiel + pratique accompagnée",
-      prochaineSession: "À venir",
+      // Créneaux et lieu viennent de lib/creneaux (source de vérité partagée
+      // avec la modale de pré-inscription).
+      lieu: CRENEAU_LIEU_COURT,
+      prochaineSession: CRENEAUX_COMPACT,
     },
   },
   {

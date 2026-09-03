@@ -16,13 +16,12 @@ import {
   type RenderedEmail,
 } from "./email-templates";
 import { logEmailEnvoye, type EmailType } from "./emails-log";
-import type { InscriptionInput, ProchaineSession } from "./sessions";
+import type { InscriptionInput } from "./sessions";
 
 export type InscriptionEmailPayload = {
   /** Id de l'inscription enregistrée : rattache les envois à leur trace. */
   inscriptionId: string;
   inscription: InscriptionInput & { statut: "confirme" | "attente" };
-  session: ProchaineSession | null;
   placesRestantes: number;
 };
 
@@ -59,11 +58,11 @@ export async function sendInscriptionEmails(
     return;
   }
 
-  const { inscription, session, placesRestantes } = payload;
+  const { inscription, placesRestantes } = payload;
   const resend = new Resend(apiKey);
 
   const client = buildClientEmail({ prenom: inscription.prenom });
-  const admin = buildAdminEmail({ inscription, session, placesRestantes });
+  const admin = buildAdminEmail({ inscription, placesRestantes });
 
   const results = await Promise.allSettled([
     resend.emails.send({

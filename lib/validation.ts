@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CRENEAUX_OPTIONS } from "./creneaux";
 
 /** Métiers proposés (CDC §5.2). « Autre » impose de préciser. */
 export const METIERS = [
@@ -51,6 +52,9 @@ export const inscriptionSchema = z
       .max(200, "Le nom de l'entreprise est trop long.")
       .optional()
       .default(""),
+    // Créneau souhaité : l'un des trois proposés ou « Sans préférence »
+    // (lib/creneaux). Requis — le libellé retenu est stocké tel quel.
+    creneau: z.enum(CRENEAUX_OPTIONS, { error: "Sélectionnez un créneau." }),
     consentement: z.literal("on", { error: "Le consentement est requis." }),
   })
   .superRefine((data, ctx) => {
@@ -83,6 +87,7 @@ export function parseInscription(formData: FormData): ParseInscriptionResult {
     metier: asString(formData.get("metier")),
     metier_autre: asString(formData.get("metier_autre")),
     entreprise: asString(formData.get("entreprise")),
+    creneau: asString(formData.get("creneau")),
     consentement: asString(formData.get("consentement")),
   };
 

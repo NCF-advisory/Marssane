@@ -25,7 +25,13 @@ export type Niveau = {
   titre: string;
   accroche: string;
   points: string[];
-  infos: { duree: string; format: string; prochaineSession: string };
+  infos: {
+    duree: string;
+    format: string;
+    prochaineSession: string;
+    /** Lieu, affiché seulement s'il est connu (niveau dont les créneaux sont arrêtés). */
+    lieu?: string;
+  };
 };
 
 /** Layout effect côté navigateur seulement (évite l'avertissement SSR). */
@@ -182,6 +188,14 @@ export function NiveauBloc({ niveaux }: { niveaux: Niveau[] }) {
                     <dt className="uppercase tracking-[0.1em]">Format</dt>
                     <dd className="font-semibold text-white">{niveau.infos.format}</dd>
                   </div>
+                  {niveau.infos.lieu && (
+                    <div className="flex items-baseline gap-2">
+                      <dt className="uppercase tracking-[0.1em]">Lieu</dt>
+                      <dd className="font-semibold text-white">
+                        {niveau.infos.lieu}
+                      </dd>
+                    </div>
+                  )}
                   <div className="flex items-baseline gap-2">
                     <dt className="uppercase tracking-[0.1em]">Prochaine session</dt>
                     <dd className="font-semibold text-white">
