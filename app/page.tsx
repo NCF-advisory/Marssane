@@ -11,6 +11,7 @@ import { Formateur } from "@/components/site/Formateur";
 import { FormationsDeuxNiveaux } from "@/components/site/FormationsDeuxNiveaux";
 import { Hero } from "@/components/site/Hero";
 import { ParolesDirigeants } from "@/components/site/ParolesDirigeants";
+import { PartenaireNovances } from "@/components/site/PartenaireNovances";
 import { Reservation } from "@/components/site/Reservation";
 import { createPublicMetadata, HOME_DESCRIPTION } from "@/lib/seo";
 
@@ -46,6 +47,7 @@ export default function Home() {
           séparation — comme sur le modèle. */}
       <main>
         <Hero />
+        <PartenaireNovances />
         <ParolesDirigeants />
         <BandeauChiffres />
         <BandeToile className="mt-[68px] pb-[76px]">

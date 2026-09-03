@@ -25,8 +25,18 @@ export function Footer() {
           className="flex flex-wrap items-center gap-2.5"
           style={{ ["--color-ink" as string]: "#FFFFFF" }}
         >
-          <LogoMarssane size={28} />
-          <span className="text-[15px] font-bold">Marssane</span>
+          {/* Lockup + mention de partenariat en colonne, comme la Nav. Le
+              `pl-[38px]` cale la mention sous le mot « Marssane » (28 px de
+              symbole + les 10 px du `gap-2.5`). */}
+          <div className="flex flex-col items-start gap-[5px]">
+            <div className="flex items-center gap-2.5">
+              <LogoMarssane size={28} />
+              <span className="text-[15px] font-bold">Marssane</span>
+            </div>
+            <span className="font-mono text-[10px] uppercase leading-none tracking-[0.15em] text-faint-sur-ink sm:pl-[38px]">
+              Partenaire du Groupe Novances
+            </span>
+          </div>
           {/* `py-3` sur les liens (et non sur la ligne) : sur un élément inline
               le padding vertical agrandit la zone cliquable — 45 px de cible —
               sans toucher à la hauteur de la ligne, donc au pied de page. */}

@@ -114,17 +114,31 @@ export function Nav() {
         dessous, hors flux) ; à partir de lg on revient au seul `pt-[26px]`
         d'origine, le contenu de la barre refermant lui-même la bande. */}
     <header className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-x-6 gap-y-4 px-6 pb-[14px] pt-[16px] sm:px-10 lg:pb-0 lg:pt-[26px]">
-      <Link
-        href="/"
-        aria-label="Marssane · retour à l'accueil"
-        onClick={surLogo}
-        // Le canard manque de contraste sur l'encre : anneau turquoise.
-        className="inline-flex rounded-btn focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
-        // Le « M » du logo suit --color-ink : on le repasse en blanc localement.
-        style={{ ["--color-ink" as string]: "#FFFFFF" }}
-      >
-        <LogoMarssane size={34} withWordmark />
-      </Link>
+      {/* Lockup + mention de partenariat en colonne. La mention est HORS du
+          lien : elle n'est pas un raccourci vers l'accueil, et le lien garde
+          exactement sa zone cliquable d'origine. Le `pl-[45px]` la cale sous le
+          mot « Marssane » et non sous le « M » (34 px de symbole + 11 px de gap
+          dans le lockup 34 px). */}
+      <div className="flex flex-col items-start gap-[5px]">
+        <Link
+          href="/"
+          aria-label="Marssane · retour à l'accueil"
+          onClick={surLogo}
+          // Le canard manque de contraste sur l'encre : anneau turquoise.
+          className="inline-flex rounded-btn focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
+          // Le « M » du logo suit --color-ink : on le repasse en blanc localement.
+          style={{ ["--color-ink" as string]: "#FFFFFF" }}
+        >
+          <LogoMarssane size={34} withWordmark />
+        </Link>
+        {/* Masquée sous sm : à 390 px, la mention (~220 px de large) ne tient
+            pas à côté du bouton « Menu » et le poussait sur une seconde rangée
+            en WebKit — la barre passait de 79 à 140 px de haut. Sur téléphone,
+            le pied de page et le bandeau de la landing la portent. */}
+        <span className="hidden font-mono text-[10px] uppercase leading-none tracking-[0.15em] text-faint-sur-ink sm:block sm:pl-[45px]">
+          Partenaire du Groupe Novances
+        </span>
+      </div>
 
       {/* Bouton menu — sous lg seulement. Cadre et graisse du CTA de la barre :
           trois traits sobres + le mot, pour rester dans la typographie du site.
