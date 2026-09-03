@@ -251,9 +251,9 @@ function CarteNiveau({ niveau, ton }: { niveau: Niveau; ton: "sombre" | "clair" 
           </h3>
           {niveau.prix && (
             <p
-              className={`inline-flex rounded-chip px-[9px] py-[5px] font-mono text-[11px] font-medium uppercase tracking-[0.1em] sm:text-[11.5px] ${
+              className={`inline-flex rounded-chip px-[11px] py-[6px] font-mono text-[13px] font-semibold uppercase tracking-[0.08em] sm:text-[13.5px] ${
                 sombre
-                  ? "border border-white/[0.16] bg-white/[0.07] text-white"
+                  ? "border border-turquoise/40 bg-turquoise/10 text-turquoise"
                   : "bg-ecume text-ink-ecume"
               }`}
             >
