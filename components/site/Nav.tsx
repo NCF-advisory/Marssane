@@ -13,6 +13,7 @@ import { ReservationTrigger } from "./ReservationTrigger";
 // la page existe toujours par lien direct et doit porter la nav.
 const links = [
   { href: "/formations", label: "Les formations" },
+  { href: "/parcours", label: "Le parcours" },
   { href: "/quelle-ia", label: "Quelle IA choisir ?" },
 ];
 
@@ -23,6 +24,7 @@ const PAGES_SITE = [
   "/",
   "/quelle-ia",
   "/formations",
+  "/parcours",
   "/implementation",
   "/confidentialite",
   "/mentions-legales",

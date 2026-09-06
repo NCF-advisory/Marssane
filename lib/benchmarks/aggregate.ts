@@ -33,15 +33,15 @@ import type { Modele, Pays } from "./models";
  * Taux de conversion USD → EUR appliqué au coût.
  * TODO : brancher un taux live plus tard (non bloquant ; valeur figée pour l'instant).
  */
-const USD_EUR = 0.92;
+export const USD_EUR = 0.92;
 
 /**
  * Coût mélangé = (POIDS_INPUT × prix_input + POIDS_OUTPUT × prix_output) / (somme
  * des poids). Pondération volontairement « input-lourde » : la plupart des usages
  * PME envoient beaucoup de contexte pour une réponse courte. Ajustable.
  */
-const POIDS_INPUT = 3;
-const POIDS_OUTPUT = 1;
+export const POIDS_INPUT = 3;
+export const POIDS_OUTPUT = 1;
 
 /**
  * Planchers éditoriaux d'intelligence : les modèles en dessous sont EXCLUS du
@@ -56,8 +56,8 @@ const POIDS_OUTPUT = 1;
  * Déplacer l'un ou l'autre ne change AUCUN score : la normalisation est calculée
  * avant le filtrage (cf. en-tête).
  */
-const MIN_INTELLIGENCE_AA = 45;
-const MIN_INTELLIGENCE_LMARENA = 55;
+export const MIN_INTELLIGENCE_AA = 45;
+export const MIN_INTELLIGENCE_LMARENA = 55;
 
 /**
  * Score global = POIDS_INTELLIGENCE × intelligence + POIDS_COUT × efficacité-coût
@@ -66,9 +66,9 @@ const MIN_INTELLIGENCE_LMARENA = 55;
  * éditorialement (et affichée au visiteur, cf. MethodoSources) : le niveau du
  * modèle décide, le prix et le temps d'attente départagent. Ajustable.
  */
-const POIDS_INTELLIGENCE = 0.5;
-const POIDS_COUT = 0.25;
-const POIDS_REACTIVITE = 0.25;
+export const POIDS_INTELLIGENCE = 0.5;
+export const POIDS_COUT = 0.25;
+export const POIDS_REACTIVITE = 0.25;
 
 /** Une source est « périmée » (stale) si sa date native dépasse ce nb de jours. */
 const FRESHNESS_DAYS = 21;

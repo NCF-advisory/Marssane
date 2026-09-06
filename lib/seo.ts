@@ -3,7 +3,23 @@ import type { Metadata } from "next";
 export const SITE_URL = "https://marssane.fr";
 
 export const HOME_DESCRIPTION =
-  "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.";
+  "Formation IA pour dirigeants de PME près de Lyon : 2 séances de 3 h 30 pour pratiquer Claude sur vos mails, documents et tâches métier, avec Marssane.";
+
+export const HOME_TITLE = "Formation IA pour dirigeants de PME à Lyon | Marssane";
+
+/** Une seule origine publique pour les canoniques, le sitemap et le JSON-LD. */
+export const PUBLIC_PATHS = [
+  "/",
+  "/formations",
+  "/parcours",
+  "/quelle-ia",
+  "/mentions-legales",
+  "/confidentialite",
+] as const;
+
+export function absoluteUrl(path: string) {
+  return new URL(path, SITE_URL).href;
+}
 
 const OPEN_GRAPH_IMAGE = {
   url: "/opengraph-image.png",
@@ -26,6 +42,15 @@ export function createPublicMetadata({
     title,
     description,
     alternates: { canonical: path },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
     openGraph: {
       title,
       description,

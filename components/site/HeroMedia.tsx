@@ -1,5 +1,6 @@
 import { heroVideo } from "@/lib/site-config";
 import { HeroVideo } from "./HeroVideo";
+import { getImageProps } from "next/image";
 
 /**
  * Moitié droite du héro. Bascule pilotée par `heroVideo` (lib/site-config) :
@@ -9,9 +10,16 @@ import { HeroVideo } from "./HeroVideo";
  */
 export function HeroMedia() {
   if (heroVideo) {
+    const { props: poster } = getImageProps({
+      src: heroVideo.poster,
+      alt: "",
+      width: 640,
+      height: 400,
+    });
     return (
       <div className="relative">
-        <HeroVideo video={heroVideo} />
+        <link rel="preload" as="image" href={poster.src} fetchPriority="high" />
+        <HeroVideo video={{ ...heroVideo, poster: poster.src }} />
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import { updateContactTraiteAction } from "@/app/admin/dashboard/actions";
+import { convertirContactAction } from "@/app/admin/dashboard/crm/actions";
 import type { ContactRow } from "@/lib/admin-queries";
 import { ContactTraiteBadge } from "./badges";
 
@@ -42,9 +43,11 @@ function MessageCell({ message }: { message: string }) {
 /**
  * Vue contact admin (CDC §5.3) : liste LECTURE SEULE des demandes reçues via le
  * formulaire « implémentation » (F4). Colonnes : date, prénom nom, email,
- * téléphone, entreprise, message (tronqué + dépliage), état. Seule action :
- * basculer « traité / non traité » (form + server action, sans JS requis). Tri :
- * plus récent d'abord (assuré par la requête). Responsive : défilement horizontal.
+ * téléphone, entreprise, message (tronqué + dépliage), état. Actions :
+ * basculer « traité / non traité », et « Créer la fiche » (CRM · Lot 1) qui
+ * convertit la demande en personne + opportunité et la marque traitée (forms +
+ * server actions, sans JS requis). Tri : plus récent d'abord (assuré par la
+ * requête). Responsive : défilement horizontal.
  */
 export function ContactsList({ rows }: { rows: ContactRow[] }) {
   if (rows.length === 0) {
@@ -94,20 +97,31 @@ export function ContactsList({ rows }: { rows: ContactRow[] }) {
                 <ContactTraiteBadge traite={row.traite} />
               </td>
               <td className="px-3 py-2.5 text-right align-top">
-                <form action={updateContactTraiteAction} className="inline">
-                  <input type="hidden" name="id" value={row.id} />
-                  <input
-                    type="hidden"
-                    name="traite"
-                    value={row.traite ? "false" : "true"}
-                  />
-                  <button
-                    type="submit"
-                    className="rounded-btn px-2.5 py-1.5 font-mono text-[12px] font-medium text-canard transition-colors hover:bg-ecume hover:text-ink-ecume"
-                  >
-                    {row.traite ? "Marquer non traité" : "Marquer traité"}
-                  </button>
-                </form>
+                <div className="flex flex-col items-end gap-1">
+                  <form action={convertirContactAction} className="inline">
+                    <input type="hidden" name="id" value={row.id} />
+                    <button
+                      type="submit"
+                      className="rounded-btn px-2.5 py-1.5 font-mono text-[12px] font-medium text-canard transition-colors hover:bg-ecume hover:text-ink-ecume"
+                    >
+                      Créer la fiche
+                    </button>
+                  </form>
+                  <form action={updateContactTraiteAction} className="inline">
+                    <input type="hidden" name="id" value={row.id} />
+                    <input
+                      type="hidden"
+                      name="traite"
+                      value={row.traite ? "false" : "true"}
+                    />
+                    <button
+                      type="submit"
+                      className="rounded-btn px-2.5 py-1.5 font-mono text-[12px] font-medium text-soft transition-colors hover:text-ink"
+                    >
+                      {row.traite ? "Marquer non traité" : "Marquer traité"}
+                    </button>
+                  </form>
+                </div>
               </td>
             </tr>
           ))}

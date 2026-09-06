@@ -1,12 +1,16 @@
 import type { MetadataRoute } from "next";
+import { absoluteUrl } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/admin", "/styleguide", "/formation$", "/formation/", "/api"],
+      // Les pages HTML privées portent noindex et restent explorables afin
+      // que les moteurs puissent lire cette directive. L'authentification
+      // protège toujours les données ; robots.txt n'est pas un contrôle d'accès.
+      disallow: ["/api/", "/formation/espace/stream"],
     },
-    sitemap: "https://marssane.fr/sitemap.xml",
+    sitemap: absoluteUrl("/sitemap.xml"),
   };
 }

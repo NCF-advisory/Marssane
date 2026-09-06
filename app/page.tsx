@@ -1,4 +1,7 @@
 import type { ReactNode } from "react";
+import { JsonLd } from "@/components/site/JsonLd";
+import { FORMATION_FAQ } from "@/lib/formation-faq";
+import { siteEntities, webPage } from "@/lib/structured-data";
 import { Accompagnement } from "@/components/site/Accompagnement";
 import { Alignement } from "@/components/site/Alignement";
 import { Apparitions } from "@/components/site/Apparitions";
@@ -13,7 +16,7 @@ import { Hero } from "@/components/site/Hero";
 import { ParolesDirigeants } from "@/components/site/ParolesDirigeants";
 import { PartenaireNovances } from "@/components/site/PartenaireNovances";
 import { Reservation } from "@/components/site/Reservation";
-import { createPublicMetadata, HOME_DESCRIPTION } from "@/lib/seo";
+import { createPublicMetadata, HOME_DESCRIPTION, HOME_TITLE } from "@/lib/seo";
 
 /**
  * Bande de tonalité claire : conteneur pleine largeur qui repose la toile sous
@@ -45,6 +48,21 @@ export default function Home() {
           restent en encre ; les bandes claires tombent sur l'accompagnement,
           sur l'avant-après, et sur la FAQ. Coupes franches, sans filet de
           séparation — comme sur le modèle. */}
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@graph": [
+          ...siteEntities,
+          {
+            ...webPage({ path: "/", name: HOME_TITLE, description: HOME_DESCRIPTION }),
+            "@type": ["WebPage", "FAQPage"],
+            mainEntity: FORMATION_FAQ.map(({ question, reponse }) => ({
+              "@type": "Question",
+              name: question,
+              acceptedAnswer: { "@type": "Answer", text: reponse },
+            })),
+          },
+        ],
+      }} />
       <main>
         <Hero />
         <PartenaireNovances />
@@ -75,7 +93,7 @@ export default function Home() {
 }
 
 export const metadata = createPublicMetadata({
-  title: "Marssane · Formation IA",
+  title: HOME_TITLE,
   description: HOME_DESCRIPTION,
   path: "/",
 });

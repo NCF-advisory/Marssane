@@ -1,73 +1,6 @@
-import type { ReactNode } from "react";
+import { FORMATION_FAQ } from "@/lib/formation-faq";
+import Link from "next/link";
 import { KickerPill } from "@/components/ui/KickerPill";
-
-/**
- * Les six questions qui reviennent avant une pré-inscription, dans l'ordre où
- * on se les pose : le niveau, puis le déroulé, puis les réserves (outil,
- * engagement).
- */
-const QUESTIONS: { question: string; reponse: ReactNode }[] = [
-  {
-    question: "Faut-il déjà connaître l'IA pour suivre la formation ?",
-    reponse: (
-      <>
-        Non. C&apos;est une formation de niveau débutant : la première session
-        reprend les bases (Claude, le prompt, la confidentialité). Seuls
-        prérequis : votre ordinateur et un abonnement Claude Pro actif
-        (20&nbsp;€/mois).
-      </>
-    ),
-  },
-  {
-    question: "J'utilise déjà ChatGPT ou Claude, qu'est-ce que ça m'apporte ?",
-    reponse: (
-      <>
-        Si vous en êtes aux usages occasionnels, la formation débutant vous fera
-        passer du chat aux automatismes qui tournent seuls. Si vous êtes déjà à
-        l&apos;aise, le niveau confirmé est fait pour vous : structurer vos
-        usages et gagner du temps sur vos vrais dossiers.
-      </>
-    ),
-  },
-  {
-    question: "Comment la formation se déroule-t-elle concrètement ?",
-    reponse: (
-      <>
-        Deux demi-journées en salle (4 h puis 4 h), à caler selon votre
-        agenda, avec de la pratique chez vous entre les deux. Vous ne regardez
-        pas une démonstration : vous construisez.
-      </>
-    ),
-  },
-  {
-    question: "Que se passe-t-il entre les deux sessions ?",
-    reponse: (
-      <>
-        Vous prenez en main les outils et vous posez des questions si besoin.
-      </>
-    ),
-  },
-  {
-    question: "Pourquoi Claude et pas ChatGPT ?",
-    reponse: (
-      <>
-        Les réflexes que vous apprendrez valent pour les quatre grands
-        outils : ChatGPT, Claude, Mistral, GLM. La formation se fait sur Claude,
-        considéré comme l&apos;IA la plus efficace en entreprise en ce moment :
-        rédaction soignée, sérieux sur les documents longs.
-      </>
-    ),
-  },
-  {
-    question: "La pré-inscription m'engage-t-elle ?",
-    reponse: (
-      <>
-        Non. Elle est sans engagement, en petit groupe, avec une réponse
-        rapide.
-      </>
-    ),
-  },
-];
 
 /**
  * Section « FAQ » (ancre #faq), dernière section de la landing. Accordéons
@@ -103,7 +36,7 @@ export function Faq() {
         style={{ ["--apparition-delai" as string]: "150ms" }}
         className="mt-[34px] flex max-w-[860px] flex-col gap-3"
       >
-        {QUESTIONS.map((item) => (
+        {FORMATION_FAQ.map((item) => (
           <details
             key={item.question}
             className="group rounded-card border border-line-sur-ink bg-surface-sur-ink"
@@ -133,6 +66,11 @@ export function Faq() {
           </details>
         ))}
       </div>
+      <p className="mt-6 text-[14.5px] text-body-sur-ink">
+        <Link href="/parcours" className="underline underline-offset-4 hover:text-turquoise">
+          Consulter le programme détaillé de la formation IA débutant
+        </Link>
+      </p>
     </section>
   );
 }

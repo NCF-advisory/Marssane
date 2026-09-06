@@ -1,5 +1,5 @@
 import type { Niveau } from "@/components/site/NiveauBloc";
-import { CRENEAU_LIEU_COURT, CRENEAUX_COMPACT } from "@/lib/creneaux";
+import { CRENEAU_LIEU_COURT, CRENEAUX_COMPACT, FORMATION_DUREE } from "@/lib/creneaux";
 
 /* ===== CONTENU PROVISOIRE — modèle à remplir =====
    Source de vérité unique des trois niveaux, utilisée par la page
@@ -32,7 +32,7 @@ export const NIVEAUX: Niveau[] = [
       "Optimiser vos processus",
     ],
     infos: {
-      duree: "2 demi-journées · selon votre agenda",
+      duree: FORMATION_DUREE,
       format: "Présentiel + pratique accompagnée",
       // Créneaux et lieu viennent de lib/creneaux (source de vérité partagée
       // avec la modale de pré-inscription).

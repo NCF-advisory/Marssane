@@ -1,0 +1,271 @@
+import type { Metadata } from "next";
+import { archiveSessionAction } from "@/app/admin/dashboard/actions";
+import { SessionStatutBadge } from "@/components/admin/badges";
+import { ConfirmButton } from "@/components/admin/ConfirmButton";
+import { DbUnavailable } from "@/components/admin/DbUnavailable";
+import { InscriptionsTable } from "@/components/admin/InscriptionsTable";
+import { Button } from "@/components/ui/Button";
+import {
+  getWaitlistGenerale,
+  listInscriptionsAvecSession,
+  listSessionsRattachables,
+  listSessionsWithCounts,
+  type InscriptionAvecSessionRow,
+  type InscriptionRow,
+  type SessionRattachable,
+  type SessionRow,
+} from "@/lib/admin-queries";
+import {
+  formatDateLongue,
+  formatDateLongueOuADefinir,
+} from "@/lib/session-display";
+
+export const metadata: Metadata = {
+  title: "Sessions · Administration Marssane",
+};
+
+/**
+ * Module Sessions (ERP · Lot 0, cadrage §6) : contenu historique du tableau
+ * de bord F3 (sessions, inscriptions, liste d'attente), déplacé ici tel quel.
+ * Les demandes de contact vivent désormais dans le module CRM ; l'accueil
+ * `/admin/dashboard` devient le tableau de bord de pilotage (Lot 1).
+ */
+
+/** Horaires « 09:30 – 17:00 » (ou « 09:30 », ou « — »). */
+function horaires(row: SessionRow): string {
+  if (row.heure_debut && row.heure_fin) {
+    return `${row.heure_debut} – ${row.heure_fin}`;
+  }
+  return row.heure_debut ?? "—";
+}
+
+/** Clé de tri : une session sans date compte comme la plus lointaine à venir. */
+function cleDate(session: SessionRow): string {
+  return session.date ?? "9999-12-31";
+}
+
+/** Prochaine session publiée / complète à venir (pour le compteur en tête). */
+function prochaineSession(sessions: SessionRow[]): SessionRow | null {
+  const today = new Date().toISOString().slice(0, 10);
+  return (
+    sessions
+      .filter(
+        (s) =>
+          (s.statut === "publiee" || s.statut === "complete") &&
+          cleDate(s) >= today,
+      )
+      .sort((a, b) => cleDate(a).localeCompare(cleDate(b)))[0] ?? null
+  );
+}
+
+const ACTION_LINK =
+  "font-mono text-[12px] font-medium text-canard transition-colors hover:text-canard-dark";
+
+export default async function AdminSessionsPage() {
+  let sessions: SessionRow[];
+  let waitlist: InscriptionRow[];
+  let inscriptions: InscriptionAvecSessionRow[];
+  let rattachables: SessionRattachable[];
+  try {
+    [sessions, waitlist, inscriptions, rattachables] = await Promise.all([
+      listSessionsWithCounts(),
+      getWaitlistGenerale(),
+      listInscriptionsAvecSession(),
+      listSessionsRattachables(),
+    ]);
+  } catch {
+    console.error("[admin] module sessions : base indisponible");
+    return (
+      <div className="space-y-8">
+        <h1 className="text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em]">
+          Sessions
+        </h1>
+        <DbUnavailable />
+      </div>
+    );
+  }
+
+  const prochaine = prochaineSession(sessions);
+
+  return (
+    <div className="space-y-10">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <h1 className="text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em]">
+          Sessions
+        </h1>
+        <Button href="/admin/dashboard/sessions/new" chevron>
+          Créer une session
+        </Button>
+      </div>
+
+      {/* Compteur de la prochaine session publiée (bandeau chiffres). */}
+      <div className="rounded-card border border-hairline bg-surface px-6 py-5 shadow-card">
+        {prochaine ? (
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="font-mono text-[34px] font-semibold leading-none text-ink-ecume">
+              {prochaine.confirme}
+            </span>
+            <span className="font-mono text-[20px] leading-none text-quiet">
+              / {prochaine.capacite}
+            </span>
+            <span className="text-[14px] text-body">
+              inscrits confirmés · session{" "}
+              <span className="font-semibold text-ink">
+                {prochaine.date
+                  ? `du ${formatDateLongue(prochaine.date)}`
+                  : "à définir"}
+              </span>
+            </span>
+          </div>
+        ) : (
+          <p className="text-[14px] text-soft">
+            Aucune session publiée à venir. Créez ou publiez une session pour
+            qu&apos;elle alimente la page d&apos;accueil.
+          </p>
+        )}
+      </div>
+
+      {/* Liste des sessions. */}
+      <section className="space-y-4">
+        <h2 className="text-[19px] font-bold tracking-[-0.01em]">Sessions</h2>
+        {sessions.length === 0 ? (
+          <p className="rounded-card border border-hairline bg-surface px-5 py-6 text-[14px] text-soft">
+            Aucune session pour le moment.
+          </p>
+        ) : (
+          <div className="overflow-x-auto rounded-card border border-hairline bg-surface shadow-card">
+            <table className="w-full min-w-[820px] border-collapse">
+              <thead>
+                <tr className="border-b border-hairline">
+                  <th className="whitespace-nowrap px-4 py-2.5 text-left font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
+                    Date
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2.5 text-left font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
+                    Horaires
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2.5 text-left font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
+                    Lieu
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2.5 text-left font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
+                    Statut
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2.5 text-left font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
+                    Inscrits
+                  </th>
+                  <th className="whitespace-nowrap px-4 py-2.5 text-right font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {sessions.map((s) => (
+                  <tr
+                    key={s.id}
+                    className="border-b border-hairline last:border-0 align-middle hover:bg-toile/60"
+                  >
+                    <td className="whitespace-nowrap px-4 py-3 text-[14px] font-semibold text-ink">
+                      {formatDateLongueOuADefinir(s.date)}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3 font-mono text-[13px] text-body">
+                      {horaires(s)}
+                    </td>
+                    <td className="px-4 py-3 text-[14px] text-body">
+                      {s.lieu ?? "—"}
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3">
+                      <SessionStatutBadge statut={s.statut} />
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-3 font-mono text-[13px] text-body">
+                      {s.confirme} / {s.capacite}
+                      {s.attente > 0 && (
+                        <span className="ml-2 text-faint">
+                          +{s.attente} att.
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex flex-wrap items-center justify-end gap-x-4 gap-y-1.5">
+                        <a
+                          href={`/admin/dashboard/sessions/${s.id}`}
+                          className={ACTION_LINK}
+                        >
+                          Modifier
+                        </a>
+                        <a
+                          href={`/admin/dashboard/sessions/${s.id}#inscrits`}
+                          className={ACTION_LINK}
+                        >
+                          Inscrits
+                        </a>
+                        <a
+                          href={`/admin/dashboard/sessions/${s.id}/export`}
+                          className={ACTION_LINK}
+                        >
+                          Export CSV
+                        </a>
+                        {s.statut !== "terminee" && (
+                          <form action={archiveSessionAction} className="inline">
+                            <input type="hidden" name="id" value={s.id} />
+                            <ConfirmButton
+                              message={`Archiver la session ${s.date ? `du ${formatDateLongue(s.date)}` : "à définir"} ? Elle passera au statut « Terminée » et ne sera plus proposée à l'inscription.`}
+                              className="font-mono text-[12px] font-medium text-soft transition-colors hover:text-ink"
+                            >
+                              Archiver
+                            </ConfirmButton>
+                          </form>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      {/* Inscriptions rattachées à une session, toutes sessions confondues. */}
+      <section className="space-y-4">
+        <div className="flex items-baseline gap-3">
+          <h2 className="text-[19px] font-bold tracking-[-0.01em]">
+            Inscriptions
+          </h2>
+          <span className="font-mono text-[13px] text-faint">
+            {inscriptions.length}
+          </span>
+        </div>
+        <p className="max-w-[640px] text-[13.5px] leading-[1.5] text-soft">
+          Personnes inscrites à une session, la plus récente d&apos;abord. Le
+          statut se modifie directement dans le tableau.
+        </p>
+        <InscriptionsTable
+          rows={inscriptions}
+          showSession
+          emptyLabel="Aucune inscription rattachée à une session."
+        />
+      </section>
+
+      {/* Liste d'attente générale (inscriptions sans session rattachée). */}
+      <section className="space-y-4">
+        <div className="flex items-baseline gap-3">
+          <h2 className="text-[19px] font-bold tracking-[-0.01em]">
+            Liste d&apos;attente générale
+          </h2>
+          <span className="font-mono text-[13px] text-faint">
+            {waitlist.length}
+          </span>
+        </div>
+        <p className="max-w-[640px] text-[13.5px] leading-[1.5] text-soft">
+          Inscriptions reçues sans session publiée. Rattachez-les à une session
+          ouverte : la personne est prévenue par e-mail si une place lui est
+          réservée.
+        </p>
+        <InscriptionsTable
+          rows={waitlist}
+          sessionsRattachables={rattachables}
+          emptyLabel="Aucune inscription en liste d'attente générale."
+        />
+      </section>
+    </div>
+  );
+}

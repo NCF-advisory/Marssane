@@ -1,0 +1,2603 @@
+{
+  "date": "2026-09-06",
+  "scope": "Public production crawl and local production build; no Search Console, Bing Webmaster Tools or field Core Web Vitals access.",
+  "production": [
+    {
+      "path": "/",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/",
+      "ttfbSeconds": 0.125624,
+      "bytes": 334880,
+      "title": "Marssane · Formation IA",
+      "description": "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
+      "canonical": [
+        "https://marssane.fr"
+      ],
+      "robots": null,
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Dirigeant de PME, gagnez 2 h par jour+."
+        },
+        {
+          "tag": "h2",
+          "text": "Les dirigeants d'entreprise témoignent."
+        },
+        {
+          "tag": "h2",
+          "text": "L’IA bien utilisée, voilà ce que ça change+."
+        },
+        {
+          "tag": "h2",
+          "text": "Vous construisez, le formateur valide chaque étape."
+        },
+        {
+          "tag": "h3",
+          "text": "Session 1 · Général"
+        },
+        {
+          "tag": "h3",
+          "text": "Entre les deux · à votre rythme"
+        },
+        {
+          "tag": "h3",
+          "text": "Session 2 · votre cas"
+        },
+        {
+          "tag": "h2",
+          "text": "Un formateur qui pratique l'IA au quotidien."
+        },
+        {
+          "tag": "h2",
+          "text": "Les cas auxquels vous répondez pendant la formation."
+        },
+        {
+          "tag": "h3",
+          "text": "Relancé 25 fois par le même client ?"
+        },
+        {
+          "tag": "h3",
+          "text": "Le devis part à 22 h, le client a signé ailleurs ?"
+        },
+        {
+          "tag": "h3",
+          "text": "Un contrat de 42 pages à éplucher avant de signer ?"
+        },
+        {
+          "tag": "h3",
+          "text": "Deux heures de réunion, zéro compte-rendu ?"
+        },
+        {
+          "tag": "h3",
+          "text": "L’impayé traîne depuis 60 jours ?"
+        },
+        {
+          "tag": "h3",
+          "text": "Rendez-vous dans 20 minutes, dossier pas rouvert depuis 3 mois ?"
+        },
+        {
+          "tag": "h2",
+          "text": "Ce qui change après les deux demi-journées."
+        },
+        {
+          "tag": "h3",
+          "text": "Sans la formation"
+        },
+        {
+          "tag": "h3",
+          "text": "Avec Marssane"
+        },
+        {
+          "tag": "h2",
+          "text": "Votre autonomie est notre modèle."
+        },
+        {
+          "tag": "h2",
+          "text": "Commencez par le niveau qui vous correspond+."
+        },
+        {
+          "tag": "h3",
+          "text": "Niveau débutant"
+        },
+        {
+          "tag": "h3",
+          "text": "Niveau confirmé"
+        },
+        {
+          "tag": "h2",
+          "text": "Réservez votre place pour la prochaine session+."
+        },
+        {
+          "tag": "h2",
+          "text": "Les questions qu'on nous pose."
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "#formation",
+        "/",
+        "/confidentialite",
+        "/formations",
+        "/formations#confirme",
+        "/mentions-legales",
+        "/quelle-ia",
+        "https://novances.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 38,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/formations",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/formations",
+      "ttfbSeconds": 0.254634,
+      "bytes": 70522,
+      "title": "Nos formations · Marssane",
+      "description": "Trois niveaux de formation à l'IA (Débutant, Confirmé, Expert) pour progresser à son rythme, des premiers usages jusqu'à l'outil construit sur mesure.",
+      "canonical": [
+        "https://marssane.fr/formations"
+      ],
+      "robots": null,
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr/formations",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Trois niveaux, un même cap : l'IA au travail+."
+        },
+        {
+          "tag": "h2",
+          "text": "Prendre en main l'IA au quotidien"
+        },
+        {
+          "tag": "h2",
+          "text": "Structurer ses usages et gagner du temps"
+        },
+        {
+          "tag": "h2",
+          "text": "Construire son propre outil, de A à Z"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "#confirme",
+        "#debutant",
+        "#expert",
+        "/",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/quelle-ia"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/parcours",
+      "status": 404,
+      "finalUrl": "https://marssane.fr/parcours",
+      "ttfbSeconds": 0.117617,
+      "bytes": 35739,
+      "title": "Page introuvable · Marssane",
+      "description": "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
+      "canonical": [],
+      "robots": "noindex",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr",
+      "ogImage": "https://marssane.fr/opengraph-image.png?opengraph-image.0f90e1j1du1i8.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Cette page n'existe pas."
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/confidentialite",
+        "/mentions-legales"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 1,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/quelle-ia",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/quelle-ia",
+      "ttfbSeconds": 0.297699,
+      "bytes": 82448,
+      "title": "Quelle IA utiliser aujourd'hui ? · Marssane",
+      "description": "Le classement des IA au meilleur compromis intelligence, prix et réactivité pour les dirigeants de PME, mis à jour automatiquement.",
+      "canonical": [
+        "https://marssane.fr/quelle-ia"
+      ],
+      "robots": null,
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr/quelle-ia",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Quelle IA utiliser aujourd'hui ?"
+        },
+        {
+          "tag": "h2",
+          "text": "Claude Opus 5"
+        },
+        {
+          "tag": "h2",
+          "text": "Intelligence × coût."
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "#pourquoi",
+        "/",
+        "/#formation",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/quelle-ia"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/mentions-legales",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/mentions-legales",
+      "ttfbSeconds": 0.228817,
+      "bytes": 41466,
+      "title": "Mentions légales · Marssane",
+      "description": "Consultez les mentions légales de Marssane : éditeur NCF Advisory, hébergeur du site, directeur de publication, contact et règles de propriété intellectuelle.",
+      "canonical": [
+        "https://marssane.fr/mentions-legales"
+      ],
+      "robots": null,
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr/mentions-legales",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Mentions légales"
+        },
+        {
+          "tag": "h2",
+          "text": "Éditeur"
+        },
+        {
+          "tag": "h2",
+          "text": "Directeur de la publication"
+        },
+        {
+          "tag": "h2",
+          "text": "Hébergeur"
+        },
+        {
+          "tag": "h2",
+          "text": "Contact"
+        },
+        {
+          "tag": "h2",
+          "text": "Propriété intellectuelle"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/quelle-ia",
+        "mailto:contact@marssane.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/confidentialite",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/confidentialite",
+      "ttfbSeconds": 0.24477,
+      "bytes": 44353,
+      "title": "Politique de confidentialité · Marssane",
+      "description": "Consultez la politique de confidentialité de Marssane : données collectées, finalités, durée de conservation, sous-traitants et exercice de vos droits.",
+      "canonical": [
+        "https://marssane.fr/confidentialite"
+      ],
+      "robots": null,
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr/confidentialite",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Politique de confidentialité"
+        },
+        {
+          "tag": "h2",
+          "text": "Responsable du traitement"
+        },
+        {
+          "tag": "h2",
+          "text": "Données collectées"
+        },
+        {
+          "tag": "h2",
+          "text": "Finalités et base légale"
+        },
+        {
+          "tag": "h2",
+          "text": "Destinataires et sous-traitants"
+        },
+        {
+          "tag": "h2",
+          "text": "Durée de conservation"
+        },
+        {
+          "tag": "h2",
+          "text": "Vos droits"
+        },
+        {
+          "tag": "h2",
+          "text": "Cookies"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/quelle-ia",
+        "mailto:contact@marssane.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/implementation",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/implementation",
+      "ttfbSeconds": 0.370357,
+      "bytes": 42908,
+      "title": "Implémenter l'IA · Marssane",
+      "description": "Décrivez votre projet d'implémentation de l'IA dans votre entreprise : nous revenons vers vous prochainement.",
+      "canonical": [
+        "https://marssane.fr/implementation"
+      ],
+      "robots": "noindex, nofollow",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr/implementation",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Parlez-nous de votre projet"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/quelle-ia"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/merci",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/merci",
+      "ttfbSeconds": 0.408009,
+      "bytes": 39462,
+      "title": "Merci · Marssane",
+      "description": "Votre pré-inscription à la formation Marssane est bien enregistrée.",
+      "canonical": [
+        "https://marssane.fr/merci"
+      ],
+      "robots": "noindex, nofollow",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr/merci",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Votre pré-inscription est bien enregistrée."
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/quelle-ia"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/styleguide",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/styleguide",
+      "ttfbSeconds": 0.402535,
+      "bytes": 80876,
+      "title": "Styleguide · Marssane",
+      "description": "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
+      "canonical": [],
+      "robots": "noindex, nofollow",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Styleguide"
+        },
+        {
+          "tag": "h2",
+          "text": "Palette & tokens"
+        },
+        {
+          "tag": "h2",
+          "text": "Échelle"
+        },
+        {
+          "tag": "h2",
+          "text": "Actions"
+        },
+        {
+          "tag": "h2",
+          "text": "Signaux"
+        },
+        {
+          "tag": "h2",
+          "text": "Le cadre-repère"
+        },
+        {
+          "tag": "h2",
+          "text": "Le drapeau tonal"
+        },
+        {
+          "tag": "h2",
+          "text": "Grille & repères"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "#",
+        "/confidentialite"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/admin",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/admin",
+      "ttfbSeconds": 1.023922,
+      "bytes": 32803,
+      "title": "Connexion · Administration Marssane",
+      "description": "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
+      "canonical": [],
+      "robots": "noindex, nofollow",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Administration"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/confidentialite"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/formation",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/formation",
+      "ttfbSeconds": 0.908686,
+      "bytes": 33796,
+      "title": "Espace formation · Marssane",
+      "description": "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
+      "canonical": [],
+      "robots": "noindex, nofollow",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Espace formation"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/confidentialite"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/seo-audit-page-inexistante",
+      "status": 404,
+      "finalUrl": "https://marssane.fr/seo-audit-page-inexistante",
+      "ttfbSeconds": 0.082548,
+      "bytes": 35739,
+      "title": "Page introuvable · Marssane",
+      "description": "Marssane forme les dirigeants de PME de moins de 20 salariés à utiliser l’IA sur leurs propres dossiers, pour gagner du temps dès leur retour au travail.",
+      "canonical": [],
+      "robots": "noindex",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr",
+      "ogImage": "https://marssane.fr/opengraph-image.png?opengraph-image.0f90e1j1du1i8.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Cette page n'existe pas."
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/confidentialite",
+        "/mentions-legales"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 1,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/robots.txt",
+      "ttfbSeconds": 0.078098,
+      "bytes": 163,
+      "title": "",
+      "description": null,
+      "canonical": [],
+      "robots": null,
+      "googlebot": null,
+      "ogUrl": null,
+      "ogImage": null,
+      "lang": null,
+      "headings": [],
+      "links": [],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": [],
+      "content": "User-Agent: *\nAllow: /\nDisallow: /admin\nDisallow: /styleguide\nDisallow: /formation$\nDisallow: /formation/\nDisallow: /api\n\nSitemap: https://marssane.fr/sitemap.xml\n"
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "finalUrl": "https://marssane.fr/sitemap.xml",
+      "ttfbSeconds": 0.125721,
+      "bytes": 385,
+      "title": "",
+      "description": null,
+      "canonical": [],
+      "robots": null,
+      "googlebot": null,
+      "ogUrl": null,
+      "ogImage": null,
+      "lang": null,
+      "headings": [],
+      "links": [],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": [],
+      "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n<url>\n<loc>https://marssane.fr/</loc>\n</url>\n<url>\n<loc>https://marssane.fr/quelle-ia</loc>\n</url>\n<url>\n<loc>https://marssane.fr/formations</loc>\n</url>\n<url>\n<loc>https://marssane.fr/mentions-legales</loc>\n</url>\n<url>\n<loc>https://marssane.fr/confidentialite</loc>\n</url>\n</urlset>\n"
+    }
+  ],
+  "local": [
+    {
+      "path": "/",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/",
+      "ttfbSeconds": 0.028021,
+      "bytes": 350751,
+      "title": "Formation IA pour dirigeants de PME à Lyon | Marssane",
+      "description": "Formation IA pour dirigeants de PME près de Lyon : 2 séances de 3 h 30 pour pratiquer Claude sur vos mails, documents et tâches métier, avec Marssane.",
+      "canonical": [
+        "https://marssane.fr"
+      ],
+      "robots": "index, follow",
+      "googlebot": "max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+      "ogUrl": "https://marssane.fr",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Dirigeant de PME, gagnez 2 h par jour+."
+        },
+        {
+          "tag": "h2",
+          "text": "Les dirigeants d'entreprise témoignent."
+        },
+        {
+          "tag": "h2",
+          "text": "L’IA bien utilisée, voilà ce que ça change+."
+        },
+        {
+          "tag": "h2",
+          "text": "Vous construisez, le formateur valide chaque étape."
+        },
+        {
+          "tag": "h3",
+          "text": "Session 1 · Général"
+        },
+        {
+          "tag": "h3",
+          "text": "Entre les deux · à votre rythme"
+        },
+        {
+          "tag": "h3",
+          "text": "Session 2 · votre cas"
+        },
+        {
+          "tag": "h2",
+          "text": "Un formateur qui pratique l'IA au quotidien."
+        },
+        {
+          "tag": "h2",
+          "text": "Les cas auxquels vous répondez pendant la formation."
+        },
+        {
+          "tag": "h3",
+          "text": "Relancé 25 fois par le même client ?"
+        },
+        {
+          "tag": "h3",
+          "text": "Le devis part à 22 h, le client a signé ailleurs ?"
+        },
+        {
+          "tag": "h3",
+          "text": "Un contrat de 42 pages à éplucher avant de signer ?"
+        },
+        {
+          "tag": "h3",
+          "text": "Deux heures de réunion, zéro compte-rendu ?"
+        },
+        {
+          "tag": "h3",
+          "text": "L’impayé traîne depuis 60 jours ?"
+        },
+        {
+          "tag": "h3",
+          "text": "Rendez-vous dans 20 minutes, dossier pas rouvert depuis 3 mois ?"
+        },
+        {
+          "tag": "h2",
+          "text": "Ce qui change après les deux demi-journées."
+        },
+        {
+          "tag": "h3",
+          "text": "Sans la formation"
+        },
+        {
+          "tag": "h3",
+          "text": "Avec Marssane"
+        },
+        {
+          "tag": "h2",
+          "text": "Votre autonomie est notre modèle."
+        },
+        {
+          "tag": "h2",
+          "text": "Commencez par le niveau qui vous correspond+."
+        },
+        {
+          "tag": "h3",
+          "text": "Niveau débutant"
+        },
+        {
+          "tag": "h3",
+          "text": "Niveau confirmé"
+        },
+        {
+          "tag": "h2",
+          "text": "Réservez votre place pour la prochaine session+."
+        },
+        {
+          "tag": "h2",
+          "text": "Les questions qu'on nous pose."
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "#formation",
+        "/",
+        "/#formateur",
+        "/confidentialite",
+        "/formations",
+        "/formations#confirme",
+        "/mentions-legales",
+        "/parcours",
+        "/quelle-ia",
+        "https://novances.fr",
+        "mailto:contact@marssane.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 38,
+      "schemas": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://marssane.fr/#organization",
+              "name": "Marssane",
+              "url": "https://marssane.fr/",
+              "description": "Formation IA pour dirigeants de PME près de Lyon : 2 séances de 3 h 30 pour pratiquer Claude sur vos mails, documents et tâches métier, avec Marssane.",
+              "email": "contact@marssane.fr",
+              "logo": "https://marssane.fr/icon.svg",
+              "founder": {
+                "@id": "https://marssane.fr/#formateur"
+              },
+              "parentOrganization": {
+                "@type": "Organization",
+                "name": "NCF Advisory",
+                "url": "https://marssane.fr/mentions-legales"
+              }
+            },
+            {
+              "@type": "Person",
+              "@id": "https://marssane.fr/#formateur",
+              "name": "Cléante Oullion",
+              "url": "https://marssane.fr/#formateur",
+              "image": "https://marssane.fr/img/formateur/cleante.jpg",
+              "jobTitle": "Fondateur et formateur de Marssane",
+              "worksFor": {
+                "@id": "https://marssane.fr/#organization"
+              }
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://marssane.fr/#website",
+              "name": "Marssane",
+              "url": "https://marssane.fr/",
+              "inLanguage": "fr-FR",
+              "publisher": {
+                "@id": "https://marssane.fr/#organization"
+              }
+            },
+            {
+              "@type": [
+                "WebPage",
+                "FAQPage"
+              ],
+              "@id": "https://marssane.fr/#webpage",
+              "url": "https://marssane.fr/",
+              "name": "Formation IA pour dirigeants de PME à Lyon | Marssane",
+              "description": "Formation IA pour dirigeants de PME près de Lyon : 2 séances de 3 h 30 pour pratiquer Claude sur vos mails, documents et tâches métier, avec Marssane.",
+              "inLanguage": "fr-FR",
+              "isPartOf": {
+                "@id": "https://marssane.fr/#website"
+              },
+              "publisher": {
+                "@id": "https://marssane.fr/#organization"
+              },
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "À qui s’adresse la formation IA Marssane ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "La formation s’adresse aux dirigeants de TPE et PME de moins de 20 salariés et aux entrepreneurs qui souhaitent utiliser l’IA sur leurs dossiers : mails, documents, recherche et tâches répétitives."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Faut-il déjà connaître l’IA pour suivre la formation ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Non. Le niveau débutant reprend les bases : choisir un modèle, rédiger un prompt et comprendre la confidentialité des échanges. Venez avec votre ordinateur et un abonnement Claude Pro actif ; son coût est distinct de celui de la formation."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "J’utilise déjà ChatGPT ou Claude, qu’est-ce que ça m’apporte ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Si vos usages sont occasionnels, le niveau débutant vous aide à construire un skill réutilisable et à connecter votre messagerie. Les niveaux confirmé et expert sont annoncés ; leurs programmes et leurs dates seront précisés ultérieurement."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Combien de temps dure la formation IA ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "La formation comprend 2 séances de 3 h 30 (7 heures au total), en présentiel. Une pratique personnelle accompagnée entre les deux séances permet de transposer les exercices sur vos propres dossiers. Ce travail personnel s’ajoute aux 7 heures en salle."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Où se déroule la formation près de Lyon ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "La formation a lieu au 13 Rue Claude Chappe, 69370 Saint-Didier-au-Mont-d'Or, près de Lyon. Les créneaux proposés se déroulent de 14 h à 17 h 30, en petit groupe, chacun sur son ordinateur."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Que se passe-t-il entre les deux séances ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Vous adaptez le système de tri de mails à votre messagerie et repérez une tâche à automatiser lors de la deuxième séance. Un chat commun avec le groupe et le formateur permet de poser vos questions pendant cette pratique."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Pourquoi travailler sur Claude pendant la formation ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Claude est l’outil utilisé pour les exercices de la formation : travail sur les fichiers, rédaction, skills et connecteurs. La méthode pour préciser une consigne, apporter du contexte et vérifier une réponse reste utile avec d’autres assistants, dont ChatGPT et Mistral. Le choix dépend de vos tâches et des fonctions disponibles."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "La pré-inscription m’engage-t-elle ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Non. La pré-inscription est sans engagement. Vous indiquez vos coordonnées et votre créneau souhaité ; Marssane vous recontacte pour la suite."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/formations",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/formations",
+      "ttfbSeconds": 0.026038,
+      "bytes": 76889,
+      "title": "Formation IA à Lyon pour dirigeants : les niveaux | Marssane",
+      "description": "Débutez avec une formation IA de 7 h près de Lyon : Claude, prompts et automatisation métier. Découvrez aussi les niveaux confirmé et expert à venir.",
+      "canonical": [
+        "https://marssane.fr/formations"
+      ],
+      "robots": "index, follow",
+      "googlebot": "max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+      "ogUrl": "https://marssane.fr/formations",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Trois niveaux, un même cap : l'IA au travail+."
+        },
+        {
+          "tag": "h2",
+          "text": "Prendre en main l'IA au quotidien"
+        },
+        {
+          "tag": "h2",
+          "text": "Structurer ses usages et gagner du temps"
+        },
+        {
+          "tag": "h2",
+          "text": "Construire son propre outil, de A à Z"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "#confirme",
+        "#debutant",
+        "#expert",
+        "/",
+        "/#formateur",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/parcours",
+        "/quelle-ia",
+        "mailto:contact@marssane.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebPage",
+              "@id": "https://marssane.fr/formations#webpage",
+              "url": "https://marssane.fr/formations",
+              "name": "Formation IA à Lyon pour dirigeants : les niveaux | Marssane",
+              "description": "Débutez avec une formation IA de 7 h près de Lyon : Claude, prompts et automatisation métier. Découvrez aussi les niveaux confirmé et expert à venir.",
+              "inLanguage": "fr-FR",
+              "isPartOf": {
+                "@id": "https://marssane.fr/#website"
+              },
+              "publisher": {
+                "@id": "https://marssane.fr/#organization"
+              },
+              "mainEntity": {
+                "@id": "https://marssane.fr/formations#debutant"
+              }
+            },
+            {
+              "@type": "Course",
+              "@id": "https://marssane.fr/formations#debutant",
+              "url": "https://marssane.fr/formations#debutant",
+              "name": "Formation IA débutant : Prendre en main l'IA au quotidien",
+              "description": "Construire son premier système : une boîte mail qui se trie toute seule, et la méthode pour recommencer.",
+              "inLanguage": "fr-FR",
+              "educationalLevel": "Débutant",
+              "timeRequired": "PT7H",
+              "teaches": [
+                "Choisir le bon modèle et formuler le bon prompt",
+                "Confier à Claude des tâches concrètes : fichiers, mails, recherche",
+                "Créer un skill réutilisable et brancher un connecteur",
+                "Optimiser vos processus"
+              ],
+              "provider": {
+                "@type": "Organization",
+                "@id": "https://marssane.fr/#organization",
+                "name": "Marssane",
+                "url": "https://marssane.fr/"
+              }
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Accueil",
+              "item": "https://marssane.fr/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Formations IA",
+              "item": "https://marssane.fr/formations"
+            }
+          ]
+        }
+      ],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/parcours",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/parcours",
+      "ttfbSeconds": 0.025278,
+      "bytes": 77494,
+      "title": "Programme formation IA débutant : 7 h près de Lyon | Marssane",
+      "description": "Le programme IA débutant Marssane : 2 séances de 3 h 30, pratique accompagnée, prompts, tri des mails et construction de votre automatisation métier.",
+      "canonical": [
+        "https://marssane.fr/parcours"
+      ],
+      "robots": "index, follow",
+      "googlebot": "max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+      "ogUrl": "https://marssane.fr/parcours",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Votre formation IA, étape par étape+."
+        },
+        {
+          "tag": "h2",
+          "text": "Vous apprenez les bases et construisez le premier système"
+        },
+        {
+          "tag": "h3",
+          "text": "Accueil & démonstration"
+        },
+        {
+          "tag": "h3",
+          "text": "Les bases"
+        },
+        {
+          "tag": "h3",
+          "text": "L'IA au travail"
+        },
+        {
+          "tag": "h3",
+          "text": "Votre premier skill"
+        },
+        {
+          "tag": "h3",
+          "text": "Les connecteurs"
+        },
+        {
+          "tag": "h3",
+          "text": "Mission & premier quiz"
+        },
+        {
+          "tag": "h2",
+          "text": "Vous transposez sur votre propre boîte mail"
+        },
+        {
+          "tag": "h3",
+          "text": "Le système chez vous"
+        },
+        {
+          "tag": "h3",
+          "text": "Chat commun"
+        },
+        {
+          "tag": "h3",
+          "text": "FAQ groupée"
+        },
+        {
+          "tag": "h3",
+          "text": "Repérer sa tâche"
+        },
+        {
+          "tag": "h2",
+          "text": "Vous construisez votre cas personnel et le démontrez"
+        },
+        {
+          "tag": "h3",
+          "text": "Retour d'expérience"
+        },
+        {
+          "tag": "h3",
+          "text": "Mini-audit de vos tâches"
+        },
+        {
+          "tag": "h3",
+          "text": "Construction de votre cas"
+        },
+        {
+          "tag": "h3",
+          "text": "Démonstrations croisées"
+        },
+        {
+          "tag": "h3",
+          "text": "Quiz final & clôture"
+        },
+        {
+          "tag": "h2",
+          "text": "Vous repartez avec"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/#formateur",
+        "/confidentialite",
+        "/formations",
+        "/formations#debutant",
+        "/mentions-legales",
+        "/parcours",
+        "/quelle-ia",
+        "mailto:contact@marssane.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebPage",
+              "@id": "https://marssane.fr/parcours#webpage",
+              "url": "https://marssane.fr/parcours",
+              "name": "Programme formation IA débutant : 7 h près de Lyon | Marssane",
+              "description": "Le programme IA débutant Marssane : 2 séances de 3 h 30, pratique accompagnée, prompts, tri des mails et construction de votre automatisation métier.",
+              "inLanguage": "fr-FR",
+              "isPartOf": {
+                "@id": "https://marssane.fr/#website"
+              },
+              "publisher": {
+                "@id": "https://marssane.fr/#organization"
+              },
+              "mainEntity": {
+                "@id": "https://marssane.fr/formations#debutant"
+              }
+            },
+            {
+              "@type": "Course",
+              "@id": "https://marssane.fr/formations#debutant",
+              "url": "https://marssane.fr/formations#debutant",
+              "name": "Formation IA débutant : Prendre en main l'IA au quotidien",
+              "description": "Construire son premier système : une boîte mail qui se trie toute seule, et la méthode pour recommencer.",
+              "inLanguage": "fr-FR",
+              "educationalLevel": "Débutant",
+              "timeRequired": "PT7H",
+              "teaches": [
+                "Choisir le bon modèle et formuler le bon prompt",
+                "Confier à Claude des tâches concrètes : fichiers, mails, recherche",
+                "Créer un skill réutilisable et brancher un connecteur",
+                "Optimiser vos processus"
+              ],
+              "provider": {
+                "@type": "Organization",
+                "@id": "https://marssane.fr/#organization",
+                "name": "Marssane",
+                "url": "https://marssane.fr/"
+              }
+            }
+          ]
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Accueil",
+              "item": "https://marssane.fr/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Formations IA",
+              "item": "https://marssane.fr/formations"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Programme débutant",
+              "item": "https://marssane.fr/parcours"
+            }
+          ]
+        }
+      ],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/quelle-ia",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/quelle-ia",
+      "ttfbSeconds": 0.026693,
+      "bytes": 48957,
+      "title": "Quelle IA choisir pour une PME ? Comparateur | Marssane",
+      "description": "Comparez les modèles IA pour votre PME : intelligence, coût API et réactivité. Consultez les sources, la méthode et les conseils de choix de Marssane.",
+      "canonical": [
+        "https://marssane.fr/quelle-ia"
+      ],
+      "robots": "index, follow",
+      "googlebot": "max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+      "ogUrl": "https://marssane.fr/quelle-ia",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Quelle IA utiliser aujourd'hui ?"
+        },
+        {
+          "tag": "h2",
+          "text": "Quelle IA choisir pour une PME ?"
+        },
+        {
+          "tag": "h3",
+          "text": "Pour rédiger et synthétiser"
+        },
+        {
+          "tag": "h3",
+          "text": "Pour automatiser une tâche"
+        },
+        {
+          "tag": "h3",
+          "text": "Pour choisir votre budget"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/#formateur",
+        "/#formation",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/parcours",
+        "/quelle-ia",
+        "mailto:contact@marssane.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "@id": "https://marssane.fr/quelle-ia#webpage",
+          "url": "https://marssane.fr/quelle-ia",
+          "name": "Quelle IA choisir pour une PME ? Comparateur | Marssane",
+          "description": "Comparez les modèles IA pour votre PME : intelligence, coût API et réactivité. Consultez les sources, la méthode et les conseils de choix de Marssane.",
+          "inLanguage": "fr-FR",
+          "isPartOf": {
+            "@id": "https://marssane.fr/#website"
+          },
+          "publisher": {
+            "@id": "https://marssane.fr/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Accueil",
+              "item": "https://marssane.fr/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Comparateur d’IA",
+              "item": "https://marssane.fr/quelle-ia"
+            }
+          ]
+        }
+      ],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/mentions-legales",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/mentions-legales",
+      "ttfbSeconds": 0.003179,
+      "bytes": 42860,
+      "title": "Mentions légales · Marssane",
+      "description": "Consultez les mentions légales de Marssane : éditeur NCF Advisory, hébergeur du site, directeur de publication, contact et règles de propriété intellectuelle.",
+      "canonical": [
+        "https://marssane.fr/mentions-legales"
+      ],
+      "robots": "index, follow",
+      "googlebot": "max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+      "ogUrl": "https://marssane.fr/mentions-legales",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Mentions légales"
+        },
+        {
+          "tag": "h2",
+          "text": "Éditeur"
+        },
+        {
+          "tag": "h2",
+          "text": "Directeur de la publication"
+        },
+        {
+          "tag": "h2",
+          "text": "Hébergeur"
+        },
+        {
+          "tag": "h2",
+          "text": "Contact"
+        },
+        {
+          "tag": "h2",
+          "text": "Propriété intellectuelle"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/#formateur",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/parcours",
+        "/quelle-ia",
+        "mailto:contact@marssane.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/confidentialite",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/confidentialite",
+      "ttfbSeconds": 0.00355,
+      "bytes": 45684,
+      "title": "Politique de confidentialité · Marssane",
+      "description": "Consultez la politique de confidentialité de Marssane : données collectées, finalités, durée de conservation, sous-traitants et exercice de vos droits.",
+      "canonical": [
+        "https://marssane.fr/confidentialite"
+      ],
+      "robots": "index, follow",
+      "googlebot": "max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+      "ogUrl": "https://marssane.fr/confidentialite",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Politique de confidentialité"
+        },
+        {
+          "tag": "h2",
+          "text": "Responsable du traitement"
+        },
+        {
+          "tag": "h2",
+          "text": "Données collectées"
+        },
+        {
+          "tag": "h2",
+          "text": "Finalités et base légale"
+        },
+        {
+          "tag": "h2",
+          "text": "Destinataires et sous-traitants"
+        },
+        {
+          "tag": "h2",
+          "text": "Durée de conservation"
+        },
+        {
+          "tag": "h2",
+          "text": "Vos droits"
+        },
+        {
+          "tag": "h2",
+          "text": "Cookies"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/#formateur",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/parcours",
+        "/quelle-ia",
+        "mailto:contact@marssane.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/implementation",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/implementation",
+      "ttfbSeconds": 0.002204,
+      "bytes": 43769,
+      "title": "Implémenter l'IA · Marssane",
+      "description": "Décrivez votre projet d'implémentation de l'IA dans votre entreprise : nous revenons vers vous prochainement.",
+      "canonical": [
+        "https://marssane.fr/implementation"
+      ],
+      "robots": "noindex, nofollow",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr/implementation",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Parlez-nous de votre projet"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/#formateur",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/parcours",
+        "/quelle-ia",
+        "mailto:contact@marssane.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": [
+        "noindex, nofollow"
+      ]
+    },
+    {
+      "path": "/merci",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/merci",
+      "ttfbSeconds": 0.01027,
+      "bytes": 40542,
+      "title": "Merci · Marssane",
+      "description": "Votre pré-inscription à la formation Marssane est bien enregistrée.",
+      "canonical": [
+        "https://marssane.fr/merci"
+      ],
+      "robots": "noindex, nofollow",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr/merci",
+      "ogImage": "https://marssane.fr/opengraph-image.png",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Votre pré-inscription est bien enregistrée."
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/#formateur",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/parcours",
+        "/quelle-ia",
+        "mailto:contact@marssane.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": [
+        "noindex, nofollow"
+      ]
+    },
+    {
+      "path": "/styleguide",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/styleguide",
+      "ttfbSeconds": 0.010093,
+      "bytes": 79872,
+      "title": "Styleguide · Marssane",
+      "description": "Formation IA pour dirigeants de PME près de Lyon : 2 séances de 3 h 30 pour pratiquer Claude sur vos mails, documents et tâches métier, avec Marssane.",
+      "canonical": [],
+      "robots": "noindex, nofollow",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr",
+      "ogImage": "https://marssane.fr/opengraph-image.png?402ab2b3e345d04f",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Styleguide"
+        },
+        {
+          "tag": "h2",
+          "text": "Palette & tokens"
+        },
+        {
+          "tag": "h2",
+          "text": "Échelle"
+        },
+        {
+          "tag": "h2",
+          "text": "Actions"
+        },
+        {
+          "tag": "h2",
+          "text": "Signaux"
+        },
+        {
+          "tag": "h2",
+          "text": "Le cadre-repère"
+        },
+        {
+          "tag": "h2",
+          "text": "Le drapeau tonal"
+        },
+        {
+          "tag": "h2",
+          "text": "Grille & repères"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "#",
+        "/confidentialite"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": [
+        "noindex, nofollow"
+      ]
+    },
+    {
+      "path": "/admin",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/admin",
+      "ttfbSeconds": 0.009949,
+      "bytes": 32156,
+      "title": "Connexion · Administration Marssane",
+      "description": "Formation IA pour dirigeants de PME près de Lyon : 2 séances de 3 h 30 pour pratiquer Claude sur vos mails, documents et tâches métier, avec Marssane.",
+      "canonical": [],
+      "robots": "noindex, nofollow",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr",
+      "ogImage": "https://marssane.fr/opengraph-image.png?402ab2b3e345d04f",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Administration"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/confidentialite"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": [
+        "noindex, nofollow"
+      ]
+    },
+    {
+      "path": "/formation",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/formation",
+      "ttfbSeconds": 0.008126,
+      "bytes": 33157,
+      "title": "Espace formation · Marssane",
+      "description": "Formation IA pour dirigeants de PME près de Lyon : 2 séances de 3 h 30 pour pratiquer Claude sur vos mails, documents et tâches métier, avec Marssane.",
+      "canonical": [],
+      "robots": "noindex, nofollow",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr",
+      "ogImage": "https://marssane.fr/opengraph-image.png?402ab2b3e345d04f",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Espace formation"
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/confidentialite"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": [
+        "noindex, nofollow"
+      ]
+    },
+    {
+      "path": "/seo-audit-page-inexistante",
+      "status": 404,
+      "finalUrl": "http://127.0.0.1:3020/seo-audit-page-inexistante",
+      "ttfbSeconds": 0.00824,
+      "bytes": 37092,
+      "title": "Page introuvable · Marssane",
+      "description": "Formation IA pour dirigeants de PME près de Lyon : 2 séances de 3 h 30 pour pratiquer Claude sur vos mails, documents et tâches métier, avec Marssane.",
+      "canonical": [],
+      "robots": "noindex",
+      "googlebot": null,
+      "ogUrl": "https://marssane.fr",
+      "ogImage": "https://marssane.fr/opengraph-image.png?402ab2b3e345d04f",
+      "lang": "fr",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Cette page n'existe pas."
+        },
+        {
+          "tag": "h2",
+          "text": "Réserver ma place"
+        }
+      ],
+      "links": [
+        "/",
+        "/#formateur",
+        "/confidentialite",
+        "/formations",
+        "/mentions-legales",
+        "/parcours",
+        "/quelle-ia",
+        "mailto:contact@marssane.fr"
+      ],
+      "imagesMissingAlt": 0,
+      "images": 1,
+      "schemas": [],
+      "xRobotsTag": []
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/robots.txt",
+      "ttfbSeconds": 0.007556,
+      "bytes": 116,
+      "title": "",
+      "description": null,
+      "canonical": [],
+      "robots": null,
+      "googlebot": null,
+      "ogUrl": null,
+      "ogImage": null,
+      "lang": null,
+      "headings": [],
+      "links": [],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": [],
+      "content": "User-Agent: *\nAllow: /\nDisallow: /api/\nDisallow: /formation/espace/stream\n\nSitemap: https://marssane.fr/sitemap.xml\n"
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:3020/sitemap.xml",
+      "ttfbSeconds": 0.006478,
+      "bytes": 438,
+      "title": "",
+      "description": null,
+      "canonical": [],
+      "robots": null,
+      "googlebot": null,
+      "ogUrl": null,
+      "ogImage": null,
+      "lang": null,
+      "headings": [],
+      "links": [],
+      "imagesMissingAlt": 0,
+      "images": 0,
+      "schemas": [],
+      "xRobotsTag": [],
+      "content": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n<url>\n<loc>https://marssane.fr/</loc>\n</url>\n<url>\n<loc>https://marssane.fr/formations</loc>\n</url>\n<url>\n<loc>https://marssane.fr/parcours</loc>\n</url>\n<url>\n<loc>https://marssane.fr/quelle-ia</loc>\n</url>\n<url>\n<loc>https://marssane.fr/mentions-legales</loc>\n</url>\n<url>\n<loc>https://marssane.fr/confidentialite</loc>\n</url>\n</urlset>\n"
+    }
+  ],
+  "browser": {
+    "results": [
+      {
+        "path": "/",
+        "width": 320,
+        "scrollWidth": 320,
+        "height": 13382,
+        "jsonLdBlocks": 1
+      },
+      {
+        "path": "/formations",
+        "width": 320,
+        "scrollWidth": 320,
+        "height": 4538,
+        "jsonLdBlocks": 2
+      },
+      {
+        "path": "/parcours",
+        "width": 320,
+        "scrollWidth": 320,
+        "height": 4013,
+        "jsonLdBlocks": 2
+      },
+      {
+        "path": "/quelle-ia",
+        "width": 320,
+        "scrollWidth": 320,
+        "height": 2263,
+        "jsonLdBlocks": 2
+      },
+      {
+        "path": "/",
+        "width": 390,
+        "scrollWidth": 390,
+        "height": 12400,
+        "jsonLdBlocks": 1
+      },
+      {
+        "path": "/formations",
+        "width": 390,
+        "scrollWidth": 390,
+        "height": 4332,
+        "jsonLdBlocks": 2
+      },
+      {
+        "path": "/parcours",
+        "width": 390,
+        "scrollWidth": 390,
+        "height": 3458,
+        "jsonLdBlocks": 2
+      },
+      {
+        "path": "/quelle-ia",
+        "width": 390,
+        "scrollWidth": 390,
+        "height": 2003,
+        "jsonLdBlocks": 2
+      },
+      {
+        "path": "/",
+        "width": 768,
+        "scrollWidth": 768,
+        "height": 11151,
+        "jsonLdBlocks": 1
+      },
+      {
+        "path": "/formations",
+        "width": 768,
+        "scrollWidth": 768,
+        "height": 4250,
+        "jsonLdBlocks": 2
+      },
+      {
+        "path": "/parcours",
+        "width": 768,
+        "scrollWidth": 768,
+        "height": 2835,
+        "jsonLdBlocks": 2
+      },
+      {
+        "path": "/quelle-ia",
+        "width": 768,
+        "scrollWidth": 768,
+        "height": 1434,
+        "jsonLdBlocks": 2
+      },
+      {
+        "path": "/",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "height": 8491,
+        "jsonLdBlocks": 1
+      },
+      {
+        "path": "/formations",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "height": 4172,
+        "jsonLdBlocks": 2
+      },
+      {
+        "path": "/parcours",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "height": 2752,
+        "jsonLdBlocks": 2
+      },
+      {
+        "path": "/quelle-ia",
+        "width": 1440,
+        "scrollWidth": 1440,
+        "height": 1306,
+        "jsonLdBlocks": 2
+      }
+    ],
+    "errors": [],
+    "interactions": "FAQ, navigation programme, ouverture modale sans soumission, tableau et méthode si données disponibles"
+  },
+  "lighthouse": {
+    "production": {
+      "version": "13.4.1",
+      "fetchTime": "2026-09-06T21:46:21.649Z",
+      "requestedUrl": "https://marssane.fr/",
+      "configSettings": {
+        "output": [
+          "json"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "cli",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo"
+        ],
+        "skipAudits": null
+      },
+      "scores": {
+        "performance": 95,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": {
+          "score": 0.99,
+          "numericValue": 1074.904,
+          "displayValue": "1.1 s"
+        },
+        "largest-contentful-paint": {
+          "score": 0.81,
+          "numericValue": 2877.404,
+          "displayValue": "2.9 s"
+        },
+        "total-blocking-time": {
+          "score": 1,
+          "numericValue": 0,
+          "displayValue": "0 ms"
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "numericValue": 0,
+          "displayValue": "0",
+          "details": {
+            "type": "debugdata",
+            "items": [
+              {
+                "cumulativeLayoutShiftMainFrame": 0,
+                "newEngineResult": {
+                  "cumulativeLayoutShift": 0,
+                  "cumulativeLayoutShiftMainFrame": 0
+                },
+                "newEngineResultDiffered": false
+              }
+            ]
+          }
+        },
+        "total-byte-weight": {
+          "score": 1,
+          "numericValue": 1610369,
+          "displayValue": "Total size was 1,573 KiB",
+          "details": {
+            "type": "table",
+            "headings": [
+              {
+                "key": "url",
+                "valueType": "url",
+                "label": "URL"
+              },
+              {
+                "key": "totalBytes",
+                "valueType": "bytes",
+                "label": "Transfer Size"
+              }
+            ],
+            "items": [
+              {
+                "url": "https://marssane.fr/video/hero-v2.webm",
+                "totalBytes": 1199405
+              },
+              {
+                "url": "https://marssane.fr/video/hero-v2-poster.jpg",
+                "totalBytes": 76476
+              },
+              {
+                "url": "https://marssane.fr/_next/static/chunks/2t12rdn8wgpr4.js",
+                "totalBytes": 72504
+              },
+              {
+                "url": "https://marssane.fr/_next/static/media/spline_sans_mono_latin_variable-s.p.0qo4dci9ry4be.woff2",
+                "totalBytes": 36717
+              },
+              {
+                "url": "https://marssane.fr/",
+                "totalBytes": 32938
+              },
+              {
+                "url": "https://marssane.fr/_next/static/chunks/0rdn2artlpqa4.js",
+                "totalBytes": 30343
+              },
+              {
+                "url": "https://marssane.fr/_next/static/media/plus_jakarta_sans_latin_variable-s.p.1nsast9qgxif8.woff2",
+                "totalBytes": 27660
+              },
+              {
+                "url": "https://marssane.fr/?_rsc=8nTjltbQWvg6NcbE",
+                "totalBytes": 15110
+              },
+              {
+                "url": "https://marssane.fr/_next/static/chunks/35prw-x-ggivy.css",
+                "totalBytes": 14642
+              },
+              {
+                "url": "https://marssane.fr/_next/static/chunks/1wobdghpd17pa.js",
+                "totalBytes": 13551
+              }
+            ],
+            "sortedBy": [
+              "totalBytes"
+            ]
+          }
+        },
+        "lcp-discovery-insight": {
+          "score": 0,
+          "details": {
+            "type": "list",
+            "items": [
+              {
+                "type": "checklist",
+                "items": {
+                  "priorityHinted": {
+                    "label": "fetchpriority=high should be applied",
+                    "value": false
+                  },
+                  "requestDiscoverable": {
+                    "label": "Request is discoverable in initial document",
+                    "value": true
+                  },
+                  "eagerlyLoaded": {
+                    "label": "LCP resources should not use loading=lazy",
+                    "value": true
+                  }
+                }
+              },
+              {
+                "type": "node",
+                "lhId": "page-0-VIDEO",
+                "path": "1,HTML,1,BODY,2,MAIN,0,SECTION,3,DIV,1,DIV,0,VIDEO",
+                "selector": "section.relative > div.grid > div.relative > video.aspect-[16/10]",
+                "boundingRect": {
+                  "top": 337,
+                  "bottom": 564,
+                  "left": 24,
+                  "right": 388,
+                  "width": 364,
+                  "height": 228
+                },
+                "snippet": "<video class=\"aspect-[16/10] w-full rounded-card object-cover shadow-hero\" poster=\"/video/hero-v2-poster.jpg\" autoplay=\"\" muted=\"\" loop=\"\" playsinline=\"\" preload=\"metadata\">",
+                "nodeLabel": "section.relative > div.grid > div.relative > video.aspect-[16/10]"
+              }
+            ]
+          }
+        },
+        "errors-in-console": {
+          "score": 1,
+          "details": {
+            "type": "table",
+            "headings": [
+              {
+                "key": "sourceLocation",
+                "valueType": "source-location",
+                "label": "Source"
+              },
+              {
+                "key": "description",
+                "valueType": "code",
+                "label": "Description"
+              }
+            ],
+            "items": []
+          }
+        }
+      }
+    },
+    "local_first_concurrent_run": {
+      "version": "13.4.1",
+      "fetchTime": "2026-09-06T21:50:38.402Z",
+      "requestedUrl": "http://127.0.0.1:3020/",
+      "configSettings": {
+        "output": [
+          "json"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "cli",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo"
+        ],
+        "skipAudits": null
+      },
+      "scores": {
+        "performance": 91,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": {
+          "score": 1,
+          "numericValue": 1054.145,
+          "displayValue": "1.1 s"
+        },
+        "largest-contentful-paint": {
+          "score": 0.63,
+          "numericValue": 3535.362500000001,
+          "displayValue": "3.5 s"
+        },
+        "total-blocking-time": {
+          "score": 1,
+          "numericValue": 28.92750000000001,
+          "displayValue": "30 ms"
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "numericValue": 0,
+          "displayValue": "0",
+          "details": {
+            "type": "debugdata",
+            "items": [
+              {
+                "cumulativeLayoutShiftMainFrame": 0,
+                "newEngineResult": {
+                  "cumulativeLayoutShift": 0,
+                  "cumulativeLayoutShiftMainFrame": 0
+                },
+                "newEngineResultDiffered": false
+              }
+            ]
+          }
+        },
+        "total-byte-weight": {
+          "score": 1,
+          "numericValue": 1549724,
+          "displayValue": "Total size was 1,513 KiB",
+          "details": {
+            "type": "table",
+            "headings": [
+              {
+                "key": "url",
+                "valueType": "url",
+                "label": "URL"
+              },
+              {
+                "key": "totalBytes",
+                "valueType": "bytes",
+                "label": "Transfer Size"
+              }
+            ],
+            "items": [
+              {
+                "url": "http://127.0.0.1:3020/video/hero-v2.webm",
+                "totalBytes": 1198826
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/static/chunks/3794-d1854fdd0e41dc44.js",
+                "totalBytes": 66047
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/static/chunks/4bd1b696-93bf506b236d6248.js",
+                "totalBytes": 63737
+              },
+              {
+                "url": "http://127.0.0.1:3020/",
+                "totalBytes": 44754
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/static/media/f84eb486fb450bf5-s.p.woff2",
+                "totalBytes": 36776
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/static/media/be6419ffe34f1ed7-s.p.woff2",
+                "totalBytes": 27648
+              },
+              {
+                "url": "http://127.0.0.1:3020/?_rsc=8nTjltbQWvg6NcbE",
+                "totalBytes": 20937
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/static/css/d81bf390f1c42d1b.css",
+                "totalBytes": 15167
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/image?url=%2Fvideo%2Fhero-v2-poster.jpg&w=1920&q=75",
+                "totalBytes": 13952
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/image?url=%2Fimg%2Fpartenaires%2Fnovances.png&w=1080&q=75",
+                "totalBytes": 9766
+              }
+            ],
+            "sortedBy": [
+              "totalBytes"
+            ]
+          }
+        },
+        "lcp-discovery-insight": {
+          "score": 1,
+          "details": {
+            "type": "list",
+            "items": [
+              {
+                "type": "checklist",
+                "items": {
+                  "priorityHinted": {
+                    "label": "fetchpriority=high applied",
+                    "value": true
+                  },
+                  "requestDiscoverable": {
+                    "label": "Request is discoverable in initial document",
+                    "value": true
+                  },
+                  "eagerlyLoaded": {
+                    "label": "LCP resources should not use loading=lazy",
+                    "value": true
+                  }
+                }
+              },
+              {
+                "type": "node",
+                "lhId": "page-0-VIDEO",
+                "path": "1,HTML,1,BODY,3,MAIN,0,SECTION,3,DIV,1,DIV,0,VIDEO",
+                "selector": "section.relative > div.grid > div.relative > video.aspect-[16/10]",
+                "boundingRect": {
+                  "top": 598,
+                  "bottom": 825,
+                  "left": 24,
+                  "right": 388,
+                  "width": 364,
+                  "height": 228
+                },
+                "snippet": "<video class=\"aspect-[16/10] w-full rounded-card object-cover shadow-hero\" poster=\"/_next/image?url=%2Fvideo%2Fhero-v2-poster.jpg&amp;w=1920&amp;q=75\" autoplay=\"\" muted=\"\" loop=\"\" playsinline=\"\" preload=\"metadata\">",
+                "nodeLabel": "section.relative > div.grid > div.relative > video.aspect-[16/10]"
+              }
+            ]
+          }
+        },
+        "errors-in-console": {
+          "score": 0,
+          "details": {
+            "type": "table",
+            "headings": [
+              {
+                "key": "sourceLocation",
+                "valueType": "source-location",
+                "label": "Source"
+              },
+              {
+                "key": "description",
+                "valueType": "code",
+                "label": "Description"
+              }
+            ],
+            "items": [
+              {
+                "source": "network",
+                "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+                "sourceLocation": {
+                  "type": "source-location",
+                  "url": "http://127.0.0.1:3020/_vercel/insights/script.js",
+                  "urlProvider": "network",
+                  "line": 0,
+                  "column": 0
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "local_isolated": {
+      "version": "13.4.1",
+      "fetchTime": "2026-09-06T21:54:28.019Z",
+      "requestedUrl": "http://127.0.0.1:3020/",
+      "configSettings": {
+        "output": [
+          "json"
+        ],
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "pauseAfterFcpMs": 1000,
+        "pauseAfterLoadMs": 1000,
+        "networkQuietThresholdMs": 1000,
+        "cpuQuietThresholdMs": 1000,
+        "formFactor": "mobile",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "throttlingMethod": "simulate",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        },
+        "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+        "auditMode": false,
+        "gatherMode": false,
+        "clearStorageTypes": [
+          "file_systems",
+          "shader_cache",
+          "service_workers",
+          "cache_storage"
+        ],
+        "disableStorageReset": false,
+        "debugNavigation": false,
+        "channel": "cli",
+        "usePassiveGathering": false,
+        "disableFullPageScreenshot": false,
+        "skipAboutBlank": false,
+        "blankPage": "about:blank",
+        "ignoreStatusCode": false,
+        "locale": "en-US",
+        "blockedUrlPatterns": null,
+        "additionalTraceCategories": null,
+        "extraHeaders": null,
+        "precomputedLanternData": null,
+        "onlyAudits": null,
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo"
+        ],
+        "skipAudits": null
+      },
+      "scores": {
+        "performance": 95,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": {
+          "score": 1,
+          "numericValue": 1053.623,
+          "displayValue": "1.1 s"
+        },
+        "largest-contentful-paint": {
+          "score": 0.8,
+          "numericValue": 2913.4345,
+          "displayValue": "2.9 s"
+        },
+        "total-blocking-time": {
+          "score": 1,
+          "numericValue": 4,
+          "displayValue": "0 ms"
+        },
+        "cumulative-layout-shift": {
+          "score": 1,
+          "numericValue": 0,
+          "displayValue": "0",
+          "details": {
+            "type": "debugdata",
+            "items": [
+              {
+                "cumulativeLayoutShiftMainFrame": 0,
+                "newEngineResult": {
+                  "cumulativeLayoutShift": 0,
+                  "cumulativeLayoutShiftMainFrame": 0
+                },
+                "newEngineResultDiffered": false
+              }
+            ]
+          }
+        },
+        "total-byte-weight": {
+          "score": 1,
+          "numericValue": 1549721,
+          "displayValue": "Total size was 1,513 KiB",
+          "details": {
+            "type": "table",
+            "headings": [
+              {
+                "key": "url",
+                "valueType": "url",
+                "label": "URL"
+              },
+              {
+                "key": "totalBytes",
+                "valueType": "bytes",
+                "label": "Transfer Size"
+              }
+            ],
+            "items": [
+              {
+                "url": "http://127.0.0.1:3020/video/hero-v2.webm",
+                "totalBytes": 1198826
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/static/chunks/3794-d1854fdd0e41dc44.js",
+                "totalBytes": 66047
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/static/chunks/4bd1b696-93bf506b236d6248.js",
+                "totalBytes": 63737
+              },
+              {
+                "url": "http://127.0.0.1:3020/",
+                "totalBytes": 44754
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/static/media/f84eb486fb450bf5-s.p.woff2",
+                "totalBytes": 36776
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/static/media/be6419ffe34f1ed7-s.p.woff2",
+                "totalBytes": 27648
+              },
+              {
+                "url": "http://127.0.0.1:3020/?_rsc=8nTjltbQWvg6NcbE",
+                "totalBytes": 20937
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/static/css/d81bf390f1c42d1b.css",
+                "totalBytes": 15167
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/image?url=%2Fvideo%2Fhero-v2-poster.jpg&w=1920&q=75",
+                "totalBytes": 13952
+              },
+              {
+                "url": "http://127.0.0.1:3020/_next/image?url=%2Fimg%2Fpartenaires%2Fnovances.png&w=1080&q=75",
+                "totalBytes": 9765
+              }
+            ],
+            "sortedBy": [
+              "totalBytes"
+            ]
+          }
+        },
+        "lcp-discovery-insight": {
+          "score": 1,
+          "details": {
+            "type": "list",
+            "items": [
+              {
+                "type": "checklist",
+                "items": {
+                  "priorityHinted": {
+                    "label": "fetchpriority=high applied",
+                    "value": true
+                  },
+                  "requestDiscoverable": {
+                    "label": "Request is discoverable in initial document",
+                    "value": true
+                  },
+                  "eagerlyLoaded": {
+                    "label": "LCP resources should not use loading=lazy",
+                    "value": true
+                  }
+                }
+              },
+              {
+                "type": "node",
+                "lhId": "page-0-VIDEO",
+                "path": "1,HTML,1,BODY,3,MAIN,0,SECTION,3,DIV,1,DIV,0,VIDEO",
+                "selector": "section.relative > div.grid > div.relative > video.aspect-[16/10]",
+                "boundingRect": {
+                  "top": 598,
+                  "bottom": 825,
+                  "left": 24,
+                  "right": 388,
+                  "width": 364,
+                  "height": 228
+                },
+                "snippet": "<video class=\"aspect-[16/10] w-full rounded-card object-cover shadow-hero\" poster=\"/_next/image?url=%2Fvideo%2Fhero-v2-poster.jpg&amp;w=1920&amp;q=75\" autoplay=\"\" muted=\"\" loop=\"\" playsinline=\"\" preload=\"metadata\">",
+                "nodeLabel": "section.relative > div.grid > div.relative > video.aspect-[16/10]"
+              }
+            ]
+          }
+        },
+        "errors-in-console": {
+          "score": 0,
+          "details": {
+            "type": "table",
+            "headings": [
+              {
+                "key": "sourceLocation",
+                "valueType": "source-location",
+                "label": "Source"
+              },
+              {
+                "key": "description",
+                "valueType": "code",
+                "label": "Description"
+              }
+            ],
+            "items": [
+              {
+                "source": "network",
+                "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+                "sourceLocation": {
+                  "type": "source-location",
+                  "url": "http://127.0.0.1:3020/_vercel/insights/script.js",
+                  "urlProvider": "network",
+                  "line": 0,
+                  "column": 0
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

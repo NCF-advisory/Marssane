@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { updateSessionAction } from "@/app/admin/dashboard/actions";
 import { SessionStatutBadge } from "@/components/admin/badges";
@@ -110,12 +111,12 @@ export default async function SessionDetailPage({
     console.error("[admin] détail session : base indisponible");
     return (
       <div className="space-y-8">
-        <a
-          href="/admin/dashboard"
+        <Link
+          href="/admin/dashboard/sessions"
           className="font-mono text-[12px] font-medium text-canard transition-colors hover:text-canard-dark"
         >
-          ← Tableau de bord
-        </a>
+          ← Sessions
+        </Link>
         <DbUnavailable />
       </div>
     );
@@ -196,12 +197,12 @@ export default async function SessionDetailPage({
   return (
     <div className="space-y-12">
       <div className="space-y-4">
-        <a
-          href="/admin/dashboard"
+        <Link
+          href="/admin/dashboard/sessions"
           className="font-mono text-[12px] font-medium text-canard transition-colors hover:text-canard-dark"
         >
-          ← Tableau de bord
-        </a>
+          ← Sessions
+        </Link>
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em]">
             {session.date

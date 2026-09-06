@@ -3,6 +3,8 @@ import { GridBackground } from "@/components/ui/GridBackground";
 import { PlusMark } from "@/components/ui/PlusMark";
 import { HeroMedia } from "./HeroMedia";
 import { ReservationTrigger } from "./ReservationTrigger";
+import Link from "next/link";
+import { FORMATION_DUREE } from "@/lib/creneaux";
 
 /**
  * Héro « formation » : colonne texte (H1, CTA) à gauche, vidéo (HeroMedia) à
@@ -24,6 +26,9 @@ export function Hero() {
       <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.9fr_1.2fr]">
         {/* Colonne texte, alignée à gauche */}
         <div className="max-w-[530px]">
+          <p className="mb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-turquoise">
+            Formation IA pour dirigeants · près de Lyon
+          </p>
           <h1 className="text-[30px] font-extrabold leading-[1.04] tracking-[-0.03em] sm:text-[44px] lg:text-[54px]">
             Dirigeant de PME,{" "}
             {/* L'insécabilité ne vaut qu'à partir de sm : à 320-360 px, les
@@ -45,11 +50,19 @@ export function Hero() {
               </span>
             </span>
           </h1>
+          <p className="mt-5 text-[16px] leading-[1.6] text-body-sur-ink">
+            Marssane vous forme à utiliser Claude sur vos mails, documents et
+            tâches métier. {FORMATION_DUREE} en présentiel à
+            Saint-Didier-au-Mont-d&apos;Or, avec une pratique accompagnée entre les deux.
+          </p>
           <div className="mt-[30px] flex flex-wrap items-center gap-4">
             <ReservationTrigger className="inline-flex items-center gap-[13px] rounded-btn bg-canard py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark">
               Réserver ma place
               <Chevron />
             </ReservationTrigger>
+            <Link href="/parcours" className="py-3 text-[14px] underline underline-offset-4 hover:text-turquoise">
+              Voir le programme IA débutant
+            </Link>
           </div>
         </div>
 

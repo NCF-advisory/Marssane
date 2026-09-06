@@ -28,6 +28,10 @@ export const CRENEAUX_OPTIONS = [
 /** Horaire commun aux trois créneaux. */
 export const CRENEAU_HORAIRE = "deux après-midis, de 14 h à 17 h 30";
 
+/** Durée confirmée par le propriétaire le 06/09/2026, hors pratique personnelle. */
+export const FORMATION_DUREE = "2 séances de 3 h 30 (7 heures au total)";
+export const FORMATION_DUREE_ISO = "PT7H";
+
 /** Lieu de la formation (adresse complète). */
 export const CRENEAU_LIEU =
   "13 Rue Claude Chappe, 69370 Saint-Didier-au-Mont-d'Or";

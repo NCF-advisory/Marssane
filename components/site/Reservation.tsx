@@ -1,6 +1,7 @@
 import { Chevron } from "@/components/ui/Chevron";
 import { PlusMark } from "@/components/ui/PlusMark";
 import { ReservationTrigger } from "./ReservationTrigger";
+import { FORMATION_DUREE } from "@/lib/creneaux";
 
 /**
  * Section « Réservation » (ancre #contact) : carte « CTA final » de la maquette
@@ -58,8 +59,8 @@ export function Reservation() {
           </span>
         </h2>
         <p className="mx-auto mt-[18px] max-w-[460px] text-[16.5px] leading-[1.55] text-body-sur-ink">
-          Deux demi-journées à caler selon votre agenda : vous repartez plus
-          productif, avec des heures gagnées chaque semaine.
+          {FORMATION_DUREE} et une pratique accompagnée pour construire
+          vos premiers automatismes sur vos dossiers.
         </p>
 
         <ReservationTrigger className="mt-7 inline-flex items-center gap-[13px] rounded-btn bg-canard py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark">

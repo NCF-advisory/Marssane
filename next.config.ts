@@ -7,11 +7,18 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: fileURLToPath(new URL(".", import.meta.url)),
   },
-  experimental: {
-    // Active le composant <ViewTransition> de React (cf. app/layout.tsx) :
-    // les changements de route passent par document.startViewTransition, ce qui
-    // permet le fondu croisé clair ↔ encre entre les pages.
-    viewTransition: true,
+  async headers() {
+    return [
+      "/admin/:path*",
+      "/formation/:path*",
+      "/api/:path*",
+      "/styleguide",
+      "/merci",
+      "/implementation",
+    ].map((source) => ({
+      source,
+      headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+    }));
   },
 };
 

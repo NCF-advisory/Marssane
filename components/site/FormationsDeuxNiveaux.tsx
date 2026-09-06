@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FORMATION_DUREE } from "@/lib/creneaux";
 import { GridBackground } from "@/components/ui/GridBackground";
 import { PlusMark } from "@/components/ui/PlusMark";
 import { ReservationTrigger } from "./ReservationTrigger";
@@ -47,7 +48,7 @@ const NIVEAUX_LANDING: [Niveau, Niveau] = [
       "Choisir le bon modèle et formuler le bon prompt",
       "Confier des tâches concrètes : fichiers, mails, recherche",
       "Créer un skill réutilisable et brancher un connecteur",
-      "Deux demi-journées, selon votre agenda",
+      FORMATION_DUREE,
       "Présentiel, dix places, chacun sur son ordinateur",
     ],
   },

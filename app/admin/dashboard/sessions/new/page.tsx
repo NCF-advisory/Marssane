@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { createSessionAction } from "@/app/admin/dashboard/actions";
 import { SessionForm } from "@/components/admin/SessionForm";
 
@@ -11,12 +12,12 @@ export default function NewSessionPage() {
   return (
     <div className="max-w-[560px] space-y-8">
       <div className="space-y-3">
-        <a
-          href="/admin/dashboard"
+        <Link
+          href="/admin/dashboard/sessions"
           className="font-mono text-[12px] font-medium text-canard transition-colors hover:text-canard-dark"
         >
-          ← Tableau de bord
-        </a>
+          ← Sessions
+        </Link>
         <h1 className="text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em]">
           Nouvelle session
         </h1>

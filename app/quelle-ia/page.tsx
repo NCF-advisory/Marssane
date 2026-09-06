@@ -7,6 +7,11 @@ import { HeroRecommandation } from "@/components/site/HeroRecommandation";
 import { GraphiqueEfficacite } from "@/components/quelle-ia/GraphiqueEfficacite";
 import { MethodoSources } from "@/components/quelle-ia/MethodoSources";
 import { createPublicMetadata } from "@/lib/seo";
+import { Breadcrumbs } from "@/components/site/Breadcrumbs";
+import { JsonLd } from "@/components/site/JsonLd";
+import { webPage } from "@/lib/structured-data";
+import { GuideChoix } from "@/components/quelle-ia/GuideChoix";
+import { TableauComparatif } from "@/components/quelle-ia/TableauComparatif";
 
 export const revalidate = 3600;
 
@@ -22,10 +27,11 @@ const fmtDate = (iso: string | null) =>
       )
     : "—";
 
+const title = "Quelle IA choisir pour une PME ? Comparateur | Marssane";
+const description = "Comparez les modèles IA pour votre PME : intelligence, coût API et réactivité. Consultez les sources, la méthode et les conseils de choix de Marssane.";
 export const metadata = createPublicMetadata({
-  title: "Quelle IA utiliser aujourd'hui ? · Marssane",
-  description:
-    "Le classement des IA au meilleur compromis intelligence, prix et réactivité pour les dirigeants de PME, mis à jour automatiquement.",
+  title,
+  description,
   path: "/quelle-ia",
 });
 
@@ -35,11 +41,13 @@ export default async function Page() {
   if (c.entries.length === 0) {
     return (
       <>
+        <JsonLd data={{ "@context": "https://schema.org", ...webPage({ path: "/quelle-ia", name: title, description }) }} />
         {/* `flex-1` fait couvrir au <main> toute la hauteur restante du body
             (min-h-full flex flex-col), pour que le pied de page reste en bas
             quand le contenu est court. Le fond encre est porté par le body. */}
         <main className="flex-1">
           <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[84px] sm:px-10">
+            <Breadcrumbs items={[{ name: "Comparateur d’IA", path: "/quelle-ia" }]} />
             <div className="max-w-[640px]">
               <Kicker className="text-faint-sur-ink!">
                 Le comparateur · intelligence et prix
@@ -57,6 +65,8 @@ export default async function Page() {
               </p>
             </div>
           </section>
+          <GuideChoix />
+          <PontFormation />
         </main>
         <Footer />
       </>
@@ -73,6 +83,7 @@ export default async function Page() {
 
   return (
     <>
+      <JsonLd data={{ "@context": "https://schema.org", ...webPage({ path: "/quelle-ia", name: title, description }) }} />
       {/* `flex-1` : cf. la branche « classement vide » ci-dessus.
           `snap-page-quelle-ia` active le scroll-snap racine, ciblé sur cette
           page via `html:has(...)` dans globals.css (aucune fuite ailleurs) :
@@ -94,7 +105,9 @@ export default async function Page() {
           date={fmtDate(c.miseAJour)}
           editeur={top.editeur}
           pays={top.pays}
-          baseline="Le meilleur compromis intelligence, prix et réactivité du moment."
+          baseline={top.rang === 1
+            ? "Premier du classement calculé selon notre pondération intelligence, coût et réactivité."
+            : "Notre sélection éditoriale pour le travail sur les documents. Elle diffère du premier rang calculé."}
           ancre="#pourquoi"
         />
         {/* Cible de l'amorce de scroll du hero, et cran de snap du graphe.
@@ -114,7 +127,12 @@ export default async function Page() {
         <div id="pourquoi" className="snap-start snap-always scroll-mt-6">
           <GraphiqueEfficacite entries={c.entries} />
         </div>
+        <div className="mx-auto max-w-[1180px] px-6 pt-8 sm:px-10">
+          <Breadcrumbs items={[{ name: "Comparateur d’IA", path: "/quelle-ia" }]} />
+        </div>
+        <TableauComparatif entries={c.entries} />
         <MethodoSources classement={c} />
+        <GuideChoix />
         <PontFormation />
       </main>
       {/* Dernier cran : sans point d'arrêt en bas de page, le snap mandatory

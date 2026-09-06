@@ -53,7 +53,7 @@ app/                     Routes (App Router)
   mentions-legales/      Mentions légales
   confidentialite/       Politique de confidentialité
   styleguide/            Recette interne (design system) — hors sitemap
-  sitemap.ts             Plan du site (4 routes publiques)
+  sitemap.ts             Plan du site (6 routes publiques)
   icon.svg               Favicon (M sur tuile canard)
   globals.css            Tokens de design + toile (quadrillage, washes)
   fonts/                 Polices auto-hébergées (woff2)
@@ -78,9 +78,19 @@ docs/references/         Maquette et charte graphique (sources de vérité)
 - **Polices auto-hébergées** : Plus Jakarta Sans et Spline Sans Mono sont
   chargées localement via `next/font/local` depuis `app/fonts/` — aucun appel à
   un CDN de polices.
-- **Preview `noindex`** : le layout racine pose `robots: { index: false }` tant
-  que le site est en préproduction ; à retirer à la mise en ligne définitive.
+- **Indexation** : les pages publiques sont indexables. Les espaces privés,
+  la page de confirmation, le styleguide et l’offre d’implémentation masquée
+  portent `noindex` (métadonnées et en-têtes HTTP). Les previews doivent aussi
+  rester protégées dans la configuration de l’hébergeur.
 - **Portabilité** : le site fonctionne avec `next start` de façon autonome et ne
   dépend d'aucune API propre à Vercel — il peut être hébergé sur n'importe quel
-  environnement Node. L'URL de base du sitemap est pilotée par la variable
-  `NEXT_PUBLIC_SITE_URL`.
+  environnement Node. L’origine publique du sitemap, des canoniques et du JSON-LD est
+  centralisée dans `lib/seo.ts` (`https://marssane.fr`).
+
+- **Contenu SEO/GEO** : `lib/formation-faq.ts` alimente à la fois la FAQ visible
+  et ses données structurées. La durée confirmée (2 × 3 h 30) est définie dans
+  `lib/creneaux.ts`. Le schéma `Course` décrit uniquement le niveau débutant,
+  dont le programme est finalisé. Ne pas ajouter de notes, de certifications
+  d’organisme ou d’offres qui ne figurent pas dans le contenu visible.
+- **Audit** : voir `docs/audit-seo-geo-2026-09-06.md` pour les constats, les
+  vérifications et le suivi après publication.

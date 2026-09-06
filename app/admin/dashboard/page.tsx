@@ -1,46 +1,58 @@
 import type { Metadata } from "next";
-import { archiveSessionAction } from "@/app/admin/dashboard/actions";
-import { SessionStatutBadge } from "@/components/admin/badges";
-import { ConfirmButton } from "@/components/admin/ConfirmButton";
-import { ContactsList } from "@/components/admin/ContactsList";
+import Link from "next/link";
+import { FactureStatutBadge, RelanceBadge } from "@/components/admin/crm-badges";
 import { DbUnavailable } from "@/components/admin/DbUnavailable";
-import { InscriptionsTable } from "@/components/admin/InscriptionsTable";
-import { Button } from "@/components/ui/Button";
 import {
   getWaitlistGenerale,
-  listContacts,
-  listInscriptionsAvecSession,
-  listSessionsRattachables,
   listSessionsWithCounts,
-  type ContactRow,
-  type InscriptionAvecSessionRow,
-  type InscriptionRow,
-  type SessionRattachable,
   type SessionRow,
 } from "@/lib/admin-queries";
 import {
-  formatDateLongue,
-  formatDateLongueOuADefinir,
-} from "@/lib/session-display";
+  countRelancesDues,
+  getArgentStats,
+  getPipelineStats,
+  listFacturesASuivre,
+  listRelancesAFaire,
+  type ArgentStats,
+  type FactureSuivi,
+  type PipelineEtape,
+  type RelanceRow,
+} from "@/lib/crm";
+import {
+  formatDateRelance,
+  formatEuros,
+  libelleRelance,
+  moisEnCours,
+} from "@/lib/crm-display";
+import { formatDateLongue } from "@/lib/session-display";
 
 export const metadata: Metadata = {
   title: "Tableau de bord · Administration Marssane",
 };
 
-/** Horaires « 09:30 – 17:00 » (ou « 09:30 », ou « — »). */
-function horaires(row: SessionRow): string {
-  if (row.heure_debut && row.heure_fin) {
-    return `${row.heure_debut} – ${row.heure_fin}`;
-  }
-  return row.heure_debut ?? "—";
-}
+/**
+ * Tableau de bord de pilotage (ERP · Lot 1, cadrage §4.A, maquette validée le
+ * 23/08/2026) : trois blocs — pipeline commercial, sessions & remplissage,
+ * argent — puis deux listes d'action (relances à faire, factures à suivre).
+ * Pas de bloc conformité (décision du 23/08/2026).
+ *
+ * Chaque famille de données est chargée avec son propre repli : un incident
+ * sur les tables CRM (migration 010 absente) ne masque pas les sessions.
+ */
+
+const EYEBROW =
+  "font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-quiet";
+const CARD =
+  "rounded-card border border-hairline bg-surface shadow-card";
+const SEEMORE =
+  "font-mono text-[12px] font-medium text-canard transition-colors hover:text-canard-dark";
 
 /** Clé de tri : une session sans date compte comme la plus lointaine à venir. */
 function cleDate(session: SessionRow): string {
   return session.date ?? "9999-12-31";
 }
 
-/** Prochaine session publiée / complète à venir (pour le compteur en tête). */
+/** Prochaine session publiée / complète à venir. */
 function prochaineSession(sessions: SessionRow[]): SessionRow | null {
   const today = new Date().toISOString().slice(0, 10);
   return (
@@ -54,249 +66,313 @@ function prochaineSession(sessions: SessionRow[]): SessionRow | null {
   );
 }
 
-const ACTION_LINK =
-  "font-mono text-[12px] font-medium text-canard transition-colors hover:text-canard-dark";
+/** Répartition « Contact 3 · Échange 2 · Proposition 2 » (étapes actives). */
+function repartition(stats: PipelineEtape[]): string {
+  const index: Record<string, number> = {};
+  for (const s of stats) index[s.etape] = s.nb;
+  return [
+    `Contact ${index.contact ?? 0}`,
+    `Échange ${index.echange ?? 0}`,
+    `Proposition ${index.proposition ?? 0}`,
+  ].join(" · ");
+}
 
 export default async function AdminDashboardPage() {
-  let sessions: SessionRow[];
-  let waitlist: InscriptionRow[];
-  let inscriptions: InscriptionAvecSessionRow[];
-  let rattachables: SessionRattachable[];
+  // Bloc sessions (tables historiques).
+  let prochaine: SessionRow | null = null;
+  let attenteGenerale = 0;
+  let sessionsOk = true;
   try {
-    [sessions, waitlist, inscriptions, rattachables] = await Promise.all([
+    const [sessions, waitlist] = await Promise.all([
       listSessionsWithCounts(),
       getWaitlistGenerale(),
-      listInscriptionsAvecSession(),
-      listSessionsRattachables(),
+    ]);
+    prochaine = prochaineSession(sessions);
+    attenteGenerale = waitlist.length;
+  } catch {
+    console.error("[admin] tableau de bord : sessions indisponibles");
+    sessionsOk = false;
+  }
+
+  // Bloc pipeline + relances (tables CRM, migration 010).
+  let pipeline: PipelineEtape[] | null = null;
+  let relancesDues = 0;
+  let relances: RelanceRow[] = [];
+  try {
+    [pipeline, relancesDues, relances] = await Promise.all([
+      getPipelineStats(),
+      countRelancesDues(),
+      listRelancesAFaire(4),
     ]);
   } catch {
-    console.error("[admin] tableau de bord : base indisponible");
-    return (
-      <div className="space-y-8">
-        <h1 className="text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em]">
-          Tableau de bord
-        </h1>
-        <DbUnavailable />
-      </div>
-    );
+    console.error("[admin] tableau de bord : tables CRM indisponibles");
+    pipeline = null;
   }
 
-  const prochaine = prochaineSession(sessions);
-
-  // Demandes de contact : chargées à part, avec repli propre. Ainsi la vue
-  // contact peut dégrader indépendamment (ex. migration 003 pas encore
-  // appliquée) sans masquer les sessions déjà chargées ci-dessus.
-  let contacts: ContactRow[] | null;
+  // Bloc argent (tables facturation, migration 010 — module au Lot 2).
+  let argent: ArgentStats | null = null;
+  let factures: FactureSuivi[] = [];
   try {
-    contacts = await listContacts();
+    [argent, factures] = await Promise.all([
+      getArgentStats(),
+      listFacturesASuivre(4),
+    ]);
   } catch {
-    console.error("[admin] demandes de contact : base indisponible");
-    contacts = null;
+    console.error("[admin] tableau de bord : tables facturation indisponibles");
+    argent = null;
   }
+
+  const enCours = pipeline
+    ? pipeline
+        .filter((s) => ["contact", "echange", "proposition"].includes(s.etape))
+        .reduce((somme, s) => somme + s.nb, 0)
+    : 0;
+
+  const toutIndisponible = !sessionsOk && pipeline === null && argent === null;
 
   return (
     <div className="space-y-10">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <h1 className="text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em]">
-          Tableau de bord
-        </h1>
-        <Button href="/admin/dashboard/sessions/new" chevron>
-          Créer une session
-        </Button>
-      </div>
+      <h1 className="text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em]">
+        Tableau de bord
+      </h1>
 
-      {/* Compteur de la prochaine session publiée (bandeau chiffres). */}
-      <div className="rounded-card border border-hairline bg-surface px-6 py-5 shadow-card">
-        {prochaine ? (
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <span className="font-mono text-[34px] font-semibold leading-none text-ink-ecume">
-              {prochaine.confirme}
-            </span>
-            <span className="font-mono text-[20px] leading-none text-quiet">
-              / {prochaine.capacite}
-            </span>
-            <span className="text-[14px] text-body">
-              inscrits confirmés · session{" "}
-              <span className="font-semibold text-ink">
-                {prochaine.date
-                  ? `du ${formatDateLongue(prochaine.date)}`
-                  : "à définir"}
-              </span>
-            </span>
-          </div>
-        ) : (
-          <p className="text-[14px] text-soft">
-            Aucune session publiée à venir. Créez ou publiez une session pour
-            qu&apos;elle alimente la page d&apos;accueil.
-          </p>
-        )}
-      </div>
+      {toutIndisponible ? (
+        <DbUnavailable />
+      ) : (
+        <>
+          {/* Les 3 blocs de pilotage. */}
+          <section className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {/* Pipeline commercial */}
+            <div className={`${CARD} flex flex-col gap-3.5 px-6 py-5`}>
+              <span className={EYEBROW}>Pipeline commercial</span>
+              {pipeline === null ? (
+                <p className="text-[13.5px] leading-[1.5] text-soft">
+                  Tables CRM indisponibles — appliquez la migration :{" "}
+                  <code>npm run db:migrate</code>.
+                </p>
+              ) : (
+                <>
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="font-mono text-[34px] font-semibold leading-none">
+                      {enCours}
+                    </span>
+                    <span className="text-[14px] text-body">
+                      opportunité{enCours > 1 ? "s" : ""} en cours
+                    </span>
+                  </div>
+                  <div className="h-px bg-hairline" />
+                  <div className="flex flex-col gap-2">
+                    <Link
+                      href="/admin/dashboard/crm"
+                      className="text-[13.5px] font-semibold text-canard transition-colors hover:text-canard-dark"
+                    >
+                      {relancesDues > 0
+                        ? `${relancesDues} relance${relancesDues > 1 ? "s" : ""} à faire aujourd'hui`
+                        : "Aucune relance due aujourd'hui"}
+                    </Link>
+                    <span className="font-mono text-[12px] text-soft">
+                      {repartition(pipeline)}
+                    </span>
+                  </div>
+                </>
+              )}
+            </div>
 
-      {/* Liste des sessions. */}
-      <section className="space-y-4">
-        <h2 className="text-[19px] font-bold tracking-[-0.01em]">Sessions</h2>
-        {sessions.length === 0 ? (
-          <p className="rounded-card border border-hairline bg-surface px-5 py-6 text-[14px] text-soft">
-            Aucune session pour le moment.
-          </p>
-        ) : (
-          <div className="overflow-x-auto rounded-card border border-hairline bg-surface shadow-card">
-            <table className="w-full min-w-[820px] border-collapse">
-              <thead>
-                <tr className="border-b border-hairline">
-                  <th className="whitespace-nowrap px-4 py-2.5 text-left font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
-                    Date
-                  </th>
-                  <th className="whitespace-nowrap px-4 py-2.5 text-left font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
-                    Horaires
-                  </th>
-                  <th className="whitespace-nowrap px-4 py-2.5 text-left font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
-                    Lieu
-                  </th>
-                  <th className="whitespace-nowrap px-4 py-2.5 text-left font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
-                    Statut
-                  </th>
-                  <th className="whitespace-nowrap px-4 py-2.5 text-left font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
-                    Inscrits
-                  </th>
-                  <th className="whitespace-nowrap px-4 py-2.5 text-right font-mono text-[10.5px] font-medium uppercase tracking-[0.08em] text-soft">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {sessions.map((s) => (
-                  <tr
-                    key={s.id}
-                    className="border-b border-hairline last:border-0 align-middle hover:bg-toile/60"
+            {/* Sessions & remplissage */}
+            <div className={`${CARD} flex flex-col gap-3.5 px-6 py-5`}>
+              <span className={EYEBROW}>Sessions &amp; remplissage</span>
+              {!sessionsOk ? (
+                <p className="text-[13.5px] leading-[1.5] text-soft">
+                  Base indisponible.
+                </p>
+              ) : prochaine ? (
+                <>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-mono text-[34px] font-semibold leading-none text-ink-ecume">
+                      {prochaine.confirme}
+                    </span>
+                    <span className="font-mono text-[20px] leading-none text-quiet">
+                      / {prochaine.capacite}
+                    </span>
+                    <span className="text-[14px] text-body">
+                      inscrits confirmés
+                    </span>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-[3px] bg-bar-track">
+                    <div
+                      className="h-1.5 rounded-[3px] bg-canard"
+                      style={{
+                        width: `${Math.min(100, Math.round((prochaine.confirme / Math.max(1, prochaine.capacite)) * 100))}%`,
+                      }}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <Link
+                      href="/admin/dashboard/sessions"
+                      className="text-[13.5px] text-body transition-colors hover:text-ink"
+                    >
+                      Session{" "}
+                      <span className="font-semibold text-ink">
+                        {prochaine.date
+                          ? `du ${formatDateLongue(prochaine.date)}`
+                          : "à définir"}
+                      </span>
+                      {prochaine.lieu ? ` · ${prochaine.lieu}` : ""}
+                    </Link>
+                    <span className="font-mono text-[12px] text-soft">
+                      {attenteGenerale} en liste d&apos;attente générale
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <p className="text-[13.5px] leading-[1.5] text-soft">
+                  Aucune session publiée à venir.{" "}
+                  <Link href="/admin/dashboard/sessions" className={SEEMORE}>
+                    Créer une session →
+                  </Link>
+                </p>
+              )}
+            </div>
+
+            {/* Argent */}
+            <div className={`${CARD} flex flex-col gap-3.5 px-6 py-5`}>
+              <span className={EYEBROW}>Argent</span>
+              {argent === null ? (
+                <p className="text-[13.5px] leading-[1.5] text-soft">
+                  Tables facturation indisponibles — appliquez la migration :{" "}
+                  <code>npm run db:migrate</code>.
+                </p>
+              ) : (
+                <>
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="font-mono text-[34px] font-semibold leading-none">
+                      {formatEuros(argent.encaisse_mois)}
+                    </span>
+                    <span className="text-[14px] text-body">
+                      encaissés en {moisEnCours()}
+                    </span>
+                  </div>
+                  <div className="h-px bg-hairline" />
+                  <div className="flex flex-col gap-2">
+                    <span className="text-[13.5px] text-body">
+                      En attente{" "}
+                      <span className="font-mono font-semibold">
+                        {formatEuros(argent.attente_montant)}
+                      </span>{" "}
+                      · {argent.attente_nb} facture
+                      {argent.attente_nb > 1 ? "s" : ""}
+                    </span>
+                    <span
+                      className={`text-[13.5px] ${argent.retard_nb > 0 ? "text-ink-clay" : "text-body"}`}
+                    >
+                      En retard{" "}
+                      <span className="font-mono font-semibold">
+                        {formatEuros(argent.retard_montant)}
+                      </span>{" "}
+                      · {argent.retard_nb} facture
+                      {argent.retard_nb > 1 ? "s" : ""}
+                    </span>
+                  </div>
+                </>
+              )}
+            </div>
+          </section>
+
+          {/* Listes d'action. */}
+          <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            {/* Relances à faire */}
+            <div className={`${CARD} flex flex-col px-6 py-5`}>
+              <div className="flex items-baseline justify-between pb-2.5">
+                <h2 className="text-[16px] font-bold tracking-[-0.01em]">
+                  Relances à faire
+                </h2>
+                <Link href="/admin/dashboard/crm" className={SEEMORE}>
+                  Tout le pipeline →
+                </Link>
+              </div>
+              {pipeline === null ? (
+                <p className="py-3 text-[13.5px] text-soft">
+                  Tables CRM indisponibles.
+                </p>
+              ) : relances.length === 0 ? (
+                <p className="py-3 text-[13.5px] text-soft">
+                  Aucune relance planifiée. Consignez vos échanges dans le CRM
+                  pour ne rien laisser filer.
+                </p>
+              ) : (
+                relances.map((r) => (
+                  <Link
+                    key={r.activite_id}
+                    href={`/admin/dashboard/crm/personnes/${r.personne_id}`}
+                    className="flex items-center justify-between gap-4 border-b border-hairline py-3 last:border-0 hover:bg-toile/40"
                   >
-                    <td className="whitespace-nowrap px-4 py-3 text-[14px] font-semibold text-ink">
-                      {formatDateLongueOuADefinir(s.date)}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-3 font-mono text-[13px] text-body">
-                      {horaires(s)}
-                    </td>
-                    <td className="px-4 py-3 text-[14px] text-body">
-                      {s.lieu ?? "—"}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-3">
-                      <SessionStatutBadge statut={s.statut} />
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-3 font-mono text-[13px] text-body">
-                      {s.confirme} / {s.capacite}
-                      {s.attente > 0 && (
-                        <span className="ml-2 text-faint">
-                          +{s.attente} att.
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex flex-wrap items-center justify-end gap-x-4 gap-y-1.5">
-                        <a
-                          href={`/admin/dashboard/sessions/${s.id}`}
-                          className={ACTION_LINK}
-                        >
-                          Modifier
-                        </a>
-                        <a
-                          href={`/admin/dashboard/sessions/${s.id}#inscrits`}
-                          className={ACTION_LINK}
-                        >
-                          Inscrits
-                        </a>
-                        <a
-                          href={`/admin/dashboard/sessions/${s.id}/export`}
-                          className={ACTION_LINK}
-                        >
-                          Export CSV
-                        </a>
-                        {s.statut !== "terminee" && (
-                          <form action={archiveSessionAction} className="inline">
-                            <input type="hidden" name="id" value={s.id} />
-                            <ConfirmButton
-                              message={`Archiver la session ${s.date ? `du ${formatDateLongue(s.date)}` : "à définir"} ? Elle passera au statut « Terminée » et ne sera plus proposée à l'inscription.`}
-                              className="font-mono text-[12px] font-medium text-soft transition-colors hover:text-ink"
-                            >
-                              Archiver
-                            </ConfirmButton>
-                          </form>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </section>
+                    <span className="flex min-w-0 flex-col gap-0.5">
+                      <span className="truncate text-[14px] font-semibold text-ink">
+                        {r.prenom} {r.nom}
+                        {r.organisation_nom ? ` · ${r.organisation_nom}` : ""}
+                      </span>
+                      <span className="truncate text-[13px] text-soft">
+                        {r.contenu ?? formatDateRelance(r.relance_at)}
+                      </span>
+                    </span>
+                    <RelanceBadge
+                      libelle={libelleRelance(r.relance_at)}
+                      enRetard={r.en_retard}
+                    />
+                  </Link>
+                ))
+              )}
+            </div>
 
-      {/* Inscriptions rattachées à une session, toutes sessions confondues. */}
-      <section className="space-y-4">
-        <div className="flex items-baseline gap-3">
-          <h2 className="text-[19px] font-bold tracking-[-0.01em]">
-            Inscriptions
-          </h2>
-          <span className="font-mono text-[13px] text-faint">
-            {inscriptions.length}
-          </span>
-        </div>
-        <p className="max-w-[640px] text-[13.5px] leading-[1.5] text-soft">
-          Personnes inscrites à une session, la plus récente d&apos;abord. Le
-          statut se modifie directement dans le tableau.
-        </p>
-        <InscriptionsTable
-          rows={inscriptions}
-          showSession
-          emptyLabel="Aucune inscription rattachée à une session."
-        />
-      </section>
-
-      {/* Liste d'attente générale (inscriptions sans session rattachée). */}
-      <section className="space-y-4">
-        <div className="flex items-baseline gap-3">
-          <h2 className="text-[19px] font-bold tracking-[-0.01em]">
-            Liste d&apos;attente générale
-          </h2>
-          <span className="font-mono text-[13px] text-faint">
-            {waitlist.length}
-          </span>
-        </div>
-        <p className="max-w-[640px] text-[13.5px] leading-[1.5] text-soft">
-          Inscriptions reçues sans session publiée. Rattachez-les à une session
-          ouverte : la personne est prévenue par e-mail si une place lui est
-          réservée.
-        </p>
-        <InscriptionsTable
-          rows={waitlist}
-          sessionsRattachables={rattachables}
-          emptyLabel="Aucune inscription en liste d'attente générale."
-        />
-      </section>
-
-      {/* Vue contact : demandes reçues via le formulaire implémentation (F4). */}
-      <section className="space-y-4 border-t border-hairline pt-8">
-        <div className="flex items-baseline gap-3">
-          <h2 className="text-[19px] font-bold tracking-[-0.01em]">
-            Demandes de contact
-          </h2>
-          {contacts && (
-            <span className="font-mono text-[13px] text-faint">
-              {contacts.length}
-            </span>
-          )}
-        </div>
-        <p className="max-w-[640px] text-[13.5px] leading-[1.5] text-soft">
-          Demandes reçues via le formulaire « Aller plus loin » (implémentation).
-          Lecture seule ; marquez chaque demande comme traitée une fois prise en
-          charge.
-        </p>
-        {contacts === null ? (
-          <DbUnavailable />
-        ) : (
-          <ContactsList rows={contacts} />
-        )}
-      </section>
+            {/* Factures à suivre */}
+            <div className={`${CARD} flex flex-col px-6 py-5`}>
+              <div className="flex items-baseline justify-between pb-2.5">
+                <h2 className="text-[16px] font-bold tracking-[-0.01em]">
+                  Factures à suivre
+                </h2>
+                <Link href="/admin/dashboard/facturation" className={SEEMORE}>
+                  Toutes les factures →
+                </Link>
+              </div>
+              {argent === null ? (
+                <p className="py-3 text-[13.5px] text-soft">
+                  Tables facturation indisponibles.
+                </p>
+              ) : factures.length === 0 ? (
+                <p className="py-3 text-[13.5px] text-soft">
+                  Aucune facture émise pour le moment — le module Facturation
+                  arrive au Lot 2.
+                </p>
+              ) : (
+                factures.map((f) => (
+                  <div
+                    key={f.id}
+                    className="flex items-center justify-between gap-4 border-b border-hairline py-3 last:border-0"
+                  >
+                    <span className="flex min-w-0 flex-col gap-0.5">
+                      <span className="truncate font-mono text-[13px] font-semibold text-ink">
+                        {f.numero ?? "—"}
+                        {f.organisation_nom ? ` · ${f.organisation_nom}` : ""}
+                      </span>
+                      <span className="truncate text-[13px] text-soft">
+                        {f.date_echeance
+                          ? `Échéance le ${formatDateRelance(f.date_echeance)}`
+                          : "Sans échéance"}
+                      </span>
+                    </span>
+                    <span className="flex items-center gap-3">
+                      <span className="font-mono text-[13.5px] font-semibold">
+                        {formatEuros(f.montant_ttc)}
+                      </span>
+                      <FactureStatutBadge statut={f.statut} />
+                    </span>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+        </>
+      )}
     </div>
   );
 }

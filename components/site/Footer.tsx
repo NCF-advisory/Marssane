@@ -14,6 +14,13 @@ import { LogoMarssane } from "@/components/ui/LogoMarssane";
 export function Footer() {
   return (
     <footer className="relative border-t border-line-sur-ink bg-ink">
+      <nav aria-label="Liens utiles" className="mx-auto flex max-w-[1180px] flex-wrap gap-x-6 gap-y-1 px-6 pt-6 text-[13px] text-body-sur-ink sm:px-10">
+        <Link href="/formations" className="py-3 hover:text-turquoise">Formations IA près de Lyon</Link>
+        <Link href="/parcours" className="py-3 hover:text-turquoise">Programme débutant · 7 heures</Link>
+        <Link href="/quelle-ia" className="py-3 hover:text-turquoise">Comparateur d’IA</Link>
+        <Link href="/#formateur" className="py-3 hover:text-turquoise">Votre formateur</Link>
+        <a href="mailto:contact@marssane.fr" className="py-3 hover:text-turquoise">contact@marssane.fr</a>
+      </nav>
       <div className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-x-6 gap-y-4 px-6 py-[30px] sm:px-10">
         {/* Le « M » du logo suit --color-ink : on le repasse en blanc localement,
             comme la Nav. La surcharge est portée par le lockup et non par le

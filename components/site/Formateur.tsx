@@ -76,7 +76,7 @@ function SparkMark({ size = 17 }: { size?: number }) {
  */
 export function Formateur() {
   return (
-    <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[84px] sm:px-10">
+    <section id="formateur" className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[84px] sm:px-10">
       {/* Décoration motifFond (décorative) */}
       <PlusMark
         variant="turquoise"

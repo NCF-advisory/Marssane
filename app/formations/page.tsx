@@ -1,3 +1,7 @@
+import Link from "next/link";
+import { Breadcrumbs } from "@/components/site/Breadcrumbs";
+import { JsonLd } from "@/components/site/JsonLd";
+import { beginnerCourse, COURSE_ID, webPage } from "@/lib/structured-data";
 import { Footer } from "@/components/site/Footer";
 import { NiveauBloc } from "@/components/site/NiveauBloc";
 import { ScrollCue } from "@/components/site/ScrollCue";
@@ -7,15 +11,19 @@ import { NIVEAUX } from "@/lib/niveaux";
 import { createPublicMetadata } from "@/lib/seo";
 
 export const metadata = createPublicMetadata({
-  title: "Nos formations · Marssane",
+  title: "Formation IA à Lyon pour dirigeants : les niveaux | Marssane",
   description:
-    "Trois niveaux de formation à l'IA (Débutant, Confirmé, Expert) pour progresser à son rythme, des premiers usages jusqu'à l'outil construit sur mesure.",
+    "Débutez avec une formation IA de 7 h près de Lyon : Claude, prompts et automatisation métier. Découvrez aussi les niveaux confirmé et expert à venir.",
   path: "/formations",
 });
 
 export default function Formations() {
   return (
     <>
+      <JsonLd data={{ "@context": "https://schema.org", "@graph": [
+        { ...webPage({ path: "/formations", name: String(metadata.title), description: String(metadata.description) }), mainEntity: { "@id": COURSE_ID } },
+        beginnerCourse(),
+      ] }} />
       {/* `snap-page-formations` active le scroll-snap racine, ciblé sur cette
           page via `html:has(...)` dans globals.css (aucune fuite ailleurs). */}
       <main className="snap-page-formations">
@@ -29,6 +37,7 @@ export default function Formations() {
             {/* Colonne qui guide l'œil vers le bas : intro en haut, sommaire
                 juste dessous, chevrons calés en bas de l'écran (`mt-auto`). */}
             <div>
+              <Breadcrumbs items={[{ name: "Formations IA", path: "/formations" }]} />
               <div className="max-w-[640px]">
                 <Kicker className="text-faint-sur-ink!">Nos formations</Kicker>
                 <h1 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[40px]">
@@ -47,9 +56,15 @@ export default function Formations() {
                   </span>
                 </h1>
                 <p className="mt-[14px] text-[16.5px] leading-[1.58] text-body-sur-ink">
-                  Chacun progresse à son rythme, des premiers usages
-                  jusqu&apos;à l&apos;outil construit sur mesure. Trois niveaux
-                  à découvrir juste en dessous.
+                  Une formation IA pour dirigeants de TPE et PME près de Lyon,
+                  à Saint-Didier-au-Mont-d&apos;Or. Le niveau débutant comprend
+                  deux séances de 3 h 30 et une pratique accompagnée.
+                  Les niveaux confirmé et expert sont à venir.
+                </p>
+                <p className="mt-4 text-[14.5px] text-body-sur-ink">
+                  <Link href="/parcours" className="underline underline-offset-4 hover:text-turquoise">
+                    Voir le programme détaillé des 7 heures de formation IA
+                  </Link>
                 </p>
               </div>
             </div>

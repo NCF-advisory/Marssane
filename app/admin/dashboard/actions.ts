@@ -51,6 +51,8 @@ import {
  */
 
 const DASHBOARD = "/admin/dashboard";
+const SESSIONS = `${DASHBOARD}/sessions`;
+const CRM = `${DASHBOARD}/crm`;
 
 /** Redirige vers la connexion si aucune session admin valide. */
 async function requireAdmin(): Promise<void> {
@@ -58,10 +60,14 @@ async function requireAdmin(): Promise<void> {
   if (!admin) redirect("/admin");
 }
 
-/** Rafraîchit la landing (session publiée) et le tableau de bord. */
+/**
+ * Rafraîchit la landing (session publiée), l'accueil admin (compteur) et le
+ * module Sessions (liste déplacée au Lot 0 de l'ERP).
+ */
 function revalidateSessions(): void {
   revalidatePath("/");
   revalidatePath(DASHBOARD);
+  revalidatePath(SESSIONS);
 }
 
 /* ===== Sessions ======================================================== */
@@ -73,7 +79,7 @@ export type SessionFormState = {
   fieldErrors?: Record<string, string>;
 };
 
-/** Crée une session, puis redirige vers le tableau de bord. */
+/** Crée une session, puis redirige vers le module Sessions. */
 export async function createSessionAction(
   _prevState: SessionFormState,
   formData: FormData,
@@ -96,10 +102,10 @@ export async function createSessionAction(
   }
 
   revalidateSessions();
-  redirect(DASHBOARD);
+  redirect(SESSIONS);
 }
 
-/** Met à jour une session (id lié via `.bind`), puis revient au tableau de bord. */
+/** Met à jour une session (id lié via `.bind`), puis revient au module Sessions. */
 export async function updateSessionAction(
   id: string,
   _prevState: SessionFormState,
@@ -124,7 +130,7 @@ export async function updateSessionAction(
   }
 
   revalidateSessions();
-  redirect(DASHBOARD);
+  redirect(SESSIONS);
 }
 
 /** Archive une session (statut → terminée). Action de formulaire simple. */
@@ -520,7 +526,7 @@ export async function updateContactTraiteAction(
 
   try {
     await updateContactTraite(id, traite);
-    revalidatePath(DASHBOARD);
+    revalidatePath(CRM);
   } catch {
     console.error("[admin] échec du changement d'état de contact (incident)");
   }

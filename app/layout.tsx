@@ -5,7 +5,7 @@ import { ViewTransition } from "react";
 import localFont from "next/font/local";
 import { Nav } from "@/components/site/Nav";
 import { ReservationDialog } from "@/components/site/ReservationDialog";
-import { HOME_DESCRIPTION, SITE_URL } from "@/lib/seo";
+import { HOME_DESCRIPTION, HOME_TITLE, SITE_URL } from "@/lib/seo";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
@@ -25,10 +25,10 @@ const splineSansMono = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Marssane · Formation IA",
+  title: HOME_TITLE,
   description: HOME_DESCRIPTION,
   openGraph: {
-    title: "Marssane · Formation IA",
+    title: HOME_TITLE,
     description: HOME_DESCRIPTION,
     url: "/",
     locale: "fr_FR",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Marssane · Formation IA",
+    title: HOME_TITLE,
     description: HOME_DESCRIPTION,
     images: ["/opengraph-image.png"],
   },
