@@ -1,6 +1,8 @@
 # Audit SEO et GEO de Marssane — 6 septembre 2026
 
-L’audit du site public et du projet a conduit à des corrections techniques, sémantiques et éditoriales dans le code local. Elles sont vérifiées sur un build de production local ; elles ne sont pas encore publiées sur marssane.fr.
+L’audit du site public et du projet a conduit à des corrections techniques, sémantiques et éditoriales, **publiées sur https://marssane.fr le 7 septembre 2026** (commit applicatif `dbe1dc1`, déploiement Vercel réussi). Les constats « avant » ci-dessous décrivent la production du 6 septembre ; les corrections sont désormais en ligne.
+
+Contrôle après publication : `node scripts/check-seo.mjs https://marssane.fr` réussi sur les six pages publiques et cinq pages noindex, sitemap, robots, FAQ et durée du cours. `/parcours` répond 200. Les 16 contrôles Chrome sur quatre largeurs passent sans erreur JavaScript ni débordement horizontal ; FAQ, navigation programme, modale et détails du comparateur vérifiés sans soumission de formulaire.
 
 La durée de la formation a été confirmée par le propriétaire pendant cet audit : **deux séances de 3 h 30, soit 7 heures en présentiel**, auxquelles s’ajoute la pratique personnelle accompagnée.
 
@@ -105,7 +107,7 @@ Vérifications réalisées :
 
 | Priorité | Action | Condition ou preuve attendue |
 | --- | --- | --- |
-| P1 | Publier les corrections puis relancer le contrôle HTTP sur marssane.fr. | Vérifier notamment que `/parcours` répond 200 et figure dans le sitemap publié. Les modifications locales existantes du projet doivent être prises en compte dans la revue de publication. |
+| Fait le 07/09 | Publier les corrections puis relancer le contrôle HTTP sur marssane.fr. | Déploiement `dbe1dc1` réussi ; `/parcours` répond 200 et figure dans le sitemap publié. Contrôle SEO et tests navigateur publics réussis. Les modifications applicatives existantes sont incluses dans cette publication. |
 | P1 | Vérifier l’indexation dans Google Search Console et Bing Webmaster Tools ; soumettre le sitemap et inspecter les quatre pages commerciales. | Accès propriétaire ; vérifier canonique choisie, exploration, exclusions, actions manuelles et éventuels problèmes de sécurité. |
 | P1 | Étayer les promesses « 2 h par jour », « +34 % de productivité » et « 10 h par semaine ». | Étude pertinente avec population et contexte, ou mesure de résultats de participants. Le code les présente comme des chiffres fournis par le propriétaire ; cet audit ne les a pas validés et n’en a fait aucune donnée structurée. |
 | P1 | Rendre les citations de dirigeants vérifiables par le lecteur et les distinguer clairement d’avis clients Marssane. | Les URL sources existent dans les données, mais leur affichage avait été retiré par décision éditoriale documentée. Les citations n’ont pas été requalifiées en témoignages de clients ni balisées comme avis. |
