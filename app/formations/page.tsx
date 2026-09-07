@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { JsonLd } from "@/components/site/JsonLd";
 import { beginnerCourse, COURSE_ID, webPage } from "@/lib/structured-data";
@@ -60,11 +59,6 @@ export default function Formations() {
                   à Saint-Didier-au-Mont-d&apos;Or. Le niveau débutant comprend
                   deux séances de 3 h 30 et une pratique accompagnée.
                   Les niveaux confirmé et expert sont à venir.
-                </p>
-                <p className="mt-4 text-[14.5px] text-body-sur-ink">
-                  <Link href="/parcours" className="underline underline-offset-4 hover:text-turquoise">
-                    Voir le programme détaillé des 7 heures de formation IA
-                  </Link>
                 </p>
               </div>
             </div>

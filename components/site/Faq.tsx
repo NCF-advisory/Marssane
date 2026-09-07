@@ -1,5 +1,4 @@
 import { FORMATION_FAQ } from "@/lib/formation-faq";
-import Link from "next/link";
 import { KickerPill } from "@/components/ui/KickerPill";
 
 /**
@@ -66,11 +65,6 @@ export function Faq() {
           </details>
         ))}
       </div>
-      <p className="mt-6 text-[14.5px] text-body-sur-ink">
-        <Link href="/parcours" className="underline underline-offset-4 hover:text-turquoise">
-          Consulter le programme détaillé de la formation IA débutant
-        </Link>
-      </p>
     </section>
   );
 }

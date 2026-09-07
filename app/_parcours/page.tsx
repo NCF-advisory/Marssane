@@ -13,7 +13,8 @@ const title = "Programme formation IA débutant : 7 h près de Lyon | Marssane";
 const description = "Le programme IA débutant Marssane : 2 séances de 3 h 30, pratique accompagnée, prompts, tri des mails et construction de votre automatisation métier.";
 export const metadata = createPublicMetadata({ title, description, path: "/parcours" });
 
-/* ===== PAGE TEMPORAIRE =====
+/* ===== PAGE MASQUÉE =====
+   Conservée dans un dossier privé Next.js, sans route publique.
    Roadmap visuelle de la formation débutant (parcours v2, grandes étapes).
    Purement informative : aucun CTA de réservation (décision du 29/07/2026).
    Contenu aligné sur `02 Formations/formation-1-debutant-classique.md` —

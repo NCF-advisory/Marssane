@@ -1,5 +1,7 @@
 # Audit SEO et GEO de Marssane — 6 septembre 2026
 
+**Décisions éditoriales après audit :** le hero a été rétabli dans sa version précédente. À la demande du propriétaire, la page `/parcours` est désormais masquée (404), ses liens sont retirés et le sitemap contient cinq pages publiques. Son contenu est conservé dans `app/_parcours/page.tsx`, hors du routage Next.js. Les relevés à six pages ci-dessous sont historiques ; `scripts/check-seo.mjs` contrôle désormais les cinq pages et le masquage du parcours.
+
 L’audit du site public et du projet a conduit à des corrections techniques, sémantiques et éditoriales, **publiées sur https://marssane.fr le 7 septembre 2026** (commit applicatif `dbe1dc1`, déploiement Vercel réussi). Les constats « avant » ci-dessous décrivent la production du 6 septembre ; les corrections sont désormais en ligne.
 
 Contrôle après publication : `node scripts/check-seo.mjs https://marssane.fr` réussi sur les six pages publiques et cinq pages noindex, sitemap, robots, FAQ et durée du cours. `/parcours` répond 200. Les 16 contrôles Chrome sur quatre largeurs passent sans erreur JavaScript ni débordement horizontal ; FAQ, navigation programme, modale et détails du comparateur vérifiés sans soumission de formulaire.

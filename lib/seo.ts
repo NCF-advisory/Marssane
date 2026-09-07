@@ -11,7 +11,6 @@ export const HOME_TITLE = "Formation IA pour dirigeants de PME à Lyon | Marssan
 export const PUBLIC_PATHS = [
   "/",
   "/formations",
-  "/parcours",
   "/quelle-ia",
   "/mentions-legales",
   "/confidentialite",

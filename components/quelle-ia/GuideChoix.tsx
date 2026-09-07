@@ -25,7 +25,7 @@ export function GuideChoix() {
         ))}
       </div>
       <p className="mt-6 text-[14px] text-body-sur-ink">
-        Pour mettre cette méthode en pratique, consultez le <Link href="/parcours" className="underline underline-offset-4 hover:text-turquoise">programme de formation IA débutant</Link>.
+        Pour mettre cette méthode en pratique, découvrez la <Link href="/formations#debutant" className="underline underline-offset-4 hover:text-turquoise">formation IA débutant</Link>.
       </p>
     </section>
   );

@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 // Requêtes GET uniquement ; aucun formulaire ni rafraîchissement de données.
 const base = new URL(process.argv[2] ?? "http://127.0.0.1:3000");
 const canonicalBase = "https://marssane.fr";
-const paths = ["/", "/formations", "/parcours", "/quelle-ia", "/mentions-legales", "/confidentialite"];
+const paths = ["/", "/formations", "/quelle-ia", "/mentions-legales", "/confidentialite"];
 const privatePaths = ["/admin", "/formation", "/styleguide", "/merci", "/implementation"];
 const attributes = (tag) => Object.fromEntries(
   [...tag.matchAll(/([\w:-]+)="([^"]*)"/g)].map((match) => [match[1], match[2]]),
@@ -48,10 +48,11 @@ for (const path of paths) {
   assert.equal(new URL(canonicals[0].href).href, new URL(path, canonicalBase).href, path);
   assert.equal(new URL(meta["og:url"]).href, new URL(path, canonicalBase).href, `OpenGraph : ${path}`);
   const nodes = schemas(html);
-  if (["/", "/formations", "/parcours", "/quelle-ia"].includes(path)) {
+  assert.doesNotMatch(html, /href="(?:https:\/\/marssane\.fr)?\/parcours(?:["/#?])/, `Lien vers la page masquée : ${path}`);
+  if (["/", "/formations", "/quelle-ia"].includes(path)) {
     assert.ok(nodes.length > 0, `Données structurées absentes : ${path}`);
   }
-  if (["/formations", "/parcours"].includes(path)) {
+  if (path === "/formations") {
     const courses = nodes.filter((node) => node["@type"] === "Course");
     assert.equal(courses.length, 1, `Seul le cours débutant doit être balisé : ${path}`);
     assert.equal(courses[0].timeRequired, "PT7H", path);
@@ -84,4 +85,7 @@ assert.ok(robots.includes(`Sitemap: ${canonicalBase}/sitemap.xml`));
 assert.doesNotMatch(robots, /Disallow: \/(?:formations|admin|formation\$|styleguide)(?:\s|$)/);
 const { response: missing } = await get("/seo-audit-page-inexistante");
 assert.equal(missing.status, 404);
-console.log("SEO vérifié : 6 pages publiques, 5 pages noindex, sitemap, robots, FAQ et durée du cours.");
+const { response: parcours, html: parcoursHtml } = await get("/parcours");
+assert.equal(parcours.status, 404, "La page parcours doit rester masquée");
+assert.match(metadata(parcoursHtml).robots ?? "", /noindex/, "Parcours masqué non indexable");
+console.log("SEO vérifié : 5 pages publiques, 5 pages noindex, parcours masqué, sitemap, robots, FAQ et durée du cours.");

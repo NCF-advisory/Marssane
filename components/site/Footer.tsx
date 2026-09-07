@@ -16,7 +16,6 @@ export function Footer() {
     <footer className="relative border-t border-line-sur-ink bg-ink">
       <nav aria-label="Liens utiles" className="mx-auto flex max-w-[1180px] flex-wrap gap-x-6 gap-y-1 px-6 pt-6 text-[13px] text-body-sur-ink sm:px-10">
         <Link href="/formations" className="py-3 hover:text-turquoise">Formations IA près de Lyon</Link>
-        <Link href="/parcours" className="py-3 hover:text-turquoise">Programme débutant · 7 heures</Link>
         <Link href="/quelle-ia" className="py-3 hover:text-turquoise">Comparateur d’IA</Link>
         <Link href="/#formateur" className="py-3 hover:text-turquoise">Votre formateur</Link>
         <a href="mailto:contact@marssane.fr" className="py-3 hover:text-turquoise">contact@marssane.fr</a>
