@@ -31,3 +31,20 @@ les données du site. Le serveur local de production doit tourner sur le port
 Validation locale : lint, compilation de production et typage validés ; les
 scénarios navigateur passent sur Chrome et WebKit. WebKit exige un clic initial
 dans cet environnement, puis la boucle et la reprise fonctionnent.
+
+## Diagnostic complémentaire
+
+Le problème persiste chez l’utilisateur sur Safari Mac avec « Toujours autoriser
+la lecture automatique ». Les tests WebKit précédents ne prouvaient que la
+reprise par clic, pas l’autoplay. La comparaison WebM/MP4, avec et sans piste
+audio, reste bloquée par `NotAllowedError` dans cet environnement automatisé.
+L’accès WebDriver au Safari natif est désactivé ; l’utilisateur souhaite le
+laisser ainsi. Aucun autre moyen de contrôle de son navigateur n’est utilisé.
+
+`/diagnostic-video` compare donc trois lecteurs dans son propre Safari : le
+lecteur actuel, le MP4 natif et le même MP4 sans piste audio. Cette dernière
+variante est copiée sans réencodage : images identiques, pas de piste sonore.
+La page porte noindex, n’est pas ajoutée à la navigation ou au sitemap et
+n’envoie pas ses mesures. L’utilisateur peut copier le rapport. La mesure
+initiale est prise sans clic après 4 secondes, avant un essai différé de play().
+L’accueil reste inchangé tant qu’aucune cause n’a été établie.
