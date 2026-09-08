@@ -4,10 +4,11 @@ import {
   PARTICIPANT_SESSION_COOKIE,
   verifyParticipantSessionToken,
 } from "@/lib/participant-session";
-import { SESSION_COOKIE, verifySessionToken } from "@/lib/session";
+import { SESSION_COOKIE } from "@/lib/session";
+import { destinationAdmin } from "@/lib/erp-admin";
 
 /**
- * Protection des routes admin (F3 · CDC §5.3) et de l'espace formation
+ * Retrait de l'ancien admin et protection de l'espace formation
  * (participants). Ne s'applique QU'À `/admin/*` et `/formation/*` (voir
  * `matcher`) — le reste du site est inchangé.
  *
@@ -24,26 +25,19 @@ export async function proxy(request: NextRequest) {
 }
 
 /**
- * Règles admin :
- *   - `/admin` (connexion) : si déjà connecté → /admin/dashboard, sinon accès.
- *   - toute autre route `/admin/*` : accès si connecté, sinon → /admin.
+ * Les favoris rejoignent l'ERP. Les anciennes écritures sont refusées :
+ * jamais de redirection POST qui transmettrait un formulaire ou mot de passe.
  */
-async function handleAdmin(request: NextRequest) {
-  const token = request.cookies.get(SESSION_COOKIE)?.value;
-  const session = await verifySessionToken(token);
-  const isLogin = request.nextUrl.pathname === "/admin";
-
-  if (isLogin) {
-    if (session) {
-      return NextResponse.redirect(new URL("/admin/dashboard", request.url));
-    }
-    return NextResponse.next();
-  }
-
-  if (!session) {
-    return NextResponse.redirect(new URL("/admin", request.url));
-  }
-  return NextResponse.next();
+function handleAdmin(request: NextRequest) {
+  const response = ["GET", "HEAD"].includes(request.method)
+    ? NextResponse.redirect(destinationAdmin(request.nextUrl.pathname), 307)
+    : new NextResponse("Cet espace a fermé. Utilisez l’ERP Marssane.", { status: 410 });
+  response.headers.set("Cache-Control", "no-store");
+  response.cookies.set(SESSION_COOKIE, "", {
+    path: "/admin", maxAge: 0, httpOnly: true, sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+  });
+  return response;
 }
 
 /**

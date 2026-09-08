@@ -1,10 +1,7 @@
 import { cookies } from "next/headers";
 import {
-  createSessionToken,
   SESSION_COOKIE,
-  SESSION_MAX_AGE,
   type SessionPayload,
-  verifySessionToken,
 } from "./session";
 
 /**
@@ -13,10 +10,9 @@ import {
  * middleware, qui lit le cookie via NextRequest (voir middleware.ts).
  */
 
-/** Retourne l'admin connecté (depuis le cookie), ou `null`. */
+/** Ancien admin fermé : même un ancien jeton valide n'autorise plus d'action. */
 export async function getCurrentAdmin(): Promise<SessionPayload | null> {
-  const token = (await cookies()).get(SESSION_COOKIE)?.value;
-  return verifySessionToken(token);
+  return null;
 }
 
 /** Attributs communs du cookie de session. */
@@ -31,15 +27,6 @@ function cookieOptions() {
     // Portée limitée aux routes admin.
     path: "/admin",
   };
-}
-
-/** Ouvre une session : signe un jeton et pose le cookie (24 h). */
-export async function createSession(payload: SessionPayload): Promise<void> {
-  const token = await createSessionToken(payload);
-  (await cookies()).set(SESSION_COOKIE, token, {
-    ...cookieOptions(),
-    maxAge: SESSION_MAX_AGE,
-  });
 }
 
 /** Détruit la session : supprime le cookie. */

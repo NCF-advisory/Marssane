@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import { getSql } from "@/lib/db";
 import { sendRappelsAValiderEmail } from "@/lib/emails";
+import { ERP_URL } from "@/lib/erp-admin";
 
 /**
  * Rappels avant session (J-7 et J-1) : signalement à l'administrateur.
@@ -30,13 +31,6 @@ import { sendRappelsAValiderEmail } from "@/lib/emails";
  */
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-/**
- * URL de base pour le lien vers l'admin (même variable que le sitemap). Défaut
- * en production plutôt que localhost : la notification n'est émise que par le
- * cron, et son lien doit rester cliquable depuis une boîte mail.
- */
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://marssane.fr";
 
 /** Échéance de rappels d'une session, avec son nombre de destinataires. */
 type Echeance = {
@@ -94,7 +88,7 @@ export async function GET(request: NextRequest) {
       variante: Number(echeance.jours) === 7 ? "j7" : "j1",
       date: echeance.date,
       enAttente: echeance.en_attente,
-      sessionUrl: `${SITE_URL}/admin/dashboard/sessions/${echeance.session_id}`,
+      sessionUrl: `${ERP_URL}/formations/gestion/${echeance.session_id}#formation`,
     });
     if (envoyee) notifications += 1;
     else echecs += 1;

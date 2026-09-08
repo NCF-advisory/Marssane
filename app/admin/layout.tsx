@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { redirect } from "next/navigation";
+import { ERP_URL } from "@/lib/erp-admin";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-/** Le back-office et tout son sous-arbre restent exclus des moteurs. */
-export default function AdminLayout({ children }: { children: ReactNode }) {
-  return children;
+/** Défense complémentaire au proxy : l'ancienne interface ne se rend plus. */
+export default function AdminLayout() {
+  redirect(ERP_URL);
 }
