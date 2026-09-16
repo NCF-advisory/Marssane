@@ -186,7 +186,7 @@ export function Nav() {
         ))}
         <RendezVousTrigger
           onClick={fermer}
-          className="cta-projet--compact mt-2 xl:mt-0"
+          className={`${styles.projectButton} mt-2 xl:mt-0`}
         >
           Discuter de mon projet
         </RendezVousTrigger>

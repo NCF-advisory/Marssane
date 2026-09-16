@@ -2,3 +2,33 @@
 .header :is(a[href], button:not(:disabled)) * {
   cursor: pointer;
 }
+
+.header .projectButton {
+  min-height: 38px;
+  padding: 8px 12px;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.projectButton :global(.cta-projet__angles) {
+  inset: -2px;
+}
+
+.projectButton :global(.cta-projet__icone),
+.projectButton :global(.cta-projet__icone) svg {
+  width: 14px;
+  height: 14px;
+}
+
+.projectButton :global(.cta-projet__icone) {
+  flex-basis: 14px;
+}
+
+@media (max-width: 1279px) {
+  .header .projectButton {
+    min-height: 44px;
+  }
+}
