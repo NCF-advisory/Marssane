@@ -1,5 +1,19 @@
 # Publication ciblée des rendez-vous — 16 septembre 2026
 
+## Résultat en production
+
+Publié sur https://marssane.fr par le commit `c4520c0`.
+[Déploiement Vercel réussi](https://vercel.com/ncf-advisory-s-projects/marssane/4J7KERMZwUqxLu87LVgpvXqwDrk7)
+le 16 septembre 2026 à 10 h 00, heure de Paris. Compilation Turbopack et
+TypeScript réussies sur Vercel.
+
+Contrôles publics : API HTTP 200 avec 198 créneaux lors de la recette,
+redirection www correcte, refus des origines étrangères (403) et des données
+incomplètes (400). Chromium 1440 px et WebKit 390 px : parcours complet avec
+POST de confirmation intercepté, aucun débordement ni erreur JavaScript.
+La base partagée contient toujours zéro rendez-vous après recette.
+Aucun e-mail réel n'a été envoyé pour tester la livraison.
+
 Base publique : `489ca3e8023f6d21429e7c7390b830f4e9ac170e`.
 
 ## Périmètre

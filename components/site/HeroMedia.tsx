@@ -1,4 +1,4 @@
-import { heroVideo } from "@/lib/site-config";
+import { heroVideo, type HeroVideoConfig } from "@/lib/site-config";
 import { HeroVideo } from "./HeroVideo";
 import { getImageProps } from "next/image";
 
@@ -8,18 +8,18 @@ import { getImageProps } from "next/image";
  * - objet → vidéo (voir HeroVideo).
  * La bascule ne demande aucune modification de ce composant.
  */
-export function HeroMedia() {
-  if (heroVideo) {
+export function HeroMedia({ video = heroVideo }: { video?: HeroVideoConfig | null } = {}) {
+  if (video) {
     const { props: poster } = getImageProps({
-      src: heroVideo.poster,
+      src: video.poster,
       alt: "",
-      width: 640,
-      height: 400,
+      width: video.width ?? 640,
+      height: video.height ?? 400,
     });
     return (
       <div className="relative">
         <link rel="preload" as="image" href={poster.src} fetchPriority="high" />
-        <HeroVideo video={{ ...heroVideo, poster: poster.src }} />
+        <HeroVideo key={video.mp4} video={{ ...video, poster: poster.src }} />
       </div>
     );
   }

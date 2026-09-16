@@ -1,9 +1,10 @@
 "use client";
 
 import { useLoopingVideo } from "./useLoopingVideo";
+import type { HeroVideoConfig } from "@/lib/site-config";
 
 type HeroVideoProps = {
-  video: { mp4: string; webm?: string; poster: string };
+  video: HeroVideoConfig;
 };
 
 export function HeroVideo({ video }: HeroVideoProps) {
@@ -12,7 +13,10 @@ export function HeroVideo({ video }: HeroVideoProps) {
   return (
     <video
       ref={videoRef}
-      className="aspect-[16/10] w-full rounded-card object-cover shadow-hero"
+      className="w-full rounded-card object-cover shadow-hero"
+      width={video.width ?? 640}
+      height={video.height ?? 400}
+      style={{ aspectRatio: `${video.width ?? 640} / ${video.height ?? 400}` }}
       poster={video.poster}
       autoPlay={!reduced}
       controls={controls}

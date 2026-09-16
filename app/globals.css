@@ -44,6 +44,13 @@
   background: #16161a;
   box-shadow: 0 16px 48px #0006;
 }
+/* En page, la carte encre de la section porte déjà le cadre et le fond : le
+   message n'en ajoute pas un second, identique, à l'intérieur du premier. */
+.rdv-validation--en-page .rdv-validation__message {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
 .rdv-validation__trace { position: relative; width: 100%; height: 100%; stroke: #063c3b; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
 @media (max-height: 600px) {
   .rdv-validation { padding-block: 8px; }
@@ -180,7 +187,13 @@
 .cta-projet__label { position: relative; }
 .cta-projet__icone { display: flex; align-items: center; justify-content: center; flex: 0 0 18px; width: 18px; height: 20px; color: #00d1be; }
 .cta-projet__icone svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.cta-projet--compact { min-height: 48px; padding: 12px 20px; gap: 14px; font-size: 14px; }
+.cta-projet--compact { min-height: 40px; padding: 9px 14px; gap: 8px; font-size: 13px; font-weight: 600; }
+.cta-projet--compact .cta-projet__angles { inset: -3px; }
+.cta-projet--compact .cta-projet__icone { flex-basis: 16px; width: 16px; height: 16px; }
+.cta-projet--compact .cta-projet__icone svg { width: 16px; height: 16px; }
+@media (max-width: 1279px) {
+  .cta-projet--compact { min-height: 44px; }
+}
 /* Posé sur la carte sombre de #offres, dont le haut de dégradé vaut #16161a :
    le fond de base du bouton s'y confondait. Encre éclaircie + bord remonté,
    géométrie et survol inchangés. */
@@ -856,25 +869,18 @@ body {
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* La nav est un élément persistant de la transition : son instantané ne fait
-   aucun fondu (l'ancienne image est masquée, la nouvelle — qui est un rendu
-   vivant de la barre — est affichée d'emblée). La barre reste donc parfaitement
-   stable pendant que le corps de page se relaie. */
-::view-transition-group(nav-marssane) {
-  animation: none;
-  /* Les groupes sont empilés dans l'ordre du DOM, et l'instantané du corps de
-     page couvre toute sa hauteur : quand on navigue depuis une position
-     défilée, il remonte au-dessus de la barre et la masquerait. La barre
-     reprend donc la main, comme son `z-50` hors transition. */
-  z-index: 10;
+/* Le contenu animé par React conserve son fondu. La racine et la nav restent
+   hors des instantanés pour que le header garde son survol et ses clics.
+   Dans WebKit, pointer-events seul ne suffit pas si la nav est capturée. */
+html:has(#nav-menu-mobile) {
+  view-transition-name: none;
 }
-::view-transition-old(nav-marssane) {
-  animation: none;
-  opacity: 0;
-}
-::view-transition-new(nav-marssane) {
-  animation: none;
-  opacity: 1;
+html:has(#nav-menu-mobile)::view-transition,
+html:has(#nav-menu-mobile)::view-transition-group(*),
+html:has(#nav-menu-mobile)::view-transition-image-pair(*),
+html:has(#nav-menu-mobile)::view-transition-old(*),
+html:has(#nav-menu-mobile)::view-transition-new(*) {
+  pointer-events: none;
 }
 
 /* Pendant une transition de vue, le retour en haut de page doit être immédiat :

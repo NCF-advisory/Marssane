@@ -24,16 +24,13 @@ export function Hero() {
       <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.9fr_1.2fr]">
         {/* Colonne texte, alignée à gauche */}
         <div className="max-w-[530px]">
-          <h1 className="text-[30px] font-extrabold leading-[1.04] tracking-[-0.03em] sm:text-[44px] lg:text-[54px]">
-            Dirigeant de PME,{" "}
-            {/* L'insécabilité ne vaut qu'à partir de sm : à 320-360 px, les
-                281 px de « gagnez 2 h par jour. » dépassaient la colonne et le
-                « + » turquoise comme le point étaient rognés. */}
-            <span className="sm:whitespace-nowrap">
-              gagnez{" "}
-              <span className="inline-block">
+          <h1 className="text-[30px] font-extrabold leading-[1.12] tracking-[-0.03em] sm:text-[44px] xl:text-[50px]">
+            <span className="block sm:whitespace-nowrap">Formez-vous à l&apos;IA</span>{" "}
+            <span className="block sm:whitespace-nowrap">
+              et gagnez{"\u00a0"}
+              <span className="inline-block mr-[0.3em]">
                 <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-                  2&nbsp;h par jour
+                  2&nbsp;heures
                   <span
                     aria-hidden
                     className="absolute right-[-0.62em] top-[-0.5em] text-[0.64em] font-medium leading-none text-turquoise"
@@ -41,9 +38,9 @@ export function Hero() {
                     +
                   </span>
                 </span>
-                .
               </span>
-            </span>
+            </span>{" "}
+            <span className="block">par semaine</span>
           </h1>
           <div className="mt-[30px] flex flex-wrap items-center gap-4">
             <ReservationTrigger className="inline-flex items-center gap-[13px] rounded-btn bg-canard py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark">

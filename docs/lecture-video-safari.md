@@ -48,3 +48,12 @@ La page porte noindex, n’est pas ajoutée à la navigation ou au sitemap et
 n’envoie pas ses mesures. L’utilisateur peut copier le rapport. La mesure
 initiale est prise sans clic après 4 secondes, avant un essai différé de play().
 L’accueil reste inchangé tant qu’aucune cause n’a été établie.
+
+## Résolution confirmée par l’utilisateur
+
+Le contrôle système du Mac a montré `lowpowermode 1`, y compris sur adaptateur
+secteur. Après la consigne de désactiver le mode économie d’énergie et de
+recharger Safari, l’utilisateur a confirmé : « bien c’est réglé ».
+Le problème est donc clos. Aucun remplacement du fichier de l’accueil n’est
+nécessaire. La page de diagnostic reste présente ; son retrait éventuel est
+une tâche distincte du changement de conversation.

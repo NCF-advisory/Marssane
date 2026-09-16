@@ -6,12 +6,28 @@
  * basculer sur la vidéo une fois produite, il suffit de déposer les fichiers
  * dans `public/` et de renseigner cet objet — aucun composant à modifier.
  */
-export const heroVideo: { mp4: string; webm?: string; poster: string } | null =
+export type HeroVideoConfig = {
+  mp4: string;
+  webm?: string;
+  poster: string;
+  width?: number;
+  height?: number;
+};
+
+export const heroVideo: HeroVideoConfig | null =
   {
     mp4: "/video/hero-v2.mp4",
     webm: "/video/hero-v2.webm",
     poster: "/video/hero-v2-poster.jpg",
   };
+
+/** Vidéo de la landing implémentation ; la formation garde sa propre vidéo. */
+export const heroAgentsVideo: HeroVideoConfig = {
+  mp4: "/video/marssane-equipe-agents-v11-blanc-pause-web.mp4",
+  poster: "/video/marssane-equipe-agents-v10-blanc-poster.jpg",
+  width: 1920,
+  height: 1080,
+};
 
 /**
  * `cas1Video` pilotait le visuel du cas concret n° 1 (« Trier, prioriser,

@@ -1,0 +1,10 @@
+.schema { min-width: 0; width: 100%; padding: 16px 0 32px; background-image: radial-gradient(#ffffff12 1px, transparent 1px); background-size: 20px 20px; border-radius: 24px; }
+.schema > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.connections path { fill: none; stroke: #47535c; stroke-width: 2; }
+.first { --accent: #ff8c7c; }
+.second { --accent: #b49aed; }
+.third { --accent: #00d1be; }
+.node { fill: #171a20; stroke: var(--accent); stroke-width: 2; }
+.icon { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.port { fill: #171a20; stroke: #81909c; stroke-width: 2; }
+.label { fill: #edf0f3; font-size: 22px; font-weight: 600; text-anchor: middle; }

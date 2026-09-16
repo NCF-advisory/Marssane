@@ -1,21 +1,21 @@
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/site/JsonLd";
-import { FORMATION_FAQ } from "@/lib/formation-faq";
+import { IMPLEMENTATION_FAQ } from "@/lib/implementation-faq";
 import { siteEntities, webPage } from "@/lib/structured-data";
-import { Accompagnement } from "@/components/site/Accompagnement";
-import { Alignement } from "@/components/site/Alignement";
+import { MethodeImplementation } from "@/components/site/MethodeImplementation";
+import { AlignementImplementation } from "@/components/site/AlignementImplementation";
 import { Apparitions } from "@/components/site/Apparitions";
-import { AvantApres } from "@/components/site/AvantApres";
-import { BandeauChiffres } from "@/components/site/BandeauChiffres";
-import { CasConcrets } from "@/components/site/CasConcrets";
-import { Faq } from "@/components/site/Faq";
+import { AvantApresImplementation } from "@/components/site/AvantApresImplementation";
+import { ChiffresImplementation } from "@/components/site/ChiffresImplementation";
+import { CasAutomatisations } from "@/components/site/CasAutomatisations";
+import { FaqImplementation } from "@/components/site/FaqImplementation";
 import { Footer } from "@/components/site/Footer";
 import { Formateur } from "@/components/site/Formateur";
-import { FormationsDeuxNiveaux } from "@/components/site/FormationsDeuxNiveaux";
-import { Hero } from "@/components/site/Hero";
+import { OffresDeuxVoies } from "@/components/site/OffresDeuxVoies";
+import { HeroAgents } from "@/components/site/HeroAgents";
 import { ParolesDirigeants } from "@/components/site/ParolesDirigeants";
 import { PartenaireNovances } from "@/components/site/PartenaireNovances";
-import { Reservation } from "@/components/site/Reservation";
+import { ContactFinal } from "@/components/site/ContactFinal";
 import { createPublicMetadata, HOME_DESCRIPTION, HOME_TITLE } from "@/lib/seo";
 
 /**
@@ -45,7 +45,7 @@ export default function Home() {
     <>
       {/* Ordre des sections et alternance de tonalités repris du tunnel 8lab
           (relevé au navigateur le 29/07/2026). Héro et paroles de dirigeants
-          restent en encre ; les bandes claires tombent sur l'accompagnement,
+          restent en encre ; les bandes claires tombent sur la méthode,
           sur l'avant-après, et sur la FAQ. Coupes franches, sans filet de
           séparation — comme sur le modèle. */}
       <JsonLd data={{
@@ -55,7 +55,7 @@ export default function Home() {
           {
             ...webPage({ path: "/", name: HOME_TITLE, description: HOME_DESCRIPTION }),
             "@type": ["WebPage", "FAQPage"],
-            mainEntity: FORMATION_FAQ.map(({ question, reponse }) => ({
+            mainEntity: IMPLEMENTATION_FAQ.map(({ question, reponse }) => ({
               "@type": "Question",
               name: question,
               acceptedAnswer: { "@type": "Answer", text: reponse },
@@ -64,26 +64,37 @@ export default function Home() {
         ],
       }} />
       <main>
-        <Hero />
+        <HeroAgents />
         <PartenaireNovances />
         <ParolesDirigeants />
-        <BandeauChiffres />
+        <ChiffresImplementation />
         <BandeToile className="mt-[68px] pb-[76px]">
-          <Accompagnement />
+          <MethodeImplementation />
         </BandeToile>
-        <Formateur />
-        <CasConcrets />
+        <Formateur
+          kicker="Qui vous accompagne"
+          titre={
+            <>
+              Un interlocuteur qui pratique l&apos;IA{" "}
+              <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+                au quotidien
+              </span>
+              .
+            </>
+          }
+        />
+        <CasAutomatisations />
         <BandeToile className="mt-[68px] pb-[76px]">
-          <AvantApres />
+          <AvantApresImplementation />
         </BandeToile>
-        <Alignement />
-        <FormationsDeuxNiveaux />
-        <Reservation />
-        {/* La réservation referme déjà sur 90 px d'encre : la bande n'a pas
+        <AlignementImplementation />
+        <OffresDeuxVoies />
+        <ContactFinal />
+        {/* Le contact referme déjà sur 90 px d'encre : la bande n'a pas
             besoin de marge haute, seulement de rendre à la FAQ (talon de 8 px)
             la respiration que les autres sections tiennent de leur `pt`. */}
         <BandeToile className="pt-[76px]">
-          <Faq />
+          <FaqImplementation />
         </BandeToile>
       </main>
       <Footer />

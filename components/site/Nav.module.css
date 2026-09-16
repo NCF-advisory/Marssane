@@ -1,0 +1,4 @@
+.header :is(a[href], button:not(:disabled)),
+.header :is(a[href], button:not(:disabled)) * {
+  cursor: pointer;
+}

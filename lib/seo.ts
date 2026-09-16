@@ -3,14 +3,16 @@ import type { Metadata } from "next";
 export const SITE_URL = "https://marssane.fr";
 
 export const HOME_DESCRIPTION =
-  "Formation IA pour dirigeants de PME près de Lyon : 2 séances de 3 h 30 pour pratiquer Claude sur vos mails, documents et tâches métier, avec Marssane.";
+  "Marssane installe des agents IA dans votre PME près de Lyon : mails, devis et relances automatisés. Passation accompagnée ou maintenance selon vos besoins.";
 
-export const HOME_TITLE = "Formation IA pour dirigeants de PME à Lyon | Marssane";
+export const HOME_TITLE = "Implémentation IA et agents pour PME à Lyon | Marssane";
 
 /** Une seule origine publique pour les canoniques, le sitemap et le JSON-LD. */
 export const PUBLIC_PATHS = [
   "/",
   "/formations",
+  "/implementation",
+  "/automatisation",
   "/quelle-ia",
   "/mentions-legales",
   "/confidentialite",

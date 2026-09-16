@@ -15,6 +15,8 @@ export function Footer() {
   return (
     <footer className="relative border-t border-line-sur-ink bg-ink">
       <nav aria-label="Liens utiles" className="mx-auto flex max-w-[1180px] flex-wrap gap-x-6 gap-y-1 px-6 pt-6 text-[13px] text-body-sur-ink sm:px-10">
+        <Link href="/implementation" className="py-3 hover:text-turquoise">Implémentation IA</Link>
+        <Link href="/automatisation" className="py-3 hover:text-turquoise">Automatisation</Link>
         <Link href="/formations" className="py-3 hover:text-turquoise">Formations IA près de Lyon</Link>
         <Link href="/quelle-ia" className="py-3 hover:text-turquoise">Comparateur d’IA</Link>
         <Link href="/#formateur" className="py-3 hover:text-turquoise">Votre formateur</Link>

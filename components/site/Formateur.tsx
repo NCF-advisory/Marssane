@@ -7,6 +7,7 @@
    ========================================================================= */
 
 import Image from "next/image";
+import type { ReactNode } from "react";
 
 import { Kicker } from "@/components/ui/Kicker";
 import { PlusMark } from "@/components/ui/PlusMark";
@@ -74,7 +75,21 @@ function SparkMark({ size = 17 }: { size?: number }) {
  * coup d'œil, du plus visuel au plus verbeux : portrait → nom et rôle →
  * quatre badges de certification → une seule ligne de texte.
  */
-export function Formateur() {
+export function Formateur({
+  kicker = "Qui vous forme",
+  titre = (
+    <>
+      Un formateur qui pratique l&apos;IA{" "}
+      <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
+        au quotidien
+      </span>
+      .
+    </>
+  ),
+}: {
+  kicker?: string;
+  titre?: ReactNode;
+} = {}) {
   return (
     <section id="formateur" className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[84px] sm:px-10">
       {/* Décoration motifFond (décorative) */}
@@ -85,13 +100,9 @@ export function Formateur() {
       />
 
       <div className="max-w-[640px]">
-        <Kicker className="text-faint-sur-ink!">Qui vous forme</Kicker>
+        <Kicker className="text-faint-sur-ink!">{kicker}</Kicker>
         <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-          Un formateur qui pratique l&apos;IA{" "}
-          <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-            au quotidien
-          </span>
-          .
+          {titre}
         </h2>
       </div>
 

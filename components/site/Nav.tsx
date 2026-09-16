@@ -4,13 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
-import { LogoMarssane } from "@/components/ui/LogoMarssane";
 import { RendezVousTrigger } from "./RendezVousTrigger";
+import { LogoMarssane } from "@/components/ui/LogoMarssane";
+import styles from "./Nav.module.css";
 
-// « Les formations » pointe vers sa page dédiée. « /implementation » est
-// masquée de la barre (offre pas encore lancée) mais reste dans PAGES_SITE :
-// la page existe toujours par lien direct et doit porter la nav.
+// Les expertises et les formations possèdent chacune leur page dédiée.
 const links = [
+  { href: "/implementation", label: "Implémentation IA" },
+  { href: "/automatisation", label: "Automatisation" },
   { href: "/formations", label: "Les formations" },
   { href: "/quelle-ia", label: "Quelle IA choisir ?" },
 ];
@@ -20,9 +21,11 @@ const links = [
  *  est montée dans le layout racine, donc partagée par toutes les routes. */
 const PAGES_SITE = [
   "/",
+  "/accueil-formation",
   "/quelle-ia",
   "/formations",
   "/implementation",
+  "/automatisation",
   "/confidentialite",
   "/mentions-legales",
   "/merci",
@@ -44,10 +47,10 @@ const ID_PANNEAU = "nav-menu-mobile";
  * l'est donc aussi partout ; l'URL (`usePathname`) ne décide plus que de son
  * positionnement (sticky / fixed).
  *
- * Responsive : sous `lg`, la barre tient sur une seule rangée (logo + bouton
+ * Responsive : sous `xl`, la barre tient sur une seule rangée (logo + bouton
  * menu) et les liens passent dans un panneau qui se déplie juste dessous — sans
  * quoi ils s'enroulaient sur quatre rangées et la barre mangeait un tiers de
- * l'écran d'un téléphone. À partir de `lg`, tout revient dans la rangée.
+ * l'écran d'un téléphone. À partir de `xl`, tout revient dans la rangée.
  */
 export function Nav() {
   const pathname = usePathname();
@@ -102,27 +105,25 @@ export function Nav() {
         // Fond opaque : le contenu de la page ne doit pas remonter au travers de
         // la barre quand il défile dessous.
         "bg-ink",
-        // Élément persistant du fondu croisé de page : nommée, la barre est
-        // sortie de l'instantané de la vue et n'est donc pas happée par le
-        // fondu — elle reste parfaitement stable d'une page à l'autre.
-        // Le nom est neutralisé côté CSS (voir globals.css).
-        "[view-transition-name:nav-marssane]",
+        // La barre reste dans le DOM interactif pendant le fondu du contenu.
+        // Ne pas lui attribuer de view-transition-name : son instantané
+        // intercepterait le survol dans WebKit.
       ].join(" ")}
     >
-    {/* Le fond couvre les angles du CTA et la mention partenaire. */}
-    <header className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-x-6 gap-y-4 px-6 pb-[14px] pt-[16px] sm:px-10 lg:pb-5 lg:pt-[26px]">
+    {/* Le fond opaque couvre aussi les angles du CTA (débord de 5 px) et
+        laisse de l'air sous la mention partenaire lors du défilement. */}
+    <header className={`${styles.header} mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-x-6 gap-y-4 px-6 pb-[14px] pt-[16px] sm:px-10 xl:pb-5 xl:pt-[26px]`}>
       {/* Lockup + mention de partenariat en colonne. La mention est HORS du
           lien : elle n'est pas un raccourci vers l'accueil, et le lien garde
-          exactement sa zone cliquable d'origine. Le `pl-[45px]` la cale sous le
-          mot « Marssane » et non sous le « M » (34 px de symbole + 11 px de gap
-          dans le lockup 34 px). */}
+          exactement sa zone cliquable d'origine. La mention s'aligne sur le
+          bord gauche du symbole Marssane. */}
       <div className="flex flex-col items-start gap-[5px]">
         <Link
           href="/"
           aria-label="Marssane · retour à l'accueil"
           onClick={surLogo}
           // Le canard manque de contraste sur l'encre : anneau turquoise.
-          className="inline-flex rounded-btn focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
+          className="inline-flex cursor-pointer rounded-btn focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-turquoise"
           // Le « M » du logo suit --color-ink : on le repasse en blanc localement.
           style={{ ["--color-ink" as string]: "#FFFFFF" }}
         >
@@ -132,12 +133,12 @@ export function Nav() {
             pas à côté du bouton « Menu » et le poussait sur une seconde rangée
             en WebKit — la barre passait de 79 à 140 px de haut. Sur téléphone,
             le pied de page et le bandeau de la landing la portent. */}
-        <span className="hidden font-mono text-[10px] uppercase leading-none tracking-[0.15em] text-faint-sur-ink sm:block sm:pl-[45px]">
+        <span className="hidden font-mono text-[10px] uppercase leading-none tracking-[0.15em] text-faint-sur-ink sm:block">
           Partenaire du Groupe Novances
         </span>
       </div>
 
-      {/* Bouton menu — sous lg seulement. Cadre et graisse du CTA de la barre :
+      {/* Bouton menu — sous xl seulement. Cadre et graisse du CTA de la barre :
           trois traits sobres + le mot, pour rester dans la typographie du site.
           `min-h-11` garantit les 44 px de cible tactile. */}
       <button
@@ -145,7 +146,7 @@ export function Nav() {
         aria-expanded={ouvert}
         aria-controls={ID_PANNEAU}
         onClick={() => setOuvert((o) => !o)}
-        className="inline-flex min-h-11 cursor-pointer items-center gap-2.5 rounded-btn border-[1.5px] border-white/60 px-4 py-2.5 text-[14.5px] font-semibold text-white transition-colors hover:border-white lg:hidden"
+        className="inline-flex min-h-11 cursor-pointer items-center gap-2.5 rounded-btn border-[1.5px] border-white/60 px-4 py-2.5 text-[14.5px] font-semibold text-white transition-colors hover:border-white xl:hidden"
       >
         <span aria-hidden className="flex flex-col gap-[4px]">
           <span className="block h-[1.5px] w-[17px] bg-current" />
@@ -159,12 +160,12 @@ export function Nav() {
         id={ID_PANNEAU}
         aria-label="Navigation principale"
         className={[
-          // Sous lg : panneau replié sous la barre (hors flux, il ne pousse donc
+          // Sous xl : panneau replié sous la barre (hors flux, il ne pousse donc
           // pas le contenu de la page), liens en colonne pleine largeur.
-          ouvert ? "flex" : "hidden lg:flex",
+          ouvert ? "flex" : "hidden xl:flex",
           "absolute inset-x-0 top-full flex-col items-stretch gap-y-1 border-y border-line-sur-ink bg-ink px-6 pb-5 pt-2 sm:px-10",
-          // À partir de lg : retour dans la rangée, à l'identique de l'origine.
-          "lg:static lg:flex-row lg:flex-wrap lg:items-center lg:gap-x-7 lg:gap-y-3 lg:border-0 lg:bg-transparent lg:p-0",
+          // À partir de xl : retour dans la rangée, à l'identique de l'origine.
+          "xl:static xl:flex-row xl:flex-nowrap xl:items-center xl:gap-x-5 xl:gap-y-3 xl:border-0 xl:bg-transparent xl:p-0",
         ].join(" ")}
       >
         {/* `Link` et non `<a>` : la navigation doit rester côté client, sinon le
@@ -174,17 +175,18 @@ export function Nav() {
           <Link
             key={link.href}
             href={link.href}
+            aria-current={pathname === link.href ? "page" : undefined}
             onClick={fermer}
-            // `py-3` sous lg : 45 px de cible tactile (le `lg:py-0` rend la
-            // rangée desktop identique à l'origine).
-            className="py-3 text-[14.5px] font-semibold text-white/70 transition-colors hover:text-white motion-reduce:transition-none lg:py-0"
+            // Une cible d'au moins 44 px, y compris sur ordinateur : le
+            // curseur reste une main autour du texte de chaque onglet.
+            className="-mx-2 inline-flex min-h-11 cursor-pointer items-center px-2 py-3 text-[14.5px] font-semibold text-white/70 transition-colors hover:text-white motion-reduce:transition-none aria-[current=page]:text-turquoise xl:py-2.5 xl:text-[13px]"
           >
             {link.label}
           </Link>
         ))}
         <RendezVousTrigger
           onClick={fermer}
-          className="cta-projet--compact mt-2 lg:mt-0"
+          className="cta-projet--compact mt-2 xl:mt-0"
         >
           Discuter de mon projet
         </RendezVousTrigger>
