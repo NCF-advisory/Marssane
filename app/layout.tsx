@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { ViewTransition } from "react";
 import localFont from "next/font/local";
 import { Nav } from "@/components/site/Nav";
+import { RendezVousDialog } from "@/components/site/RendezVousDialog";
 import { ReservationDialog } from "@/components/site/ReservationDialog";
 import { HOME_DESCRIPTION, HOME_TITLE, SITE_URL } from "@/lib/seo";
 import { Analytics } from "@vercel/analytics/next";
@@ -74,6 +75,7 @@ export default function RootLayout({
             la nav est présent sur tout le site, la modale qu'il ouvre doit
             l'être aussi (un seul id="reservation-dialog" dans le DOM). */}
         <ReservationDialog />
+        <RendezVousDialog />
         <Analytics />
       </body>
     </html>

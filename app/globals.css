@@ -1,5 +1,202 @@
 @import "tailwindcss";
 
+/* Roadmap rendez-vous : accordéon vertical, un panneau ouvert à la fois. */
+.rdv-dialog {
+  --rdv-top: clamp(16px, 5vh, 48px);
+  top: var(--rdv-top);
+  bottom: auto;
+  margin: 0 auto;
+  max-height: calc(100dvh - var(--rdv-top) - 16px);
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  overscroll-behavior: contain;
+  overflow-anchor: none;
+}
+.rdv-dialog[data-confirme="true"] {
+  inset: 0;
+  margin: auto;
+  width: 440px;
+  max-height: calc(100dvh - 32px);
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  scrollbar-gutter: auto;
+}
+.rdv-validation { padding: 20px 16px; text-align: center; }
+.rdv-validation__coche { position: relative; width: 164px; height: 164px; margin: 0 auto 32px; }
+.rdv-validation__forme {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #00d1be;
+  border-radius: 50%;
+  background: #00d1be;
+  pointer-events: none;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.rdv-validation__message {
+  position: relative;
+  border: 1px solid #ffffff24;
+  border-radius: 16px;
+  padding: 24px 20px;
+  background: #16161a;
+  box-shadow: 0 16px 48px #0006;
+}
+.rdv-validation__trace { position: relative; width: 100%; height: 100%; stroke: #063c3b; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-height: 600px) {
+  .rdv-validation { padding-block: 8px; }
+  .rdv-validation__coche { width: 108px; height: 108px; margin-bottom: 20px; }
+  .rdv-dialog[data-confirme="true"] { overflow-y: auto; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Transform et opacité uniquement : aucune modification de la mise en page. */
+  .rdv-dialog[open][data-confirme="false"] {
+    transform-origin: 50% 0;
+    animation: rdv-ouverture 260ms cubic-bezier(.22, 1, .36, 1);
+  }
+  .rdv-dialog[open]::backdrop { animation: rdv-fond-ouverture 200ms ease-out; }
+  @keyframes rdv-ouverture {
+    from { opacity: 0; transform: translateY(12px) scale(.98); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes rdv-fond-ouverture { from { opacity: 0; } to { opacity: 1; } }
+  .rdv-validation__trace path { stroke-dasharray: 1; animation: rdv-validation-trace 260ms 200ms cubic-bezier(.22, 1, .36, 1) both; }
+  .rdv-validation__message { animation: rdv-validation-message 220ms 260ms ease-out both; }
+  .rdv-validation__message:has(button:focus-visible) { animation: none; }
+  @keyframes rdv-validation-trace { from { stroke-dashoffset: 1; opacity: 0; } to { stroke-dashoffset: 0; opacity: 1; } }
+  @keyframes rdv-validation-message { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+}
+.rdv-roadmap__etape { position: relative; }
+.rdv-roadmap__etape:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 52px;
+  bottom: -6px;
+  width: 1px;
+  background: #ffffff24;
+}
+.rdv-roadmap__etape[data-valide="true"]::before { background: #00d1be70; }
+.rdv-roadmap__entete {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 70px;
+  padding: 10px 0;
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.rdv-roadmap__entete:disabled { cursor: default; }
+.rdv-roadmap__entete:focus-visible { outline: 2px solid #00d1be; outline-offset: 4px; }
+.rdv-roadmap__numero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 35px;
+  width: 35px;
+  height: 35px;
+  border: 1px solid #ffffff29;
+  border-radius: 50%;
+  background: #16161a;
+  color: #98a1ac;
+  font-family: var(--font-spline-mono), monospace;
+  font-size: 12px;
+  font-weight: 700;
+}
+.rdv-roadmap__texte { min-width: 0; flex: 1; }
+.rdv-roadmap__titre { display: block; font-size: 16px; font-weight: 700; color: #98a1ac; }
+.rdv-roadmap__resume { display: block; margin-top: 4px; font-size: 12px; line-height: 1.5; color: #98a1ac; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rdv-roadmap__chevron { width: 18px; height: 18px; flex: none; color: #98a1ac; }
+.rdv-roadmap__entete:disabled .rdv-roadmap__chevron { visibility: hidden; }
+.rdv-roadmap__etape[data-active="true"] .rdv-roadmap__numero { border-color: #00d1be; background: #0e7291; color: white; box-shadow: 0 0 18px #00d1be18; }
+.rdv-roadmap__etape[data-valide="true"] .rdv-roadmap__numero { border-color: #00d1be; background: #00d1be; color: #0e0e12; }
+.rdv-roadmap__etape:is([data-active="true"], [data-valide="true"]) .rdv-roadmap__titre { color: white; }
+.rdv-roadmap__etape[data-active="true"] .rdv-roadmap__chevron { transform: rotate(180deg); color: #00d1be; }
+.rdv-roadmap__panneau { display: grid; grid-template-rows: 0fr; opacity: 0; visibility: hidden; }
+.rdv-roadmap__etape[data-active="true"] .rdv-roadmap__panneau { grid-template-rows: 1fr; opacity: 1; visibility: visible; }
+.rdv-roadmap__interieur { min-height: 0; overflow: hidden; }
+.rdv-roadmap__contenu { padding: 6px 3px 24px 51px; }
+.rdv-planning-chargement { margin-top: 20px; }
+.rdv-squelette { display: block; border-radius: 3px; background: #ffffff09; }
+.rdv-squelette--label { width: 140px; height: 20px; margin-bottom: 8px; }
+.rdv-squelette--champ { height: 51px; }
+.rdv-squelette--heure { height: 46px; }
+@media (max-width: 380px) {
+  .rdv-roadmap__entete { gap: 11px; }
+  .rdv-roadmap__contenu { padding-left: 4px; }
+  .rdv-roadmap__etape:not(:last-child)::before { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .rdv-roadmap__panneau { transition: grid-template-rows 240ms cubic-bezier(.4, 0, .2, 1), opacity 180ms ease, visibility 0s 240ms; }
+  .rdv-roadmap__etape[data-active="true"] .rdv-roadmap__panneau { transition-delay: 0s; }
+  .rdv-roadmap__chevron { transition: transform 300ms ease; }
+  .rdv-roadmap__numero { transition: background 250ms ease, border-color 250ms ease; }
+  .rdv-heure { transition: background-color 180ms ease, border-color 180ms ease; }
+}
+
+/* CTA projet : direction 05, encre et angles ouverts turquoise. */
+.cta-projet {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  max-width: 100%;
+  min-height: 52px;
+  padding: 14px 24px;
+  overflow: visible;
+  border: 1px solid #ffffff24;
+  border-radius: 2px;
+  background: #16161a;
+  color: #fff;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.cta-projet__angles {
+  position: absolute;
+  inset: -5px;
+  pointer-events: none;
+  background:
+    linear-gradient(#00d1be, #00d1be) left top / 10px 1px no-repeat,
+    linear-gradient(#00d1be, #00d1be) left top / 1px 10px no-repeat,
+    linear-gradient(#00d1be, #00d1be) right top / 10px 1px no-repeat,
+    linear-gradient(#00d1be, #00d1be) right top / 1px 10px no-repeat,
+    linear-gradient(#00d1be, #00d1be) left bottom / 10px 1px no-repeat,
+    linear-gradient(#00d1be, #00d1be) left bottom / 1px 10px no-repeat,
+    linear-gradient(#00d1be, #00d1be) right bottom / 10px 1px no-repeat,
+    linear-gradient(#00d1be, #00d1be) right bottom / 1px 10px no-repeat;
+}
+.cta-projet__label { position: relative; }
+.cta-projet__icone { display: flex; align-items: center; justify-content: center; flex: 0 0 18px; width: 18px; height: 20px; color: #00d1be; }
+.cta-projet__icone svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.cta-projet--compact { min-height: 48px; padding: 12px 20px; gap: 14px; font-size: 14px; }
+/* Posé sur la carte sombre de #offres, dont le haut de dégradé vaut #16161a :
+   le fond de base du bouton s'y confondait. Encre éclaircie + bord remonté,
+   géométrie et survol inchangés. */
+.cta-projet--sur-carte { border-color: #ffffff38; background: #26262e; }
+.cta-projet:focus-visible { outline: 2px solid var(--color-turquoise); outline-offset: 8px; }
+@media (hover: hover) {
+  .cta-projet:hover { background: #10313b; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cta-projet { transition: background-color 160ms ease; }
+  .cta-projet__icone { transition: transform 180ms ease; }
+  @media (hover: hover) {
+    .cta-projet:hover .cta-projet__icone { transform: translateX(3px); }
+  }
+}
+
 @theme inline {
   --font-sans: var(--font-jakarta-sans);
   --font-mono: var(--font-spline-mono);
