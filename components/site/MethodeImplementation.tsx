@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
+import { ParcoursFondateurTrigger } from "./ParcoursFondateur";
 import { KickerPill } from "@/components/ui/KickerPill";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
 import { PlusMark } from "@/components/ui/PlusMark";
@@ -13,13 +15,13 @@ const TEMPS: {
   {
     repere: "01",
     titre: "Diagnostic · votre semaine au crible",
-    texte: "On liste ce qui vous prend du temps : mails, devis, relances, comptes-rendus. On identifie ce qui peut tourner seul.",
+    texte: "Avec vous, je repère ce qui prend du temps : mails, devis, relances, comptes rendus. Nous choisissons les tâches à automatiser en premier.",
     vignette: <VignetteDiagnostic />,
   },
   {
     repere: "01 → 02",
     titre: "Construction · sur vos outils",
-    texte: "On construit les agents sur vos vrais documents, votre vraie boîte mail. Rien de générique.",
+    texte: "Je construis vos agents sur vos documents et votre boîte mail. Nous les testons ensemble, sur les situations de votre quotidien.",
     vignette: <VignetteConstruction />,
   },
   {
@@ -36,7 +38,7 @@ const TEMPS: {
  */
 export function MethodeImplementation() {
   return (
-    <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[84px] sm:px-10">
+    <section id="formateur" className="relative isolate mx-auto max-w-[1180px] scroll-mt-8 px-6 pb-2 pt-[84px] sm:px-10">
       {/* Décoration motifFond (décorative) */}
       <PlusMark
         variant="grey-sur-ink"
@@ -53,9 +55,26 @@ export function MethodeImplementation() {
           </span>
           .
         </h2>
-        <p className="mt-4 text-[16.5px] leading-[1.58] text-body-sur-ink">
-          Diagnostic, construction, puis passation accompagnée ou maintenance par Marssane. Vous choisissez la suite.
-        </p>
+        <div className="mt-6 flex items-start gap-4">
+          <Image
+            src="/img/formateur/cleante.jpg"
+            alt="Cléante Oullion"
+            width={64}
+            height={64}
+            sizes="64px"
+            className="h-16 w-16 shrink-0 rounded-full border border-line-sur-ink object-cover"
+          />
+          <div className="min-w-0">
+            <p className="text-[16px] leading-[1.6] text-body-sur-ink">
+              Je conçois vos automatisations avec vous, à partir de votre quotidien.
+              Du premier diagnostic à la prise en main, je suis votre interlocuteur.
+            </p>
+            <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-body-sur-ink">
+              <span><strong className="font-semibold text-ink">Cléante Oullion</strong> · Fondateur</span>
+              <ParcoursFondateurTrigger className="text-canard" />
+            </div>
+          </div>
+        </div>
       </div>
 
       <ol className="mt-[34px] grid grid-cols-1 gap-[22px] lg:grid-cols-3">

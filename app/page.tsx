@@ -11,6 +11,7 @@ import { CasAutomatisations } from "@/components/site/CasAutomatisations";
 import { FaqImplementation } from "@/components/site/FaqImplementation";
 import { Footer } from "@/components/site/Footer";
 import { Formateur } from "@/components/site/Formateur";
+import { ParcoursFondateurDialog } from "@/components/site/ParcoursFondateur";
 import { OffresDeuxVoies } from "@/components/site/OffresDeuxVoies";
 import { HeroAgents } from "@/components/site/HeroAgents";
 import { ParolesDirigeants } from "@/components/site/ParolesDirigeants";
@@ -71,18 +72,6 @@ export default function Home() {
         <BandeToile className="mt-[68px] pb-[76px]">
           <MethodeImplementation />
         </BandeToile>
-        <Formateur
-          kicker="Qui vous accompagne"
-          titre={
-            <>
-              Un interlocuteur qui pratique l&apos;IA{" "}
-              <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-                au quotidien
-              </span>
-              .
-            </>
-          }
-        />
         <CasAutomatisations />
         <BandeToile className="mt-[68px] pb-[76px]">
           <AvantApresImplementation />
@@ -97,6 +86,9 @@ export default function Home() {
           <FaqImplementation />
         </BandeToile>
       </main>
+      <ParcoursFondateurDialog>
+        <Formateur compact kicker="Fondateur de Marssane" />
+      </ParcoursFondateurDialog>
       <Footer />
       <Apparitions />
     </>

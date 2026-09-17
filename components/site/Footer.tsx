@@ -41,9 +41,9 @@ export function Footer() {
               <LogoMarssane size={28} />
               <span className="text-[15px] font-bold">Marssane</span>
             </div>
-            <span className="font-mono text-[10px] uppercase leading-none tracking-[0.15em] text-faint-sur-ink sm:pl-[38px]">
-              Partenaire du Groupe Novances
-            </span>
+            <a href="https://novances.fr" target="_blank" rel="noopener" className="py-2 text-[12px] leading-[1.5] text-body-sur-ink hover:text-white sm:pl-[38px]">
+              Partenaire du <strong className="font-semibold text-turquoise">Groupe Novances</strong>
+            </a>
           </div>
           {/* `py-3` sur les liens (et non sur la ligne) : sur un élément inline
               le padding vertical agrandit la zone cliquable — 45 px de cible —

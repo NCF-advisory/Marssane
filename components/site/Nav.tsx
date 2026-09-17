@@ -117,7 +117,7 @@ export function Nav() {
           lien : elle n'est pas un raccourci vers l'accueil, et le lien garde
           exactement sa zone cliquable d'origine. La mention s'aligne sur le
           bord gauche du symbole Marssane. */}
-      <div className="flex flex-col items-start gap-[5px]">
+      <div className="flex flex-col items-start gap-2">
         <Link
           href="/"
           aria-label="Marssane · retour à l'accueil"
@@ -129,13 +129,10 @@ export function Nav() {
         >
           <LogoMarssane size={34} withWordmark />
         </Link>
-        {/* Masquée sous sm : à 390 px, la mention (~220 px de large) ne tient
-            pas à côté du bouton « Menu » et le poussait sur une seconde rangée
-            en WebKit — la barre passait de 79 à 140 px de haut. Sur téléphone,
-            le pied de page et le bandeau de la landing la portent. */}
-        <span className="hidden font-mono text-[10px] uppercase leading-none tracking-[0.15em] text-faint-sur-ink sm:block">
-          Partenaire du Groupe Novances
-        </span>
+        <a href="https://novances.fr" target="_blank" rel="noopener" className={styles.partenaire}>
+          <span>Partenaire du</span>
+          <strong>Groupe Novances</strong>
+        </a>
       </div>
 
       {/* Bouton menu — sous xl seulement. Cadre et graisse du CTA de la barre :

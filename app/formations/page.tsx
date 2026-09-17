@@ -22,7 +22,7 @@ export default function Formations() {
       ] }} />
       {/* La navigation est fixe sur /formations. Le défilement reste libre
           pour passer du hero aux trois niveaux sans saut forcé. */}
-      <main className="pt-[79px] xl:pt-[100px]">
+      <main className="pt-[108px] min-[480px]:pt-[90px] xl:pt-[106px]">
         <Hero />
         <NiveauBloc niveaux={NIVEAUX} />
       </main>

@@ -23,8 +23,8 @@ export const heroVideo: HeroVideoConfig | null =
 
 /** Vidéo de la landing implémentation ; la formation garde sa propre vidéo. */
 export const heroAgentsVideo: HeroVideoConfig = {
-  mp4: "/video/marssane-equipe-agents-v11-blanc-pause-web.mp4",
-  poster: "/video/marssane-equipe-agents-v10-blanc-poster.jpg",
+  mp4: "/video/marssane-equipe-agents-v12-blanc-pause-web.mp4",
+  poster: "/video/marssane-equipe-agents-v12-blanc-poster.jpg",
   width: 1920,
   height: 1080,
 };

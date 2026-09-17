@@ -7,10 +7,7 @@
    ========================================================================= */
 
 import Image from "next/image";
-import type { ReactNode } from "react";
-
 import { Kicker } from "@/components/ui/Kicker";
-import { PlusMark } from "@/components/ui/PlusMark";
 
 /** Libellés courts des quatre certifications, dans l'ordre d'affichage. Les
  *  intitulés délivrés en entier sont, respectivement : « Claude Code in
@@ -69,88 +66,73 @@ function SparkMark({ size = 17 }: { size?: number }) {
   );
 }
 
-/**
- * Section « Qui vous forme » : un dirigeant de PME confie ses mails et ses
- * devis à quelqu'un, il veut un visage et un nom. Le bloc se lit donc d'un
- * coup d'œil, du plus visuel au plus verbeux : portrait → nom et rôle →
- * quatre badges de certification → une seule ligne de texte.
- */
 export function Formateur({
   kicker = "Qui vous forme",
-  titre = (
-    <>
-      Un formateur qui pratique l&apos;IA{" "}
-      <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-        au quotidien
-      </span>
-      .
-    </>
-  ),
+  compact = false,
 }: {
   kicker?: string;
-  titre?: ReactNode;
+  compact?: boolean;
 } = {}) {
   return (
-    <section id="formateur" className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[84px] sm:px-10">
-      {/* Décoration motifFond (décorative) */}
-      <PlusMark
-        variant="turquoise"
-        size={19}
-        className="absolute left-[15px] top-[60px] -z-[1] hidden -translate-x-1/2 -translate-y-1/2 lg:block"
-      />
+    <section
+      id={compact ? undefined : "formateur"}
+      aria-labelledby={compact ? "parcours-fondateur-titre" : "formateur-titre"}
+      className={compact ? "px-6 pb-8 pt-6 sm:px-8" : "mx-auto max-w-[1180px] scroll-mt-8 px-6 pb-2 pt-[84px] sm:px-10"}
+    >
+      <div className={compact ? "grid items-start gap-6 sm:grid-cols-[128px_minmax(0,1fr)]" : "grid items-start gap-8 md:grid-cols-[280px_minmax(0,1fr)] md:gap-10 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-14"}>
+        <div className={compact ? "w-[96px] sm:w-[128px]" : "w-full max-w-[340px]"}>
+          <Image
+            src="/img/formateur/cleante.jpg"
+            alt="Cléante Oullion, fondateur de Marssane"
+            width={1090}
+            height={1127}
+            sizes={compact ? "(min-width: 640px) 128px, 96px" : "(min-width: 1024px) 340px, (min-width: 768px) 280px, (max-width: 388px) calc(100vw - 48px), 340px"}
+            className="aspect-[1090/1127] h-auto w-full rounded-[6px] border border-line-sur-ink object-cover"
+          />
+          {!compact && <p className="mt-4 text-[13px] leading-[1.6] text-body-sur-ink">
+            Fondateur de Marssane<br />
+            Analyste en valorisation d’entreprises chez NCF
+          </p>}
+        </div>
 
-      <div className="max-w-[640px]">
-        <Kicker className="text-faint-sur-ink!">{kicker}</Kicker>
-        <h2 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] sm:text-[38px]">
-          {titre}
-        </h2>
-      </div>
-
-      <div className="mt-[34px] flex max-w-[860px] flex-col gap-6 rounded-card border border-line-sur-ink bg-surface-sur-ink p-6 sm:flex-row sm:items-start sm:gap-8 sm:p-8">
-        {/* Le portrait est l'ancrage visuel de la section, d'où une tuile plus
-            large que les vignettes du reste de la page. Le fond du cliché est
-            un bleu-vert sombre, très proche de la carte : la bordure
-            `border-line-sur-ink` est ce qui l'en détache, ne pas la retirer.
-            Cadrage centré : le sujet est déjà centré sur une image quasi
-            carrée, le recadrage carré ne coupe que quelques pixels. */}
-        <Image
-          src="/img/formateur/cleante.jpg"
-          alt="Cléante Oullion, fondateur de Marssane"
-          width={1090}
-          height={1127}
-          sizes="(min-width: 640px) 208px, 180px"
-          className="h-[180px] w-[180px] flex-none rounded-card border border-line-sur-ink object-cover sm:h-[208px] sm:w-[208px]"
-        />
-
-        {/* `sm:flex-1` : sans lui, la colonne se dimensionne sur son plus long
-            texte (une ligne courte, désormais) et laisse un vide à droite dans
-            la carte — les badges occupent la largeur à sa place. */}
-        <div className="min-w-0 sm:flex-1">
-          <div className="text-[22px] font-extrabold leading-[1.15] tracking-[-0.02em] sm:text-[26px]">
+        <div className="min-w-0">
+          <Kicker className="text-turquoise!">{kicker}</Kicker>
+          <h2 id={compact ? "parcours-fondateur-titre" : "formateur-titre"} className={`mt-3 font-extrabold leading-[1.15] text-fort ${compact ? "text-[26px]" : "text-[30px] sm:text-[38px]"}`}>
             Cléante Oullion
-          </div>
-          <div className="mt-1.5 font-mono text-[11.5px] uppercase tracking-[0.12em] text-turquoise">
-            Fondateur de Marssane
-          </div>
+          </h2>
+          <p className="mt-4 text-[20px] font-semibold leading-[1.4] text-fort">
+            L’IA que je vous propose, je l’utilise d’abord dans mon métier.
+          </p>
+          <p className="mt-4 text-[15.5px] leading-[1.75] text-body-sur-ink">
+            Analyste en valorisation d’entreprises et en fusions-acquisitions
+            chez NCF, je travaille au contact des dirigeants de PME. J’ai commencé
+            par automatiser mon propre travail : les rapports, les notes de réunion
+            et les supports de présentation.
+          </p>
+          <p className="mt-3 text-[15.5px] leading-[1.75] text-body-sur-ink">
+            J’ai créé Marssane pour mettre cette pratique au service de votre
+            entreprise. Je conçois vos automatisations et vous forme à les utiliser,
+            à partir de vos outils et de vos besoins réels.
+          </p>
 
-          {/* Grille 2×2 de badges : c'est la preuve, elle doit primer sur la
-              prose. Fond `bg-ecume-sur-ink` — la carte porte déjà
-              `bg-surface-sur-ink`, un fond neutre y serait invisible. */}
-          <ul className="mt-[18px] grid grid-cols-2 gap-2.5">
+          <h3 className="mt-7 text-[15px] font-semibold text-fort">Mes réalisations au quotidien</h3>
+          <ul className="mt-3 divide-y divide-line-sur-ink border-y border-line-sur-ink text-[14px] leading-[1.6] text-body-sur-ink">
+            <li className="py-3"><strong className="font-semibold text-fort">Rapports :</strong> automatisation des vérifications de cohérence et de mise en forme, avec une revue humaine finale.</li>
+            <li className="py-3"><strong className="font-semibold text-fort">Réunions :</strong> traitement automatique des notes et préparation des comptes rendus.</li>
+            <li className="py-3"><strong className="font-semibold text-fort">Présentations :</strong> automatisation de la création des visuels de rapports.</li>
+          </ul>
+
+          <ul aria-label="Certifications Anthropic Academy" className="mt-6 flex flex-wrap gap-x-5 gap-y-3">
             {CERTIFICATIONS.map((certification) => (
-              <li
-                key={certification}
-                className="flex items-center justify-center gap-2 rounded-card border border-line-sur-ink bg-ecume-sur-ink px-2.5 py-3"
-              >
+              <li key={certification} className="flex items-center gap-2">
                 <SparkMark size={18} />
-                <span className="font-mono text-[10.5px] uppercase leading-[1.2] tracking-[0.08em]">
+                <span className="font-mono text-[11px] leading-[1.4]">
                   {certification}
                 </span>
               </li>
             ))}
           </ul>
-
-          <p className="mt-[18px] text-[14px] leading-[1.5] text-body-sur-ink">
+          <p className="mt-3 text-[13px] leading-[1.5] text-body-sur-ink">
             Certifié Anthropic Academy sur tout l&apos;écosystème Claude.
           </p>
         </div>

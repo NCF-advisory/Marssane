@@ -2,9 +2,9 @@ import Image from "next/image";
 import styles from "./EquipeAgents.module.css";
 
 const agents = [
-  ["marco", "Marco"], ["elise", "Élise"], ["jacque", "Jacque"],
+  ["marco", "Marco"], ["elise", "Élise"], ["jacque", "Jacques"],
   ["alma", "Alma"], ["noe", "Noé"], ["ines", "Inès"], ["louis", "Louis"],
-  ["sarah", "Sarah"], ["hugo", "Hugo"], ["lina", "Lina"],
+  ["sarah", "Sarah"], ["hugo", "Hugo"], ["lina", "Camille"],
 ];
 
 export function EquipeAgents() {

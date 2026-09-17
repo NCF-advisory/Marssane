@@ -3,6 +3,43 @@
   cursor: pointer;
 }
 
+.partenaire {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 5px;
+  max-width: 220px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #c4c9ce;
+  text-decoration: none;
+}
+
+.partenaire strong {
+  color: #00d1be;
+  font-weight: 700;
+}
+
+.partenaire:hover strong {
+  color: #fff;
+}
+
+.partenaire:focus-visible {
+  outline: 2px solid #00d1be;
+  outline-offset: 4px;
+}
+
+@media (max-width: 479px) {
+  .partenaire {
+    flex-direction: column;
+    max-width: 165px;
+  }
+
+  .header {
+    column-gap: 12px;
+  }
+}
+
 .header .projectButton {
   min-height: 38px;
   padding: 8px 12px;

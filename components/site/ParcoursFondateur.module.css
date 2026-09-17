@@ -1,0 +1,60 @@
+.dialog {
+  width: min(820px, calc(100vw - 24px));
+  max-height: min(880px, calc(100dvh - 32px));
+  margin: auto;
+  padding: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid #ffffff24;
+  border-radius: 8px;
+  background: #16161a;
+  color: #fff;
+}
+
+.dialog::backdrop {
+  background: #0e0e12d9;
+}
+
+:global(html):has(.dialog[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 16px 8px 24px;
+  border-bottom: 1px solid #ffffff1a;
+  background: #16161a;
+  color: #c4c9ce;
+  font-size: 12px;
+}
+
+.close {
+  display: grid;
+  flex: 0 0 44px;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.close:hover { background: #ffffff0d; }
+.close:focus-visible { outline: 2px solid #00d1be; outline-offset: -2px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .dialog[open] { animation: apparition 180ms ease-out; }
+  @keyframes apparition {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}

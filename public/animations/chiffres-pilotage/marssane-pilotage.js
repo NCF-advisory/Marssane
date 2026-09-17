@@ -41,8 +41,8 @@ const template=`<style>
 </style>
 <div class="frame">
 <svg viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
-<title id="title">Chiffres et pilotage avec Jacque</title>
-<desc id="desc">Chaque semaine, Jacque rassemble les informations de la facturation, du suivi commercial et des projets. Il prépare une diapositive PowerPoint pour le point hebdomadaire : 12 400 euros facturés hors taxes, 6 devis signés sur la semaine et 3 projets en cours. Exemple fictif. La présentation est prête à présenter, sans envoi automatique.</desc>
+<title id="title">Chiffres et pilotage avec Jacques</title>
+<desc id="desc">Chaque semaine, Jacques rassemble les informations de la facturation, du suivi commercial et des projets. Il prépare une diapositive PowerPoint pour le point hebdomadaire : 12 400 euros facturés hors taxes, 6 devis signés sur la semaine et 3 projets en cours. Exemple fictif. La présentation est prête à présenter, sans envoi automatique.</desc>
 <defs>
  <clipPath id="portrait"><circle cx="426" cy="280" r="54"/></clipPath>
  ${sources.map((s,i)=>`<clipPath id="sourceClip${i}"><rect id="sourceReveal${i}" x="42" y="${s.y}" width="250" height="58" rx="15"/></clipPath>`).join('')}
@@ -70,7 +70,7 @@ ${sources.map((s,i)=>`<g data-node="source-${i}" clip-path="url(#sourceClip${i})
  <circle cx="426" cy="280" r="62" fill="var(--schema-background)" stroke="#D3994F" stroke-width="1.5"/>
  <circle id="agentRing" cx="426" cy="280" r="62" fill="none" stroke="var(--schema-signal)" stroke-width="3" stroke-dasharray="59 330" opacity="0"/>
  <g clip-path="url(#portrait)"><circle cx="426" cy="280" r="54" fill="#0E0E12"/><image href="${portrait}" x="334.2" y="223.6" width="183.6" height="183.6"/></g>
- <text x="426" y="379" text-anchor="middle" font-size="30" fill="var(--schema-label)">Jacque</text>
+ <text x="426" y="379" text-anchor="middle" font-size="30" fill="var(--schema-label)">Jacques</text>
 </g>
 <g data-node="synthese">
  <g clip-path="url(#docClip)">

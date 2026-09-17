@@ -31,3 +31,21 @@ la dernière version publique, pour préserver le serveur local et le travail pa
 
 Le déploiement suit le circuit GitHub `main` → Vercel Production existant.
 La livraison effective des e-mails n’est pas testée avec un envoi réel.
+
+## Résultat en production
+
+Publié sur https://marssane.fr le 16 septembre 2026 vers 16 h 43 (Paris),
+commit `240ae8754faf5eda0d470f9cc156ca4d67d5242b`.
+Déploiement Vercel réussi :
+https://vercel.com/ncf-advisory-s-projects/marssane/3useHLMzivtcET7Zf7fJQPmPbHiY
+
+Contrôles après publication : huit pages HTTP 200, Chromium et WebKit à
+1440 px et 390 px, deux parcours rendez-vous simulés sans écriture réelle,
+aucune erreur JavaScript ni débordement. Les cinq schémas démarrent au
+défilement. Empreintes de la vidéo et des six scripts publics conformes
+aux fichiers locaux. API disponibilités : HTTP 200, 198 créneaux.
+Redirection www : HTTP 308 vers le domaine principal, puis HTTP 200.
+
+Le dépôt de travail local reste sur son historique précédent avec ses
+modifications, afin de préserver le travail partagé. La publication a été
+effectuée depuis la copie isolée, basée sur le dernier `main` distant.
