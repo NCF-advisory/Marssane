@@ -29,9 +29,11 @@ export const siteEntities = [
     "@type": "Person",
     "@id": PERSON_ID,
     name: "Cléante Oullion",
-    url: absoluteUrl("/#formateur"),
+    url: absoluteUrl("/"),
     image: absoluteUrl("/img/formateur/cleante.jpg"),
-    jobTitle: "Fondateur et formateur de Marssane",
+    jobTitle: "Fondateur de Marssane",
+    knowsAbout: ["Implémentation IA", "Automatisation des tâches métier", "Formation IA"],
+    sameAs: ["https://fr.linkedin.com/in/cl%C3%A9ante-oullion-a555291a1"],
     worksFor: { "@id": ORGANIZATION_ID },
   },
   {
@@ -43,6 +45,50 @@ export const siteEntities = [
     publisher: { "@id": ORGANIZATION_ID },
   },
 ];
+
+/** Le balisage réutilise le contenu affiché, sans ajouter de résultats supposés. */
+export function serviceEntities({
+  path,
+  name,
+  description,
+  faq,
+}: {
+  path: string;
+  name: string;
+  description: string;
+  faq: { question: string; reponse: string }[];
+}) {
+  const serviceId = absoluteUrl(`${path}#service`);
+  return [
+    ...siteEntities,
+    {
+      ...webPage({ path, name, description }),
+      mainEntity: { "@id": serviceId },
+      hasPart: { "@id": absoluteUrl(`${path}#faq`) },
+    },
+    {
+      "@type": "Service",
+      "@id": serviceId,
+      url: absoluteUrl(path),
+      name: `${name} pour les PME`,
+      serviceType: name,
+      description,
+      provider: { "@id": ORGANIZATION_ID },
+      audience: { "@type": "BusinessAudience", audienceType: "PME" },
+      mainEntityOfPage: { "@id": absoluteUrl(`${path}#webpage`) },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": absoluteUrl(`${path}#faq`),
+      isPartOf: { "@id": absoluteUrl(`${path}#webpage`) },
+      mainEntity: faq.map(({ question, reponse }) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: reponse },
+      })),
+    },
+  ];
+}
 
 /** Le niveau débutant est le seul programme finalisé et ouvert. */
 export function beginnerCourse() {

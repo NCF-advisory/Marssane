@@ -14,7 +14,6 @@ const nextConfig: NextConfig = {
       "/api/:path*",
       "/styleguide",
       "/merci",
-      "/implementation",
     ].map((source) => ({
       source,
       headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],

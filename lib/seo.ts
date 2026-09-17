@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 export const SITE_URL = "https://marssane.fr";
 
 export const HOME_DESCRIPTION =
-  "Marssane installe des agents IA dans votre PME près de Lyon : mails, devis et relances automatisés. Passation accompagnée ou maintenance selon vos besoins.";
+  "Marssane déploie des agents IA et automatise les tâches de votre PME : devis, mails, relances et reporting. Intégration à vos outils, passation ou maintenance.";
 
-export const HOME_TITLE = "Implémentation IA et agents pour PME à Lyon | Marssane";
+export const HOME_TITLE = "Marssane | Implémentation IA et automatisation pour PME";
 
 /** Une seule origine publique pour les canoniques, le sitemap et le JSON-LD. */
 export const PUBLIC_PATHS = [

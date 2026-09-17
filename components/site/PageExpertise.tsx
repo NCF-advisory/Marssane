@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Fragment } from "react";
+import { JsonLd } from "./JsonLd";
+import { serviceEntities } from "@/lib/structured-data";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { Footer } from "./Footer";
 import { RendezVousTrigger } from "./RendezVousTrigger";
@@ -35,6 +37,15 @@ export type Expertise = {
 export function PageExpertise({ contenu: c }: { contenu: Expertise }) {
   return (
     <>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@graph": serviceEntities({
+          path: c.path,
+          name: c.nom,
+          description: c.introduction,
+          faq: c.faq,
+        }),
+      }} />
       <main className={styles.page}>
         <section className={`${styles.section} ${styles.hero}`}>
           <Breadcrumbs items={[{ name: c.nom, path: c.path }]} />
