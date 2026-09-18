@@ -11,7 +11,7 @@ Tailwind CSS v4, avec pré-inscription en base Postgres (Supabase en v1).
 - **ERP** — `https://erp.marssane.fr`, dépôt voisin `../erp-marssane`. La
   publication passe par `npm run publier` depuis ce dépôt, qui déclenche les
   tests, la compilation et la bascule via GitHub Actions. Procédure et accès :
-  `../erp-marssane/docs/deploiement-github.md`.
+  `../erp-marssane/docs/exploitation/deploiement-github.md`.
 
 ## Prérequis
 

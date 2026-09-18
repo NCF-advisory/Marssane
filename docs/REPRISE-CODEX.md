@@ -39,7 +39,7 @@ l’instant. Demander la prochaine tâche après lecture.
   formations, Participants (5 pour dirigeants PME), simulateur par séance
   indépendant de la durée et frais de structure à 20 %.
 - Configuration, accès limités et procédure de retour :
-  `../erp-marssane/docs/deploiement-github.md`.
+  `../erp-marssane/docs/exploitation/deploiement-github.md`.
   Les migrations en attente bloquent la publication ; elles ne sont pas
   appliquées automatiquement. Les secrets applicatifs restent sur le VPS.
 - Le dépôt GitHub a été initialisé depuis la dernière version publiée du
@@ -161,6 +161,6 @@ Ne pas lancer de build dans le même .next qu’un serveur dev actif.
   tarif directement modifiable, aucun crayon visible. Champs interactifs indépendants.
 - Migration additive 020 appliquée, sauvegarde privée des cinq lignes de tags ;
   aucune modification métier de test. Conteneur sain, HTTPS et 493 empreintes vérifiés.
-- Détails : ../erp-marssane/docs/publication-20260912-cartes-taches.md.
+- Détails : ../erp-marssane/docs/publications/publication-20260912-cartes-taches.md.
 - La prochaine publication devra partir du dernier main. Le dossier local
   historique reste partagé : examiner le diff, éviter les documents anciens hors scope.
