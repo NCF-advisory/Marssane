@@ -21,7 +21,6 @@ const links = [
  *  est montée dans le layout racine, donc partagée par toutes les routes. */
 const PAGES_SITE = [
   "/",
-  "/accueil-formation",
   "/quelle-ia",
   "/formations",
   "/implementation",

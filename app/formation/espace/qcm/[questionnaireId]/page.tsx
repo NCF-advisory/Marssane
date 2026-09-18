@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import { DbUnavailable } from "@/components/admin/DbUnavailable";
+import { DbUnavailable } from "@/components/ui/DbUnavailable";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
 import { getCurrentParticipant } from "@/lib/participant-auth";
 import {

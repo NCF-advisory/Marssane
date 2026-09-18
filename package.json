@@ -9,8 +9,7 @@
     "lint": "eslint",
     "db:migrate": "node --env-file-if-exists=.env.local scripts/db-migrate.mjs",
     "db:seed": "node --env-file-if-exists=.env.local scripts/db-seed.mjs",
-    "db:seed:qcm": "node --env-file-if-exists=.env.local scripts/db-seed-qcm.mjs",
-    "admin:create": "node --env-file-if-exists=.env.local scripts/create-admin.mjs"
+    "db:seed:qcm": "node --env-file-if-exists=.env.local scripts/db-seed-qcm.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

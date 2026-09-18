@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { logoutAction } from "@/app/formation/actions";
-import { DbUnavailable } from "@/components/admin/DbUnavailable";
+import { DbUnavailable } from "@/components/ui/DbUnavailable";
 import { LogoMarssane } from "@/components/ui/LogoMarssane";
 import { PlusMark } from "@/components/ui/PlusMark";
 import { listMessages } from "@/lib/formation-chat";

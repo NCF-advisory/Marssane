@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 const base = new URL(process.argv[2] ?? "http://127.0.0.1:3000");
 const canonicalBase = "https://marssane.fr";
 const paths = ["/", "/implementation", "/automatisation", "/formations", "/quelle-ia", "/mentions-legales", "/confidentialite"];
-const privatePaths = ["/formation", "/styleguide", "/merci", "/accueil-formation", "/diagnostic-video", "/explorations/cta"];
+const privatePaths = ["/formation", "/styleguide", "/merci"];
 const attributes = (tag) => Object.fromEntries(
   [...tag.matchAll(/([\w:-]+)="([^"]*)"/g)].map((match) => [match[1], match[2]]),
 );

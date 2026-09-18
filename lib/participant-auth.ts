@@ -10,7 +10,7 @@ import {
 /**
  * Helpers de session participant côté serveur (composants serveur + server
  * actions). S'appuient sur `next/headers` (cookies) — à ne PAS importer dans le
- * proxy, qui lit le cookie via NextRequest. Calqués sur lib/admin-auth.ts.
+ * proxy, qui lit le cookie via NextRequest.
  */
 
 /** Retourne le participant connecté (depuis le cookie), ou `null`. */
