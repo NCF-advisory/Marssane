@@ -13,8 +13,7 @@
  */
 import React from "react";
 import { LogoIA } from "@/components/ui/LogoIA";
-import { PAYS } from "@/lib/pays";
-import type { Pays } from "@/lib/benchmarks/models";
+import { PAYS, type Pays } from "@/lib/pays";
 
 const INK = "#0E0E12";
 const TURQUOISE = "#00D1BE";

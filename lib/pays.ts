@@ -1,4 +1,5 @@
-import type { Pays } from "@/lib/benchmarks/models";
+/** Pays de l'éditeur d'un modèle (badge de souveraineté). */
+export type Pays = "US" | "FR" | "CN";
 
 /**
  * Table des pays d'éditeurs — source de vérité unique des libellés.

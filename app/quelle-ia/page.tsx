@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { getClassementSafe } from "@/lib/benchmarks/classement";
+import { CLASSEMENT } from "@/lib/benchmarks/classement-statique";
 import { Footer } from "@/components/site/Footer";
 import { Chevron } from "@/components/ui/Chevron";
-import { Kicker } from "@/components/ui/Kicker";
 import { HeroRecommandation } from "@/components/site/HeroRecommandation";
 import { GraphiqueEfficacite } from "@/components/quelle-ia/GraphiqueEfficacite";
 import { MethodoSources } from "@/components/quelle-ia/MethodoSources";
@@ -13,19 +12,15 @@ import { webPage } from "@/lib/structured-data";
 import { GuideChoix } from "@/components/quelle-ia/GuideChoix";
 import { TableauComparatif } from "@/components/quelle-ia/TableauComparatif";
 
-export const revalidate = 3600;
-
 /** Score au dixième, virgule décimale (ex. 73,3). */
 const fmtScore = (x: number) =>
   new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 1 }).format(x);
 
 /** Même formatage de date que « Méthode & sources », pour rester cohérent. */
-const fmtDate = (iso: string | null) =>
-  iso
-    ? new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(
-        new Date(iso),
-      )
-    : "—";
+const fmtDate = (iso: string) =>
+  new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(
+    new Date(iso),
+  );
 
 const title = "Quelle IA choisir pour une PME ? Comparateur | Marssane";
 const description = "Comparez les modèles IA pour votre PME : intelligence, coût API et réactivité. Consultez les sources, la méthode et les conseils de choix de Marssane.";
@@ -35,56 +30,22 @@ export const metadata = createPublicMetadata({
   path: "/quelle-ia",
 });
 
-export default async function Page() {
-  const c = await getClassementSafe();
-
-  if (c.entries.length === 0) {
-    return (
-      <>
-        <JsonLd data={{ "@context": "https://schema.org", ...webPage({ path: "/quelle-ia", name: title, description }) }} />
-        {/* `flex-1` fait couvrir au <main> toute la hauteur restante du body
-            (min-h-full flex flex-col), pour que le pied de page reste en bas
-            quand le contenu est court. Le fond encre est porté par le body. */}
-        <main className="flex-1">
-          <section className="relative isolate mx-auto max-w-[1180px] px-6 pb-2 pt-[84px] sm:px-10">
-            <Breadcrumbs items={[{ name: "Comparateur d’IA", path: "/quelle-ia" }]} />
-            <div className="max-w-[640px]">
-              <Kicker className="text-faint-sur-ink!">
-                Le comparateur · intelligence et prix
-              </Kicker>
-              <h1 className="mt-[14px] text-[30px] font-extrabold leading-[1.08] tracking-[-0.025em] text-white sm:text-[38px]">
-                Quelle IA utiliser{" "}
-                <span className="relative inline-block bg-canard px-[0.26em] pb-[0.05em] pt-0 text-white">
-                  aujourd&apos;hui
-                </span>{" "}
-                ?
-              </h1>
-              <p className="mt-[14px] text-[16.5px] leading-[1.58] text-body-sur-ink">
-                Le classement est en cours d&apos;actualisation. Revenez dans quelques instants pour
-                découvrir le meilleur compromis intelligence, prix et réactivité du moment.
-              </p>
-            </div>
-          </section>
-          <GuideChoix />
-          <PontFormation />
-        </main>
-        <Footer />
-      </>
-    );
-  }
+export default function Page() {
+  const c = CLASSEMENT;
 
   // Épingle éditoriale temporaire (01/09/2026) : le héro montre Claude Opus 5
   // plutôt que le premier du classement. En l'état, la formule hisse en tête les
   // Flash bon marché, alors que le graphe du bas de page désigne Opus 5 au
   // sommet de la frontière intelligence/coût. Repli sur le premier du classement
-  // si l'entrée manque (elle est exclue tant que ses sources ne donnent pas
-  // d'intelligence exploitable). À retirer une fois la formule recalibrée.
+  // si l'entrée manque. À retirer une fois la formule recalibrée.
   const top = c.entries.find((e) => e.cle === "claude-opus-5") ?? c.entries[0];
 
   return (
     <>
       <JsonLd data={{ "@context": "https://schema.org", ...webPage({ path: "/quelle-ia", name: title, description }) }} />
-      {/* `flex-1` : cf. la branche « classement vide » ci-dessus.
+      {/* `flex-1` fait couvrir au <main> toute la hauteur restante du body
+          (min-h-full flex flex-col), pour que le pied de page reste en bas
+          quand le contenu est court. Le fond encre est porté par le body.
           `snap-page-quelle-ia` active le scroll-snap racine, ciblé sur cette
           page via `html:has(...)` dans globals.css (aucune fuite ailleurs) :
           depuis le héro, le moindre défilement aimante le bloc du graphe. */}
