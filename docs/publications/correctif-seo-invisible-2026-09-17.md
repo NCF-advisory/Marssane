@@ -34,4 +34,12 @@ Mesure proposée : référence des 28 derniers jours, requêtes de marque sépar
 
 ## Publication
 
-À compléter après validation en production.
+Publié sur https://marssane.fr par le commit `b1d9caf041b9147f6fa4ad51801bb97d14d01f30`.
+
+Déploiement Vercel réussi : https://vercel.com/ncf-advisory-s-projects/marssane/71aV4dx1EjP791iVwqEDKVRsgRG5.
+
+Recette HTTPS après publication réussie : sept pages publiques, six pages noindex, redirection admin, canoniques, sitemap, robots, métadonnées sociales, services et FAQ. `/implementation` répond HTTP 200 sans X-Robots-Tag bloquant, y compris avec un User-Agent Googlebot (ce contrôle ne remplace pas une inspection Google authentifiée).
+
+Comparaison du HTML de production avant/après : contenu, structure et attributs du `<main>` identiques sur l’accueil, l’implémentation, l’automatisation et les formations, hors scripts et hashs CSS normalisés. Aucune modification visuelle apportée.
+
+La demande de réexploration et les mesures Search Console restent à effectuer une fois un accès authentifié disponible. Aucun changement du résultat Google ni aucune indexation effective ne sont prétendus.

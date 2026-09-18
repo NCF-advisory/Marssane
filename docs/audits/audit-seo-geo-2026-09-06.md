@@ -17,7 +17,7 @@ La durée de la formation a été confirmée par le propriétaire pendant cet au
 - Lighthouse mobile sur la production et le build local ; tests Chrome à 320, 390, 768 et 1440 pixels ; interactions sans soumission de formulaire.
 - Recherche exploratoire de marque et de formations IA pour dirigeants dans la région lyonnaise, puis consultation de recommandations officielles.
 
-Les preuves publiques et locales sont conservées dans [le relevé JSON](audits/seo-geo-2026-09-06.json). Les constats de production et les corrections locales y sont séparés.
+Les preuves publiques et locales sont conservées dans [le relevé JSON](seo-geo-2026-09-06.json). Les constats de production et les corrections locales y sont séparés.
 
 **Limites d’accès :** pas de connexion à Google Search Console, Bing Webmaster Tools, aux historiques de trafic, aux journaux des robots ou à un inventaire de backlinks. Les positions, impressions, conversions organiques, citations par les assistants et Core Web Vitals des visiteurs réels ne sont donc pas mesurés. L’absence de Marssane dans les résultats de la recherche exploratoire ne prouve pas une absence d’indexation.
 

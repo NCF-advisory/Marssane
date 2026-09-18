@@ -4,6 +4,15 @@ Landing page de Marssane — formation à l'IA pour dirigeants de PME et TPE
 et entrepreneurs. Next.js (App Router) +
 Tailwind CSS v4, avec pré-inscription en base Postgres (Supabase en v1).
 
+## Deux applications
+
+- **Site public** — `https://marssane.fr`, ce dépôt. Déploiement Vercel
+  automatique depuis `main` du dépôt `NCF-advisory/Marssane`.
+- **ERP** — `https://erp.marssane.fr`, dépôt voisin `../erp-marssane`. La
+  publication passe par `npm run publier` depuis ce dépôt, qui déclenche les
+  tests, la compilation et la bascule via GitHub Actions. Procédure et accès :
+  `../erp-marssane/docs/deploiement-github.md`.
+
 ## Prérequis
 
 - Node **24** (le projet est développé et testé sous Node 24).
@@ -70,7 +79,12 @@ lib/
   emails.ts              Emails transactionnels (no-op — jalon 3 tâche 3)
 db/migrations/           Migrations SQL (schéma)
 scripts/                 Scripts Node : db:migrate, db:seed
-docs/references/         Maquette et charte graphique (sources de vérité)
+docs/                    Documentation
+  references/            Maquette et charte graphique (sources de vérité)
+  specs/                 CDC, spécifications, briefs et prompts
+  audits/                Audits SEO/GEO et relevés JSON
+  recettes/              Comptes rendus de recette
+  publications/          Notes de mise en production
 ```
 
 ## Notes
@@ -92,5 +106,8 @@ docs/references/         Maquette et charte graphique (sources de vérité)
   `lib/creneaux.ts`. Le schéma `Course` décrit uniquement le niveau débutant,
   dont le programme est finalisé. Ne pas ajouter de notes, de certifications
   d’organisme ou d’offres qui ne figurent pas dans le contenu visible.
-- **Audit** : voir `docs/audit-seo-geo-2026-09-06.md` pour les constats, les
+- **Vidéo sur Safari** : un blocage de la lecture automatique vient du mode
+  économie d'énergie du Mac, pas du fichier vidéo ni du lecteur — voir
+  `docs/lecture-video-safari.md`.
+- **Audit** : voir `docs/audits/audit-seo-geo-2026-09-06.md` pour les constats, les
   vérifications et le suivi après publication.

@@ -1,0 +1,1259 @@
+{
+  "observed_at": "2026-09-17T14:16:58Z",
+  "method": "GET HTTPS public, HTML initial et en-têtes ; aucune consultation Search Console",
+  "pages": [
+    {
+      "path": "/",
+      "headers": [
+        "HTTP/2 200 "
+      ],
+      "meta": {
+        "title": "Implémentation IA et agents pour PME à Lyon | Marssane",
+        "description": "Marssane installe des agents IA dans votre PME près de Lyon : mails, devis et relances automatisés. Passation accompagnée ou maintenance selon vos besoins.",
+        "robots": "index, follow",
+        "googlebot": "max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+        "og:title": "Implémentation IA et agents pour PME à Lyon | Marssane",
+        "og:image:alt": "Marssane · La formation IA des dirigeants de PME"
+      },
+      "canonical": [
+        "https://marssane.fr"
+      ],
+      "headings": [
+        [
+          "h1",
+          "Dirigeant de PME, gagnez 2 h par jour+."
+        ],
+        [
+          "h2",
+          "Le Groupe Novances"
+        ],
+        [
+          "h2",
+          "Les dirigeants d'entreprise témoignent."
+        ],
+        [
+          "h2",
+          "L'IA bien implémentée, voilà ce que ça change+."
+        ],
+        [
+          "h2",
+          "Nous construisons, vous gardez la main."
+        ],
+        [
+          "h3",
+          "Diagnostic · votre semaine au crible"
+        ],
+        [
+          "h3",
+          "Construction · sur vos outils"
+        ],
+        [
+          "h3",
+          "La suite · selon vos besoins"
+        ],
+        [
+          "h2",
+          "Les automatisations qu'on installe chez vous."
+        ],
+        [
+          "h3",
+          "Relancé 25 fois par le même client ?"
+        ],
+        [
+          "h3",
+          "Le devis part à 22 h, le client a signé ailleurs ?"
+        ],
+        [
+          "h3",
+          "Un contrat de 42 pages à éplucher avant de signer ?"
+        ],
+        [
+          "h3",
+          "Deux heures de réunion, zéro compte-rendu ?"
+        ],
+        [
+          "h3",
+          "L’impayé traîne depuis 60 jours ?"
+        ],
+        [
+          "h3",
+          "Rendez-vous dans 20 minutes, dossier pas rouvert depuis 3 mois ?"
+        ],
+        [
+          "h2",
+          "Ce qui change quand le système tourne."
+        ],
+        [
+          "h3",
+          "Sans Marssane"
+        ],
+        [
+          "h3",
+          "Avec Marssane"
+        ],
+        [
+          "h2",
+          "Passation ou maintenance."
+        ],
+        [
+          "h2",
+          "Commencez par la voie qui vous correspond+."
+        ],
+        [
+          "h3",
+          "Les formations"
+        ],
+        [
+          "h3",
+          "Implémentation sur mesure"
+        ],
+        [
+          "h2",
+          "Un premier échange, en trois étapes."
+        ],
+        [
+          "h3",
+          "01Vos coordonnéesVotre nom et votre adresse mail"
+        ],
+        [
+          "h3",
+          "02Votre créneauUne heure pour parler de votre projet"
+        ],
+        [
+          "h3",
+          "03ConfirmationVérifiez et confirmez votre rendez-vous"
+        ],
+        [
+          "h2",
+          "Les questions qu'on nous pose."
+        ],
+        [
+          "h2",
+          "Cléante Oullion"
+        ],
+        [
+          "h3",
+          "Mes réalisations au quotidien"
+        ],
+        [
+          "h2",
+          "Réserver ma place"
+        ],
+        [
+          "h2",
+          "Un premier échange, en trois étapes."
+        ],
+        [
+          "h3",
+          "01Vos coordonnéesVotre nom et votre adresse mail"
+        ],
+        [
+          "h3",
+          "02Votre créneauUne heure pour parler de votre projet"
+        ],
+        [
+          "h3",
+          "03ConfirmationVérifiez et confirmez votre rendez-vous"
+        ]
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://marssane.fr/#organization",
+              "name": "Marssane",
+              "url": "https://marssane.fr/",
+              "description": "Marssane installe des agents IA dans votre PME près de Lyon : mails, devis et relances automatisés. Passation accompagnée ou maintenance selon vos besoins.",
+              "email": "contact@marssane.fr",
+              "logo": "https://marssane.fr/icon.svg",
+              "founder": {
+                "@id": "https://marssane.fr/#formateur"
+              },
+              "parentOrganization": {
+                "@type": "Organization",
+                "name": "NCF Advisory",
+                "url": "https://marssane.fr/mentions-legales"
+              }
+            },
+            {
+              "@type": "Person",
+              "@id": "https://marssane.fr/#formateur",
+              "name": "Cléante Oullion",
+              "url": "https://marssane.fr/#formateur",
+              "image": "https://marssane.fr/img/formateur/cleante.jpg",
+              "jobTitle": "Fondateur et formateur de Marssane",
+              "worksFor": {
+                "@id": "https://marssane.fr/#organization"
+              }
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://marssane.fr/#website",
+              "name": "Marssane",
+              "url": "https://marssane.fr/",
+              "inLanguage": "fr-FR",
+              "publisher": {
+                "@id": "https://marssane.fr/#organization"
+              }
+            },
+            {
+              "@type": [
+                "WebPage",
+                "FAQPage"
+              ],
+              "@id": "https://marssane.fr/#webpage",
+              "url": "https://marssane.fr/",
+              "name": "Implémentation IA et agents pour PME à Lyon | Marssane",
+              "description": "Marssane installe des agents IA dans votre PME près de Lyon : mails, devis et relances automatisés. Passation accompagnée ou maintenance selon vos besoins.",
+              "inLanguage": "fr-FR",
+              "isPartOf": {
+                "@id": "https://marssane.fr/#website"
+              },
+              "publisher": {
+                "@id": "https://marssane.fr/#organization"
+              },
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "Qu'est-ce que Marssane implémente concrètement ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Des agents IA qui prennent en charge vos tâches répétitives : tri de la boîte mail, préparation des devis, relances d'impayés, comptes-rendus de réunion, synthèses de documents."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Qu'est-ce qu'un agent IA ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Un assistant numérique qui utilise l’IA pour enchaîner plusieurs actions dans vos outils à partir d’une consigne. Par exemple, il peut trier vos mails, repérer les demandes importantes et préparer des réponses. Vous gardez la validation finale."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Combien de temps avant les premiers résultats ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Les premières automatisations tournent en quelques semaines : on commence par la tâche qui vous coûte le plus de temps, on la met en route, puis on élargit."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Sur quels outils travaillez-vous ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Sur les vôtres : votre messagerie, vos documents, vos fichiers. Les agents sont construits autour de vos outils existants."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Mes données sont-elles en sécurité ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "On définit ensemble, dès le diagnostic, ce que l'IA peut voir et ce qui reste hors de son périmètre. Vous savez à tout moment quoi lui confier, quoi garder."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Combien ça coûte ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Sur devis, selon le périmètre : nombre de tâches à automatiser, outils concernés et accompagnement choisi. La passation ou la maintenance sont précisées dans le devis. Le diagnostic permet de chiffrer avant de s'engager."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Qui s’occupe du système après la mise en place ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Vous choisissez l’accompagnement qui vous convient. Avec une passation accompagnée, nous formons votre équipe et documentons le système pour qu’elle puisse le gérer. Si vous préférez nous en confier la maintenance, Marssane assure le suivi technique, les corrections et les ajustements prévus ensemble. Le périmètre et le coût sont définis sur devis."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Et si je préfère apprendre à faire moi-même ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "C'est l'objet de nos formations : 2 séances de 3 h 30 en petit groupe près de Lyon, pour prendre l'IA en main et construire vos premiers automatismes vous-même."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "bytes": 375152
+    },
+    {
+      "path": "/implementation",
+      "headers": [
+        "HTTP/2 200 ",
+        "x-robots-tag: noindex, nofollow"
+      ],
+      "meta": {
+        "title": "Implémentation IA pour les PME | Marssane",
+        "description": "Des agents IA pour votre PME : prospection, devis, demandes clients, réunions et veille. Mise en place, puis passation accompagnée ou maintenance avec Marssane.",
+        "robots": "index, follow",
+        "googlebot": "max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+        "og:title": "Implémentation IA pour les PME | Marssane",
+        "og:image:alt": "Marssane · La formation IA des dirigeants de PME"
+      },
+      "canonical": [
+        "https://marssane.fr/implementation"
+      ],
+      "headings": [
+        [
+          "h1",
+          "Des agents IA qui travaillent pour votre entreprise."
+        ],
+        [
+          "h2",
+          "Les différents cas d’usages"
+        ],
+        [
+          "h3",
+          "Trouver de nouveaux clients"
+        ],
+        [
+          "h3",
+          "Gagner du temps sur l’administratif"
+        ],
+        [
+          "h3",
+          "Votre secrétaire vocal"
+        ],
+        [
+          "h2",
+          "Un système utile.L’accompagnement qui vous convient."
+        ],
+        [
+          "h2",
+          "Un premier usage, puis la suite."
+        ],
+        [
+          "h3",
+          "Choisir le bon point de départ"
+        ],
+        [
+          "h3",
+          "Construire et tester avec vous"
+        ],
+        [
+          "h3",
+          "Choisir votre accompagnement"
+        ],
+        [
+          "h2",
+          "Vos questions."
+        ],
+        [
+          "h3",
+          "Vous répétez surtout les mêmes manipulations ?"
+        ],
+        [
+          "h2",
+          "Quelle tâche aimeriez-vous ne plus avoir à refaire ?"
+        ],
+        [
+          "h2",
+          "Réserver ma place"
+        ],
+        [
+          "h2",
+          "Un premier échange, en trois étapes."
+        ],
+        [
+          "h3",
+          "01Vos coordonnéesVotre nom et votre adresse mail"
+        ],
+        [
+          "h3",
+          "02Votre créneauUne heure pour parler de votre projet"
+        ],
+        [
+          "h3",
+          "03ConfirmationVérifiez et confirmez votre rendez-vous"
+        ]
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Accueil",
+              "item": "https://marssane.fr/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Implémentation IA",
+              "item": "https://marssane.fr/implementation"
+            }
+          ]
+        }
+      ],
+      "bytes": 97111
+    },
+    {
+      "path": "/automatisation",
+      "headers": [
+        "HTTP/2 200 "
+      ],
+      "meta": {
+        "title": "Automatisation des tâches pour les PME | Marssane",
+        "description": "Reliez vos outils et automatisez les tâches répétitives de votre PME avec Marssane. Mise en place, puis passation accompagnée ou maintenance selon vos besoins.",
+        "robots": "index, follow",
+        "googlebot": "max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+        "og:title": "Automatisation des tâches pour les PME | Marssane",
+        "og:image:alt": "Marssane · La formation IA des dirigeants de PME"
+      },
+      "canonical": [
+        "https://marssane.fr/automatisation"
+      ],
+      "headings": [
+        [
+          "h1",
+          "Une règle définie déclenche une action."
+        ],
+        [
+          "h2",
+          "Les différents cas d’usages"
+        ],
+        [
+          "h3",
+          "Relances automatiques lorsqu’un client ne paie pas"
+        ],
+        [
+          "h3",
+          "Compte rendu chaque lundi matin 9h"
+        ],
+        [
+          "h3",
+          "Factures et paiements"
+        ],
+        [
+          "h2",
+          "Un système utile.L’accompagnement qui vous convient."
+        ],
+        [
+          "h2",
+          "Un premier usage, puis la suite."
+        ],
+        [
+          "h3",
+          "Décrire ce qui se répète"
+        ],
+        [
+          "h3",
+          "Relier les outils et vérifier les cas réels"
+        ],
+        [
+          "h3",
+          "Mettre en route et organiser le suivi"
+        ],
+        [
+          "h2",
+          "Vos questions."
+        ],
+        [
+          "h3",
+          "Vos tâches demandent aussi de comprendre des documents ?"
+        ],
+        [
+          "h2",
+          "Quelle tâche aimeriez-vous ne plus avoir à refaire ?"
+        ],
+        [
+          "h2",
+          "Réserver ma place"
+        ],
+        [
+          "h2",
+          "Un premier échange, en trois étapes."
+        ],
+        [
+          "h3",
+          "01Vos coordonnéesVotre nom et votre adresse mail"
+        ],
+        [
+          "h3",
+          "02Votre créneauUne heure pour parler de votre projet"
+        ],
+        [
+          "h3",
+          "03ConfirmationVérifiez et confirmez votre rendez-vous"
+        ]
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Accueil",
+              "item": "https://marssane.fr/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Automatisation",
+              "item": "https://marssane.fr/automatisation"
+            }
+          ]
+        }
+      ],
+      "bytes": 81625
+    },
+    {
+      "path": "/formations",
+      "headers": [
+        "HTTP/2 200 "
+      ],
+      "meta": {
+        "title": "Formation IA à Lyon pour dirigeants : les niveaux | Marssane",
+        "description": "Débutez avec une formation IA de 7 h près de Lyon : Claude, prompts et automatisation métier. Découvrez aussi les niveaux confirmé et expert à venir.",
+        "robots": "index, follow",
+        "googlebot": "max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+        "og:title": "Formation IA à Lyon pour dirigeants : les niveaux | Marssane",
+        "og:image:alt": "Marssane · La formation IA des dirigeants de PME"
+      },
+      "canonical": [
+        "https://marssane.fr/formations"
+      ],
+      "headings": [
+        [
+          "h1",
+          "Formez-vous à l'IA et gagnez 2 heures+ par semaine"
+        ],
+        [
+          "h2",
+          "Prendre en main l'IA au quotidien"
+        ],
+        [
+          "h2",
+          "Structurer ses usages et gagner du temps"
+        ],
+        [
+          "h2",
+          "Construire son propre outil, de A à Z"
+        ],
+        [
+          "h2",
+          "Réserver ma place"
+        ],
+        [
+          "h2",
+          "Un premier échange, en trois étapes."
+        ],
+        [
+          "h3",
+          "01Vos coordonnéesVotre nom et votre adresse mail"
+        ],
+        [
+          "h3",
+          "02Votre créneauUne heure pour parler de votre projet"
+        ],
+        [
+          "h3",
+          "03ConfirmationVérifiez et confirmez votre rendez-vous"
+        ]
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebPage",
+              "@id": "https://marssane.fr/formations#webpage",
+              "url": "https://marssane.fr/formations",
+              "name": "Formation IA à Lyon pour dirigeants : les niveaux | Marssane",
+              "description": "Débutez avec une formation IA de 7 h près de Lyon : Claude, prompts et automatisation métier. Découvrez aussi les niveaux confirmé et expert à venir.",
+              "inLanguage": "fr-FR",
+              "isPartOf": {
+                "@id": "https://marssane.fr/#website"
+              },
+              "publisher": {
+                "@id": "https://marssane.fr/#organization"
+              },
+              "mainEntity": {
+                "@id": "https://marssane.fr/formations#debutant"
+              }
+            },
+            {
+              "@type": "Course",
+              "@id": "https://marssane.fr/formations#debutant",
+              "url": "https://marssane.fr/formations#debutant",
+              "name": "Formation IA débutant : Prendre en main l'IA au quotidien",
+              "description": "Construire son premier système : une boîte mail qui se trie toute seule, et la méthode pour recommencer.",
+              "inLanguage": "fr-FR",
+              "educationalLevel": "Débutant",
+              "timeRequired": "PT7H",
+              "teaches": [
+                "Choisir le bon modèle et formuler le bon prompt",
+                "Confier à Claude des tâches concrètes : fichiers, mails, recherche",
+                "Créer un skill réutilisable et brancher un connecteur",
+                "Optimiser vos processus"
+              ],
+              "provider": {
+                "@type": "Organization",
+                "@id": "https://marssane.fr/#organization",
+                "name": "Marssane",
+                "url": "https://marssane.fr/"
+              }
+            }
+          ]
+        }
+      ],
+      "bytes": 79450
+    },
+    {
+      "path": "/quelle-ia",
+      "headers": [
+        "HTTP/2 200 "
+      ],
+      "meta": {
+        "title": "Quelle IA choisir pour une PME ? Comparateur | Marssane",
+        "description": "Comparez les modèles IA pour votre PME : intelligence, coût API et réactivité. Consultez les sources, la méthode et les conseils de choix de Marssane.",
+        "robots": "index, follow",
+        "googlebot": "max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+        "og:title": "Quelle IA choisir pour une PME ? Comparateur | Marssane",
+        "og:image:alt": "Marssane · La formation IA des dirigeants de PME"
+      },
+      "canonical": [
+        "https://marssane.fr/quelle-ia"
+      ],
+      "headings": [
+        [
+          "h1",
+          "Quelle IA utiliser aujourd'hui ?"
+        ],
+        [
+          "h2",
+          "Claude Opus 5"
+        ],
+        [
+          "h2",
+          "Intelligence × coût."
+        ],
+        [
+          "h2",
+          "Comment ce comparateur d’IA est-il calculé ?"
+        ],
+        [
+          "h2",
+          "Quelle IA choisir pour une PME ?"
+        ],
+        [
+          "h3",
+          "Pour rédiger et synthétiser"
+        ],
+        [
+          "h3",
+          "Pour automatiser une tâche"
+        ],
+        [
+          "h3",
+          "Pour choisir votre budget"
+        ],
+        [
+          "h2",
+          "Réserver ma place"
+        ],
+        [
+          "h2",
+          "Un premier échange, en trois étapes."
+        ],
+        [
+          "h3",
+          "01Vos coordonnéesVotre nom et votre adresse mail"
+        ],
+        [
+          "h3",
+          "02Votre créneauUne heure pour parler de votre projet"
+        ],
+        [
+          "h3",
+          "03ConfirmationVérifiez et confirmez votre rendez-vous"
+        ]
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "@id": "https://marssane.fr/quelle-ia#webpage",
+          "url": "https://marssane.fr/quelle-ia",
+          "name": "Quelle IA choisir pour une PME ? Comparateur | Marssane",
+          "description": "Comparez les modèles IA pour votre PME : intelligence, coût API et réactivité. Consultez les sources, la méthode et les conseils de choix de Marssane.",
+          "inLanguage": "fr-FR",
+          "isPartOf": {
+            "@id": "https://marssane.fr/#website"
+          },
+          "publisher": {
+            "@id": "https://marssane.fr/#organization"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Accueil",
+              "item": "https://marssane.fr/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Comparateur d’IA",
+              "item": "https://marssane.fr/quelle-ia"
+            }
+          ]
+        }
+      ],
+      "bytes": 105700
+    },
+    {
+      "path": "/accueil-formation",
+      "headers": [
+        "HTTP/2 200 "
+      ],
+      "meta": {
+        "title": "Formation IA pour dirigeants de PME à Lyon | Marssane",
+        "description": "Formation IA pour dirigeants de PME près de Lyon : 2 séances de 3 h 30 pour pratiquer Claude sur vos mails, documents et tâches métier, avec Marssane.",
+        "robots": "noindex, nofollow",
+        "og:title": "Formation IA pour dirigeants de PME à Lyon | Marssane",
+        "og:image:alt": "Marssane · La formation IA des dirigeants de PME"
+      },
+      "canonical": [
+        "https://marssane.fr/accueil-formation"
+      ],
+      "headings": [
+        [
+          "h1",
+          "Formez-vous à l'IA et gagnez 2 heures+ par semaine"
+        ],
+        [
+          "h2",
+          "Le Groupe Novances"
+        ],
+        [
+          "h2",
+          "Les dirigeants d'entreprise témoignent."
+        ],
+        [
+          "h2",
+          "L’IA bien utilisée, voilà ce que ça change+."
+        ],
+        [
+          "h2",
+          "Vous construisez, le formateur valide chaque étape."
+        ],
+        [
+          "h3",
+          "Session 1 · Général"
+        ],
+        [
+          "h3",
+          "Entre les deux · à votre rythme"
+        ],
+        [
+          "h3",
+          "Session 2 · votre cas"
+        ],
+        [
+          "h2",
+          "Cléante Oullion"
+        ],
+        [
+          "h3",
+          "Mes réalisations au quotidien"
+        ],
+        [
+          "h2",
+          "Les cas auxquels vous répondez pendant la formation."
+        ],
+        [
+          "h3",
+          "Relancé 25 fois par le même client ?"
+        ],
+        [
+          "h3",
+          "Le devis part à 22 h, le client a signé ailleurs ?"
+        ],
+        [
+          "h3",
+          "Un contrat de 42 pages à éplucher avant de signer ?"
+        ],
+        [
+          "h3",
+          "Deux heures de réunion, zéro compte-rendu ?"
+        ],
+        [
+          "h3",
+          "L’impayé traîne depuis 60 jours ?"
+        ],
+        [
+          "h3",
+          "Rendez-vous dans 20 minutes, dossier pas rouvert depuis 3 mois ?"
+        ],
+        [
+          "h2",
+          "Ce qui change après les deux demi-journées."
+        ],
+        [
+          "h3",
+          "Sans la formation"
+        ],
+        [
+          "h3",
+          "Avec Marssane"
+        ],
+        [
+          "h2",
+          "Votre autonomie est notre modèle."
+        ],
+        [
+          "h2",
+          "Commencez par le niveau qui vous correspond+."
+        ],
+        [
+          "h3",
+          "Niveau débutant"
+        ],
+        [
+          "h3",
+          "Niveau confirmé"
+        ],
+        [
+          "h2",
+          "Réservez votre place pour la prochaine session+."
+        ],
+        [
+          "h2",
+          "Les questions qu'on nous pose."
+        ],
+        [
+          "h2",
+          "Réserver ma place"
+        ],
+        [
+          "h2",
+          "Un premier échange, en trois étapes."
+        ],
+        [
+          "h3",
+          "01Vos coordonnéesVotre nom et votre adresse mail"
+        ],
+        [
+          "h3",
+          "02Votre créneauUne heure pour parler de votre projet"
+        ],
+        [
+          "h3",
+          "03ConfirmationVérifiez et confirmez votre rendez-vous"
+        ]
+      ],
+      "jsonld": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://marssane.fr/#organization",
+              "name": "Marssane",
+              "url": "https://marssane.fr/",
+              "description": "Marssane installe des agents IA dans votre PME près de Lyon : mails, devis et relances automatisés. Passation accompagnée ou maintenance selon vos besoins.",
+              "email": "contact@marssane.fr",
+              "logo": "https://marssane.fr/icon.svg",
+              "founder": {
+                "@id": "https://marssane.fr/#formateur"
+              },
+              "parentOrganization": {
+                "@type": "Organization",
+                "name": "NCF Advisory",
+                "url": "https://marssane.fr/mentions-legales"
+              }
+            },
+            {
+              "@type": "Person",
+              "@id": "https://marssane.fr/#formateur",
+              "name": "Cléante Oullion",
+              "url": "https://marssane.fr/#formateur",
+              "image": "https://marssane.fr/img/formateur/cleante.jpg",
+              "jobTitle": "Fondateur et formateur de Marssane",
+              "worksFor": {
+                "@id": "https://marssane.fr/#organization"
+              }
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://marssane.fr/#website",
+              "name": "Marssane",
+              "url": "https://marssane.fr/",
+              "inLanguage": "fr-FR",
+              "publisher": {
+                "@id": "https://marssane.fr/#organization"
+              }
+            },
+            {
+              "@type": [
+                "WebPage",
+                "FAQPage"
+              ],
+              "@id": "https://marssane.fr/accueil-formation#webpage",
+              "url": "https://marssane.fr/accueil-formation",
+              "name": "Formation IA pour dirigeants de PME à Lyon | Marssane",
+              "description": "Formation IA pour dirigeants de PME près de Lyon : 2 séances de 3 h 30 pour pratiquer Claude sur vos mails, documents et tâches métier, avec Marssane.",
+              "inLanguage": "fr-FR",
+              "isPartOf": {
+                "@id": "https://marssane.fr/#website"
+              },
+              "publisher": {
+                "@id": "https://marssane.fr/#organization"
+              },
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "À qui s’adresse la formation IA Marssane ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "La formation s’adresse aux dirigeants de TPE et PME de moins de 20 salariés et aux entrepreneurs qui souhaitent utiliser l’IA sur leurs dossiers : mails, documents, recherche et tâches répétitives."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Faut-il déjà connaître l’IA pour suivre la formation ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Non. Le niveau débutant reprend les bases : choisir un modèle, rédiger un prompt et comprendre la confidentialité des échanges. Venez avec votre ordinateur et un abonnement Claude Pro actif ; son coût est distinct de celui de la formation."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "J’utilise déjà ChatGPT ou Claude, qu’est-ce que ça m’apporte ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Si vos usages sont occasionnels, le niveau débutant vous aide à construire un skill réutilisable et à connecter votre messagerie. Les niveaux confirmé et expert sont annoncés ; leurs programmes et leurs dates seront précisés ultérieurement."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Combien de temps dure la formation IA ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "La formation comprend 2 séances de 3 h 30 (7 heures au total), en présentiel. Une pratique personnelle accompagnée entre les deux séances permet de transposer les exercices sur vos propres dossiers. Ce travail personnel s’ajoute aux 7 heures en salle."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Où se déroule la formation près de Lyon ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "La formation a lieu au 13 Rue Claude Chappe, 69370 Saint-Didier-au-Mont-d'Or, près de Lyon. Les créneaux proposés se déroulent de 14 h à 17 h 30, en petit groupe, chacun sur son ordinateur."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Que se passe-t-il entre les deux séances ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Vous adaptez le système de tri de mails à votre messagerie et repérez une tâche à automatiser lors de la deuxième séance. Un chat commun avec le groupe et le formateur permet de poser vos questions pendant cette pratique."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Pourquoi travailler sur Claude pendant la formation ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Claude est l’outil utilisé pour les exercices de la formation : travail sur les fichiers, rédaction, skills et connecteurs. La méthode pour préciser une consigne, apporter du contexte et vérifier une réponse reste utile avec d’autres assistants, dont ChatGPT et Mistral. Le choix dépend de vos tâches et des fonctions disponibles."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "La pré-inscription m’engage-t-elle ?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Non. La pré-inscription est sans engagement. Vous indiquez vos coordonnées et votre créneau souhaité ; Marssane vous recontacte pour la suite."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "bytes": 370255
+    },
+    {
+      "path": "/styleguide",
+      "headers": [
+        "HTTP/2 200 ",
+        "x-robots-tag: noindex, nofollow"
+      ],
+      "meta": {
+        "title": "Styleguide · Marssane",
+        "description": "Marssane installe des agents IA dans votre PME près de Lyon : mails, devis et relances automatisés. Passation accompagnée ou maintenance selon vos besoins.",
+        "robots": "noindex, nofollow",
+        "og:title": "Implémentation IA et agents pour PME à Lyon | Marssane",
+        "og:image:alt": "Marssane · La formation IA des dirigeants de PME"
+      },
+      "canonical": [],
+      "headings": [
+        [
+          "h1",
+          "Styleguide"
+        ],
+        [
+          "h2",
+          "Palette & tokens"
+        ],
+        [
+          "h2",
+          "Échelle"
+        ],
+        [
+          "h2",
+          "Actions"
+        ],
+        [
+          "h2",
+          "Signaux"
+        ],
+        [
+          "h2",
+          "Le cadre-repère"
+        ],
+        [
+          "h2",
+          "Le drapeau tonal"
+        ],
+        [
+          "h2",
+          "Grille & repères"
+        ],
+        [
+          "h2",
+          "Réserver ma place"
+        ],
+        [
+          "h2",
+          "Un premier échange, en trois étapes."
+        ],
+        [
+          "h3",
+          "01Vos coordonnéesVotre nom et votre adresse mail"
+        ],
+        [
+          "h3",
+          "02Votre créneauUne heure pour parler de votre projet"
+        ],
+        [
+          "h3",
+          "03ConfirmationVérifiez et confirmez votre rendez-vous"
+        ]
+      ],
+      "jsonld": [],
+      "bytes": 93534
+    },
+    {
+      "path": "/formation",
+      "headers": [
+        "HTTP/2 200 ",
+        "x-robots-tag: noindex, nofollow"
+      ],
+      "meta": {
+        "title": "Espace formation · Marssane",
+        "description": "Marssane installe des agents IA dans votre PME près de Lyon : mails, devis et relances automatisés. Passation accompagnée ou maintenance selon vos besoins.",
+        "robots": "noindex, nofollow",
+        "og:title": "Implémentation IA et agents pour PME à Lyon | Marssane",
+        "og:image:alt": "Marssane · La formation IA des dirigeants de PME"
+      },
+      "canonical": [],
+      "headings": [
+        [
+          "h1",
+          "Espace formation"
+        ],
+        [
+          "h2",
+          "Réserver ma place"
+        ],
+        [
+          "h2",
+          "Un premier échange, en trois étapes."
+        ],
+        [
+          "h3",
+          "01Vos coordonnéesVotre nom et votre adresse mail"
+        ],
+        [
+          "h3",
+          "02Votre créneauUne heure pour parler de votre projet"
+        ],
+        [
+          "h3",
+          "03ConfirmationVérifiez et confirmez votre rendez-vous"
+        ]
+      ],
+      "jsonld": [],
+      "bytes": 47044
+    },
+    {
+      "path": "/diagnostic-video",
+      "headers": [
+        "HTTP/2 200 "
+      ],
+      "meta": {
+        "title": "Diagnostic vidéo · Marssane",
+        "description": "Marssane installe des agents IA dans votre PME près de Lyon : mails, devis et relances automatisés. Passation accompagnée ou maintenance selon vos besoins.",
+        "robots": "noindex, nofollow",
+        "og:title": "Implémentation IA et agents pour PME à Lyon | Marssane",
+        "og:image:alt": "Marssane · La formation IA des dirigeants de PME"
+      },
+      "canonical": [],
+      "headings": [
+        [
+          "h1",
+          "Test de lecture sur Safari"
+        ],
+        [
+          "h2",
+          "Lecteur actuel"
+        ],
+        [
+          "h2",
+          "MP4 natif"
+        ],
+        [
+          "h2",
+          "MP4 sans audio"
+        ],
+        [
+          "h2",
+          "Réserver ma place"
+        ],
+        [
+          "h2",
+          "Un premier échange, en trois étapes."
+        ],
+        [
+          "h3",
+          "01Vos coordonnéesVotre nom et votre adresse mail"
+        ],
+        [
+          "h3",
+          "02Votre créneauUne heure pour parler de votre projet"
+        ],
+        [
+          "h3",
+          "03ConfirmationVérifiez et confirmez votre rendez-vous"
+        ]
+      ],
+      "jsonld": [],
+      "bytes": 40957
+    },
+    {
+      "path": "/explorations/cta",
+      "headers": [
+        "HTTP/2 200 "
+      ],
+      "meta": {
+        "title": "10 pistes pour le CTA · Marssane",
+        "description": "Marssane installe des agents IA dans votre PME près de Lyon : mails, devis et relances automatisés. Passation accompagnée ou maintenance selon vos besoins.",
+        "robots": "noindex, nofollow",
+        "og:title": "Implémentation IA et agents pour PME à Lyon | Marssane",
+        "og:image:alt": "Marssane · La formation IA des dirigeants de PME"
+      },
+      "canonical": [],
+      "headings": [
+        [
+          "h1",
+          "Les angles.Dix interprétations."
+        ],
+        [
+          "h2",
+          "Dirigeant de PME,gagnez 2 h par jour+."
+        ],
+        [
+          "h3",
+          "Encre & turquoise"
+        ],
+        [
+          "h2",
+          "Les dix pistes"
+        ],
+        [
+          "h3",
+          "La base"
+        ],
+        [
+          "h3",
+          "Angles diagonaux"
+        ],
+        [
+          "h3",
+          "Cadre intérieur"
+        ],
+        [
+          "h3",
+          "Double cadre"
+        ],
+        [
+          "h3",
+          "Encre & turquoise"
+        ],
+        [
+          "h3",
+          "Bloc flèche"
+        ],
+        [
+          "h3",
+          "Écume claire"
+        ],
+        [
+          "h3",
+          "Trame technique"
+        ],
+        [
+          "h3",
+          "Coins biseautés"
+        ],
+        [
+          "h3",
+          "Mono encadrée"
+        ],
+        [
+          "h2",
+          "Réserver ma place"
+        ],
+        [
+          "h2",
+          "Un premier échange, en trois étapes."
+        ],
+        [
+          "h3",
+          "01Vos coordonnéesVotre nom et votre adresse mail"
+        ],
+        [
+          "h3",
+          "02Votre créneauUne heure pour parler de votre projet"
+        ],
+        [
+          "h3",
+          "03ConfirmationVérifiez et confirmez votre rendez-vous"
+        ]
+      ],
+      "jsonld": [],
+      "bytes": 58254
+    }
+  ],
+  "robots_txt": "User-Agent: *\nAllow: /\nDisallow: /api/\nDisallow: /formation/espace/stream\n\nSitemap: https://marssane.fr/sitemap.xml\n",
+  "sitemap_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n<url>\n<loc>https://marssane.fr/</loc>\n</url>\n<url>\n<loc>https://marssane.fr/formations</loc>\n</url>\n<url>\n<loc>https://marssane.fr/implementation</loc>\n</url>\n<url>\n<loc>https://marssane.fr/automatisation</loc>\n</url>\n<url>\n<loc>https://marssane.fr/quelle-ia</loc>\n</url>\n<url>\n<loc>https://marssane.fr/mentions-legales</loc>\n</url>\n<url>\n<loc>https://marssane.fr/confidentialite</loc>\n</url>\n</urlset>\n"
+}

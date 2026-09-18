@@ -30,6 +30,20 @@ Aucune migration, reservation ou notification reelle n'est necessaire.
 
 Circuit de publication : GitHub main vers Vercel Production.
 
+## Resultat en production
+
+Publie sur https://marssane.fr par le commit
+`b2aa32a057ac5075e17c6213de9792d0062af8b9`.
+Vercel : https://vercel.com/ncf-advisory-s-projects/marssane/FvqVY4DQYhGwYtvpDhFJSae6e7Ef
+(statut success).
+
+Recette HTTPS apres publication : huit pages dans Chromium et WebKit,
+ordinateur et mobile, sans erreur JavaScript ni debordement ; parcours
+ouvrable et refermable, chiffres et liens Novances, video V12 presents.
+SHA256 de la video, du poster et de l'animation pilotage conformes au local.
+API disponibilites HTTP 200, 190 creneaux au moment du controle.
+Le serveur local gere par launchd sur le port 3001 reste actif.
+
 ## Notes 1709 : reste a faire
 
 - Ajouter l'offre duo au site et preparer sa communication.
