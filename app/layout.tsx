@@ -6,7 +6,7 @@ import localFont from "next/font/local";
 import { Nav } from "@/components/site/Nav";
 import { RendezVousDialog } from "@/components/site/RendezVousDialog";
 import { ReservationDialog } from "@/components/site/ReservationDialog";
-import { HOME_DESCRIPTION, HOME_TITLE, SITE_URL } from "@/lib/seo";
+import { HOME_DESCRIPTION, HOME_TITLE, OPEN_GRAPH_IMAGE, SITE_URL } from "@/lib/seo";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
@@ -35,20 +35,13 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     type: "website",
     siteName: "Marssane",
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Marssane · La formation IA des dirigeants de PME",
-      },
-    ],
+    images: [OPEN_GRAPH_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: HOME_TITLE,
     description: HOME_DESCRIPTION,
-    images: ["/opengraph-image.png"],
+    images: [OPEN_GRAPH_IMAGE],
   },
 };
 

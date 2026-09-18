@@ -33,6 +33,10 @@ for (const path of paths) {
   const { response, html } = await get(path);
   assert.equal(response.status, 200, path);
   const meta = metadata(html);
+  const shareImage = `${canonicalBase}/images/marssane-hero-partage-20260918.png`;
+  assert.equal(meta["og:image"], shareImage, `Image Open Graph : ${path}`);
+  assert.equal(meta["twitter:image"], shareImage, `Image Twitter : ${path}`);
+  assert.match(meta["og:image:alt"], /gagnez 2 h par jour/, `Texte de l’aperçu : ${path}`);
   const title = html.match(/<title>([\s\S]*?)<\/title>/)?.[1];
   assert.ok(title && meta.description, `Titre/description manquant : ${path}`);
   assert.ok(!titles.has(title), `Titre dupliqué : ${path}`);

@@ -22,11 +22,11 @@ export function absoluteUrl(path: string) {
   return new URL(path, SITE_URL).href;
 }
 
-const OPEN_GRAPH_IMAGE = {
-  url: "/opengraph-image.png",
+export const OPEN_GRAPH_IMAGE = {
+  url: "/images/marssane-hero-partage-20260918.png",
   width: 1200,
   height: 630,
-  alt: "Marssane · La formation IA des dirigeants de PME",
+  alt: "Marssane · Dirigeant de PME, gagnez 2 h par jour grâce à l’implémentation IA",
 };
 
 /** Métadonnées partagées des pages publiques, avec URL canonique et aperçu social. */
