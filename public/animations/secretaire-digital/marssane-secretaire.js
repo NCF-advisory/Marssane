@@ -1,8 +1,8 @@
 import { observeSchemaVisibility } from "../observe-schema-visibility.js";
 
 /** Marssane — Secrétaire digital. SVG natif, dérivé de la référence web v8. */
-const portrait = new URL('./elise.png', import.meta.url).href;
-const fontURL = new URL('./jakarta.woff2', import.meta.url).href;
+const portrait = new URL('./elise.webp', import.meta.url).href;
+const fontURL = new URL('../jakarta.woff2', import.meta.url).href;
 let fontReady;
 const loadFont = () => fontReady ??= (async () => {
   const face = new FontFace('MarssaneSecretariatJakarta', `url(${fontURL})`, {weight:'200 800', style:'normal'});

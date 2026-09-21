@@ -2,7 +2,7 @@ import { observeSchemaVisibility } from "../observe-schema-visibility.js";
 
 /** Marssane — Chiffres et pilotage. SVG + CSS + JavaScript natif. */
 const portrait = new URL('./jacque.jpg', import.meta.url).href;
-const fontURL = new URL('./jakarta.woff2', import.meta.url).href;
+const fontURL = new URL('../jakarta.woff2', import.meta.url).href;
 let fontReady;
 const loadFont = () => fontReady ??= (async () => {
  const face = new FontFace('MarssanePilotageJakarta', `url(${fontURL})`, {weight:'200 800',style:'normal'});

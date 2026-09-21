@@ -2,7 +2,7 @@ import { observeSchemaVisibility } from "../observe-schema-visibility.js";
 
 /** Marssane — Schéma SVG animé, sans bibliothèque ni lecteur vidéo. */
 const portrait=new URL('./marco.jpg',import.meta.url).href;
-const fontURL=new URL('./jakarta.woff2',import.meta.url).href;
+const fontURL=new URL('../jakarta.woff2',import.meta.url).href;
 // Load the bundled face once. FontFaceSet.check can return true for an
 // unknown family when no matching face has been registered yet.
 let fontReady;
