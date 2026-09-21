@@ -13,6 +13,19 @@ export const CRENEAUX = [
   "Mardi 29 septembre et jeudi 1er octobre 2026",
 ] as const;
 
+/**
+ * Les mêmes créneaux en dates machine, pour le balisage des sessions
+ * (`hasCourseInstance` du Course). Aligné index par index sur `CRENEAUX` :
+ * début à la première après-midi, fin à la seconde, 14 h – 17 h 30, fuseau
+ * Europe/Paris (+02:00 à ces dates). L'assertion ci-dessous interdit qu'une
+ * liste évolue sans l'autre.
+ */
+export const CRENEAUX_DATES = [
+  { debut: "2026-09-15T14:00:00+02:00", fin: "2026-09-17T17:30:00+02:00" },
+  { debut: "2026-09-22T14:00:00+02:00", fin: "2026-09-24T17:30:00+02:00" },
+  { debut: "2026-09-29T14:00:00+02:00", fin: "2026-10-01T17:30:00+02:00" },
+] as const satisfies { length: (typeof CRENEAUX)["length"] };
+
 /** Choix laissé au prospect qui n'a pas de préférence. */
 export const CRENEAU_SANS_PREFERENCE = "Sans préférence";
 

@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node scripts/indexnow.mjs --apres-build",
+    "indexnow": "node scripts/indexnow.mjs",
     "start": "next start",
     "lint": "eslint",
     "db:migrate": "node --env-file-if-exists=.env.local scripts/db-migrate.mjs",

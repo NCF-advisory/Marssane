@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PUBLIC_PATHS } from "@/lib/public-paths.mjs";
 
 export const SITE_URL = "https://marssane.fr";
 
@@ -8,15 +9,32 @@ export const HOME_DESCRIPTION =
 export const HOME_TITLE = "Marssane | Implémentation IA et automatisation pour PME";
 
 /** Une seule origine publique pour les canoniques, le sitemap et le JSON-LD. */
-export const PUBLIC_PATHS = [
-  "/",
-  "/formations",
-  "/implementation",
-  "/automatisation",
-  "/quelle-ia",
-  "/mentions-legales",
-  "/confidentialite",
-] as const;
+export { PUBLIC_PATHS };
+
+/**
+ * Date de dernière modification du contenu de chaque page publique, tenue à la
+ * main et publiée dans le sitemap.
+ *
+ * Règle : quand le contenu d'une page change (texte, visuel, structure ou une
+ * source qu'elle affiche — `lib/*-faq.ts`, `lib/niveaux.ts`, `lib/creneaux.ts`,
+ * ses composants de section), la date de cette page est mise à jour dans le
+ * même commit. Ne jamais y mettre la date du jour par réflexe : un correctif
+ * technique, une dépendance ou un changement de balisage ne déplacent pas la
+ * date. Une date fausse est pire qu'une date ancienne — les moteurs cessent de
+ * s'y fier.
+ *
+ * Valeurs initiales : date du dernier commit ayant touché la page ou l'un de
+ * ses fichiers de contenu (`git log -1 --format=%cs -- …`), au 18/09/2026.
+ */
+export const LAST_MODIFIED: Record<(typeof PUBLIC_PATHS)[number], string> = {
+  "/": "2026-09-17",
+  "/formations": "2026-09-17",
+  "/implementation": "2026-09-17",
+  "/automatisation": "2026-09-17",
+  "/quelle-ia": "2026-09-18",
+  "/mentions-legales": "2026-09-02",
+  "/confidentialite": "2026-09-02",
+};
 
 export function absoluteUrl(path: string) {
   return new URL(path, SITE_URL).href;

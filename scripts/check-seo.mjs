@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readdirSync, readFileSync } from "node:fs";
 
 // Contrôle du HTML réellement servi : démarrer `npm start`, puis lancer
 // `node scripts/check-seo.mjs http://127.0.0.1:3000` (ou l'URL publiée).
@@ -21,6 +22,27 @@ const schemas = (html) => [...html.matchAll(/<script type="application\/ld\+json
     const parsed = JSON.parse(match[1]);
     return parsed["@graph"] ?? [parsed];
   });
+// Un objet réduit à { "@id" } est une référence ; tout autre objet portant un
+// « @id » définit l'entité. Les deux ensembles doivent coïncider page par page.
+const identifiants = (noeuds) => {
+  const definis = new Set();
+  const references = new Set();
+  const parcourir = (valeur) => {
+    if (Array.isArray(valeur)) return valeur.forEach(parcourir);
+    if (!valeur || typeof valeur !== "object") return;
+    const cles = Object.keys(valeur);
+    if (valeur["@id"]) (cles.length === 1 ? references : definis).add(valeur["@id"]);
+    Object.values(valeur).forEach(parcourir);
+  };
+  parcourir(noeuds);
+  return { definis, references };
+};
+// La clé IndexNow est le nom du fichier publié dans public/ (cf. scripts/indexnow.mjs).
+const cleIndexNow = readdirSync(new URL("../public/", import.meta.url))
+  .filter((nom) => /^[0-9a-f]{32}\.txt$/.test(nom));
+// Créneaux encore à venir, lus dans la source (module TypeScript, non importable ici).
+const creneauxFuturs = [...readFileSync(new URL("../lib/creneaux.ts", import.meta.url), "utf8")
+  .matchAll(/fin: "([^"]+)"/g)].filter(([, fin]) => new Date(fin) > new Date()).length;
 
 async function get(path) {
   const response = await fetch(new URL(path, base), { signal: AbortSignal.timeout(30000) });
@@ -60,6 +82,18 @@ for (const path of paths) {
     const courses = nodes.filter((node) => node["@type"] === "Course");
     assert.equal(courses.length, 1, `Seul le cours débutant doit être balisé : ${path}`);
     assert.equal(courses[0].timeRequired, "PT7H", path);
+    assert.ok(nodes.some((node) => node["@type"] === "BreadcrumbList"), `Fil d’Ariane : ${path}`);
+    if (creneauxFuturs) {
+      const sessions = courses[0].hasCourseInstance ?? [];
+      assert.ok(sessions.length, `Sessions absentes alors qu’un créneau est à venir : ${path}`);
+      for (const session of sessions) {
+        assert.equal(session["@type"], "CourseInstance", path);
+        assert.equal(session.courseMode, "Onsite", path);
+        assert.equal(session.courseWorkload, "PT7H", path);
+        assert.ok(session.startDate && session.endDate, `Dates de session : ${path}`);
+        assert.equal(session.location.address.postalCode, "69370", `Lieu de session : ${path}`);
+      }
+    }
   }
   if (["/implementation", "/automatisation"].includes(path)) {
     const service = nodes.find((node) => node["@type"] === "Service");
@@ -91,6 +125,17 @@ for (const path of paths) {
       assert.ok(visibleHtml.includes(escape(question.acceptedAnswer.text)), `Réponse non visible : ${question.name}`);
     }
   }
+  if (nodes.length) {
+    const { definis, references } = identifiants(nodes);
+    for (const reference of references) {
+      assert.ok(definis.has(reference), `Référence @id sans définition : ${reference} (${path})`);
+    }
+    const organisation = nodes.find((node) => node["@type"] === "Organization");
+    assert.ok(organisation, `Organisation absente : ${path}`);
+    assert.equal(organisation.legalName, "NCF Advisory", path);
+    assert.equal(organisation.address.streetAddress, "3 Cité Rougemont", path);
+    assert.equal(organisation.address.postalCode, "75009", path);
+  }
   console.log(`OK ${path}`);
 }
 for (const path of privatePaths) {
@@ -104,6 +149,16 @@ const { response: sitemapResponse, html: sitemap } = await get("/sitemap.xml");
 assert.equal(sitemapResponse.status, 200);
 const locations = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => new URL(match[1]).href);
 assert.deepEqual(locations.sort(), paths.map((path) => new URL(path, canonicalBase).href).sort());
+const lastmods = [...sitemap.matchAll(/<lastmod>(.*?)<\/lastmod>/g)].map((match) => match[1]);
+assert.equal(lastmods.length, locations.length, "Une date de modification par URL du sitemap");
+for (const date of lastmods) {
+  assert.ok(!Number.isNaN(Date.parse(date)), `Date de modification illisible : ${date}`);
+  assert.ok(Date.parse(date) <= Date.now(), `Date de modification dans le futur : ${date}`);
+}
+assert.equal(cleIndexNow.length, 1, "Une seule clé IndexNow dans public/");
+const { response: cleReponse, html: cleCorps } = await get(`/${cleIndexNow[0]}`);
+assert.equal(cleReponse.status, 200, "Fichier de clé IndexNow");
+assert.equal(cleCorps.trim(), cleIndexNow[0].replace(/\.txt$/, ""), "Contenu du fichier de clé IndexNow");
 const { html: robots } = await get("/robots.txt");
 assert.match(robots, /User-Agent: \*/i);
 assert.match(robots, /Allow: \/\s/);
@@ -117,4 +172,4 @@ assert.match(metadata(parcoursHtml).robots ?? "", /noindex/, "Parcours masqué n
 const admin = await fetch(new URL("/admin", base), { redirect: "manual", signal: AbortSignal.timeout(30000) });
 assert.equal(admin.status, 307, "Ancien admin redirigé");
 assert.equal(new URL(admin.headers.get("location")).hostname, "erp.marssane.fr");
-console.log("SEO vérifié : 7 pages publiques, 6 pages noindex, admin redirigé, sitemap, robots, services, FAQ et durée du cours.");
+console.log("SEO vérifié : 7 pages publiques, 6 pages noindex, admin redirigé, sitemap daté, robots, clé IndexNow, services, FAQ, sessions du cours et références @id résolues.");

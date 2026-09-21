@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/site/JsonLd";
 import { IMPLEMENTATION_FAQ } from "@/lib/implementation-faq";
-import { siteEntities, webPage } from "@/lib/structured-data";
+import { siteEntities, videoObject, webPage } from "@/lib/structured-data";
+import { heroAgentsVideo } from "@/lib/site-config";
 import { MethodeImplementation } from "@/components/site/MethodeImplementation";
 import { AlignementImplementation } from "@/components/site/AlignementImplementation";
 import { Apparitions } from "@/components/site/Apparitions";
@@ -42,6 +43,16 @@ function BandeToile({
 }
 
 export default function Home() {
+  const video = videoObject({
+    path: "/",
+    name: "Les agents IA de Marssane au travail",
+    description:
+      "Animation du héro : quatre agents IA — devis, relation client, comptabilité, dossiers — traitent chacun une demande de l’entreprise. Sans parole ni son.",
+    contentUrl: heroAgentsVideo.mp4,
+    thumbnailUrl: heroAgentsVideo.poster,
+    uploadDate: "2026-09-17",
+    duration: "PT35S",
+  });
   return (
     <>
       {/* Ordre des sections et alternance de tonalités repris du tunnel 8lab
@@ -56,12 +67,14 @@ export default function Home() {
           {
             ...webPage({ path: "/", name: HOME_TITLE, description: HOME_DESCRIPTION }),
             "@type": ["WebPage", "FAQPage"],
+            video: { "@id": video["@id"] },
             mainEntity: IMPLEMENTATION_FAQ.map(({ question, reponse }) => ({
               "@type": "Question",
               name: question,
               acceptedAnswer: { "@type": "Answer", text: reponse },
             })),
           },
+          video,
         ],
       }} />
       <main>

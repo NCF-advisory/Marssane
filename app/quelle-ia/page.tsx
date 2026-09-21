@@ -8,7 +8,7 @@ import { MethodoSources } from "@/components/quelle-ia/MethodoSources";
 import { createPublicMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { JsonLd } from "@/components/site/JsonLd";
-import { webPage } from "@/lib/structured-data";
+import { siteEntities, webPage } from "@/lib/structured-data";
 import { GuideChoix } from "@/components/quelle-ia/GuideChoix";
 import { TableauComparatif } from "@/components/quelle-ia/TableauComparatif";
 
@@ -42,7 +42,10 @@ export default function Page() {
 
   return (
     <>
-      <JsonLd data={{ "@context": "https://schema.org", ...webPage({ path: "/quelle-ia", name: title, description }) }} />
+      <JsonLd data={{ "@context": "https://schema.org", "@graph": [
+        ...siteEntities,
+        webPage({ path: "/quelle-ia", name: title, description }),
+      ] }} />
       {/* `flex-1` fait couvrir au <main> toute la hauteur restante du body
           (min-h-full flex flex-col), pour que le pied de page reste en bas
           quand le contenu est court. Le fond encre est porté par le body.
