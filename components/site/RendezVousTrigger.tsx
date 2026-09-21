@@ -25,6 +25,8 @@ export function RendezVousTrigger({
         if (dialog instanceof HTMLDialogElement) {
           dialog.dispatchEvent(new Event(RENDEZ_VOUS_OPEN_EVENT));
           dialog.showModal();
+          // Le défilement ne peut être réinitialisé qu'une fois la fenêtre visible.
+          dialog.scrollTop = 0;
         }
       }}
     >

@@ -209,132 +209,136 @@ export function ParcoursRendezVous({
   }
 
   return (
-    <div ref={racineRef} className="relative px-5 py-7 sm:px-10 sm:py-9">
+    <div ref={racineRef} className="relative">
       {fermer && (
-        <button type="button" onClick={fermer} disabled={enConfirmation} aria-label="Fermer la prise de rendez-vous" className="absolute right-3 top-3 inline-flex h-11 w-11 items-center justify-center rounded-btn text-faint-sur-ink hover:text-white disabled:opacity-40">
-          <span aria-hidden>✕</span>
-        </button>
+        <div className="sticky top-0 z-20 h-0">
+          <button type="button" onClick={fermer} disabled={enConfirmation} aria-label="Fermer la prise de rendez-vous" className="absolute right-3 top-3 inline-flex h-11 w-11 items-center justify-center rounded-btn bg-surface-sur-ink text-faint-sur-ink hover:text-white disabled:opacity-40">
+            <span aria-hidden>✕</span>
+          </button>
+        </div>
       )}
-      <div className="mb-8 inline-flex" style={{ ["--color-ink" as string]: "#FFFFFF" }}>
-        <LogoMarssane withWordmark size={25} />
-      </div>
-      <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-turquoise">Discutons de votre projet</p>
-      <h2 ref={titreRef} tabIndex={-1} id={`${prefixe}-titre`} className="mt-3 pr-2 text-[26px] font-extrabold leading-[1.12] tracking-[-0.025em] outline-none sm:text-[32px]">
-        Un premier échange, en trois étapes.
-      </h2>
+      <div className="px-5 py-7 sm:px-10 sm:py-9">
+        <div className="mb-8 inline-flex" style={{ ["--color-ink" as string]: "#FFFFFF" }}>
+          <LogoMarssane withWordmark size={25} />
+        </div>
+        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-turquoise">Discutons de votre projet</p>
+        <h2 ref={titreRef} tabIndex={-1} id={`${prefixe}-titre`} className="mt-3 pr-2 text-[26px] font-extrabold leading-[1.12] tracking-[-0.025em] outline-none sm:text-[32px]">
+          Un premier échange, en trois étapes.
+        </h2>
 
-      <div className="mt-5 flex items-center gap-3">
-        <span className="block h-14 w-14 shrink-0 overflow-hidden rounded-full border border-turquoise/50 bg-canard-dark">
-          <Image
-            src="/img/formateur/cleante.jpg"
-            alt="Portrait de Cléante Oullion"
-            width={1090}
-            height={1127}
-            sizes="84px"
-            className="h-full w-full origin-[50%_30%] scale-150 object-cover"
-          />
-        </span>
-        <p className="min-w-0 text-[13px] leading-relaxed">
-          <span className="block font-semibold text-white">Avec Cléante Oullion</span>
-          <span className="block text-faint-sur-ink">Fondateur de Marssane</span>
-        </p>
-      </div>
+        <div className="mt-5 flex items-center gap-3">
+          <span className="block h-14 w-14 shrink-0 overflow-hidden rounded-full border border-turquoise/50 bg-canard-dark">
+            <Image
+              src="/img/formateur/cleante.jpg"
+              alt="Portrait de Cléante Oullion"
+              width={1090}
+              height={1127}
+              sizes="84px"
+              className="h-full w-full origin-[50%_30%] scale-150 object-cover"
+            />
+          </span>
+          <p className="min-w-0 text-[13px] leading-relaxed">
+            <span className="block font-semibold text-white">Avec Cléante Oullion</span>
+            <span className="block text-faint-sur-ink">Fondateur de Marssane</span>
+          </p>
+        </div>
 
-      <ol aria-label="Étapes de la prise de rendez-vous" className="rdv-roadmap mt-8">
-        <EtapeRendezVous index={0} prefixe={prefixe} etape={etape} confirmation={Boolean(confirmation)} bloque={enConfirmation}
-          resume={etape > 0 || confirmation ? `${coordonnees.nom} · ${coordonnees.email}` : "Votre nom et votre adresse mail"}
-          onOuvrir={() => { setEtape(0); setMessage(""); }}>
-          <form noValidate onSubmit={(event) => {
-            event.preventDefault();
-            const nom = coordonnees.nom.trim();
-            const email = coordonnees.email.trim();
-            const prochains: Partial<RendezVousCoordonnees> = {};
-            if (nom.length < 2) prochains.nom = "Indiquez votre nom (au moins 2 caractères).";
-            if (!email || !emailRef.current?.validity.valid) prochains.email = "Indiquez une adresse mail valide.";
-            setErreurs(prochains);
-            if (prochains.nom) { nomRef.current?.focus(); return; }
-            if (prochains.email) { emailRef.current?.focus(); return; }
-            setCoordonnees({ nom, email });
-            setEtape(1);
-            if (!disponibilites.length && !chargement) charger();
-          }} className="space-y-5">
-            <Field id={`${prefixe}-nom`} label="Nom" required error={erreurs.nom}>
-              <input ref={nomRef} id={`${prefixe}-nom`} name="nom" autoComplete="name" required minLength={2} maxLength={120} value={coordonnees.nom} onChange={(e) => setCoordonnees({ ...coordonnees, nom: e.target.value })} aria-invalid={Boolean(erreurs.nom)} aria-describedby={erreurs.nom ? `${prefixe}-nom-error` : undefined} className={controlClassSurInk} />
-            </Field>
-            <Field id={`${prefixe}-email`} label="Adresse mail" required error={erreurs.email}>
-              <input ref={emailRef} id={`${prefixe}-email`} name="email" type="email" inputMode="email" autoComplete="email" required maxLength={254} value={coordonnees.email} onChange={(e) => setCoordonnees({ ...coordonnees, email: e.target.value })} aria-invalid={Boolean(erreurs.email)} aria-describedby={erreurs.email ? `${prefixe}-email-error` : undefined} className={controlClassSurInk} />
-            </Field>
-            <p className="text-[12px] leading-relaxed text-faint-sur-ink">Vos coordonnées servent à organiser cet échange. <a href="/confidentialite" className="text-turquoise underline">Confidentialité</a></p>
-            <button type="submit" className={`${BOUTON} w-full`}>Valider mes coordonnées <Chevron /></button>
-          </form>
-        </EtapeRendezVous>
-        <EtapeRendezVous index={1} prefixe={prefixe} etape={etape} confirmation={Boolean(confirmation)} bloque={enConfirmation}
-          resume={selection ? `${rendezVousDate(selection.debut)} · ${rendezVousHeure(selection.debut)} – ${rendezVousHeure(selection.fin)}` : "Une heure pour parler de votre projet"}
-          onOuvrir={() => { setEtape(1); setMessage(""); }}>
-          <div>
-            <p className="mt-2 text-[13px] text-faint-sur-ink">Un départ chaque heure · heure de Paris</p>
-            {chargement ? <div className="rdv-planning-chargement" role="status">
-              <span className="sr-only">Recherche des créneaux disponibles…</span>
-              <span className="rdv-squelette rdv-squelette--label" />
-              <span className="rdv-squelette rdv-squelette--champ" />
-              <span className="rdv-squelette rdv-squelette--label mt-5" />
-              <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">{HEURES.map(h => <span key={h} className="rdv-squelette rdv-squelette--heure" />)}</div>
-            </div> : (
-              <>
-                {message && <p role="alert" className="mt-4 text-[14px] leading-relaxed text-body-sur-ink">{message}</p>}
-                {jours.length ? (
-                  <>
-                    <label htmlFor={`${prefixe}-jour`} className="mb-2 mt-5 block text-[13.5px] font-semibold">Jour du rendez-vous</label>
-                    <select id={`${prefixe}-jour`} value={jour} onChange={(e) => {
-                      const prochainJour = e.target.value;
-                      setJour(prochainJour);
-                      setSelection(selection ? planning.get(prochainJour)?.heures.get(rendezVousHeure(selection.debut)) ?? null : null);
-                      setMessage("");
-                    }} className={selectClassSurInk}>
-                      {jours.map((j) => <option key={j} value={j}>{planning.get(j)!.libelle}</option>)}
-                    </select>
-                    <fieldset className="mt-5">
-                      <legend className="mb-3 text-[13.5px] font-semibold">Heure de début</legend>
-                      <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-                        {HEURES.map((heure) => {
-                          const c = creneauxDuJour?.get(heure);
-                          return c ? (
-                            <label key={heure} className="relative cursor-pointer">
-                              <input type="radio" name={`${prefixe}-creneau`} value={c.debut} checked={selection?.debut === c.debut} onChange={() => { setSelection(c); setMessage(""); }} className="peer sr-only" />
-                              <span className="rdv-heure flex min-h-11 items-center justify-center rounded-btn border border-line-sur-ink px-2 py-3 font-mono text-[13px] hover:border-turquoise peer-checked:border-turquoise peer-checked:bg-canard peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-turquoise">{heure}</span>
-                            </label>
-                          ) : <span key={heure} aria-label={`${heure}, indisponible`} className="flex min-h-11 items-center justify-center rounded-btn border border-white/5 px-2 py-3 font-mono text-[13px] text-faint-sur-ink opacity-40 line-through">{heure}</span>;
-                        })}
-                      </div>
-                    </fieldset>
-                  </>
-                ) : <div className="mt-4 rounded-card border border-line-sur-ink p-5 text-[14px] leading-relaxed text-body-sur-ink">{!message && "Aucun créneau n'est disponible pour le moment."}<button type="button" onClick={charger} className="mt-2 block min-h-11 text-turquoise underline">Actualiser les disponibilités</button></div>}
-              </>
-            )}
-            <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row">
-              <button type="button" onClick={() => { setEtape(0); setMessage(""); }} className={RETOUR}>Retour</button>
-              <button type="button" disabled={!selection || chargement} onClick={() => { setEtape(2); setMessage(""); }} className={`${BOUTON} flex-1`}>Valider ce créneau <Chevron /></button>
+        <ol aria-label="Étapes de la prise de rendez-vous" className="rdv-roadmap mt-8">
+          <EtapeRendezVous index={0} prefixe={prefixe} etape={etape} confirmation={Boolean(confirmation)} bloque={enConfirmation}
+            resume={etape > 0 || confirmation ? `${coordonnees.nom} · ${coordonnees.email}` : "Votre nom et votre adresse mail"}
+            onOuvrir={() => { setEtape(0); setMessage(""); }}>
+            <form noValidate onSubmit={(event) => {
+              event.preventDefault();
+              const nom = coordonnees.nom.trim();
+              const email = coordonnees.email.trim();
+              const prochains: Partial<RendezVousCoordonnees> = {};
+              if (nom.length < 2) prochains.nom = "Indiquez votre nom (au moins 2 caractères).";
+              if (!email || !emailRef.current?.validity.valid) prochains.email = "Indiquez une adresse mail valide.";
+              setErreurs(prochains);
+              if (prochains.nom) { nomRef.current?.focus(); return; }
+              if (prochains.email) { emailRef.current?.focus(); return; }
+              setCoordonnees({ nom, email });
+              setEtape(1);
+              if (!disponibilites.length && !chargement) charger();
+            }} className="space-y-5">
+              <Field id={`${prefixe}-nom`} label="Nom" required error={erreurs.nom}>
+                <input ref={nomRef} id={`${prefixe}-nom`} name="nom" autoComplete="name" required minLength={2} maxLength={120} value={coordonnees.nom} onChange={(e) => setCoordonnees({ ...coordonnees, nom: e.target.value })} aria-invalid={Boolean(erreurs.nom)} aria-describedby={erreurs.nom ? `${prefixe}-nom-error` : undefined} className={controlClassSurInk} />
+              </Field>
+              <Field id={`${prefixe}-email`} label="Adresse mail" required error={erreurs.email}>
+                <input ref={emailRef} id={`${prefixe}-email`} name="email" type="email" inputMode="email" autoComplete="email" required maxLength={254} value={coordonnees.email} onChange={(e) => setCoordonnees({ ...coordonnees, email: e.target.value })} aria-invalid={Boolean(erreurs.email)} aria-describedby={erreurs.email ? `${prefixe}-email-error` : undefined} className={controlClassSurInk} />
+              </Field>
+              <p className="text-[12px] leading-relaxed text-faint-sur-ink">Vos coordonnées servent à organiser cet échange. <a href="/confidentialite" className="text-turquoise underline">Confidentialité</a></p>
+              <button type="submit" className={`${BOUTON} w-full`}>Valider mes coordonnées <Chevron /></button>
+            </form>
+          </EtapeRendezVous>
+          <EtapeRendezVous index={1} prefixe={prefixe} etape={etape} confirmation={Boolean(confirmation)} bloque={enConfirmation}
+            resume={selection ? `${rendezVousDate(selection.debut)} · ${rendezVousHeure(selection.debut)} – ${rendezVousHeure(selection.fin)}` : "Une heure pour parler de votre projet"}
+            onOuvrir={() => { setEtape(1); setMessage(""); }}>
+            <div>
+              <p className="mt-2 text-[13px] text-faint-sur-ink">Un départ chaque heure · heure de Paris</p>
+              {chargement ? <div className="rdv-planning-chargement" role="status">
+                <span className="sr-only">Recherche des créneaux disponibles…</span>
+                <span className="rdv-squelette rdv-squelette--label" />
+                <span className="rdv-squelette rdv-squelette--champ" />
+                <span className="rdv-squelette rdv-squelette--label mt-5" />
+                <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">{HEURES.map(h => <span key={h} className="rdv-squelette rdv-squelette--heure" />)}</div>
+              </div> : (
+                <>
+                  {message && <p role="alert" className="mt-4 text-[14px] leading-relaxed text-body-sur-ink">{message}</p>}
+                  {jours.length ? (
+                    <>
+                      <label htmlFor={`${prefixe}-jour`} className="mb-2 mt-5 block text-[13.5px] font-semibold">Jour du rendez-vous</label>
+                      <select id={`${prefixe}-jour`} value={jour} onChange={(e) => {
+                        const prochainJour = e.target.value;
+                        setJour(prochainJour);
+                        setSelection(selection ? planning.get(prochainJour)?.heures.get(rendezVousHeure(selection.debut)) ?? null : null);
+                        setMessage("");
+                      }} className={selectClassSurInk}>
+                        {jours.map((j) => <option key={j} value={j}>{planning.get(j)!.libelle}</option>)}
+                      </select>
+                      <fieldset className="mt-5">
+                        <legend className="mb-3 text-[13.5px] font-semibold">Heure de début</legend>
+                        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                          {HEURES.map((heure) => {
+                            const c = creneauxDuJour?.get(heure);
+                            return c ? (
+                              <label key={heure} className="relative cursor-pointer">
+                                <input type="radio" name={`${prefixe}-creneau`} value={c.debut} checked={selection?.debut === c.debut} onChange={() => { setSelection(c); setMessage(""); }} className="peer sr-only" />
+                                <span className="rdv-heure flex min-h-11 items-center justify-center rounded-btn border border-line-sur-ink px-2 py-3 font-mono text-[13px] hover:border-turquoise peer-checked:border-turquoise peer-checked:bg-canard peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-turquoise">{heure}</span>
+                              </label>
+                            ) : <span key={heure} aria-label={`${heure}, indisponible`} className="flex min-h-11 items-center justify-center rounded-btn border border-white/5 px-2 py-3 font-mono text-[13px] text-faint-sur-ink opacity-40 line-through">{heure}</span>;
+                          })}
+                        </div>
+                      </fieldset>
+                    </>
+                  ) : <div className="mt-4 rounded-card border border-line-sur-ink p-5 text-[14px] leading-relaxed text-body-sur-ink">{!message && "Aucun créneau n'est disponible pour le moment."}<button type="button" onClick={charger} className="mt-2 block min-h-11 text-turquoise underline">Actualiser les disponibilités</button></div>}
+                </>
+              )}
+              <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row">
+                <button type="button" onClick={() => { setEtape(0); setMessage(""); }} className={RETOUR}>Retour</button>
+                <button type="button" disabled={!selection || chargement} onClick={() => { setEtape(2); setMessage(""); }} className={`${BOUTON} flex-1`}>Valider ce créneau <Chevron /></button>
+              </div>
             </div>
-          </div>
-        </EtapeRendezVous>
-        <EtapeRendezVous index={2} prefixe={prefixe} etape={etape} confirmation={Boolean(confirmation)} bloque={enConfirmation}
-          resume={confirmation ? "Votre rendez-vous est réservé" : "Vérifiez et confirmez votre rendez-vous"}
-          onOuvrir={() => setEtape(2)}>
-          <div>
-            <p className="mt-2 text-[14px] leading-relaxed text-body-sur-ink">Vérifiez vos informations, puis confirmez votre rendez-vous.</p>
-            <dl className="mt-5 space-y-4 rounded-card border border-line-sur-ink p-5 text-[14px]">
-              <div><dt className="text-[12px] text-faint-sur-ink">Nom</dt><dd className="mt-1 break-words font-semibold">{coordonnees.nom}</dd></div>
-              <div><dt className="text-[12px] text-faint-sur-ink">Adresse mail</dt><dd className="mt-1 break-all font-semibold">{coordonnees.email}</dd></div>
-              {selection && <div><dt className="text-[12px] text-faint-sur-ink">Votre rendez-vous</dt><dd className="mt-1 font-semibold">{rendezVousDate(selection.debut)}<br />{rendezVousHeure(selection.debut)} – {rendezVousHeure(selection.fin)}<span className="mt-1 block text-[12px] font-normal text-faint-sur-ink">Heure de Paris</span></dd></div>}
-            </dl>
-            {message && <p role="alert" className="mt-4 text-[14px] leading-relaxed text-erreur">{message}</p>}
-            <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row">
-              <button type="button" disabled={enConfirmation} onClick={() => { setEtape(1); setMessage(""); }} className={RETOUR}>Modifier le créneau</button>
-              <button type="button" disabled={enConfirmation} onClick={confirmer} aria-busy={enConfirmation} className={`${BOUTON} flex-1`}>{enConfirmation ? "Confirmation…" : "Confirmer le rendez-vous"}{!enConfirmation && <Chevron />}</button>
+          </EtapeRendezVous>
+          <EtapeRendezVous index={2} prefixe={prefixe} etape={etape} confirmation={Boolean(confirmation)} bloque={enConfirmation}
+            resume={confirmation ? "Votre rendez-vous est réservé" : "Vérifiez et confirmez votre rendez-vous"}
+            onOuvrir={() => setEtape(2)}>
+            <div>
+              <p className="mt-2 text-[14px] leading-relaxed text-body-sur-ink">Vérifiez vos informations, puis confirmez votre rendez-vous.</p>
+              <dl className="mt-5 space-y-4 rounded-card border border-line-sur-ink p-5 text-[14px]">
+                <div><dt className="text-[12px] text-faint-sur-ink">Nom</dt><dd className="mt-1 break-words font-semibold">{coordonnees.nom}</dd></div>
+                <div><dt className="text-[12px] text-faint-sur-ink">Adresse mail</dt><dd className="mt-1 break-all font-semibold">{coordonnees.email}</dd></div>
+                {selection && <div><dt className="text-[12px] text-faint-sur-ink">Votre rendez-vous</dt><dd className="mt-1 font-semibold">{rendezVousDate(selection.debut)}<br />{rendezVousHeure(selection.debut)} – {rendezVousHeure(selection.fin)}<span className="mt-1 block text-[12px] font-normal text-faint-sur-ink">Heure de Paris</span></dd></div>}
+              </dl>
+              {message && <p role="alert" className="mt-4 text-[14px] leading-relaxed text-erreur">{message}</p>}
+              <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row">
+                <button type="button" disabled={enConfirmation} onClick={() => { setEtape(1); setMessage(""); }} className={RETOUR}>Modifier le créneau</button>
+                <button type="button" disabled={enConfirmation} onClick={confirmer} aria-busy={enConfirmation} className={`${BOUTON} flex-1`}>{enConfirmation ? "Confirmation…" : "Confirmer le rendez-vous"}{!enConfirmation && <Chevron />}</button>
+              </div>
             </div>
-          </div>
-        </EtapeRendezVous>
-      </ol>
+          </EtapeRendezVous>
+        </ol>
+      </div>
     </div>
   );
 }

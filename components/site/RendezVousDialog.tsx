@@ -21,7 +21,6 @@ export function RendezVousDialog() {
     const ouvrir = () => {
       // Une réservation en cours ne doit pas être soumise une seconde fois.
       if (confirmationRef.current) return;
-      dialog.scrollTop = 0;
       parcoursRef.current?.reinitialiser();
     };
     dialog.addEventListener(RENDEZ_VOUS_OPEN_EVENT, ouvrir);
