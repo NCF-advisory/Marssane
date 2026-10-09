@@ -10,7 +10,7 @@ const dev = process.env.NODE_ENV !== "production";
  * rapports observés. Inventaire du 18/09/2026 : polices, vidéos, animations et
  * Vercel Analytics sont servis par le site lui-même ; aucun script tiers.
  */
-const csp = [
+const cspDirectives = [
   "default-src 'self'",
   // Next.js injecte des scripts inline (hydratation) : sans nonce, qui
   // forcerait le rendu dynamique de toutes les pages, 'unsafe-inline' est
@@ -30,13 +30,46 @@ const csp = [
   "base-uri 'self'",
   "form-action 'self'",
   "report-uri /api/csp-report",
-].join("; ");
+];
+
+const csp = cspDirectives.join("; ");
+
+/**
+ * Présentation Novances (page non répertoriée) : fichier HTML autonome servi
+ * depuis `public/`, qui embarque ses polices en `data:` (@font-face woff2 en
+ * base64). Même politique que le reste du site, `font-src` élargi à `data:`.
+ * `index.html` porte une ligne ajoutée à la main avant `</body>` qui charge
+ * `nav.js` (flèches de navigation) : la remettre après tout réexport.
+ */
+const cspFormationNovances = cspDirectives
+  .map((directive) =>
+    directive.startsWith("font-src ") ? `${directive} data:` : directive,
+  )
+  .join("; ");
+
+/**
+ * Les deux chemins de la présentation : l'URL publique et le fichier servi
+ * derrière le rewrite. Les règles `headers` s'appliquent sur le chemin
+ * demandé, avant le rewrite : les deux doivent donc être listés.
+ */
+const cheminsFormationNovances = [
+  "/formation-novances-7k3q",
+  "/formation-novances-7k3q/index.html",
+];
 
 const nextConfig: NextConfig = {
   // Pin the workspace root to this project so Next.js does not infer it from
   // an unrelated lockfile higher up in the filesystem.
   turbopack: {
     root: fileURLToPath(new URL(".", import.meta.url)),
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/formation-novances-7k3q",
+        destination: "/formation-novances-7k3q/index.html",
+      },
+    ];
   },
   async headers() {
     return [
@@ -67,6 +100,18 @@ const nextConfig: NextConfig = {
           { key: "Content-Security-Policy-Report-Only", value: csp },
         ],
       },
+      // Placé après la règle `/(.*)` : à clé d'en-tête identique, la dernière
+      // règle qui correspond l'emporte.
+      ...cheminsFormationNovances.map((source) => ({
+        source,
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+          {
+            key: "Content-Security-Policy-Report-Only",
+            value: cspFormationNovances,
+          },
+        ],
+      })),
     ];
   },
 };
