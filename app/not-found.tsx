@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/site/Footer";
 import { Chevron } from "@/components/ui/Chevron";
+import { CroixErreur } from "@/components/ui/CroixErreur";
 import { Kicker } from "@/components/ui/Kicker";
 
 export const metadata: Metadata = {
@@ -34,17 +34,14 @@ export default function NotFound() {
               </Link>
             </div>
 
-            {/* Visuel décoratif : le titre dit déjà l'erreur, d'où alt vide. */}
-            <div className="mx-auto w-full max-w-[520px] lg:mx-0 lg:justify-self-end">
-              <Image
-                src="/img/croix-erreur.webp"
-                alt=""
-                width={1200}
-                height={960}
-                priority
-                sizes="(min-width: 1024px) 520px, 100vw"
-                className="aspect-[5/4] w-full rounded-card object-cover shadow-hero"
-              />
+            {/* Visuel d'erreur : une croix turquoise qui se trace à
+                l'apparition (cercle, puis les deux diagonales, puis léger
+                « pop » — animation CSS dans globals.css). Décoratif
+                (`aria-hidden`) : le titre dit déjà l'erreur. En desktop, la
+                marge droite la recentre sur la zone qu'occupait le visuel
+                précédent. */}
+            <div className="flex justify-center lg:justify-end">
+              <CroixErreur className="h-[180px] w-[180px] text-turquoise sm:h-[220px] sm:w-[220px] lg:mr-[130px] lg:h-[260px] lg:w-[260px]" />
             </div>
           </div>
         </section>
