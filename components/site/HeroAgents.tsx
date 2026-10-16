@@ -66,7 +66,7 @@ export function HeroAgents() {
             >
               <path d={CLAUDE_PATH} />
             </svg>
-            Claude Partner
+            Partenaire de Claude
           </p>
         </div>
 
