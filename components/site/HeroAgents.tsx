@@ -1,6 +1,7 @@
 import { RendezVousTrigger } from "./RendezVousTrigger";
 import { GridBackground } from "@/components/ui/GridBackground";
 import { PlusMark } from "@/components/ui/PlusMark";
+import { CLAUDE_PATH } from "@/components/ui/LogoIA";
 import { HeroMedia } from "./HeroMedia";
 import { heroAgentsVideo } from "@/lib/site-config";
 
@@ -49,6 +50,24 @@ export function HeroAgents() {
               Parler de mon projet
             </RendezVousTrigger>
           </div>
+
+          {/* Mention partenaire sous le CTA. Glyphe = tracé simple-icons de
+              `LogoIA`, monochrome comme les autres logos d'éditeur du site :
+              une mention sobre, pas une reproduction du badge d'Anthropic. Le
+              glyphe est décoratif, le texte porte le sens. */}
+          <p className="mt-4 flex items-center gap-2 font-mono text-[13px] leading-none text-faint-sur-ink">
+            <svg
+              aria-hidden
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="flex-none"
+            >
+              <path d={CLAUDE_PATH} />
+            </svg>
+            Claude Partner
+          </p>
         </div>
 
         {/* Colonne média */}
