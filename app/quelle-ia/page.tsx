@@ -4,26 +4,23 @@ import { Footer } from "@/components/site/Footer";
 import { Chevron } from "@/components/ui/Chevron";
 import { HeroRecommandation } from "@/components/site/HeroRecommandation";
 import { GraphiqueEfficacite } from "@/components/quelle-ia/GraphiqueEfficacite";
-import { MethodoSources } from "@/components/quelle-ia/MethodoSources";
 import { createPublicMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/site/Breadcrumbs";
 import { JsonLd } from "@/components/site/JsonLd";
 import { siteEntities, webPage } from "@/lib/structured-data";
-import { GuideChoix } from "@/components/quelle-ia/GuideChoix";
-import { TableauComparatif } from "@/components/quelle-ia/TableauComparatif";
 
 /** Score au dixième, virgule décimale (ex. 73,3). */
 const fmtScore = (x: number) =>
   new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 1 }).format(x);
 
-/** Même formatage de date que « Méthode & sources », pour rester cohérent. */
+/** Date du relevé des sources, affichée sous la recommandation du héro. */
 const fmtDate = (iso: string) =>
   new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(
     new Date(iso),
   );
 
 const title = "Quelle IA choisir pour une PME ? Comparateur | Marssane";
-const description = "Comparez les modèles IA pour votre PME : intelligence, coût API et réactivité. Consultez les sources, la méthode et les conseils de choix de Marssane.";
+const description = "Comparez les modèles IA pour votre PME : intelligence, coût API et réactivité. Visualisez d’un coup d’œil le meilleur rapport qualité-prix, par Marssane.";
 export const metadata = createPublicMetadata({
   title,
   description,
@@ -33,12 +30,12 @@ export const metadata = createPublicMetadata({
 export default function Page() {
   const c = CLASSEMENT;
 
-  // Épingle éditoriale temporaire (01/09/2026) : le héro montre Claude Opus 5
-  // plutôt que le premier du classement. En l'état, la formule hisse en tête les
-  // Flash bon marché, alors que le graphe du bas de page désigne Opus 5 au
-  // sommet de la frontière intelligence/coût. Repli sur le premier du classement
-  // si l'entrée manque. À retirer une fois la formule recalibrée.
-  const top = c.entries.find((e) => e.cle === "claude-opus-5") ?? c.entries[0];
+  // Épingle éditoriale (décidée par le propriétaire le 04/11/2026) : le héro
+  // montre Claude Opus 5.5 à effort élevé plutôt que le premier du classement
+  // calculé, qu'il n'est pas. C'est le modèle que nous recommandons pour le
+  // travail sur les documents ; la baseline le dit au visiteur. Repli sur le
+  // premier du classement si l'entrée manque.
+  const top = c.entries.find((e) => e.cle === "claude-opus-5-5") ?? c.entries[0];
 
   return (
     <>
@@ -82,7 +79,7 @@ export default function Page() {
             sur le chevron du héro et défilement libre atterrissent au pixel près
             au même endroit, haut du bloc calé sous la barre.
             `snap-always` interdit d'enjamber ce cran : aucune lancée, même
-            longue, ne peut passer du héro à la méthodo sans s'arrêter là.
+            longue, ne peut passer du héro au bas de page sans s'arrêter là.
             Note de gabarit : le bloc entier (titre + carte) fait 880 px sur les
             largeurs ≥ lg ; la carte du graphe n'est donc visible en entier qu'à
             partir de ~900 px de fenêtre. Plus court, on cale le haut du bloc
@@ -94,9 +91,6 @@ export default function Page() {
         <div className="mx-auto max-w-[1180px] px-6 pt-8 sm:px-10">
           <Breadcrumbs items={[{ name: "Comparateur d’IA", path: "/quelle-ia" }]} />
         </div>
-        <TableauComparatif entries={c.entries} />
-        <MethodoSources classement={c} />
-        <GuideChoix />
         <PontFormation />
       </main>
       {/* Dernier cran : sans point d'arrêt en bas de page, le snap mandatory

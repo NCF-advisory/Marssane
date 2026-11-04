@@ -371,8 +371,8 @@ body {
   }
 }
 
-/* Le comparateur contient désormais un tableau et une méthode détaillée.
-   Une aimantation légère sur grand écran laisse ces contenus accessibles ;
+/* Le comparateur enchaîne le héro, le graphe puis le bas de page. Une
+   aimantation légère sur grand écran laisse ces contenus accessibles ;
    le défilement reste libre sur mobile. */
 @media (min-width: 1024px) and (min-height: 760px) {
   html:has(.snap-page-quelle-ia) {

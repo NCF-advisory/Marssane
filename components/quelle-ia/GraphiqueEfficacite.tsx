@@ -65,19 +65,37 @@ const chevauche = (a: Box, b: Box) =>
 const LABEL_H = 13;
 const CHAR_W = 6.6;
 
+type Position = { x: number; y: number; anchor: "start" | "end" | "middle"; box: Box };
+
 function placeLabel(
   cx: number,
   cy: number,
   nom: string,
   occupes: Box[],
   prefereDessus: boolean,
-): { x: number; y: number; anchor: "start" | "end" | "middle"; box: Box } {
+  rayon: number,
+): Position {
   const w = nom.length * CHAR_W;
-  const candidats: { x: number; y: number; anchor: "start" | "end" | "middle"; box: Box }[] = [
-    { x: cx + 10, y: cy + 4, anchor: "start", box: { x0: cx + 9, y0: cy - 7, x1: cx + 10 + w, y1: cy + 6 } },
-    { x: cx - 10, y: cy + 4, anchor: "end", box: { x0: cx - 10 - w, y0: cy - 7, x1: cx - 9, y1: cy + 6 } },
-    { x: cx, y: cy - 12, anchor: "middle", box: { x0: cx - w / 2, y0: cy - 12 - LABEL_H + 3, x1: cx + w / 2, y1: cy - 8 } },
-    { x: cx, y: cy + 19, anchor: "middle", box: { x0: cx - w / 2, y0: cy + 9, x1: cx + w / 2, y1: cy + 21 } },
+  // Dégagement autour du point : les quatre positions doivent commencer HORS de
+  // sa pastille, qui figure parmi les boîtes occupées. Les marges d'origine
+  // (9 px de côté, 8 px au-dessus) étaient taillées pour un point de 6 px de
+  // rayon ; les cerclés du TOP 2 en font 10, et chaque candidat heurtait alors
+  // le point qu'il étiquette — les quatre rejetés, le repli descendait
+  // l'étiquette très loin sous sa pastille. Dérivées du rayon, ces marges
+  // rendent exactement la géométrie d'origine pour un point ordinaire.
+  const d = rayon + 3;
+  const du = rayon + 2;
+  const droite: Position = {
+    x: cx + d + 1,
+    y: cy + 4,
+    anchor: "start",
+    box: { x0: cx + d, y0: cy - 7, x1: cx + d + 1 + w, y1: cy + 6 },
+  };
+  const candidats: Position[] = [
+    droite,
+    { x: cx - d - 1, y: cy + 4, anchor: "end", box: { x0: cx - d - 1 - w, y0: cy - 7, x1: cx - d, y1: cy + 6 } },
+    { x: cx, y: cy - du - 4, anchor: "middle", box: { x0: cx - w / 2, y0: cy - du - LABEL_H - 1, x1: cx + w / 2, y1: cy - du } },
+    { x: cx, y: cy + d + 10, anchor: "middle", box: { x0: cx - w / 2, y0: cy + d, x1: cx + w / 2, y1: cy + d + 12 } },
   ];
   if (prefereDessus) candidats.unshift(candidats.splice(2, 1)[0]);
 
@@ -86,8 +104,10 @@ function placeLabel(
       c.box.x0 >= PLOT_X0 - 40 && c.box.x1 <= PLOT_X1 + 8 && c.box.y0 >= PLOT_Y0 - 14 && c.box.y1 <= PLOT_Y1 + 2;
     if (dansRepere && !occupes.some((o) => chevauche(o, c.box))) return c;
   }
-  // Dernier recours : à droite, décalé sous les gêneurs.
-  const repli = candidats[0];
+  // Dernier recours : à droite, décalé sous les gêneurs — et non le premier
+  // candidat, que `prefereDessus` vient de remplacer par la position du dessus :
+  // l'étiquette glissait alors vers le bas en traversant son propre point.
+  const repli = droite;
   let dy = 0;
   while (occupes.some((o) => chevauche(o, { ...repli.box, y0: repli.box.y0 + dy, y1: repli.box.y1 + dy })) && dy < 60) {
     dy += LABEL_H;
@@ -122,6 +142,35 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
     return PLOT_Y1 - t * (PLOT_Y1 - PLOT_Y0); // inversion : haut = grand
   };
 
+  // --- Points strictement superposés : écartement horizontal ---
+  // Deux modèles au même coût ET à la même intelligence tombent au pixel près
+  // l'un sur l'autre : le second dessiné masque entièrement le premier, et son
+  // étiquette semble désigner le point d'un autre éditeur. On écarte donc les
+  // membres d'un tel groupe de ±5 px autour de leur position réelle — assez
+  // pour que les deux pastilles se voient, assez peu pour ne pas fausser la
+  // lecture d'une échelle log. L'anti-collision fait le reste : chaque
+  // étiquette se range du côté libre, donc du côté de son propre point.
+  const ECART_SUPERPOSES = 10;
+  const groupes = new Map<string, ClassementEntry[]>();
+  for (const e of entries) {
+    const cle = `${e.coutEurM}|${e.intelligence}`;
+    const groupe = groupes.get(cle);
+    if (groupe) groupe.push(e);
+    else groupes.set(cle, [e]);
+  }
+  const cxParCle = new Map<string, number>();
+  for (const groupe of groupes.values()) {
+    groupe.forEach((e, i) => {
+      const decalage = (i - (groupe.length - 1) / 2) * ECART_SUPERPOSES;
+      cxParCle.set(e.cle, scaleX(e.coutEurM) + decalage);
+    });
+  }
+  /** Abscisse DESSINÉE du point (position réelle, écartement compris). */
+  const cxDe = (e: ClassementEntry) => cxParCle.get(e.cle) ?? scaleX(e.coutEurM);
+
+  /** Rayon de l'empreinte du point : les cerclés du TOP 2 sont plus larges. */
+  const rayonDe = (e: ClassementEntry) => (e.rang <= 2 ? 10 : 6);
+
   // Graduations Y : multiples de 5 dans le domaine (quadrillage horizontal).
   const yTicks: number[] = [];
   for (let v = Math.ceil(yDomMin / 5) * 5; v <= yDomMax; v += 5) yTicks.push(v);
@@ -141,14 +190,14 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
     }
   }
   const cheminFrontiere = frontiere
-    .map((e, i) => `${i === 0 ? "M" : "L"} ${scaleX(e.coutEurM).toFixed(1)} ${scaleY(e.intelligence).toFixed(1)}`)
+    .map((e, i) => `${i === 0 ? "M" : "L"} ${cxDe(e).toFixed(1)} ${scaleY(e.intelligence).toFixed(1)}`)
     .join(" ");
 
   // --- Zone de performance maximale : boîte englobante du quart supérieur ---
   const seuilZone = yMax - (yMax - yMin) * 0.25;
   const ptsZone = entries.filter((e) => e.intelligence >= seuilZone);
-  const zoneX0 = Math.max(PLOT_X0, Math.min(...ptsZone.map((e) => scaleX(e.coutEurM))) - 26);
-  const zoneX1 = Math.min(PLOT_X1, Math.max(...ptsZone.map((e) => scaleX(e.coutEurM))) + 26);
+  const zoneX0 = Math.max(PLOT_X0, Math.min(...ptsZone.map(cxDe)) - 26);
+  const zoneX1 = Math.min(PLOT_X1, Math.max(...ptsZone.map(cxDe)) + 26);
   const zoneY0 = Math.max(PLOT_Y0, Math.min(...ptsZone.map((e) => scaleY(e.intelligence))) - 20);
   const zoneY1 = Math.min(PLOT_Y1, Math.max(...ptsZone.map((e) => scaleY(e.intelligence))) + 20);
 
@@ -167,9 +216,9 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
   //     Les points eux-mêmes sont déclarés occupés d'entrée. ---
   const ordre = [...entries].sort((a, b) => a.rang - b.rang);
   const occupes: Box[] = ordre.map((e) => {
-    const cx = scaleX(e.coutEurM);
+    const cx = cxDe(e);
     const cy = scaleY(e.intelligence);
-    const r = e.rang <= 2 ? 10 : 6;
+    const r = rayonDe(e);
     return { x0: cx - r, y0: cy - r, x1: cx + r, y1: cy + r };
   });
 
@@ -191,7 +240,7 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
   occupes.push(captionBox(captionX, captionY));
   const etiquettes = ordre.map((e) => {
     const cerne = e.rang <= 2;
-    const pos = placeLabel(scaleX(e.coutEurM), scaleY(e.intelligence), e.nom, occupes, cerne);
+    const pos = placeLabel(cxDe(e), scaleY(e.intelligence), e.nom, occupes, cerne, rayonDe(e));
     occupes.push(pos.box);
     return { e, cerne, ...pos };
   });
@@ -333,7 +382,7 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
 
             {/* Points + étiquettes (cerclés en dernier pour passer dessus) */}
             {[...etiquettes].reverse().map(({ e, cerne, x, y, anchor }) => {
-              const cx = scaleX(e.coutEurM);
+              const cx = cxDe(e);
               const cy = scaleY(e.intelligence);
               return (
                 <g key={e.cle}>

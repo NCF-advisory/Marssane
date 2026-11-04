@@ -31,7 +31,7 @@ export const LAST_MODIFIED: Record<(typeof PUBLIC_PATHS)[number], string> = {
   "/formations": "2026-09-17",
   "/implementation": "2026-09-17",
   "/automatisation": "2026-09-17",
-  "/quelle-ia": "2026-09-18",
+  "/quelle-ia": "2026-11-04",
   "/mentions-legales": "2026-09-02",
   "/confidentialite": "2026-09-02",
 };
