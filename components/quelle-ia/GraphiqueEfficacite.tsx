@@ -307,16 +307,6 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
               fill="var(--color-ecume)"
               opacity={0.38}
             />
-            <text
-              x={captionX}
-              y={captionY}
-              className="font-mono text-[10px] font-semibold uppercase"
-              style={{ letterSpacing: "0.12em" }}
-              fill="var(--color-ink-ecume)"
-            >
-              {CAPTION}
-            </text>
-
             {/* Quadrillage horizontal + graduations Y */}
             {yTicks.map((v) => (
               <g key={v}>
@@ -338,6 +328,19 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
                 </text>
               </g>
             ))}
+
+            {/* Légende de la zone, APRÈS le quadrillage : son anti-collision
+                n'évite que les points, pas les lignes du repère, et une
+                graduation tombant à hauteur de x-hauteur barrait le texte. */}
+            <text
+              x={captionX}
+              y={captionY}
+              className="font-mono text-[10px] font-semibold uppercase"
+              style={{ letterSpacing: "0.12em" }}
+              fill="var(--color-ink-ecume)"
+            >
+              {CAPTION}
+            </text>
 
             {/* Graduations X */}
             {xTicks.map((v) => (
