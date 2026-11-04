@@ -9,10 +9,8 @@ import { CRENEAU_LIEU_COURT, CRENEAUX_COMPACT, FORMATION_DUREE } from "@/lib/cre
    chaque paire badgeBg/badgeText est choisie pour rester lisible sur le fond
    encre.
    Pas de prix ici (décision du propriétaire, 29/07/2026 : le prix ne s'annonce
-   pas sur le site), aucune promesse chiffrée. Exception du 03/09/2026 : le prix
-   « 980 € par personne » s'affiche sur la carte débutant de la section « Les
-   formations » de la landing (components/site/FormationsDeuxNiveaux.tsx), et
-   nulle part ailleurs — /formations reste sans prix. */
+   pas sur le site), aucune promesse chiffrée. Le prix ne s'affiche nulle part
+   sur le site (décision du propriétaire, 04/11/2026). */
 export const NIVEAUX: Niveau[] = [
   {
     id: "debutant",

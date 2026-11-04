@@ -9,9 +9,9 @@ type Niveau = {
   /** Phrase de cadrage, juste sous le titre de la carte. */
   phrase: string;
   /**
-   * Prix affiché en pastille sur la ligne du titre. Optionnel : seule la carte
-   * débutant l'affiche (décision du propriétaire, 03/09/2026), la carte
-   * confirmé n'a pas de tarif arrêté.
+   * Prix affiché en pastille sur la ligne du titre. Optionnel, et aucune carte
+   * ne le renseigne : le prix ne s'affiche plus nulle part sur le site
+   * (décision du propriétaire, 04/11/2026).
    */
   prix?: string;
   cta: {
@@ -40,8 +40,6 @@ const NIVEAUX_LANDING: [Niveau, Niveau] = [
     titre: "Niveau débutant",
     phrase:
       "Le point de départ : prendre l’IA en main et repartir le soir avec ses premiers automatismes.",
-    // Espace insécable avant l'euro (typographie française).
-    prix: "980 € par personne",
     // Pas de `href` : ce CTA ouvre la modale de pré-inscription.
     cta: { libelle: "Réserver ma place" },
     points: [
@@ -77,9 +75,10 @@ const NIVEAUX_LANDING: [Niveau, Niveau] = [
  * sur carte claire à droite. Le niveau expert ne figure plus ici — il reste
  * présenté sur /formations, qui garde les trois niveaux.
  *
- * Hiérarchie de chaque carte : titre (+ pastille de prix, débutant seul) →
- * phrase de cadrage → bouton pleine largeur → cinq coches. Le bouton passe
- * AVANT la liste (structure du bloc « programmes » du modèle).
+ * Hiérarchie de chaque carte : titre → phrase de cadrage → bouton pleine
+ * largeur → cinq coches. Aucune carte n'affiche de prix (décision du
+ * propriétaire, 04/11/2026). Le bouton passe AVANT la liste (structure du
+ * bloc « programmes » du modèle).
  *
  * Trois écarts locaux revendiqués, qui ne se propagent nulle part ailleurs :
  * — rayon 20 px sur les cartes et boutons pill (999 px), là où la charte pose

@@ -30,7 +30,6 @@ type OffresDeuxVoiesProps = {
 const NIVEAUX_LANDING: [Niveau, Niveau] = [
   {
     titre: "Les formations",
-    prix: "Dès 980 € par personne",
     phrase: "Vous préférez apprendre à faire vous-même : prenez l'IA en main et repartez avec vos premiers automatismes.",
     cta: { libelle: "Découvrir les formations", href: "/formations" },
     points: [
@@ -43,7 +42,6 @@ const NIVEAUX_LANDING: [Niveau, Niveau] = [
   },
   {
     titre: "Implémentation sur mesure",
-    prix: "Sur devis",
     phrase: "Nous installons des agents IA sur vos outils : vous récupérez du temps dès les premières semaines.",
     cta: { libelle: "Parler de mon projet", href: "#contact" },
     points: [
@@ -60,9 +58,9 @@ const NIVEAUX_LANDING: [Niveau, Niveau] = [
  * Section « Les offres » (ancre #offres) : formation sur carte sombre,
  * implémentation sur carte claire. Gabarits repris des deux niveaux de formation.
  *
- * Hiérarchie de chaque carte : titre et pastille de tarif →
- * phrase de cadrage → bouton pleine largeur → cinq coches. Le bouton passe
- * AVANT la liste (structure du bloc « programmes » du modèle).
+ * Hiérarchie de chaque carte : titre (et pastille de tarif si le niveau en
+ * fournit un) → phrase de cadrage → bouton pleine largeur → cinq coches. Le
+ * bouton passe AVANT la liste (structure du bloc « programmes » du modèle).
  *
  * Cartes arrondies et carte sombre en dégradé vertical. Les deux CTA reprennent
  * le bouton animé partagé de la landing : le CTA projet ouvre la fenêtre de
