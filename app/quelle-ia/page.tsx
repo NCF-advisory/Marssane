@@ -125,7 +125,7 @@ export default function Page() {
  * la formation à « comment s'en servir ». Carte encre (mêmes gabarit et filet que
  * les cartes du site) et CTA canard plein, l'idiome CTA du site.
  *
- * `Link` et non `<a>` : la navigation vers l'accueil doit rester côté client,
+ * `Link` et non `<a>` : la navigation vers /formations doit rester côté client,
  * sinon le document est rechargé et le fondu croisé entre pages n'a pas lieu.
  */
 function PontFormation() {
@@ -137,7 +137,7 @@ function PontFormation() {
           sur vos dossiers, c&apos;est la formation.
         </p>
         <Link
-          href="/#formation"
+          href="/formations"
           className="mt-6 inline-flex items-center gap-[13px] rounded-btn bg-canard py-[15px] pl-[27px] pr-[26px] text-[16.5px] font-bold tracking-[-0.005em] text-white shadow-cta transition-[background-color] duration-[180ms] ease-out hover:bg-canard-dark"
         >
           Découvrir la formation
