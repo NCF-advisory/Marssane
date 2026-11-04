@@ -142,15 +142,20 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
     return PLOT_Y1 - t * (PLOT_Y1 - PLOT_Y0); // inversion : haut = grand
   };
 
+  /** Rayon de l'empreinte du point : les cerclés du TOP 2 sont plus larges. */
+  const rayonDe = (e: ClassementEntry) => (e.rang <= 2 ? 10 : 6);
+
   // --- Points strictement superposés : écartement horizontal ---
   // Deux modèles au même coût ET à la même intelligence tombent au pixel près
   // l'un sur l'autre : le second dessiné masque entièrement le premier, et son
   // étiquette semble désigner le point d'un autre éditeur. On écarte donc les
-  // membres d'un tel groupe de ±5 px autour de leur position réelle — assez
-  // pour que les deux pastilles se voient, assez peu pour ne pas fausser la
-  // lecture d'une échelle log. L'anti-collision fait le reste : chaque
-  // étiquette se range du côté libre, donc du côté de son propre point.
-  const ECART_SUPERPOSES = 10;
+  // membres d'un tel groupe autour de leur position réelle — assez pour que
+  // les pastilles se voient, assez peu pour ne pas fausser la lecture d'une
+  // échelle log. L'écart vaut deux fois le plus grand rayon du groupe, plus une
+  // marge : si l'un des superposés est cerclé (TOP 2), son anneau est deux fois
+  // plus large qu'une pastille ordinaire et avalerait son voisin à écart fixe.
+  // L'anti-collision fait le reste : chaque étiquette se range du côté libre.
+  const MARGE_SUPERPOSES = 4;
   const groupes = new Map<string, ClassementEntry[]>();
   for (const e of entries) {
     const cle = `${e.coutEurM}|${e.intelligence}`;
@@ -160,16 +165,14 @@ export function GraphiqueEfficacite({ entries }: { entries: ClassementEntry[] })
   }
   const cxParCle = new Map<string, number>();
   for (const groupe of groupes.values()) {
+    const ecart = 2 * Math.max(...groupe.map(rayonDe)) + MARGE_SUPERPOSES;
     groupe.forEach((e, i) => {
-      const decalage = (i - (groupe.length - 1) / 2) * ECART_SUPERPOSES;
+      const decalage = (i - (groupe.length - 1) / 2) * ecart;
       cxParCle.set(e.cle, scaleX(e.coutEurM) + decalage);
     });
   }
   /** Abscisse DESSINÉE du point (position réelle, écartement compris). */
   const cxDe = (e: ClassementEntry) => cxParCle.get(e.cle) ?? scaleX(e.coutEurM);
-
-  /** Rayon de l'empreinte du point : les cerclés du TOP 2 sont plus larges. */
-  const rayonDe = (e: ClassementEntry) => (e.rang <= 2 ? 10 : 6);
 
   // Graduations Y : multiples de 5 dans le domaine (quadrillage horizontal).
   const yTicks: number[] = [];

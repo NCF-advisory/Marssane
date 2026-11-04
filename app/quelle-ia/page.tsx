@@ -31,10 +31,11 @@ export default function Page() {
   const c = CLASSEMENT;
 
   // Épingle éditoriale (décidée par le propriétaire le 04/11/2026) : le héro
-  // montre Claude Opus 5.5 à effort élevé plutôt que le premier du classement
-  // calculé, qu'il n'est pas. C'est le modèle que nous recommandons pour le
-  // travail sur les documents ; la baseline le dit au visiteur. Repli sur le
-  // premier du classement si l'entrée manque.
+  // montre Claude Opus 5.5 à effort élevé, le modèle que nous recommandons pour
+  // le travail sur les documents — quel que soit son rang calculé. Il tient la
+  // première place du relevé du 04/11/2026, mais l'épingle ne suit pas le
+  // classement : la baseline dit au visiteur laquelle des deux situations
+  // s'applique. Repli sur le premier du classement si l'entrée manque.
   const top = c.entries.find((e) => e.cle === "claude-opus-5-5") ?? c.entries[0];
 
   return (
@@ -87,6 +88,23 @@ export default function Page() {
             titre sous la barre. */}
         <div id="pourquoi" className="snap-start snap-always scroll-mt-6">
           <GraphiqueEfficacite entries={c.entries} />
+          {/* Mention de source, sous la carte du graphe : même gabarit mono
+              discret que l'amorce de défilement, et `faint-sur-ink` (8,2:1 sur
+              l'encre) plutôt qu'un gris plus sombre. Le lien passe en
+              `body-sur-ink` souligné — il ne se distingue pas par la seule
+              couleur. La date vient de l'instantané, jamais codée en dur. */}
+          <p className="mx-auto max-w-[1180px] px-6 pb-2 pt-3 font-mono text-[10.5px] text-faint-sur-ink sm:px-10">
+            Source :{" "}
+            <a
+              href="https://artificialanalysis.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-body-sur-ink underline underline-offset-2 hover:text-white"
+            >
+              Artificial Analysis
+            </a>{" "}
+            · données relevées le {fmtDate(c.miseAJour)}
+          </p>
         </div>
         <div className="mx-auto max-w-[1180px] px-6 pt-8 sm:px-10">
           <Breadcrumbs items={[{ name: "Comparateur d’IA", path: "/quelle-ia" }]} />
